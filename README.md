@@ -3,4 +3,4 @@
 Margara
 Cappella Ilaria 889047 10620359 ilaria.cappella@mail.polimi.it_
 Castelli Elisa 890514 10615041 elisa3.castelli@mail.polimi.it_
-Corti Greta 887330 10598667 greta.corti@mail.polimi.it
+Corti Greta 887330 10598667 greta.corti@mail.polimi.it_
