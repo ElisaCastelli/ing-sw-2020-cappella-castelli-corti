@@ -9,8 +9,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>AM21</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  git@github.com:ElisaCastelli/ing-sw-2020-cappella-castelli-corti.git
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
