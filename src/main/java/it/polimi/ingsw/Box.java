@@ -50,9 +50,13 @@ public class Box {
         return vuota;
     }
     public void build(){ //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
+
+        ///TO DO riguarda il counter del building perchè serve un identificatore per il pezzo da costruire
+
         if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
-            //building.build();
             counter++;
+            //building.build(counter);
+
         }
     }
     //controllo se box2 è raggiungibile e vuota partendo da this
