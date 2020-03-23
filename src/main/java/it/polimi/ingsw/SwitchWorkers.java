@@ -6,8 +6,9 @@ public class SwitchWorkers extends GodDecorator {
         super(newGod);
     }
 
-    /*@Override
+    @Override
     public void moveWorker(Worker worker, Box pos) {
         super.moveWorker(worker, pos);
-    }*/
+
+    }
 }
