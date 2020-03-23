@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 
 public class Board {
     private static final int DIM = 5;
-    private static Box[][] matrix;
+    private Box[][] matrix;
 
     Board(){
         matrix= new Box[DIM][DIM];
