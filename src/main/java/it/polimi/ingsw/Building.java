@@ -8,11 +8,9 @@ public class Building {
 
     public Building() {
         arrayOfBlocks=new ArrayList<>();
-
     }
 
     public ArrayList<Block> build(int blockIdentif){
-
         if(blockIdentif == 1){
             arrayOfBlocks.add(getBlock(blockIdentif));
             //arrayOfBlocks.get(0).print();
