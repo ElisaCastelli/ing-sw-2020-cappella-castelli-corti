@@ -55,14 +55,14 @@ public class Box {
 
         if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
             //HO MODIFICATO IL CONTATORE PER VEDERE SE FUNZIONAVA
-            //counter++;
-            counter=1;
+            counter++;
+            /*counter=1;
             building.build(counter);
             counter=2;
             building.build(counter);
             counter=3;
             building.build(counter);
-            counter=4;
+            counter=4;*/
             building.build(counter);
 
         }
