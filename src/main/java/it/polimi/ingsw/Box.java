@@ -50,6 +50,7 @@ public class Box {
         return vuota;
     }
     public void build(){ //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
+        //Building building=new Building();
 
         ///TO DO riguarda il counter del building perchè serve un identificatore per il pezzo da costruire
 
