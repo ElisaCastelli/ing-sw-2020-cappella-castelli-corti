@@ -1,19 +1,19 @@
 package it.polimi.ingsw;
 
 public class Box {
-    //private static Building building;
+    private Building building;
     private int row;
     private int column;
     private int counter;
     //private Worker worker;
     Box(){
-        //building=new Building();
+        building=new Building();
         counter=0;
         row=0;
         column=0;
         //worker=null;
     }
-    public Box(int counter,int row, int column){
+    public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
         this.counter=counter;
         this.row=row;
         this.column=column;
@@ -55,8 +55,7 @@ public class Box {
 
         if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
             counter++;
-            //building.build(counter);
-
+            building.getBlock(counter);
         }
     }
     //controllo se box2 è raggiungibile e vuota partendo da this
@@ -66,7 +65,7 @@ public class Box {
         int column2=box2.getColumn();
         boolean empty=box2.isEmpty();
         if(empty){
-            if(this.row-row2>=1 || row2-this.row>=1 || column2-this.column<=1 || this.column-column2>=1){
+            if(this.row-row2<=1 || row2-this.row<=1 || column2-this.column<=1 || this.column-column2<=1){
                 reachable=true;
             }
         }
