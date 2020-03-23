@@ -7,11 +7,13 @@ public class Game {
     private Board board;
     private ArrayList<Gamer> gamers;
     private  int nPlayer;
+    private boolean finito;
 
     Game(){
         board= new Board();
         gamers= new ArrayList<>();
         nPlayer=0;
+        finito=false;
     }
 
     public void play(){
@@ -25,8 +27,12 @@ public class Game {
             gamers.add(i,g);
         }
         //gestisco i turni
-
-
+        int i=1;
+        while(!finito && i<gamers.size()){
+            gamers.get(i).move();
+            i++;
+            if(i==4)i=1;
+        }
     }
     /*public static void main( String[] args )
     {

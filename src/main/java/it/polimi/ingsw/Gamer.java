@@ -16,6 +16,12 @@ public class Gamer {
         alive=true;
         myCard=null;
     }
+    public static String getName() {
+        return name;
+    }
+    public static void setName(String name) {
+        Gamer.name = name;
+    }
     public God getMyCard() {
         return myCard;
     }
@@ -46,14 +52,15 @@ public class Gamer {
             int c = Integer.parseInt(row.nextLine());
             b.setRow(r);
             b.setColumn(c);
-            /*if(worker.getPos().reachable(b)){
-                myCard.moveWorker(workers[w],b);
-                workerMoved=true;
-            }*/
+            //myCard.moveWorker(myWorkers[w],b);
         }
         while(!built){
+            b.clear();
 
+
+            //moveBlock(block, box);
         }
+
     }
 
 
