@@ -8,6 +8,7 @@ public class Building {
 
     public Building() {
         arrayOfBlocks=new ArrayList<>();
+
     }
 
     public ArrayList<Block> build(int blockIdentif){
@@ -49,7 +50,7 @@ public class Building {
 
     public void print() {
         Iterator<Block> blockIterator=arrayOfBlocks.iterator();
-        if(arrayOfBlocks!=null){
+        if(arrayOfBlocks.size()!=0){
             System.out.println("Building:");
                 while ((blockIterator.hasNext())) {
                     System.out.println(blockIterator.next() + " ");

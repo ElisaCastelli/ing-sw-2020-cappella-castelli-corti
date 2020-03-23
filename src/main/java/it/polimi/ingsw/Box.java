@@ -82,8 +82,9 @@ public class Box {
     }
     public void print(){
         /*if(worker!=null) worker.print();
-        else if (building!=null)building.print();
+        else if (building!=null)
         else{}*/
+        building.print();
         System.out.print("["+counter+"] ");
     }
 }
