@@ -44,6 +44,10 @@ public class Box {
         row=0;
         column=0;
     }
+    public boolean notWorker(){
+        if(worker==null) return true;
+        else return false;
+    }
     public boolean isEmpty(){
         boolean vuota=true;
         if(counter!=0 && worker!=null){

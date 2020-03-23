@@ -51,7 +51,7 @@ public class Board {
     public Box getBox(int r, int c){
         return matrix[r][c];
     }
-    public static void main( String[] args ){
+    /*public static void main( String[] args ){
         Board b= new Board();
         b.clear();
         b.build(0,0);
@@ -59,5 +59,5 @@ public class Board {
         b.build(1,2);
         b.print();
 
-    }
+    }*/
 }
