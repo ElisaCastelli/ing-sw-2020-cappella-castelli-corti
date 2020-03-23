@@ -4,8 +4,14 @@ public class Worker {
     private int workerId;
     private int height;
     private Box actualBox;
+    private Board board;
 
 
+
+    public Worker(int workerId, Board board){
+        this.workerId=workerId;
+        this.board=board;
+    }
 
     public Worker(int workerId, Box actualBox) {
         this.workerId = workerId;
@@ -31,4 +37,5 @@ public class Worker {
     public void setActualBox(Box actualBox) {
         this.actualBox = actualBox;
     }
+
 }
