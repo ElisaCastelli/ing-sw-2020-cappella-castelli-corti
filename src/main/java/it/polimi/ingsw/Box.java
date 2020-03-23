@@ -72,14 +72,12 @@ public class Box {
         boolean reachable=false;
         int row2= box2.getRow();
         int column2=box2.getColumn();
-        boolean empty=box2.isEmpty();
-        if(empty){
-            if(this.row-row2<=1 || row2-this.row<=1 || column2-this.column<=1 || this.column-column2<=1){
+        if(this.row-row2<=1 || row2-this.row<=1 || column2-this.column<=1 || this.column-column2<=1){
                 reachable=true;
-            }
         }
         return reachable;
     }
+
     public void print(){
         /*if(worker!=null) worker.print();
         else if (building!=null)
