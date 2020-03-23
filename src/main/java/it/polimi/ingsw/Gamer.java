@@ -1,16 +1,19 @@
 package it.polimi.ingsw;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gamer {
     private static String name;
     private boolean alive;
     private God myCard;
-    Worker myWorkers[];
+    private Worker myWorkers[];
 
     Gamer(String name){
         this.name=name;
         myWorkers= new Worker[2];
+        myWorkers[0]= new Worker();
+        myWorkers[1]= new Worker();
         alive=true;
         myCard=null;
     }
@@ -33,10 +36,11 @@ public class Gamer {
         this.alive = alive;
     }
     public void setWorker(int index, Board b){
-        myWorkers[index]=new Worker(index,b);
+        myWorkers[index].setBoard(b);
+        myWorkers[index].setWorkerId(index+1);
     }
     void move(){
-        boolean workerMoved=false;
+        /*boolean workerMoved=false;
         boolean built=false;
         Box b=new Box();
         while(!workerMoved){
@@ -61,8 +65,8 @@ public class Gamer {
 
 
             //moveBlock(block, box);
-        }
-
+        }*/
+        System.out.println("Muove giocatore "+name);
     }
 
 

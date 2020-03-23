@@ -21,20 +21,30 @@ public class Game {
         //ricevo partecipanti
         System.out.println("Inserire numero di giocatore:");
         Scanner input = new Scanner(System.in);
-        String s = input.nextLine();
+        nPlayer = Integer.parseInt(input.nextLine());
         for(int i=0;i<nPlayer;i++){
-
-            g=new Gamer("s");
+            System.out.println("Inserire nome del giocatore numero"+i);
+            Scanner playerName = new Scanner(System.in);
+            String s=input.nextLine();
+            g=new Gamer(s);
             gamers.add(i,g);
+            gamers.get(i).setWorker(0,board);
             gamers.get(i).setWorker(1,board);
-            gamers.get(i).setWorker(2,board);
         }
         //gestisco i turni
-        int i=1;
+        int i=0;
         while(!finito && i<gamers.size()){
             gamers.get(i).move();
             i++;
-            if(i==4)i=1;
+            if(i==gamers.size())i=1;
+            System.out.println("Vuoi finire? [1 si - 0 no]");
+            Scanner f = new Scanner(System.in);
+            int fin = Integer.parseInt(f.nextLine());
+            if(fin==1){
+                finito=true;
+            }else{
+                finito=false;
+            }
         }
     }
 

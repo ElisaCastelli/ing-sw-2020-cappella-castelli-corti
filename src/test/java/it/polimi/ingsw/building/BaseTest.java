@@ -11,6 +11,6 @@ public class BaseTest extends TestCase {
     }
 
     public void testGetBlockName() {
-        assertEquals("base",baseTest.getBlockName());
+        assertEquals("Base",baseTest.getBlockName());
     }
 }
