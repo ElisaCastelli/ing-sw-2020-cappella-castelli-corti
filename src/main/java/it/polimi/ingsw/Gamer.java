@@ -53,6 +53,7 @@ public class Gamer {
             int c = Integer.parseInt(row.nextLine());
             b.setRow(r);
             b.setColumn(c);
+
             //myCard.moveWorker(myWorkers[w],b);
         }
         while(!built){

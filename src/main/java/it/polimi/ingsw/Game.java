@@ -19,7 +19,7 @@ public class Game {
     public void play(){
         Gamer g;
         //ricevo partecipanti
-        System.out.println("Inserire nnumero di giocatore:");
+        System.out.println("Inserire numero di giocatore:");
         Scanner input = new Scanner(System.in);
         String s = input.nextLine();
         for(int i=0;i<nPlayer;i++){
@@ -37,12 +37,10 @@ public class Game {
             if(i==4)i=1;
         }
     }
-    /*public static void main( String[] args )
+
+    public static void main( String[] args )
     {
         Game g= new Game();
-        g.board.build(0,0);
-        g.board.build(1,0);
-        g.board.build(0,0);
-        g.print();
-    }*/
+        g.play();
+    }
 }
