@@ -38,4 +38,7 @@ public class Worker {
         this.actualBox = actualBox;
     }
 
+    public boolean initializePos()
+
+
 }

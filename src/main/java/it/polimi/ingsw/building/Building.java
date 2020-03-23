@@ -57,13 +57,11 @@ public class Building {
                     System.out.println(blockIterator.next() + " ");
                 }
         }
-
-
+    }
+    public void clear(){
+        if(arrayOfBlocks.size()!=0){
+            arrayOfBlocks.clear();
+        }
 
     }
-
-
-
-
-
 }
