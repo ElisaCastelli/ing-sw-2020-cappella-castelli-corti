@@ -14,8 +14,7 @@ public class Board {
         }
     }
     public void build(int r, int c){
-        Box b=matrix[r][c];
-        b.build();
+        matrix[r][c].build();
     }
     public void clear(){
         for(int i=0;i<DIM;i++){
@@ -53,5 +52,6 @@ public class Board {
         b.build(0,0);
         b.build(1,2);
         b.print();
+
     }
 }
