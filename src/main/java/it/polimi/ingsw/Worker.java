@@ -7,7 +7,6 @@ public class Worker {
     private Board board;
 
 
-
     public Worker(int workerId, Board board){
         this.workerId=workerId;
         this.board=board;
@@ -38,6 +37,7 @@ public class Worker {
         this.actualBox = actualBox;
     }
 
+    //when a gamer start playing this method is used to control that the box is empty and return a boolean
     public boolean initializePos(int row, int column){
         Box requestedBox;
         if(board.isEmpty(row,column)){

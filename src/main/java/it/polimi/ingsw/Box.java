@@ -8,6 +8,7 @@ public class Box {
     private int column;
     private int counter;
     private Worker worker;
+
     Box(){
         building=new Building();
         counter=0;
@@ -15,6 +16,7 @@ public class Box {
         column=0;
         worker=null;
     }
+
     public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
         this.counter=counter;
         this.row=row;
@@ -54,24 +56,33 @@ public class Box {
     public void setWorker(Worker worker){
         this.worker=worker;
     }
-    public void build(){ //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
+    public void build(){
+        //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
 
         ///TO DO riguarda il counter del building perchè serve un identificatore per il pezzo da costruire
 
         if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
             //HO MODIFICATO IL CONTATORE PER VEDERE SE FUNZIONAVA
             counter++;
-            /*counter=1;
-            building.build(counter);
-            counter=2;
-            building.build(counter);
-            counter=3;
-            building.build(counter);
-            counter=4;*/
             building.build(counter);
 
         }
     }
+    ///TO DO METHOD FOR ATLAS FOR BUILDING DOME EVERYWHERE
+    public void build(int blockId){
+        //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
+
+        ///TO DO riguarda il counter del building perchè serve un identificatore per il pezzo da costruire
+
+        if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
+            //HO MODIFICATO IL CONTATORE PER VEDERE SE FUNZIONAVA
+            counter++;
+            building.build(counter);
+
+        }
+
+    }
+
     //controllo se box2 è raggiungibile e vuota partendo da this
     public boolean reachable(Box box2){
         boolean reachable=false;
