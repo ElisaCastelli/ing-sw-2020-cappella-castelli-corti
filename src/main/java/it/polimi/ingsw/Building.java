@@ -1,34 +1,36 @@
 package it.polimi.ingsw;
 
+import java.util.ArrayList;
+
 public class Building {
-    private Block[] arrayOfBlocks;
+    private ArrayList<Block> arrayOfBlocks;
 
     public Building() {
-        arrayOfBlocks=null;
+        arrayOfBlocks=new ArrayList<>();
     }
 
-    public Block[] build(int blockIdentif){
+    public ArrayList<Block> build(int blockIdentif){
 
         if(blockIdentif == 1){
-            arrayOfBlocks[0]=getBlock(blockIdentif);
-            arrayOfBlocks[0].print();
+            arrayOfBlocks.add(getBlock(blockIdentif));
+            arrayOfBlocks.get(0).print();
 
         }else if(blockIdentif==2){
-            arrayOfBlocks[1]=getBlock(blockIdentif);
-            arrayOfBlocks[1].print();
+            arrayOfBlocks.add(getBlock(blockIdentif));
+            arrayOfBlocks.get(1).print();
 
         }else if(blockIdentif ==3){
-            arrayOfBlocks[2]=getBlock(blockIdentif);
-            arrayOfBlocks[2].print();
+            arrayOfBlocks.add(getBlock(blockIdentif));
+            arrayOfBlocks.get(2).print();
         }else{
-            arrayOfBlocks[3]=getBlock(blockIdentif);
-            arrayOfBlocks[3].print();
+            arrayOfBlocks.add(getBlock(blockIdentif));
+            arrayOfBlocks.get(3).print();
         }
         return arrayOfBlocks;
     }
 
     public Block getBlock(int blockIdentifier){
-        Block block =null;
+        Block block;
         if(blockIdentifier == 1){
             BuildingBase baseBuilder=new BuildingBase();
             block=baseBuilder.getBlock();
