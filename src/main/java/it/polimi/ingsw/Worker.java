@@ -38,7 +38,17 @@ public class Worker {
         this.actualBox = actualBox;
     }
 
-    public boolean initializePos()
+    public boolean initializePos(Box requestedBox){
+        if(requestedBox.isEmpty()){
+            requestedBox.setWorker(this);
+            this.setActualBox(requestedBox);
+            System.out.println("the box is now occupied by this worker");
+            return true;
+        }else {
+            System.out.println("the box is occupied");
+            return false;
+        }
+    }
 
 
 }
