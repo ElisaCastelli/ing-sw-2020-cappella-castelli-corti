@@ -1,30 +1,32 @@
 package it.polimi.ingsw;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Building {
     private ArrayList<Block> arrayOfBlocks;
 
     public Building() {
         arrayOfBlocks=new ArrayList<>();
+
     }
 
     public ArrayList<Block> build(int blockIdentif){
 
         if(blockIdentif == 1){
             arrayOfBlocks.add(getBlock(blockIdentif));
-            arrayOfBlocks.get(0).print();
+            //arrayOfBlocks.get(0).print();
 
         }else if(blockIdentif==2){
             arrayOfBlocks.add(getBlock(blockIdentif));
-            arrayOfBlocks.get(1).print();
+            //arrayOfBlocks.get(1).print();
 
         }else if(blockIdentif ==3){
             arrayOfBlocks.add(getBlock(blockIdentif));
-            arrayOfBlocks.get(2).print();
+            //arrayOfBlocks.get(2).print();
         }else{
             arrayOfBlocks.add(getBlock(blockIdentif));
-            arrayOfBlocks.get(3).print();
+            //arrayOfBlocks.get(3).print();
         }
         return arrayOfBlocks;
     }
@@ -47,7 +49,17 @@ public class Building {
        return block;
     }
 
+    public void print() {
+        Iterator<Block> blockIterator=arrayOfBlocks.iterator();
+        if(arrayOfBlocks!=null){
+            System.out.println("Building:");
+                while ((blockIterator.hasNext())) {
+                    System.out.println(blockIterator.next() + " ");
+                }
+        }
 
 
+
+    }
 
 }
