@@ -50,6 +50,7 @@ public class Building {
 
     public void print() {
         Iterator<Block> blockIterator=arrayOfBlocks.iterator();
+
         if(arrayOfBlocks.size()!=0){
             System.out.println("Building:");
                 while ((blockIterator.hasNext())) {
@@ -60,5 +61,9 @@ public class Building {
 
 
     }
+
+
+
+
 
 }

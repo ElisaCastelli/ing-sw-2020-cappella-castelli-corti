@@ -23,7 +23,11 @@ public class Middle implements Block {
     /*@
     @this method print out the name of the block you have selected
     @*/
-    public void print(){
-        System.out.println("selected:"+this.getBlockName());
+
+    @Override
+    public String toString() {
+        return "Middle{" +
+                "blockName='" + blockName + '\'' +
+                '}';
     }
 }
