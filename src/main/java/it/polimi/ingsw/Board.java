@@ -48,6 +48,9 @@ public class Board {
             System.out.println();
         }
     }
+    public Box getBox(int r, int c){
+        return matrix[r][c];
+    }
     public static void main( String[] args ){
         Board b= new Board();
         b.clear();
