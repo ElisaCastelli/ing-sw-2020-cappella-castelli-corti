@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import it.polimi.ingsw.god.God;
 
 public class Gamer {
     private String name;
