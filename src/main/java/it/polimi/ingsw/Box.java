@@ -7,13 +7,13 @@ public class Box {
     private int row;
     private int column;
     private int counter;
-    //private Worker worker;
+    private Worker worker;
     Box(){
         building=new Building();
         counter=0;
         row=0;
         column=0;
-        //worker=null;
+        worker=null;
     }
     public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
         this.counter=counter;
@@ -39,17 +39,20 @@ public class Box {
         this.counter = counter;
     }
     public void clear(){
-        //building=building.clear();  //ILA
+        building.clear();
         counter=0;
         row=0;
         column=0;
     }
     public boolean isEmpty(){
         boolean vuota=true;
-        if(counter!=0 /*&& building!=null*/){
+        if(counter!=0 && worker!=null){
             vuota=false;
         }
         return vuota;
+    }
+    public void setWorker(Worker worker){
+        this.worker=worker;
     }
     public void build(){ //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
 

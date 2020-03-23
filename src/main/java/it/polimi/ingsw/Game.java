@@ -19,10 +19,11 @@ public class Game {
     public void play(){
         Gamer g;
         //ricevo partecipanti
+        System.out.println("Inserire nnumero di giocatore:");
+        Scanner input = new Scanner(System.in);
+        String s = input.nextLine();
         for(int i=0;i<nPlayer;i++){
-            System.out.println("Nome giocatore "+i+" :");
-            Scanner input = new Scanner(System.in);
-            String s = input.nextLine();
+
             g=new Gamer("s");
             gamers.add(i,g);
             gamers.get(i).setWorker(1,board);
