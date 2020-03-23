@@ -38,10 +38,12 @@ public class Worker {
         this.actualBox = actualBox;
     }
 
-    public boolean initializePos(Box requestedBox){
-        if(requestedBox.isEmpty()){
+    public boolean initializePos(int row, int column){
+        Box requestedBox;
+        if(board.isEmpty(row,column)){
+            requestedBox=board.getBox(row,column);
             requestedBox.setWorker(this);
-            this.setActualBox(requestedBox);
+            actualBox=requestedBox;
             System.out.println("the box is now occupied by this worker");
             return true;
         }else {
