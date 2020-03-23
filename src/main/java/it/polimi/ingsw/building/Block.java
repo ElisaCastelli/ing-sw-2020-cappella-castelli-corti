@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.building;
 
 public interface Block {
     public int blockIdentifier=0;

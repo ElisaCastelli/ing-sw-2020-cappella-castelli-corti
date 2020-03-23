@@ -1,31 +1,33 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.building;
 
-public class Dome implements Block {
+import it.polimi.ingsw.building.Block;
+
+public class Top implements Block {
     private int blockIdentifier;
     private String blockName;
 
-    public Dome() {
-        this.blockIdentifier =4;
-        this.blockName="Dome";
+    public Top() {
+        this.blockIdentifier = 3;
+        this.blockName="Top";
     }
 
     public int getBlockIdentifier() {
         return blockIdentifier;
     }
 
-    public String getBlockName() {
-        return blockName;
-    }
-
     public void setBlockIdentifier(int blockIdentifier) {
         this.blockIdentifier = blockIdentifier;
     }
+
+    public String getBlockName() {
+        return blockName;
+    }
     /*@
-      @this method print out the name of the block you have selected
-      @*/
+    @this method print out the name of the block you have selected
+    @*/
     @Override
     public String toString() {
-        return "Dome{" +
+        return "Top{" +
                 "blockName='" + blockName + '\'' +
                 '}';
     }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.building.Building;
+
 public class Box {
     private Building building;
     private int row;

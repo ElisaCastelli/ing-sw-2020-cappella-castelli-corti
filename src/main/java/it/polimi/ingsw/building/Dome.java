@@ -1,12 +1,14 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.building;
 
-public class Base implements Block {
+import it.polimi.ingsw.building.Block;
+
+public class Dome implements Block {
     private int blockIdentifier;
     private String blockName;
 
-    public Base() {
-        this.blockIdentifier = 1;
-        this.blockName="Base";
+    public Dome() {
+        this.blockIdentifier =4;
+        this.blockName="Dome";
     }
 
     public int getBlockIdentifier() {
@@ -23,13 +25,9 @@ public class Base implements Block {
     /*@
       @this method print out the name of the block you have selected
       @*/
-    /*public void print(){
-        System.out.println("selected:"+this.getBlockName());
-    }*/
-
     @Override
     public String toString() {
-        return "Base{" +
+        return "Dome{" +
                 "blockName='" + blockName + '\'' +
                 '}';
     }

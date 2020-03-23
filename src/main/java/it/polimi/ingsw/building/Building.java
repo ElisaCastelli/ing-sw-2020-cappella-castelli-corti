@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.building;
 
 import java.util.ArrayList;
 import java.util.Iterator;
