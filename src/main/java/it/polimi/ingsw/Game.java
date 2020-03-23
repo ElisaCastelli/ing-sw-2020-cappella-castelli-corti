@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
-    private Board board;
+    private static Board board;
     private ArrayList<Gamer> gamers;
     private  int nPlayer;
     private boolean finito;
@@ -25,6 +25,8 @@ public class Game {
             String s = input.nextLine();
             g=new Gamer("s");
             gamers.add(i,g);
+            gamers.get(i).setWorker(1,board);
+            gamers.get(i).setWorker(2,board);
         }
         //gestisco i turni
         int i=1;

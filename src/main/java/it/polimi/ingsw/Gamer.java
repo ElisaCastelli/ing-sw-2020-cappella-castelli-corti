@@ -6,13 +6,11 @@ public class Gamer {
     private static String name;
     private boolean alive;
     private God myCard;
-    //Worker myWorkers[];
+    Worker myWorkers[];
 
     Gamer(String name){
         this.name=name;
-        //myWorkers= new Worker[2];
-        //myworkers[1]=new Worker(1);
-        //myWorkers[2]=new Worker(2);
+        myWorkers= new Worker[2];
         alive=true;
         myCard=null;
     }
@@ -33,6 +31,9 @@ public class Gamer {
     }
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+    public void setWorker(int index, Board b){
+        myWorkers[index]=new Worker(index,b);
     }
     void move(){
         boolean workerMoved=false;
