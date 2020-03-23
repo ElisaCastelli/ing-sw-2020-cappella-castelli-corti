@@ -37,6 +37,9 @@ public class Board {
         }
         return trovato;
     }
+    public boolean isEmpty(int r, int c){
+        return matrix[r][c].isEmpty();
+    }
     public void print(){
         for(int i=0;i<DIM;i++){
             for(int j=0;j<DIM;j++){
