@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gamer {
-    private static String name;
+    private String name;
     private boolean alive;
     private God myCard;
     private Worker myWorkers[];
@@ -17,11 +17,11 @@ public class Gamer {
         alive=true;
         myCard=null;
     }
-    public static String getName() {
+    public String getName() {
         return name;
     }
-    public static void setName(String name) {
-        Gamer.name = name;
+    public  void setName(String name) {
+        this.name = name;
     }
     public God getMyCard() {
         return myCard;

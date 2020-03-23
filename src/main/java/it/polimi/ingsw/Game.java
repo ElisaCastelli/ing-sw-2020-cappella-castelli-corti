@@ -22,21 +22,27 @@ public class Game {
         System.out.println("Inserire numero di giocatore:");
         Scanner input = new Scanner(System.in);
         nPlayer = Integer.parseInt(input.nextLine());
-        for(int i=0;i<nPlayer;i++){
-            System.out.println("Inserire nome del giocatore numero"+i);
+        for(int p=0;p<nPlayer;p++){
+            System.out.println("Inserire nome del giocatore numero "+p);
             Scanner playerName = new Scanner(System.in);
-            String s=input.nextLine();
-            g=new Gamer(s);
-            gamers.add(i,g);
-            gamers.get(i).setWorker(0,board);
-            gamers.get(i).setWorker(1,board);
+            String nomePlayer=playerName.nextLine();
+            g=new Gamer(nomePlayer);
+            gamers.add(p,g);
+            gamers.get(p).setWorker(0,board); //assegno pedina 1
+            gamers.get(p).setWorker(1,board); //assegno pedina 2
+        }
+        for(int j=0;j<nPlayer;j++){
+            System.out.println(gamers.get(j).getName());
+
         }
         //gestisco i turni
         int i=0;
-        while(!finito && i<gamers.size()){
+        while(!finito && i<=gamers.size()){
             gamers.get(i).move();
             i++;
-            if(i==gamers.size())i=1;
+            if(i==gamers.size()){
+                i=0;
+            }
             System.out.println("Vuoi finire? [1 si - 0 no]");
             Scanner f = new Scanner(System.in);
             int fin = Integer.parseInt(f.nextLine());
