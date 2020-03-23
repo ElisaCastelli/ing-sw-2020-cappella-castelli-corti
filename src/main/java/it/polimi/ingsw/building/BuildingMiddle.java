@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.building;
 
 public class BuildingMiddle extends Building {
     public Block getBlock() {

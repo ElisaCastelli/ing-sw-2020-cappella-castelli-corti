@@ -1,4 +1,6 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.building;
+
+import it.polimi.ingsw.building.Block;
 
 public class Middle implements Block {
     private int blockIdentifier;
