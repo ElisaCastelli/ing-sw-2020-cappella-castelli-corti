@@ -48,6 +48,14 @@ public class Building {
        return block;
     }
 
+    public String getBlocksNameInArray(int pos) {
+        return arrayOfBlocks.get(pos).toString();
+    }
+
+    public ArrayList<Block> getArrayOfBlocks() {
+        return arrayOfBlocks;
+    }
+
     public void print() {
         Iterator<Block> blockIterator=arrayOfBlocks.iterator();
 
@@ -58,6 +66,7 @@ public class Building {
                 }
         }
     }
+
     public void clear(){
         if(arrayOfBlocks.size()!=0){
             arrayOfBlocks.clear();
