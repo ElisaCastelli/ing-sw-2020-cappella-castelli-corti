@@ -16,7 +16,6 @@ public class Box {
         column=0;
         worker=null;
     }
-
     public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
         this.counter=counter;
         this.row=row;

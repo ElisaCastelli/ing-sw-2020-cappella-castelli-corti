@@ -4,17 +4,14 @@ public class Worker {
     private int workerId;
     private int height;
     private Box actualBox;
-    private Board board;
 
     public Worker(){
         workerId=0;
         height=0;
         actualBox=null;
-        board=null;
     }
-    public Worker(int workerId, Board board){
+    public Worker(int workerId){
         this.workerId=workerId;
-        this.board=board;
     }
     public Worker(int workerId, Box actualBox) {
         this.workerId = workerId;
@@ -36,10 +33,6 @@ public class Worker {
         this.workerId = workerId;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
     public Box getActualBox() {
         return actualBox;
     }
@@ -47,7 +40,7 @@ public class Worker {
         this.actualBox = actualBox;
     }
 
-    public boolean initializePos(int row, int column){
+    /*public boolean initializePos(int row, int column){
         Box requestedBox;
         if(this.board.isEmpty(row,column)){
             requestedBox=this.board.getBox(row,column);
@@ -59,14 +52,13 @@ public class Worker {
             System.out.println("the box is occupied");
             return false;
         }
-    }
+    }*/
 
     public void clear(){
         workerId=0;
         height=0;
         if(actualBox!=null)actualBox.clear();
         actualBox=null;
-        board=null;
     }
 
 

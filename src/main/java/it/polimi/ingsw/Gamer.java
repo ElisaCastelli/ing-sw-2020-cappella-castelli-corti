@@ -36,7 +36,6 @@ public class Gamer {
         this.alive = alive;
     }
     public void setWorker(int index, Board b){
-        myWorkers[index].setBoard(b);
         myWorkers[index].setWorkerId(index+1);
     }
     void move(){
