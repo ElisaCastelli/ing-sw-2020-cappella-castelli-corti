@@ -73,20 +73,10 @@ public class Box {
         }
     }
     ///TO DO METHOD FOR ATLAS FOR BUILDING DOME EVERYWHERE
-    public void build(int blockId){
-        //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
-
-        ///TO DO riguarda il counter del building perchè serve un identificatore per il pezzo da costruire
-
-        if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
-            //HO MODIFICATO IL CONTATORE PER VEDERE SE FUNZIONAVA
-            counter++;
-            building.build(counter);
-
-        }
-
+    public void buildDome(){
+        counter=4;
+        building.build(4);
     }
-
     //controllo se box2 è raggiungibile e vuota partendo da this
     public boolean reachable(Box box2){
         boolean reachable=false;
@@ -97,7 +87,6 @@ public class Box {
         }
         return reachable;
     }
-
     public void print(){
         /*if(worker!=null) worker.print();
         else if (building!=null)
