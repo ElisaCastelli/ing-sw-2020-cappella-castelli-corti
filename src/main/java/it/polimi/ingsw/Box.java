@@ -45,6 +45,7 @@ public class Box {
         counter=0;
         row=0;
         column=0;
+        if(worker!=null)worker.clear();
         worker=null;
     }
     /**
@@ -76,7 +77,6 @@ public class Box {
 
         }
     }
-
     ///TO DO METHOD FOR ATLAS FOR BUILDING DOME EVERYWHERE
     public void buildDome(){
         counter=4;

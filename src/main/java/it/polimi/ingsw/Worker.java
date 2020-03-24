@@ -21,27 +21,32 @@ public class Worker {
         height=0;
         this.actualBox=actualBox;
     }
+
     public int getHeight() {
         return height;
     }
     public void setHeight(int height) {
         this.height = height;
     }
+
     public int getWorkerId() {
         return workerId;
     }
     public void setWorkerId(int workerId) {
         this.workerId = workerId;
     }
+
     public void setBoard(Board board) {
         this.board = board;
     }
+
     public Box getActualBox() {
         return actualBox;
     }
     public void setActualBox(Box actualBox) {
         this.actualBox = actualBox;
     }
+
     public boolean initializePos(int row, int column){
         Box requestedBox;
         if(this.board.isEmpty(row,column)){
@@ -55,5 +60,14 @@ public class Worker {
             return false;
         }
     }
+
+    public void clear(){
+        workerId=0;
+        height=0;
+        if(actualBox!=null)actualBox.clear();
+        actualBox=null;
+        board=null;
+    }
+
 
 }

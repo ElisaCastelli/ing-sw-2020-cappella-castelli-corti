@@ -18,6 +18,13 @@ public class BoardTest extends TestCase {
         boardTest.clear();
         assertTrue(boardTest.getBox(1,1).notWorker());
         assertEquals(0,boardTest.getBox(2,3).getCounter());
+        boardTest.build(0,0);
+        workerTest.setBoard(boardTest);
+        workerTest.setWorkerId(2);
+        boardTest.getBox(0,0).setWorker(workerTest);
+        boardTest.clear();
+        assertTrue(boardTest.getBox(0,0).notWorker());
+        assertEquals(0,boardTest.getBox(0,0).getCounter());
 
     }
 
