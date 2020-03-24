@@ -33,11 +33,11 @@ public class Game {
         }
         for(int j=0;j<nPlayer;j++){
             System.out.println(gamers.get(j).getName());
-
         }
+
         //gestisco i turni
         int i=0;
-        while(!finito && i<=gamers.size()){
+        while(!finito && i<=nPlayer){
             gamers.get(i).move();
             i++;
             if(i==gamers.size()){
