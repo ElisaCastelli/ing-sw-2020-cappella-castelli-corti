@@ -18,6 +18,6 @@ public class BuildingTest extends TestCase {
 
     public void testClear() {
         buildingTest.clear();
-        assertEquals(true,buildingTest.getArrayOfBlocks().size()==0);
+        assertTrue(buildingTest.getArrayOfBlocks().size() == 0);
     }
 }
