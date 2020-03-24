@@ -3,29 +3,35 @@ package it.polimi.ingsw;
 import junit.framework.TestCase;
 
 public class WorkerTest extends TestCase {
-    Worker workerTest= new Worker();
+    Board boardTest=new Board();
+    Worker workerTest1= new Worker(1,boardTest);
+    Worker workerTest2=new Worker(2,boardTest);
+
 
     public void testGetHeight() {
-        workerTest.setHeight(0);
-        assertEquals(0,workerTest.getHeight());
-        workerTest.setHeight(1);
-        assertEquals(1,workerTest.getHeight());
-        workerTest.setHeight(2);
-        assertEquals(2,workerTest.getHeight());
-        workerTest.setHeight(3);
-        assertEquals(3,workerTest.getHeight());
+        workerTest1.setHeight(0);
+        assertEquals(0,workerTest1.getHeight());
+        workerTest1.setHeight(1);
+        assertEquals(1,workerTest1.getHeight());
+        workerTest1.setHeight(2);
+        assertEquals(2,workerTest1.getHeight());
+        workerTest1.setHeight(3);
+        assertEquals(3,workerTest1.getHeight());
     }
 
     public void testGetWorkerId() {
-        workerTest.setWorkerId(1);
-        assertEquals(1,workerTest.getWorkerId());
+        workerTest1.setWorkerId(1);
+        assertEquals(1,workerTest1.getWorkerId());
     }
 
     public void testGetActualBox() {
-        workerTest.setWorkerId(2);
-        assertEquals(2,workerTest.getWorkerId());
+        workerTest1.setWorkerId(2);
+        assertEquals(2,workerTest1.getWorkerId());
     }
 
     public void testInitializePos() {
+        assertTrue(workerTest1.initializePos(1, 1));
+        assertTrue(workerTest2.initializePos(1,2));
+        assertFalse(workerTest1.initializePos(1,2));
     }
 }

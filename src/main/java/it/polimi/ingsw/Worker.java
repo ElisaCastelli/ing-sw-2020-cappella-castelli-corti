@@ -44,8 +44,8 @@ public class Worker {
     }
     public boolean initializePos(int row, int column){
         Box requestedBox;
-        if(board.isEmpty(row,column)){
-            requestedBox=board.getBox(row,column);
+        if(this.board.isEmpty(row,column)){
+            requestedBox=this.board.getBox(row,column);
             requestedBox.setWorker(this);
             actualBox=requestedBox;
             System.out.println("the box is now occupied by this worker");

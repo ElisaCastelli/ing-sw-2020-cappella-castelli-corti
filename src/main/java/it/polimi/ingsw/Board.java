@@ -37,6 +37,11 @@ public class Board {
         }
         return trovato;
     }
+
+    public Box[][] getMatrix() {
+        return matrix;
+    }
+
     public boolean isEmpty(int r, int c){
         return matrix[r][c].isEmpty();
     }
