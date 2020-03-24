@@ -8,6 +8,10 @@ import it.polimi.ingsw.Worker;
  */
 public interface God {
     /**
+     * This attribute is the God name
+     */
+    String godName="God";
+    /**
      * This attribute is the worker move type which tells if the worker moves up, moves down or stays at the same level
      */
     int isCorrectWorkerMove=0;
