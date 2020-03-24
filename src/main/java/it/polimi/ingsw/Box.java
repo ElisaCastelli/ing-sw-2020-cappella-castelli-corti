@@ -45,7 +45,11 @@ public class Box {
         counter=0;
         row=0;
         column=0;
+        worker=null;
     }
+    /**
+     * @return true if there is NOT worker else false
+     */
     public boolean notWorker(){
         if(worker==null) return true;
         else return false;
@@ -72,6 +76,7 @@ public class Box {
 
         }
     }
+
     ///TO DO METHOD FOR ATLAS FOR BUILDING DOME EVERYWHERE
     public void buildDome(){
         counter=4;

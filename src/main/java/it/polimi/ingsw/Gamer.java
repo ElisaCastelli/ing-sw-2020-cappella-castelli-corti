@@ -8,6 +8,7 @@ public class Gamer {
     private God myCard;
     private Worker myWorkers[];
 
+
     Gamer(String name){
         this.name=name;
         myWorkers= new Worker[2];

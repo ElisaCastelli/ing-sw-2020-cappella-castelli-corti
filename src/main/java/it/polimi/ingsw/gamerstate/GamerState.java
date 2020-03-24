@@ -1,4 +1,7 @@
 package it.polimi.ingsw.gamerstate;
 
-public interface GamerState {
+public class GamerState {
+    public void goNext(GamerStateManager next){
+        next.setCurrentState(new IsAlive());
+    }
 }
