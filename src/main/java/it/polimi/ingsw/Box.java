@@ -52,7 +52,7 @@ public class Box {
     }
     public boolean isEmpty(){
         boolean vuota=true;
-        if(counter!=0 && worker!=null){
+        if(counter!=0 || worker!=null){
             vuota=false;
         }
         return vuota;
