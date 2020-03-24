@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gods>
+	<god>
+		<name>
+			Apollo
+		</name>
+		<description>
+			Il dio della musica: può spostarsi nella casella di un worker avversario e costringerlo a occupare la casella appena liberata, scambiando le posizioni.
+		</description>
+		<effect>
+			moveEffect
+		</effect>
+	</god>
+	<god>
+		<name>
+			Artemis
+		</name>
+		<description>
+			La dea della caccia: può spostarsi una volta in più , ma non retrocedendo alla casella di partenza.
+		</description>
+		<effect>
+			moveEffect
+		</effect>
+	</god>
+	<god>
+		<name>
+			Athena
+		</name>
+		<description>
+			La dea della saggezza: se nell'ultimo turno hai mosso uno dei tuoi operai,in questo turno gli operai avvesari non potranno salire di livello.
+		</description>
+		<effect>
+			
+		</effect>
+	</god>
+	<god>
+		<name>
+			Atlas
+		</name>
+		<description>
+			Il titano che regge sulle spalle la volta celeste:può costruire una cupola su qualsiasi livello, compreso il terreno. 
+		</description>
+		<effect>
+			buildEffect
+		</effect>
+	</god>
+	<god>
+		<name>
+			Demeter
+		</name>
+		<description>
+			La dea del raccolto: può costruire una volta in più, ma non nella stessa casella.
+		</description>
+		<effect>
+			buildEffect
+		</effect>
+	</god>
+	<god>
+		<name>
+			Hephaestus
+		</name>
+		<description>
+			Il dio delle fucine: può costruire un blocco aggiuntivo (non una cupola) al di sopra del tuo primo blocco.
+		</description>
+		<effect>
+			buildEffect
+		</effect>
+	</god>
+	<god>
+		<name>
+			Minotaur
+		</name>
+		<description>
+			Il mostro dalla testa di toro: può spostarsi nella casella di un worker avversario (con le regole normali di spostamento) se la casella succesiva nella stessa direzione è libera.
+		</description>
+		<effect>
+			moveEffect
+		</effect>
+	</god>
+	<god>
+		<name>
+			Pan
+		</name>
+		<description>
+			Il dio della natura selvaggia: vinci anche se il tuo worker è sceso di due o più livelli.
+		</description>
+		<effect>
+			winCondition
+		</effect>
+	</god>
+	<god>
+		<name>
+			Prometheus
+		</name>
+		<description>
+			Il titano benefattore dell'umanità: se il worker non può salire di livello, può costruire sia prima, sia dopo essere stato mosso.
+		</description>
+		<effect>
+			
+		</effect>
+	</god>
+</gods>
