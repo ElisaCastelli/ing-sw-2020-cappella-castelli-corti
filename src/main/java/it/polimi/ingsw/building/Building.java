@@ -11,7 +11,7 @@ public class Building {
 
     }
 
-    public ArrayList<Block> build(int blockIdentif){
+    public void build(int blockIdentif){
         if(blockIdentif == 1){
             arrayOfBlocks.add(getBlock(blockIdentif));
             //arrayOfBlocks.get(0).print();
@@ -27,7 +27,6 @@ public class Building {
             arrayOfBlocks.add(getBlock(blockIdentif));
             //arrayOfBlocks.get(3).print();
         }
-        return arrayOfBlocks;
     }
 
     public Block getBlock(int blockIdentifier){

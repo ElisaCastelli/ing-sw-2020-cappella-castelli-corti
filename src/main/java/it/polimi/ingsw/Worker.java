@@ -17,6 +17,7 @@ public class Worker {
         this.workerId = workerId;
         height=0;
         this.actualBox=actualBox;
+        this.actualBox.setWorker(this);
     }
 
     public int getHeight() {
@@ -57,7 +58,6 @@ public class Worker {
     public void clear(){
         workerId=0;
         height=0;
-        if(actualBox!=null)actualBox.clear();
         actualBox=null;
     }
 

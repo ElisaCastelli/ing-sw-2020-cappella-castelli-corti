@@ -9,10 +9,11 @@ public class Board {
         matrix= new Box[DIM][DIM];
         for(int i=0;i<DIM;i++){
             for(int j=0;j<DIM;j++){
-                matrix[i][j]=new Box();
+                matrix[i][j]=new Box(0,i,j);
             }
         }
     }
+
     public void build(int r, int c){
         matrix[r][c].build();
     }

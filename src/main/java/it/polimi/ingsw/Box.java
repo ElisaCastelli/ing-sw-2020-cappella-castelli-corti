@@ -17,9 +17,11 @@ public class Box {
         worker=null;
     }
     public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
+        building=new Building();
         this.counter=counter;
         this.row=row;
         this.column=column;
+        worker=null;
     }
     public int getRow() {
         return row;
@@ -42,8 +44,6 @@ public class Box {
     public void clear(){
         building.clear();
         counter=0;
-        row=0;
-        column=0;
         if(worker!=null)worker.clear();
         worker=null;
     }
@@ -61,8 +61,12 @@ public class Box {
         }
         return vuota;
     }
+
+    ///TO DO...MA IL SETWORKER LO UTILIZZI QUANDO SPOSTI IL WORKER SULLA BOARD DA UNA POS ALL'ALTRA?
+    //PERCHE IN QUESTO CASO NON CONTROLLA SE IL WORKER E' POSIZIONATO IN UN'ALTRA CASELLA
     public void setWorker(Worker worker){
         this.worker=worker;
+        this.worker.setActualBox(this);
     }
     public void build(){
         //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
