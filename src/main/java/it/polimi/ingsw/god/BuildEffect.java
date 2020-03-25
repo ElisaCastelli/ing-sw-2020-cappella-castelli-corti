@@ -4,12 +4,11 @@ import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
 /**
- * This class represents a god concrete decorator which implements the ability to move the worker twice, but it must not
- * move back to the initial place (Artemis ability)
+ * This class represents a god concrete decorator which implements
  */
-public class MoveWorkerTwice extends GodDecorator {
+public class BuildEffect extends GodDecorator {
 
-    public MoveWorkerTwice (God newGod) {super(newGod);}
+    public BuildEffect (God newGod) {super(newGod);}
 
     /**
      *
