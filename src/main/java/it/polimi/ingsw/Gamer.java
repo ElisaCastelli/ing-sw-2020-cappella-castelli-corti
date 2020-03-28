@@ -1,13 +1,15 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.gamerstate.GamerStateManager;
 import it.polimi.ingsw.god.God;
+import java.util.Scanner;
 
 public class Gamer {
     private String name;
     private boolean alive;
     private God myCard;
     private Worker myWorkers[];
-
+    GamerStateManager gamerManager = new GamerStateManager();
 
     Gamer(String name){
         this.name=name;
@@ -39,7 +41,7 @@ public class Gamer {
         myWorkers[index].setWorkerId(index+1);
     }
     void move(){
-        /*boolean workerMoved=false;
+        boolean workerMoved=false;
         boolean built=false;
         Box b=new Box();
         while(!workerMoved){
@@ -61,12 +63,16 @@ public class Gamer {
         }
         while(!built){
             b.clear();
-
-
             //moveBlock(block, box);
-        }*/
-        System.out.println("Muove giocatore "+name);
+        }
+       gamerManager.move();
+       gamerManager.move();
     }
+    public static void main( String[] args )
+    {
+        Gamer g= new Gamer("Io");
+        g.move();
 
+    }
 
 }
