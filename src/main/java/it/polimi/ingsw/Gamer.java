@@ -6,17 +6,17 @@ import java.util.Scanner;
 
 public class Gamer {
     private String name;
+    private boolean alive;
     private God myCard;
     private Worker myWorkers[];
-    private Board board;
     GamerStateManager gamerManager = new GamerStateManager();
 
-    Gamer(String name, Board board){
+    Gamer(String name){
         this.name=name;
         myWorkers= new Worker[2];
         myWorkers[0]= new Worker();
         myWorkers[1]= new Worker();
-        this.board=board;
+        alive=true;
         myCard=null;
     }
     public String getName() {
@@ -31,20 +31,21 @@ public class Gamer {
     public void setMyCard(God myCard) {
         this.myCard = myCard;
     }
-    public boolean initializeWorker(int index, Box requestedBox){
-        if(myWorkers[index-1].initializePos(requestedBox)==true){
-            myWorkers[index-1].setWorkerId(index);
-            return true;
-        }
-        return false;
+    public boolean isAlive() {
+        return alive;
     }
-
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+    public void setWorker(int index, Board b){
+        myWorkers[index].setWorkerId(index+1);
+    }
     void move(){
         boolean workerMoved=false;
         boolean built=false;
-
+        Box b=new Box();
         while(!workerMoved){
-
+            b.clear();
             //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
             System.out.println("Pedina da muovere [1] 0 [2]:");
             Scanner worker = new Scanner(System.in);
@@ -55,28 +56,23 @@ public class Gamer {
             System.out.println("Colonna dove voglio muovermi:");
             Scanner col = new Scanner(System.in);
             int c = Integer.parseInt(row.nextLine());
+            b.setRow(r);
+            b.setColumn(c);
 
-            myCard.moveWorker(myWorkers[w],board.getBox(r,c));
+            //myCard.moveWorker(myWorkers[w],b);
         }
         while(!built){
-
+            b.clear();
             //moveBlock(block, box);
         }
        gamerManager.move();
        gamerManager.move();
     }
-    /*public static void main( String[] args )
+    public static void main( String[] args )
     {
-        Board b= new Board();
-        Gamer g= new Gamer("Io",b);
-        Box box= new Box(0,1,1);
-        if(g.initializeWorker(1,box)==true){
-            System.out.println("ok");
-        }
-        else{
-            System.out.println("mannaggia la miseria");
-        }
+        Gamer g= new Gamer("Io");
+        g.move();
 
-    }*/
+    }
 
 }
