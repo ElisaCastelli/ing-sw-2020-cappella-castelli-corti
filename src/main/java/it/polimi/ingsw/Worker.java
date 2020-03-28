@@ -59,5 +59,10 @@ public class Worker {
         actualBox=null;
     }
 
-
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "workerId=" + workerId +
+                '}';
+    }
 }
