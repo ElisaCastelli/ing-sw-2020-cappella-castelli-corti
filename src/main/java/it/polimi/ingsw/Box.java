@@ -9,13 +9,21 @@ public class Box {
     private int counter;
     private Worker worker;
 
-    Box(){
+    /*Box(){
         building=new Building();
         counter=0;
         row=0;
         column=0;
         worker=null;
-    }
+    }*/
+
+    /**
+     *
+     * @param counter level of the box
+     * @param row row of the box
+     * @param column column of the box
+     * Constructor with parameters
+     */
     public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
         building=new Building();
         this.counter=counter;
@@ -91,15 +99,18 @@ public class Box {
         int row2= box2.getRow();
         int column2=box2.getColumn();
         if(this.row-row2<=1 || row2-this.row<=1 || column2-this.column<=1 || this.column-column2<=1){
-                reachable=true;
+            reachable=true;
         }
         return reachable;
     }
     public void print(){
-        /*if(worker!=null) worker.print();
-        else if (building!=null)
-        else{}*/
-        building.print();
+        if(worker!=null) {
+            System.out.print("["+worker.toString()+"] ");
+        }
+        else if (building!=null){
+            building.print();
+        }
         System.out.print("["+counter+"] ");
     }
 }
+

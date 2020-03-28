@@ -17,7 +17,8 @@ public class Game {
     }
 
     public void play(){
-        Gamer g;
+        Gamer gamer;
+        int indexWorker=0;
         //ricevo partecipanti
         System.out.println("Inserire numero di giocatore:");
         Scanner input = new Scanner(System.in);
@@ -26,15 +27,26 @@ public class Game {
             System.out.println("Inserire nome del giocatore numero "+p);
             Scanner playerName = new Scanner(System.in);
             String nomePlayer=playerName.nextLine();
-            g=new Gamer(nomePlayer);
-            gamers.add(p,g);
-            gamers.get(p).setWorker(0,board); //assegno pedina 1
-            gamers.get(p).setWorker(1,board); //assegno pedina 2
+            gamer=new Gamer(nomePlayer, board);
+            gamers.add(p,gamer);
+            for(int index=0; index<2;index++){
+                boolean workerCorrect=false;
+                while(workerCorrect==false) {
+                    //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
+                    indexWorker = index + 1;
+                    System.out.println("Settare pedina numero " + (indexWorker));
+                    System.out.println("Riga:");
+                    Scanner r = new Scanner(System.in);
+                    int row = Integer.parseInt(r.nextLine());
+                    System.out.println("Colonna dove voglio muovermi:");
+                    Scanner c = new Scanner(System.in);
+                    int column = Integer.parseInt(c.nextLine());
+                    workerCorrect=gamers.get(p).initializeWorker(indexWorker, board.getBox(row, column));
+                }
+            }
         }
-        for(int j=0;j<nPlayer;j++){
-            System.out.println(gamers.get(j).getName());
-        }
-
+        board.print();
+        /*
         //gestisco i turni
         int i=0;
         while(!finito && i<=nPlayer){
@@ -51,12 +63,13 @@ public class Game {
             }else{
                 finito=false;
             }
-        }
+        }*/
     }
 
-    /*public static void main( String[] args )
+    public static void main( String[] args )
     {
         Game g= new Game();
         g.play();
-    }*/
+    }
 }
+
