@@ -42,7 +42,6 @@ public class Gamer {
     void move(){
         boolean workerMoved=false;
         boolean built=false;
-
         while(!workerMoved){
 
             //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
@@ -55,11 +54,10 @@ public class Gamer {
             System.out.println("Colonna dove voglio muovermi:");
             Scanner col = new Scanner(System.in);
             int c = Integer.parseInt(row.nextLine());
-
-            myCard.moveWorker(myWorkers[w],board.getBox(r,c));
+            //TO DO:MOVEWORKER BOOLEAN
+            /*workerMoved=*/myCard.moveWorker(myWorkers[w],board.getBox(r,c));
         }
         while(!built){
-
             //moveBlock(block, box);
         }
         gamerManager.move();

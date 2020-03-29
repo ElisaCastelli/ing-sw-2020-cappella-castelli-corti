@@ -65,7 +65,9 @@ public class Game {
             }
         }*/
     }
+    public void ordinaGamer(){
 
+    }
     public static void main( String[] args )
     {
         Game g= new Game();
