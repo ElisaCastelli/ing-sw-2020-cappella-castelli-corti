@@ -20,32 +20,65 @@ public class Gamer {
      * This array of Workers contains two workers for each player
      */
     private Worker myWorkers[];
+    private int age;
     private Board board;
     GamerStateManager gamerManager = new GamerStateManager();
 
     /**
      * Constructor with name and board as parameters
+     * @param age
      * @param name
      * @param board
      */
-    Gamer(String name, Board board){
+    Gamer(String name, int age, Board board){
         this.name=name;
         myWorkers= new Worker[2];
         myWorkers[0]= new Worker();
         myWorkers[1]= new Worker();
         this.board=board;
+        this.age=age;
         myCard=null;
     }
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     public God getMyCard() {
         return myCard;
     }
     public void setMyCard(God myCard) {
         this.myCard = myCard;
     }
+    public int getAge() {
+        return age;
+    }
 
+    /**
+     * This method changes the attributes of a gamer with attributes of another, and the other way around
+     * @param gamer2
+     */
+    public void swap(Gamer gamer2){
+        Gamer newGamer=new Gamer(gamer2.name,gamer2.age, gamer2.board);
+        gamer2.setName(this.name);
+        gamer2.setAge(this.age);
+        gamer2.setBoard(this.board);
+        this.setName(newGamer.name);
+        this.setAge(newGamer.age);
+        this.setBoard(newGamer.board);
+    }
+
+    public void print(){
+        System.out.println(name+ " "+ age);
+    }
     /**
      * This method sets the first position of a worker
      * @param index is the number of the worker i want to set
@@ -88,6 +121,8 @@ public class Gamer {
         gamerManager.move();
         gamerManager.move();
     }
+
+
     /*public static void main( String[] args )
     {
         Board b= new Board();
@@ -101,5 +136,4 @@ public class Gamer {
         }
 
     }*/
-
 }

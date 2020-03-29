@@ -70,6 +70,18 @@ public class Box {
         return counter;
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
     /**
      * This method clear the attributes of a box setting them on default values
      */

@@ -5,10 +5,10 @@ import junit.framework.TestCase;
 public class BoardTest extends TestCase {
     Board boardTest=new Board();
 
-
-    public void testBuild() {
+    //Ho tolto getMatrix perchè non lo usavamo mai
+    /*public void testBuild() {
         assertNotNull(boardTest.getMatrix());
-    }
+    }*/
 
     public void testClear() {
         Worker workerTest=new Worker(1,boardTest.getBox(4,3));
