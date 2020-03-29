@@ -18,8 +18,8 @@ public abstract class GodDecorator implements God {
      * @param pos Position on the board where the worker wants to go
      */
     @Override
-    public void moveWorker(Worker worker, Box pos) {
-        this.newGod.moveWorker(worker, pos);
+    public boolean moveWorker(Worker worker, Box pos) {
+        return this.newGod.moveWorker(worker, pos);
     }
 
     /**
@@ -28,7 +28,5 @@ public abstract class GodDecorator implements God {
      * @param pos Position on the board where the worker builds a building block
      */
     @Override
-    public void moveBlock(Worker worker, Box pos) {
-        this.newGod.moveBlock(worker, pos);
-    }
+    public boolean moveBlock(Worker worker, Box pos) { return this.newGod.moveBlock(worker, pos); }
 }

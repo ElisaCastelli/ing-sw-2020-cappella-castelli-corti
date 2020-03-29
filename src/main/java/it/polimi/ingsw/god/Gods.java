@@ -11,26 +11,17 @@ public class Gods implements God {
      * This attribute is the name of the God
      */
     private String godName;
-    /**
-     * This attribute is the worker move type which tells if the worker moves up, moves down or stays at the same level
-     */
-    private int isCorrectWorkerMove;
-    /**
-     *
-     */
-    private boolean isCorrectBlockMove;
 
     /**
      * This constructor instantiates a God with the given godName, isCorrectWorkerMove and isCorrectBlockMove
      * @param godName Name of the God to be instantiated
-     * @param isCorrectWorkerMove Worker move type to be instatiated
-     * @param isCorrectBlockMove Block move type to be instatiated
      */
-    public Gods (String godName, int isCorrectWorkerMove, boolean isCorrectBlockMove) {
+    public Gods (String godName) {
         this.godName=godName;
-        this.isCorrectWorkerMove=isCorrectWorkerMove;
-        this.isCorrectBlockMove=isCorrectBlockMove;
     }
+
+    public String getGodName(String godName) {return this.godName=godName;}
+    public void setGodName(String godName) {this.godName = godName;}
 
     /**
      * This method implements the basic worker move: a chosen worker moves in a new position that must be unoccupied
@@ -41,41 +32,34 @@ public class Gods implements God {
      * @param pos Position on the board where the worker wants to go
      */
     @Override
-    public void moveWorker (Worker worker, Box pos) {
+    public boolean moveWorker (Worker worker, Box pos) {
         Box boxWorker=worker.getActualBox();
         int heightWorker=worker.getHeight();
         int counterPos=pos.getCounter();
-        isCorrectWorkerMove=0;
 
-        if (boxWorker.reachable(pos)) {
+        if (boxWorker.reachable(pos) && pos.notWorker() && counterPos!=4) {
             //first case: the worker moves up a maximum of one level higher;
             //second case: the worker moves down any number of levels lower;
             //third case: the worker moves along the same level.
             if (counterPos-heightWorker==1) {
-                if (pos.notWorker() && counterPos!=4) {
-                    worker.setHeight(heightWorker++);
+                    worker.setHeight(heightWorker+1);
                     worker.setActualBox(pos);
-                }
-                isCorrectWorkerMove=1;
+                    return true;
             }
             else if (heightWorker-counterPos>=1) {
-                if(pos.notWorker() && counterPos!=4) {
                     worker.setHeight(counterPos);
                     worker.setActualBox(pos);
-                }
-                isCorrectWorkerMove=2;
+                    return true;
             }
             else if (heightWorker==counterPos) {
-                if (pos.notWorker() && counterPos!=4)
-                {
                     worker.setActualBox(pos);
-                }
-                isCorrectWorkerMove=3;
+                    return true;
             }
             //se si prova un caso in cui non entra in nessuna delle tre condizioni significa che la mossa non è valida
-            //in quanto sale o scende di troppi livelli
+            //in quanto sale di troppi livelli
             //checkWin();
         }
+        else { return false; }
     }
 
     /**
@@ -85,7 +69,7 @@ public class Gods implements God {
      * @param pos Position on the board where the worker builds a building block
      */
     @Override
-    public void moveBlock(Worker worker, Box pos) {
+    public boolean moveBlock(Worker worker, Box pos) {
         Box boxWorker=worker.getActualBox();
         int counterPos=pos.getCounter();
 
@@ -93,5 +77,11 @@ public class Gods implements God {
             pos.build();
             isCorrectBlockMove=true;
         }
+        return true; //da sistemare
+    }
+
+
+    public void checkWin() {
+
     }
 }

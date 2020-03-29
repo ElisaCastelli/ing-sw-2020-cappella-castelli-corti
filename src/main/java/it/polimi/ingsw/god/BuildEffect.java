@@ -16,8 +16,12 @@ public class BuildEffect extends GodDecorator {
      * @param pos Position on the board where the worker wants to go
      */
     @Override
-    public void moveWorker(Worker worker, Box pos) {
-        super.moveWorker(worker, pos);
+    public boolean moveWorker(Worker worker, Box pos) {
+        return super.moveWorker(worker, pos);
+    }
 
+    @Override
+    public boolean moveBlock(Worker worker, Box pos) {
+        return super.moveBlock(worker, pos);
     }
 }

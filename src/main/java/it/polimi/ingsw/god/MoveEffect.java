@@ -18,10 +18,14 @@ public class MoveEffect extends GodDecorator {
      * @param pos Position on the board where the worker wants to go
      */
     @Override
-    public void moveWorker(Worker worker, Box pos) {
-        super.moveWorker(worker, pos);
+    public boolean moveWorker(Worker worker, Box pos) {
         if(godName.equals("Apollo")) {
-            switchWorkers(worker, pos);
+            if(!pos.notWorker()) {
+                switchWorkers(worker, pos);
+            }
+            else {
+                return super.moveWorker(worker, pos);
+            }
         }
         else if(godName.equals("Artemis")) {
             moveTwice(worker, pos);
@@ -35,10 +39,11 @@ public class MoveEffect extends GodDecorator {
      * @param pos Position on the board where the worker wants to go
      */
     public void switchWorkers (Worker worker, Box pos) {
-        if(!pos.notWorker()) {
-            Box tempBox=worker.getActualBox();
+        int counterPos=pos.getCounter();
+        Box tempBox=worker.getActualBox();
+        if(tempBox.reachable(pos) && counterPos!=4) {
             int heightWorker=worker.getHeight();
-            int counterPos=pos.getCounter();
+
             if(isCorrectWorkerMove==1) {
                 worker.setActualBox(pos);
                 worker.setHeight(heightWorker++);
@@ -64,5 +69,10 @@ public class MoveEffect extends GodDecorator {
      */
     public void moveTwice (Worker worker, Box pos) {
 
+    }
+
+    @Override
+    public boolean moveBlock(Worker worker, Box pos) {
+        return super.moveBlock(worker, pos);
     }
 }
