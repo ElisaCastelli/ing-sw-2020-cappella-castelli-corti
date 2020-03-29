@@ -4,13 +4,30 @@ import it.polimi.ingsw.gamerstate.GamerStateManager;
 import it.polimi.ingsw.god.God;
 import java.util.Scanner;
 
+/**
+ * This class represents the gamer
+ */
 public class Gamer {
+    /**
+     * This is the name of the player
+     */
     private String name;
+    /**
+     * This id the god card drawn by the player
+     */
     private God myCard;
+    /**
+     * This array of Workers contains two workers for each player
+     */
     private Worker myWorkers[];
     private Board board;
     GamerStateManager gamerManager = new GamerStateManager();
 
+    /**
+     * Constructor with name and board as parameters
+     * @param name
+     * @param board
+     */
     Gamer(String name, Board board){
         this.name=name;
         myWorkers= new Worker[2];
@@ -22,15 +39,19 @@ public class Gamer {
     public String getName() {
         return name;
     }
-    public  void setName(String name) {
-        this.name = name;
-    }
     public God getMyCard() {
         return myCard;
     }
     public void setMyCard(God myCard) {
         this.myCard = myCard;
     }
+
+    /**
+     * This method sets the first position of a worker
+     * @param index is the number of the worker i want to set
+     * @param requestedBox is the box where i want to set the worker
+     * @return true if initialization is successful, else false
+     */
     public boolean initializeWorker(int index, Box requestedBox){
         if(myWorkers[index-1].initializePos(requestedBox)==true){
             myWorkers[index-1].setWorkerId(index);
@@ -39,6 +60,10 @@ public class Gamer {
         return false;
     }
 
+    /**
+     * this method implements a single turn for a gamerr. the turn consist of two parts:
+     * the movement of the pawn and the construction of a building
+     */
     void move(){
         boolean workerMoved=false;
         boolean built=false;
