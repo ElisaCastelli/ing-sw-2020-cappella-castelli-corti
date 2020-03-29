@@ -54,10 +54,10 @@ public class Game {
         Scanner input = new Scanner(System.in);
         nPlayers = Integer.parseInt(input.nextLine());
         for(int p=0;p<nPlayers;p++){
-            System.out.print("Inserire nome del giocatore numero "+p);
+            System.out.print("Inserire nome del giocatore numero "+p+": ");
             Scanner playerName = new Scanner(System.in);
             String nomePlayer=playerName.nextLine();
-            System.out.print("Inserire età del giocatore numero "+p);
+            System.out.print("Inserire età del giocatore numero "+p+": ");
             Scanner gamerAge = new Scanner(System.in);
             int playerAge=Integer.parseInt(gamerAge.nextLine());
             gamer=new Gamer(nomePlayer, playerAge, board);
@@ -74,7 +74,7 @@ public class Game {
                     //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
                     indexWorker = index + 1;
                     System.out.println("Settare pedina numero " + (indexWorker));
-                    System.out.print("Riga:");
+                    System.out.print("Riga: ");
                     Scanner r = new Scanner(System.in);
                     int row = Integer.parseInt(r.nextLine());
                     System.out.print("Colonna dove voglio muovermi: ");
