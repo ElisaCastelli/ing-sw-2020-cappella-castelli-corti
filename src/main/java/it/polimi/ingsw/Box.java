@@ -55,6 +55,7 @@ public class Box {
     public int getRow() {
         return row;
     }
+
     /**
      * Column getter
      * @return the attribute column
@@ -62,6 +63,7 @@ public class Box {
     public int getColumn() {
         return column;
     }
+
     /**
      * Counter getter
      * @return the attribute counter
@@ -70,14 +72,26 @@ public class Box {
         return counter;
     }
 
+    /**
+     * Setter to change row
+     * @param row
+     */
     public void setRow(int row) {
         this.row = row;
     }
 
+    /**
+     * Setter to change columnn
+     * @param column
+     */
     public void setColumn(int column) {
         this.column = column;
     }
 
+    /**
+     * Setter to change counter
+     * @param counter
+     */
     public void setCounter(int counter) {
         this.counter = counter;
     }
@@ -91,6 +105,7 @@ public class Box {
         if(worker!=null)worker.clear();
         worker=null;
     }
+
     /**
      * @return true if there is NOT a worker in the box, else return false
      */
@@ -130,6 +145,7 @@ public class Box {
             building.build(counter);
         }
     }
+
     ///TO DO METHOD FOR ATLAS FOR BUILDING DOME EVERYWHERE
     public void buildDome(){
         counter=4;

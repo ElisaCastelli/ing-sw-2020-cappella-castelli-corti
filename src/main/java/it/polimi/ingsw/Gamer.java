@@ -51,7 +51,6 @@ public class Gamer {
     public void setBoard(Board board) {
         this.board = board;
     }
-
     public God getMyCard() {
         return myCard;
     }
@@ -61,7 +60,6 @@ public class Gamer {
     public int getAge() {
         return age;
     }
-
     /**
      * This method changes the attributes of a gamer with attributes of another, and the other way around
      * @param gamer2
@@ -75,7 +73,6 @@ public class Gamer {
         this.setAge(newGamer.age);
         this.setBoard(newGamer.board);
     }
-
     public void print(){
         System.out.println(name+ " "+ age);
     }
@@ -92,7 +89,6 @@ public class Gamer {
         }
         return false;
     }
-
     /**
      * this method implements a single turn for a gamerr. the turn consist of two parts:
      * the movement of the pawn and the construction of a building
@@ -121,8 +117,6 @@ public class Gamer {
         gamerManager.move();
         gamerManager.move();
     }
-
-
     /*public static void main( String[] args )
     {
         Board b= new Board();

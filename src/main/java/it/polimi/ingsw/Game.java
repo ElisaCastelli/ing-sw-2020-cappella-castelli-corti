@@ -20,7 +20,6 @@ public class Game {
      * This integer attribute is the number of the players
      */
     private  int nPlayers;
-
     //private boolean finito;
 
     /**
@@ -33,7 +32,10 @@ public class Game {
         //finito=false;
     }
 
-    public void ordinaGamers(){
+    /**
+     * Method to sort gamers by age
+     */
+    public void sortGamers(){
         for(int i=0;i<nPlayers-1;i++){
             if(gamers.get(i).getAge()>gamers.get(i+1).getAge()){
                 gamers.get(i).swap(gamers.get(i+1));
@@ -63,7 +65,7 @@ public class Game {
             gamer=new Gamer(nomePlayer, playerAge, board);
             gamers.add(p,gamer);
         }
-        ordinaGamers();
+        sortGamers();
         /*for(int p=0;p<nPlayers;p++){
             gamers.get(p).print();
         }*/
