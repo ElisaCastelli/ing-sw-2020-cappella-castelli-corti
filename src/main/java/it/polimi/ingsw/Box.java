@@ -107,6 +107,14 @@ public class Box {
     }
 
     /**
+     * This method remove the worker from the box
+     */
+    public void clearWorker(){
+        if(worker!=null)worker.clear();
+        worker=null;
+    }
+
+    /**
      * @return true if there is NOT a worker in the box, else return false
      */
     public boolean notWorker(){
