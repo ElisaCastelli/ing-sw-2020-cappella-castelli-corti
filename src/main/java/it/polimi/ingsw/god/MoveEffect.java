@@ -17,20 +17,21 @@ public class MoveEffect extends GodDecorator {
      *
      * @param worker Which worker is applied the move
      * @param pos Position on the board where the worker wants to go
+     * @param godName The God name card
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker(Worker worker, Box pos) {
+    public boolean moveWorker(Worker worker, Box pos, String godName) {
 
-        if(actualGod.getGodName().equals("Apollo")) {
+        if(godName.equals("Apollo")) {
             if(!pos.notWorker()) {
                 return switchWorkers(worker, pos);
             }
             else {
-                return super.moveWorker(worker, pos);
+                return super.moveWorker(worker, pos, godName);
             }
         }
-        else if(actualGod.getGodName().equals("Artemis")) {
+        else if(godName.equals("Artemis")) {
             /*if(){ Capire come fare la doppia mossa sullo stesso worker
                 return moveWorker(worker, pos);
             }
@@ -39,13 +40,13 @@ public class MoveEffect extends GodDecorator {
             }*/
 
         }
-        else if (actualGod.getGodName().equals("Minotaur")) {
+        else if (godName.equals("Minotaur")) {
             if(!pos.notWorker()) {
                 return shiftWorker(worker, pos);
             }
             else
             {
-                return super.moveWorker(worker, pos);
+                return super.moveWorker(worker, pos, godName);
             }
         }
         return false;
@@ -160,11 +161,24 @@ public class MoveEffect extends GodDecorator {
      * This method calls the basic moveBlock in the Gods class
      * @param worker Which worker is applied the move
      * @param pos Position on the board where the worker builds a building block
+     * @param godName The God name card
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock(Worker worker, Box pos) {
-        return super.moveBlock(worker, pos);
+    public boolean moveBlock(Worker worker, Box pos, String godName) {
+        return super.moveBlock(worker, pos, godName);
+    }
+
+    /**
+     * This method calls the basic checkWin in the Gods class
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox Position on the board where the worker arrives
+     * @param godName The God name card
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox, String godName) {
+        return false;
     }
 
     /**
