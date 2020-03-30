@@ -93,6 +93,7 @@ public class Board {
     public Box getBox(int row, int column){
         return matrix[row][column];
     }
+
     /*public static void main( String[] args ){
         Board b= new Board();
         b.clear();
@@ -100,6 +101,5 @@ public class Board {
         b.build(0,0);
         b.build(1,2);
         b.print();
-
     }*/
 }

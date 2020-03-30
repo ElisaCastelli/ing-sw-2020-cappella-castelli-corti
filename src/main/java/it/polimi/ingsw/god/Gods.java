@@ -13,14 +13,14 @@ public class Gods implements God {
     private String godName;
 
     /**
-     * This constructor instantiates a God with the given godName, isCorrectWorkerMove and isCorrectBlockMove
+     * This constructor instantiates a God with the given godName
      * @param godName Name of the God to be instantiated
      */
     public Gods (String godName) {
         this.godName=godName;
     }
 
-    public String getGodName() {return this.godName=godName;}
+    public String getGodName() {return godName;}
     public void setGodName(String godName) {this.godName = godName;}
 
     /**
@@ -33,7 +33,7 @@ public class Gods implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker (Worker worker, Box pos) {
+    public boolean moveWorker (Worker worker, Box pos, String godName) {
         Box boxWorker=worker.getActualBox();
         int heightWorker=worker.getHeight();
         int counterPos=pos.getCounter();
@@ -69,7 +69,7 @@ public class Gods implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock(Worker worker, Box pos) {
+    public boolean moveBlock(Worker worker, Box pos, String godName) {
         Box boxWorker=worker.getActualBox();
         int counterPos=pos.getCounter();
 
@@ -77,6 +77,18 @@ public class Gods implements God {
             pos.build();
             return true;
         }
+        return false;
+    }
+
+    /**
+     * This method implements the basic check win: a player wins if his worker moves up on top of level 3
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox Position on the board where the worker arrives
+     * @param godName The God name card
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox, String godName) {
         return false;
     }
 

@@ -13,16 +13,20 @@ public class Gamer {
      */
     private String name;
     /**
+     * Gamer's age
+     */
+    private int age;
+    /**
      * This id the god card drawn by the player
      */
-    private God myCard;
+    private God myGod;
     /**
      * This array of Workers contains two workers for each player
      */
     private Worker myWorkers[];
-    private int age;
-    private Board board;
     GamerStateManager gamerManager = new GamerStateManager();
+
+    //private Board board;
 
     /**
      * Constructor with name and board as parameters
@@ -30,14 +34,14 @@ public class Gamer {
      * @param name
      * @param board
      */
-    Gamer(String name, int age, Board board){
+    Gamer(String name, int age/*, Board board*/){
         this.name=name;
         myWorkers= new Worker[2];
-        myWorkers[0]= new Worker();
-        myWorkers[1]= new Worker();
-        this.board=board;
+        /*myWorkers[0]= new Worker();
+        myWorkers[1]= new Worker();*/
+        //this.board=board;
         this.age=age;
-        myCard=null;
+        myGod=null;
     }
     public String getName() {
         return name;
@@ -48,37 +52,29 @@ public class Gamer {
     public void setAge(int age) {
         this.age = age;
     }
-    public void setBoard(Board board) {
+    /*public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public God getMyCard() {
-        return myCard;
-    }
-    public void setMyCard(God myCard) {
-        this.myCard = myCard;
-    }
+    }*/
     public int getAge() {
         return age;
     }
-
     /**
      * This method changes the attributes of a gamer with attributes of another, and the other way around
      * @param gamer2
      */
     public void swap(Gamer gamer2){
-        Gamer newGamer=new Gamer(gamer2.name,gamer2.age, gamer2.board);
+        Gamer newGamer=new Gamer(gamer2.name,gamer2.age/*, gamer2.board*/);
         gamer2.setName(this.name);
         gamer2.setAge(this.age);
-        gamer2.setBoard(this.board);
+        //gamer2.setBoard(this.board);
         this.setName(newGamer.name);
         this.setAge(newGamer.age);
-        this.setBoard(newGamer.board);
+        //this.setBoard(newGamer.board);
     }
-
     public void print(){
         System.out.println(name+ " "+ age);
     }
+
     /**
      * This method sets the first position of a worker
      * @param index is the number of the worker i want to set
@@ -93,36 +89,35 @@ public class Gamer {
         return false;
     }
 
+    public boolean playWorker(int indexWorker, Box finalBox){
+        movedWorker=myGod.moveWorker(myWorkers[indexWorker],finalBox/*,myGod.getGodName().getGodName()*/);
+    }
+
+    public boolean playBlock(int indexWorker, Box finalBox){
+        movedBlock=myGod.moveBlock(myWorkers[indexWorker], finalBox/*,myCard.getGodName()*/);
+    }
+
     /**
      * this method implements a single turn for a gamerr. the turn consist of two parts:
      * the movement of the pawn and the construction of a building
      */
-    void move(){
-        boolean workerMoved=false;
-        boolean built=false;
-        while(!workerMoved){
+    public boolean play(){
+        boolean movedWorker=false;
+        boolean movedBlock=false;
+        Box oldBox=new Box();
+        while(!movedWorker){
 
-            //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
-            System.out.println("Pedina da muovere [1] 0 [2]:");
-            Scanner worker = new Scanner(System.in);
-            int w = Integer.parseInt(worker.nextLine());
-            System.out.println("Riga dove voglio muovermi:");
-            Scanner row = new Scanner(System.in);
-            int r = Integer.parseInt(row.nextLine());
-            System.out.println("Colonna dove voglio muovermi:");
-            Scanner col = new Scanner(System.in);
-            int c = Integer.parseInt(row.nextLine());
-            //TO DO:MOVEWORKER BOOLEAN
-            /*workerMoved=*/myCard.moveWorker(myWorkers[w],board.getBox(r,c));
         }
-        while(!built){
-            //moveBlock(block, box);
+        /*if(myCard.checkWin(oldBox, myWorker[w-1].getActualBox(),myCard.getGodName())==true){
+            gamerManager.moveToWin();
+            return true;
+        }*/
+        while(!movedBlock){
+
+            //movedBlock=myGod.moveBlock(block, box,myCard.getGodName());
         }
-        gamerManager.move();
-        gamerManager.move();
+        return false;
     }
-
-
     /*public static void main( String[] args )
     {
         Board b= new Board();
