@@ -11,20 +11,20 @@ public class Building {
 
     }
 
-    public void build(int blockIdentif){
-        if(blockIdentif == 1){
-            arrayOfBlocks.add(getBlock(blockIdentif));
+    public void build(){
+        if(arrayOfBlocks.size()==0){
+            arrayOfBlocks.add(getBlock(1));
             //arrayOfBlocks.get(0).print();
 
-        }else if(blockIdentif==2){
-            arrayOfBlocks.add(getBlock(blockIdentif));
+        }else if(arrayOfBlocks.size()==1){
+            arrayOfBlocks.add(getBlock(2));
             //arrayOfBlocks.get(1).print();
 
-        }else if(blockIdentif ==3){
-            arrayOfBlocks.add(getBlock(blockIdentif));
+        }else if(arrayOfBlocks.size()==2){
+            arrayOfBlocks.add(getBlock(3));
             //arrayOfBlocks.get(2).print();
         }else{
-            arrayOfBlocks.add(getBlock(blockIdentif));
+            arrayOfBlocks.add(getBlock(4));
             //arrayOfBlocks.get(3).print();
         }
     }
