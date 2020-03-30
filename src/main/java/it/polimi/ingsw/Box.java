@@ -25,13 +25,13 @@ public class Box {
     //POSSIAMO TOGLIERE IL COUNTER E RICAVARLO DAL BUILDING.SIZE?
     private int counter;
 
-    /*Box(){
+    Box(){
         building=new Building();
         counter=0;
         row=0;
         column=0;
         worker=null;
-    }*/
+    }
 
     /**
      *

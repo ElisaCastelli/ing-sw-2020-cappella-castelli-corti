@@ -4,13 +4,17 @@ public class GamerStateManager {
     private GamerState isPlaying;
     private GamerState isWaiting;
     private GamerState dead;
+    private GamerState win;
 
     private GamerState currentState;
+
+
 
     public GamerStateManager(){
         isPlaying=new IsPlaying(this);
         isWaiting=new IsWaiting(this);
         dead=new Dead(this);
+        win=new Win(this);
         currentState= isWaiting;
     }
 
@@ -31,6 +35,12 @@ public class GamerStateManager {
     }
     public void setDead(GamerState dead) {
         this.dead = dead;
+    }
+    public GamerState getWin() {
+        return win;
+    }
+    public void setWin(GamerState win) {
+        this.win = win;
     }
     public void setCurrentState(GamerState newState ){
         currentState=newState;

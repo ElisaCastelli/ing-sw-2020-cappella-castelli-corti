@@ -62,14 +62,19 @@ public class Game {
             System.out.print("Inserire età del giocatore numero "+p+": ");
             Scanner gamerAge = new Scanner(System.in);
             int playerAge=Integer.parseInt(gamerAge.nextLine());
-            gamer=new Gamer(nomePlayer, playerAge, board);
+            ///TO DO!!!!! togliere board dal costruttore
+            gamer=new Gamer(nomePlayer, playerAge /*, board*/);
             gamers.add(p,gamer);
         }
+        //TO DO gamers.sort()
         sortGamers();
-        /*for(int p=0;p<nPlayers;p++){
-            gamers.get(p).print();
-        }*/
+
+        //estraggo carte
+
+        //setto pedine
+        //un ciclo per ogni giocatore
         for(int p=0;p<nPlayers;p++){
+            //due cicli per le pedine
             for(int index=0; index<2;index++){
                 boolean workerCorrect=false;
                 while(workerCorrect==false) {
@@ -88,24 +93,32 @@ public class Game {
         }
 
         board.print();
-        /*
+
         //turns management
         int i=0;
-        while(!finito && i<=nPlayer){
-            gamers.get(i).move();
+        while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i<=nPlayers){
+
+            //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
+            System.out.println("Pedina da muovere [1] 0 [2]:");
+            Scanner worker = new Scanner(System.in);
+            int w = Integer.parseInt(worker.nextLine());
+            //oldBox=myWorkers[w-1].getActualBox();
+            System.out.println("Riga dove voglio muovermi:");
+            Scanner row = new Scanner(System.in);
+            int r = Integer.parseInt(row.nextLine());
+            System.out.println("Colonna dove voglio muovermi:");
+            Scanner col = new Scanner(System.in);
+            int c = Integer.parseInt(row.nextLine());
+
+            gamers.get(i).playWorker(w+1,board.getBox(r,c)); //play LO CHIAMO SOLO SE NON E' MORTO
+
             i++;
             if(i==gamers.size()){
                 i=0;
             }
-            System.out.println("Vuoi finire? [1 si - 0 no]");
-            Scanner f = new Scanner(System.in);
-            int fin = Integer.parseInt(f.nextLine());
-            if(fin==1){
-                finito=true;
-            }else{
-                finito=false;
-            }
-        }*/
+
+
+        }
     }
 
     public static void main( String[] args )
