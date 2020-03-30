@@ -13,7 +13,7 @@ public class Box {
     /**
      * This attribute is a worker that can occupy this box
      */
-    private Worker worker;
+    private Worker worker; //MAGARI POTREMMO TOGLIERLO
     /**
      * This attribute indicates the row of the matrix where the box is located
      */
@@ -22,27 +22,17 @@ public class Box {
      * This attribute indicates the column of the matrix where the box is located
      */
     private int column;
-    //POSSIAMO TOGLIERE IL COUNTER E RICAVARLO DAL BUILDING.SIZE?
-    private int counter;
 
-    Box(){
-        building=new Building();
-        counter=0;
-        row=0;
-        column=0;
-        worker=null;
-    }
+
 
     /**
      *
-     * @param counter level of the box
      * @param row row of the box
      * @param column column of the box
      * Constructor with parameters
      */
-    public Box(int counter,int row, int column){ //controllare r e c da 0 a 5
+    public Box(int row, int column){ //controllare r e c da 0 a 5
         building=new Building();
-        this.counter=counter;
         this.row=row;
         this.column=column;
         worker=null;
@@ -65,14 +55,6 @@ public class Box {
     }
 
     /**
-     * Counter getter
-     * @return the attribute counter
-     */
-    public int getCounter() {
-        return counter;
-    }
-
-    /**
      * Setter to change row
      * @param row
      */
@@ -88,20 +70,14 @@ public class Box {
         this.column = column;
     }
 
-    /**
-     * Setter to change counter
-     * @param counter
-     */
-    public void setCounter(int counter) {
-        this.counter = counter;
+    public int getCounter(){
+        return building.getArrayOfBlocks().size();
     }
-
     /**
      * This method clear the attributes of a box setting them on default values
      */
     public void clear(){
         building.clear();
-        counter=0;
         if(worker!=null)worker.clear();
         worker=null;
     }
@@ -128,7 +104,7 @@ public class Box {
      */
     public boolean isEmpty(){
         boolean vuota=true;
-        if(counter!=0 || worker!=null){
+        if(building.getArrayOfBlocks().size()!=0 || worker!=null){
             vuota=false;
         }
         return vuota;
@@ -136,6 +112,7 @@ public class Box {
 
     ///TO DO...MA IL SETWORKER LO UTILIZZI QUANDO SPOSTI IL WORKER SULLA BOARD DA UNA POS ALL'ALTRA?
     //PERCHE IN QUESTO CASO NON CONTROLLA SE IL WORKER E' POSIZIONATO IN UN'ALTRA CASELLA
+    //HO FATTO ILA!
     public void setWorker(Worker worker){
         this.worker=worker;
         this.worker.setActualBox(this);
@@ -145,19 +122,7 @@ public class Box {
      * This method calls the method build of Building if the counter is less than five
      */
     public void build(){
-        //se la casella ha meno di 4 pezzi ed è adiacente a una pedina costruisce
-        ///TO DO riguarda il counter del building perchè serve un identificatore per il pezzo da costruire
-        if(counter<5 /*&& (reachable(worker1.getPos()) || reachable(worker2.getPos())*/){
-            //HO MODIFICATO IL CONTATORE PER VEDERE SE FUNZIONAVA
-            counter++;
-            building.build(counter);
-        }
-    }
-
-    ///TO DO METHOD FOR ATLAS FOR BUILDING DOME EVERYWHERE
-    public void buildDome(){
-        counter=4;
-        building.build(4);
+        building.build();
     }
 
     /**
@@ -185,7 +150,7 @@ public class Box {
         else if (building!=null){
             building.print();
         }
-        System.out.print("["+counter+"] ");
+        System.out.print("["+building.getArrayOfBlocks().size()+"] ");
     }
 }
 

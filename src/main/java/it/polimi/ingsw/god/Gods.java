@@ -16,6 +16,9 @@ public class Gods implements God {
      * This constructor instantiates a God with the given godName
      * @param godName Name of the God to be instantiated
      */
+    /*public Gods(){
+        godName="";
+    }*/
     public Gods (String godName) {
         this.godName=godName;
     }

@@ -20,18 +20,9 @@ public class Board {
         matrix= new Box[DIM][DIM];
         for(int i=0;i<DIM;i++){
             for(int j=0;j<DIM;j++){
-                matrix[i][j]=new Box(0,i,j);
+                matrix[i][j]=new Box(i,j);
             }
         }
-    }
-
-    /**
-     * This method launches the method build on the box in posiion matrix[row][column]
-     * @param row indicates the row of the box where i want to build
-     * @param column indicates the column of the box where i want to build
-     */
-    public void build(int row, int column){
-        matrix[row][column].build();
     }
 
     /**
@@ -61,15 +52,6 @@ public class Board {
                 i++;
         }
         return trovato;
-    }
-
-    /**
-     * @param row is the row of the box i wanto to check
-     * @param column is the column of the box i want to check
-     * @return true if the box matrix[r][c] is empty else false
-     */
-    public boolean isEmpty(int row, int column){
-        return matrix[row][column].isEmpty();
     }
 
     /**

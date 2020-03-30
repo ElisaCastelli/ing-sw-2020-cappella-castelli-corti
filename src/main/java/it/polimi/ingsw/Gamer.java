@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.gamerstate.GamerStateManager;
 import it.polimi.ingsw.god.God;
+import it.polimi.ingsw.god.Gods;
+
 import java.util.Scanner;
 
 /**
@@ -26,22 +28,23 @@ public class Gamer {
     private Worker myWorkers[];
     GamerStateManager gamerManager = new GamerStateManager();
 
-    //private Board board;
 
     /**
      * Constructor with name and board as parameters
      * @param age
      * @param name
-     * @param board
      */
-    Gamer(String name, int age/*, Board board*/){
+    Gamer(String name, int age){
         this.name=name;
         myWorkers= new Worker[2];
         /*myWorkers[0]= new Worker();
         myWorkers[1]= new Worker();*/
-        //this.board=board;
         this.age=age;
         myGod=null;
+    }
+    public void setGod(String nameGod){
+        myGod=new Gods(nameGod);
+        //TO DO swtch in base al nome decidere decorator
     }
     public String getName() {
         return name;
@@ -52,9 +55,6 @@ public class Gamer {
     public void setAge(int age) {
         this.age = age;
     }
-    /*public void setBoard(Board board) {
-        this.board = board;
-    }*/
     public int getAge() {
         return age;
     }
@@ -89,35 +89,39 @@ public class Gamer {
         return false;
     }
 
+    public int checkPossibleBuild(Box finalBox){
+       int indexWorker=3;
+       return indexWorker;
+    }
+
     public boolean playWorker(int indexWorker, Box finalBox){
-        movedWorker=myGod.moveWorker(myWorkers[indexWorker],finalBox/*,myGod.getGodName().getGodName()*/);
-    }
-
-    public boolean playBlock(int indexWorker, Box finalBox){
-        movedBlock=myGod.moveBlock(myWorkers[indexWorker], finalBox/*,myCard.getGodName()*/);
-    }
-
-    /**
-     * this method implements a single turn for a gamerr. the turn consist of two parts:
-     * the movement of the pawn and the construction of a building
-     */
-    public boolean play(){
         boolean movedWorker=false;
-        boolean movedBlock=false;
-        Box oldBox=new Box();
-        while(!movedWorker){
-
-        }
-        /*if(myCard.checkWin(oldBox, myWorker[w-1].getActualBox(),myCard.getGodName())==true){
-            gamerManager.moveToWin();
+        movedWorker=myGod.moveWorker(myWorkers[indexWorker],finalBox,myGod.getGodName());
+        if(movedWorker==true){
             return true;
-        }*/
-        while(!movedBlock){
-
-            //movedBlock=myGod.moveBlock(block, box,myCard.getGodName());
         }
         return false;
     }
+
+    public boolean playBlock( Box finalBox){
+        boolean movedBlock=false;
+        int indexWorker=checkPossibleBuild(finalBox);
+        movedBlock=myGod.moveBlock(myWorkers[indexWorker], finalBox,myGod.getGodName());
+        if(movedBlock==true){
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean checkWin(Box oldBox, int indexWorkerMoved){ //index già giusto
+        if(myGod.checkWin(oldBox, myWorkers[indexWorkerMoved].getActualBox(),myGod.getGodName())==true){
+            //gamerManager.moveToWin();
+            return true;
+        }
+        return false;
+    }
+
     /*public static void main( String[] args )
     {
         Board b= new Board();

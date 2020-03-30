@@ -96,28 +96,50 @@ public class Game {
 
         //turns management
         int i=0;
+        int indexWorkerMoved=0;
+        boolean movedWorker=false, win=false, dead=false;
+        boolean movedBlock=false;
+        int row=0, column=0;
+
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i<=nPlayers){
+            //TO DO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
+            while(!movedWorker){
+                //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
+                System.out.println("Pedina da muovere [1] 0 [2]:");
+                Scanner worker = new Scanner(System.in);
+                indexWorkerMoved = Integer.parseInt(worker.nextLine());
+                System.out.println("Riga dove voglio muovermi:");
+                Scanner r = new Scanner(System.in);
+                row = Integer.parseInt(r.nextLine());
+                System.out.println("Colonna dove voglio muovermi:");
+                Scanner col = new Scanner(System.in);
+                column = Integer.parseInt(col.nextLine());
+                movedWorker=gamers.get(i).playWorker(indexWorkerMoved-1,board.getBox(row,column));
 
-            //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
-            System.out.println("Pedina da muovere [1] 0 [2]:");
-            Scanner worker = new Scanner(System.in);
-            int w = Integer.parseInt(worker.nextLine());
-            //oldBox=myWorkers[w-1].getActualBox();
-            System.out.println("Riga dove voglio muovermi:");
-            Scanner row = new Scanner(System.in);
-            int r = Integer.parseInt(row.nextLine());
-            System.out.println("Colonna dove voglio muovermi:");
-            Scanner col = new Scanner(System.in);
-            int c = Integer.parseInt(row.nextLine());
+            }
 
-            gamers.get(i).playWorker(w+1,board.getBox(r,c)); //play LO CHIAMO SOLO SE NON E' MORTO
+            win=gamers.get(i).checkWin(board.getBox(row,column),indexWorkerMoved-1);
+            if (win==true){
+                //cambia stato e termino
+            }
+
+            while(!movedBlock){
+                //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
+
+                System.out.println("Riga dove voglio costruire:");
+                Scanner r2 = new Scanner(System.in);
+                int row2 = Integer.parseInt(r2.nextLine());
+                System.out.println("Colonna dove voglio costruire:");
+                Scanner col2 = new Scanner(System.in);
+                int column2= Integer.parseInt(col2.nextLine());
+
+                movedBlock=gamers.get(i).playBlock(board.getBox(row2,column2));
+            }
 
             i++;
             if(i==gamers.size()){
                 i=0;
             }
-
-
         }
     }
 
