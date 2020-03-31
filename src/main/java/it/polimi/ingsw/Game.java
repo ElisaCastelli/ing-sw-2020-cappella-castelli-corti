@@ -20,6 +20,7 @@ public class Game {
      * This integer attribute is the number of the players
      */
     private  int nPlayers;
+
     //private boolean finito;
 
     /**
