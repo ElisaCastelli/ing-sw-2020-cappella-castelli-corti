@@ -102,6 +102,7 @@ public class Game {
         int row=0, column=0;
 
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i<=nPlayers){
+            //boolean sipuoMuovere=gamers.get(i).checkPossibleMove(actualBox,board)
             //TO DO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
             while(!movedWorker){
                 //la richiesta del numero di pedina e dello spazio dove voglio muovermi verrà fatta graficamente
@@ -114,11 +115,11 @@ public class Game {
                 System.out.println("Colonna dove voglio muovermi:");
                 Scanner col = new Scanner(System.in);
                 column = Integer.parseInt(col.nextLine());
-                movedWorker=gamers.get(i).playWorker(indexWorkerMoved-1,board.getBox(row,column));
+                movedWorker=gamers.get(i).playWorker(indexWorkerMoved-1,board,row,column);
 
             }
 
-            win=gamers.get(i).checkWin(board.getBox(row,column),indexWorkerMoved-1);
+            win=gamers.get(i).checkWin(indexWorkerMoved-1,board,row,column);
             if (win==true){
                 //cambia stato e termino
             }
@@ -133,7 +134,7 @@ public class Game {
                 Scanner col2 = new Scanner(System.in);
                 int column2= Integer.parseInt(col2.nextLine());
 
-                movedBlock=gamers.get(i).playBlock(board.getBox(row2,column2));
+                movedBlock=gamers.get(i).playBlock(board,row2,column2,gamers.get(i).getName());
             }
 
             i++;

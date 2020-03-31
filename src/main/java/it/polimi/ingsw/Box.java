@@ -70,6 +70,10 @@ public class Box {
         this.column = column;
     }
 
+    public Worker getWorker() {
+        return worker;
+    }
+
     public int getCounter(){
         return building.getArrayOfBlocks().size();
     }

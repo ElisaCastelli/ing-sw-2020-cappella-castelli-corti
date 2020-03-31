@@ -4,21 +4,24 @@ public class Worker {
     private int workerId;
     private int height;
     private Box actualBox;
+    private String gamerName;
 
     public Worker(){
         workerId=0;
         height=0;
         actualBox=null;
+        gamerName="";
     }
     public Worker(int workerId){
         this.workerId=workerId;
     }
 
-    public Worker(int workerId, Box actualBox) {
+    public Worker(int workerId, Box actualBox,String gamerName) {
         this.workerId = workerId;
         height=0;
         this.actualBox=actualBox;
         this.actualBox.setWorker(this);
+        this.gamerName=gamerName;
     }
 
     public int getHeight() {
@@ -40,6 +43,10 @@ public class Worker {
     }
     public void setActualBox(Box actualBox) {
         this.actualBox = actualBox;
+    }
+
+    public String getGamerName() {
+        return gamerName;
     }
 
     public boolean initializePos(Box requestedBox){

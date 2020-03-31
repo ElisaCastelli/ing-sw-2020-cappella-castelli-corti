@@ -8,33 +8,29 @@ public class Base implements Block {
         this.blockIdentifier = 1;
         this.blockName="Base";
     }
-
     /**
-     * @return the int of the identifier
+     * @return the int of the identifier of the block
      */
     public int getBlockIdentifier() {
         return blockIdentifier;
     }
-
     /**
      *@return the name of the block
      */
     public String getBlockName() {
         return blockName;
     }
-
     /**
      * set the identifier as an int
      * for now is not used
      * TO DO remember that is not verified the identifier
-     * @param blockIdentifier
+     * @param blockIdentifier is the identifier for building correctly
      */
     public void setBlockIdentifier(int blockIdentifier) {
         this.blockIdentifier = blockIdentifier;
     }
-
     /**
-     * @return the name of the block you have selected
+     * @return this method print out the name of the block you have selected
      */
     @Override
     public String toString() {

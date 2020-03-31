@@ -8,9 +8,12 @@ public class Building {
 
     public Building() {
         arrayOfBlocks=new ArrayList<>();
-
     }
-
+    /**
+     * As it is a factory method it build a block based on the size of arrayOfBlocks
+     * without asking the gamer to specified the block.
+     * This method recall getBlock
+     */
     public void build(){
         if(arrayOfBlocks.size()==0){
             arrayOfBlocks.add(getBlock(1));
@@ -28,7 +31,10 @@ public class Building {
             //arrayOfBlocks.get(3).print();
         }
     }
-
+    /**
+     * @param blockIdentifier is an int passed by the method Build to build the rightful block
+     * @return the block created to Build so that can be added to arrayOfBlocks
+     */
     public Block getBlock(int blockIdentifier){
         Block block;
         if(blockIdentifier == 1){
@@ -47,14 +53,23 @@ public class Building {
        return block;
     }
 
+    /**
+     * //REMEMBER the index is not controlled if is illegal
+     * @param pos is an index of the arrayOfBlocks
+     * @return the name of the block in the list at the specified index
+     */
     public String getBlocksNameInArray(int pos) {
         return arrayOfBlocks.get(pos).toString();
     }
-
+    /**
+     * @return the array is a list of the block that was created in a Box and as a size>=0
+     */
     public ArrayList<Block> getArrayOfBlocks() {
         return arrayOfBlocks;
     }
-
+    /**
+     * this method print out the building of a single box
+     */
     public void print() {
         Iterator<Block> blockIterator=arrayOfBlocks.iterator();
 
@@ -65,7 +80,9 @@ public class Building {
                 }
         }
     }
-
+    /**
+     * this method clear the arrayOfBlock so that the size of the list is equal to zero and the building is !=null
+     */
     public void clear(){
         if(arrayOfBlocks.size()!=0){
             arrayOfBlocks.clear();
