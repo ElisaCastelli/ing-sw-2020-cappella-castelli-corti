@@ -19,12 +19,12 @@ public class Gods implements God {
     /*public Gods(){
         godName="";
     }*/
-    public Gods (String godName) {
+    public Gods ( String godName ) {
         this.godName=godName;
     }
 
-    public String getGodName() {return godName;}
-    public void setGodName(String godName) {this.godName = godName;}
+    public String getGodName() { return godName; }
+    public void setGodName ( String godName ) { this.godName = godName; }
 
     /**
      * This method implements the basic worker move: a chosen worker moves to a new position that must be unoccupied
@@ -36,30 +36,29 @@ public class Gods implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker (Worker worker, Box pos, String godName) {
-        Box boxWorker=worker.getActualBox();
-        int heightWorker=worker.getHeight();
-        int counterPos=pos.getCounter();
+    public boolean moveWorker ( Worker worker, Box pos, String godName ) {
+        Box boxWorker = worker.getActualBox();
+        int heightWorker = worker.getHeight();
+        int counterPos = pos.getCounter();
         //i puntatori sono giusti, pos puntatore alla box della board, boxWorker puntatore alla posizionne inziale tramite worker
-        if (boxWorker.reachable(pos) && pos.notWorker() && counterPos!=4) {
+        if ( boxWorker.reachable(pos) && pos.notWorker() && counterPos != 4 ) {
 
-            if (upDownOrStayAtTheSameLevel(counterPos,heightWorker)==1) {
-                    worker.setHeight(heightWorker+1);
-                    worker.setActualBox(pos);
+            if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
+                    worker.setHeight ( heightWorker + 1 );
+                    worker.setActualBox ( pos );
                     return true;
             }
-            else if (upDownOrStayAtTheSameLevel(counterPos,heightWorker)==2) {
-                    worker.setHeight(counterPos);
-                    worker.setActualBox(pos);
+            else if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ) {
+                    worker.setHeight ( counterPos );
+                    worker.setActualBox ( pos );
                     return true;
             }
-            else if (upDownOrStayAtTheSameLevel(counterPos,heightWorker)==3) {
-                    worker.setActualBox(pos);
+            else if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
+                    worker.setActualBox ( pos );
                     return true;
             }
             //se si prova un caso in cui non entra in nessuna delle tre condizioni significa che la mossa non è valida
             //in quanto sale di troppi livelli (upDownOrStayAtTheSameLevel==4)
-            //checkWin();
         }
         return false;
     }
@@ -72,11 +71,11 @@ public class Gods implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock(Worker worker, Box pos, String godName) {
-        Box boxWorker=worker.getActualBox();
-        int counterPos=pos.getCounter();
+    public boolean moveBlock ( Worker worker, Box pos, String godName ) {
+        Box boxWorker = worker.getActualBox();
+        int counterPos = pos.getCounter();
 
-        if (boxWorker.reachable(pos) && pos.notWorker() && counterPos!=4) {
+        if ( boxWorker.reachable(pos) && pos.notWorker() && counterPos != 4 ) {
             pos.build();
             return true;
         }
@@ -91,7 +90,9 @@ public class Gods implements God {
      * @return False if the player doesn't win; true if the player wins
      */
     @Override
-    public boolean checkWin(Box initialPos, Box finalBox, String godName) {
+    public boolean checkWin ( Box initialPos, Box finalBox, String godName ) {
+        if ( finalBox.getCounter() - initialPos.getCounter() == 1 && finalBox.getCounter() == 3 )
+            return true;
         return false;
     }
 
@@ -103,14 +104,14 @@ public class Gods implements God {
      * @param counterWorker Counter of the worker
      * @return int representing the case in which the player is
      */
-    public int upDownOrStayAtTheSameLevel(int counterBuilding, int counterWorker) {
-        if (counterBuilding-counterWorker==1) {
+    public int upDownOrStayAtTheSameLevel ( int counterBuilding, int counterWorker ) {
+        if ( counterBuilding - counterWorker == 1 ) {
             return 1;
         }
-        else if (counterWorker-counterBuilding>=1) {
+        else if ( counterWorker - counterBuilding >= 1 ) {
             return 2;
         }
-        else if (counterWorker==counterBuilding) {
+        else if ( counterWorker == counterBuilding ) {
             return 3;
         }
         return 4;

@@ -8,8 +8,8 @@ import it.polimi.ingsw.Worker;
  */
 public class MoveEffect extends GodDecorator {
 
-    public MoveEffect (God newGod) {
-        super(newGod);
+    public MoveEffect ( God newGod ) {
+        super ( newGod );
     }
     public Gods actualGod;
 
@@ -21,32 +21,42 @@ public class MoveEffect extends GodDecorator {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker(Worker worker, Box pos, String godName) {
+    public boolean moveWorker ( Worker worker, Box pos, String godName ) {
 
-        if(godName.equals("Apollo")) {
-            if(!pos.notWorker()) {
-                return switchWorkers(worker, pos);
+        if ( godName.equals ( "Apollo" ) ) {
+            if ( !pos.notWorker() ) {
+                return switchWorkers ( worker, pos );
             }
             else {
-                return super.moveWorker(worker, pos, godName);
+                return super.moveWorker ( worker, pos, godName );
             }
         }
-        else if(godName.equals("Artemis")) {
-            /*if(){ Capire come fare la doppia mossa sullo stesso worker
-                return moveWorker(worker, pos);
+        /*else if ( godName.equals ( "Artemis" ) ) {
+            if ( ) { Capire come fare la doppia mossa sullo stesso worker
+                return moveWorker ( worker, pos );
             }
             else {
-                return moveTwice(worker, pos);
-            }*/
-
+                return moveTwice ( worker, pos );
+            }
+        }*/
+        else if ( godName.equals ( "Athena" ) ) {
+            if ( pos.getCounter() - worker.getHeight() == 1 )
+            {//Capire come tenere conto che una volta che atena sale gli altri giocatori non possono salire durante il loro turno
+                worker.setHeight ( pos.getCounter() );
+                worker.setActualBox ( pos );
+                return true;
+            }
+            else {
+                return moveWorker ( worker, pos, godName );
+            }
         }
-        else if (godName.equals("Minotaur")) {
-            if(!pos.notWorker()) {
-                return shiftWorker(worker, pos);
+        else if ( godName.equals ( "Minotaur" ) ) {
+            if ( !pos.notWorker() ) {
+                return shiftWorker ( worker, pos );
             }
             else
             {
-                return super.moveWorker(worker, pos, godName);
+                return super.moveWorker ( worker, pos, godName );
             }
         }
         return false;
@@ -59,28 +69,31 @@ public class MoveEffect extends GodDecorator {
      * @param pos Position on the board where the worker wants to go
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
-    public boolean switchWorkers (Worker worker, Box pos) {
-        int counterPos=pos.getCounter();
-        Box workerBox=worker.getActualBox();
-        if(workerBox.reachable(pos) && counterPos!=4) {
-            int heightWorker=worker.getHeight();
+    public boolean switchWorkers ( Worker worker, Box pos ) {
+        int counterPos = pos.getCounter();
+        Box workerBox = worker.getActualBox();
 
-            if(actualGod.upDownOrStayAtTheSameLevel(counterPos,heightWorker)==1) {
-                worker.setActualBox(pos);
-                worker.setHeight(heightWorker+1);
-                //TO DO metodo o qualcosa per selezionare la pedina dell'avversario in modo tale da fare lo switch
+        if ( workerBox.reachable ( pos ) && counterPos != 4 ) {
+            int heightWorker = worker.getHeight();
+            Worker enemyWorker = pos.getWorker();
 
+            if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
+                worker.setActualBox ( pos );
+                worker.setHeight ( heightWorker + 1 );
+                enemyWorker.setActualBox ( workerBox );
+                enemyWorker.setHeight ( counterPos - 1 );
                 return true;
             }
-            else if (actualGod.upDownOrStayAtTheSameLevel(counterPos,heightWorker)==2){
-                worker.setActualBox(pos);
-                worker.setHeight(counterPos);
-
+            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ){
+                worker.setActualBox ( pos );
+                worker.setHeight ( counterPos );
+                enemyWorker.setActualBox ( workerBox );
+                enemyWorker.setHeight ( heightWorker );
                 return true;
             }
-            else if (actualGod.upDownOrStayAtTheSameLevel(counterPos,heightWorker)==3) {
-                worker.setActualBox(pos);
-
+            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
+                worker.setActualBox ( pos );
+                enemyWorker.setActualBox ( workerBox );
                 return true;
             }
         }
@@ -94,7 +107,7 @@ public class MoveEffect extends GodDecorator {
      * @param pos Position on the board where the worker wants to go
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
-    public boolean moveTwice (Worker worker, Box pos) {
+    public boolean moveTwice ( Worker worker, Box pos ) {
         return false;
     }
 
@@ -105,49 +118,47 @@ public class MoveEffect extends GodDecorator {
      * @param pos Position on the board where the worker wants to go
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
-    public boolean shiftWorker(Worker worker, Box pos) {
-        int counterPos=pos.getCounter();
-        Box workerBox=worker.getActualBox();
-        Box newEnemyPosition; //Devo fare new box?
-        if(workerBox.reachable(pos) && counterPos!=4) {
+    public boolean shiftWorker ( Worker worker, Box pos ) {
+        int counterPos = pos.getCounter();
+        Box workerBox = worker.getActualBox();
+        Box newEnemyPosition;
+
+        if ( workerBox.reachable( pos ) && counterPos != 4 ) {
             int heightWorker=worker.getHeight();
+            Worker enemyWorker = pos.getWorker();
 
-            if(actualGod.upDownOrStayAtTheSameLevel(counterPos,heightWorker)==1) {
-                newEnemyPosition=directionControl(worker, pos);
-                if (newEnemyPosition.getRow()>=0 && newEnemyPosition.getRow()<=4 && newEnemyPosition.getColumn()>=0 && newEnemyPosition.getColumn()<=4) {
-                    if (newEnemyPosition.notWorker() && newEnemyPosition.getCounter()!=4) {
-                        //TO DO metodo o qualcosa per selezionare la pedina dell'avversario in modo tale da spostarla in newEnemyPosition
-                        //Settare poi tutti i counter
-                        worker.setActualBox(pos);
-                        worker.setHeight(heightWorker+1);
-
+            if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
+                newEnemyPosition = directionControl ( worker, pos );
+                if ( newEnemyPosition.getRow() >= 0 && newEnemyPosition.getRow() <= 4 && newEnemyPosition.getColumn() >=0 && newEnemyPosition.getColumn() <= 4 ) {
+                    if ( newEnemyPosition.notWorker() && newEnemyPosition.getCounter() != 4 ) {
+                        enemyWorker.setActualBox ( newEnemyPosition );
+                        enemyWorker.setHeight ( newEnemyPosition.getCounter() );
+                        worker.setActualBox ( pos );
+                        worker.setHeight ( heightWorker + 1 );
                         return true;
                     }
                 }
                 return false;
             }
-            else if (actualGod.upDownOrStayAtTheSameLevel(counterPos,heightWorker)==2){
-                newEnemyPosition=directionControl(worker, pos);
-                if (newEnemyPosition.getRow()>=0 && newEnemyPosition.getRow()<=4 && newEnemyPosition.getColumn()>=0 && newEnemyPosition.getColumn()<=4) {
-                    if (newEnemyPosition.notWorker() && newEnemyPosition.getCounter()!=4) {
-                        //TO DO metodo o qualcosa per selezionare la pedina dell'avversario in modo tale da spostarla in newEnemyPosition
-                        //Settare poi tutti i counter
-                        worker.setActualBox(pos);
-                        worker.setHeight(counterPos);
-
+            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ) {
+                newEnemyPosition = directionControl ( worker , pos );
+                if ( newEnemyPosition.getRow() >= 0 && newEnemyPosition.getRow() <= 4 && newEnemyPosition.getColumn() >= 0 && newEnemyPosition.getColumn() <= 4 ) {
+                    if ( newEnemyPosition.notWorker() && newEnemyPosition.getCounter() !=4 ) {
+                        enemyWorker.setActualBox ( newEnemyPosition );
+                        enemyWorker.setHeight ( newEnemyPosition.getCounter() );
+                        worker.setActualBox ( pos );
+                        worker.setHeight ( counterPos );
                         return true;
                     }
                 }
                 return false;
             }
-            else if (actualGod.upDownOrStayAtTheSameLevel(counterPos,heightWorker)==3) {
-                newEnemyPosition=directionControl(worker, pos);
-                if (newEnemyPosition.getRow()>=0 && newEnemyPosition.getRow()<=4 && newEnemyPosition.getColumn()>=0 && newEnemyPosition.getColumn()<=4) {
-                    if (newEnemyPosition.notWorker() && newEnemyPosition.getCounter()!=4) {
-                        //TO DO metodo o qualcosa per selezionare la pedina dell'avversario in modo tale da spostarla in newEnemyPosition
-                        //Settare poi tutti i counter
-                        worker.setActualBox(pos);
-
+            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
+                newEnemyPosition = directionControl ( worker, pos );
+                if ( newEnemyPosition.getRow() >= 0 && newEnemyPosition.getRow() <= 4 && newEnemyPosition.getColumn() >= 0 && newEnemyPosition.getColumn() <= 4 ) {
+                    if ( newEnemyPosition.notWorker() && newEnemyPosition.getCounter() != 4) {
+                        enemyWorker.setActualBox ( newEnemyPosition );
+                        worker.setActualBox ( pos );
                         return true;
                     }
                 }
@@ -165,8 +176,8 @@ public class MoveEffect extends GodDecorator {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock(Worker worker, Box pos, String godName) {
-        return super.moveBlock(worker, pos, godName);
+    public boolean moveBlock ( Worker worker, Box pos, String godName ) {
+        return super.moveBlock ( worker, pos, godName );
     }
 
     /**
@@ -177,8 +188,8 @@ public class MoveEffect extends GodDecorator {
      * @return False if the player doesn't win; true if the player wins
      */
     @Override
-    public boolean checkWin(Box initialPos, Box finalBox, String godName) {
-        return false;
+    public boolean checkWin ( Box initialPos, Box finalBox, String godName ) {
+        return super.checkWin ( initialPos, finalBox, godName );
     }
 
     @Override
@@ -192,22 +203,22 @@ public class MoveEffect extends GodDecorator {
      * @param pos Position on the board where the worker builds a building block
      * @return Box presenting the new enemy worker position
      */
-    public Box directionControl(Worker worker, Box pos) {
-        Box workerPos=worker.getActualBox();
-        int newColumn=pos.getColumn();
-        int newRow=pos.getRow();
-        if (pos.getColumn()-workerPos.getColumn()==1) { //va a destra
-            newColumn=newColumn+1;
+    public Box directionControl ( Worker worker, Box pos ) {
+        Box workerPos = worker.getActualBox();
+        int newColumn = pos.getColumn();
+        int newRow = pos.getRow();
+        if ( pos.getColumn() - workerPos.getColumn() == 1 ) { //va a destra
+            newColumn = newColumn + 1;
         }
-        else if (workerPos.getColumn()-pos.getColumn()==1) {//va a sinistra
-            newColumn=newColumn-1;
+        else if ( workerPos.getColumn() - pos.getColumn() == 1 ) {//va a sinistra
+            newColumn = newColumn - 1;
         }
 
-        if (pos.getRow()-workerPos.getRow()==1) {//va sotto
-            newRow=newRow+1;
+        if ( pos.getRow() - workerPos.getRow() == 1 ) {//va sotto
+            newRow = newRow + 1;
         }
-        else if (workerPos.getRow()-pos.getRow()==1) {//va sopra
-            newRow=newRow-1;
+        else if ( workerPos.getRow() - pos.getRow() == 1 ) {//va sopra
+            newRow = newRow - 1;
         }
         //pos.setRow(newRow);
         //pos.setColumn(newColumn);

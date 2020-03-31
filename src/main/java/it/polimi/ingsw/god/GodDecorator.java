@@ -8,8 +8,8 @@ import it.polimi.ingsw.Worker;
  */
 public abstract class GodDecorator implements God {
     protected God newGod;
-    public GodDecorator(God newGod) {
-        this.newGod=newGod;
+    public GodDecorator ( God newGod ) {
+        this.newGod = newGod;
     }
 
     /**
@@ -20,8 +20,8 @@ public abstract class GodDecorator implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker(Worker worker, Box pos, String godName) {
-        return this.newGod.moveWorker(worker, pos, godName);
+    public boolean moveWorker ( Worker worker, Box pos, String godName ) {
+        return this.newGod.moveWorker ( worker, pos, godName );
     }
 
     /**
@@ -32,8 +32,8 @@ public abstract class GodDecorator implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock(Worker worker, Box pos, String godName) {
-        return this.newGod.moveBlock(worker, pos, godName);
+    public boolean moveBlock ( Worker worker, Box pos, String godName ) {
+        return this.newGod.moveBlock ( worker, pos, godName );
     }
 
     /**
@@ -44,7 +44,7 @@ public abstract class GodDecorator implements God {
      * @return
      */
     @Override
-    public boolean checkWin(Box initialPos, Box finalBox, String godName) {
+    public boolean checkWin ( Box initialPos, Box finalBox, String godName ) {
         return false;
     }
 }
