@@ -28,7 +28,6 @@ public class Gamer {
     private Worker myWorkers[];
     GamerStateManager gamerManager = new GamerStateManager();
 
-
     /**
      * Constructor with name and board as parameters
      * @param age
@@ -37,8 +36,8 @@ public class Gamer {
     Gamer(String name, int age){
         this.name=name;
         myWorkers= new Worker[2];
-        /*myWorkers[0]= new Worker();
-        myWorkers[1]= new Worker();*/
+        myWorkers[0]= new Worker(1,name);
+        myWorkers[1]= new Worker(2,name);
         this.age=age;
         myGod=null;
     }
@@ -82,9 +81,9 @@ public class Gamer {
      * @return true if initialization is successful, else false
      */
     //ELISA MANNAGGIA COSA GLIELA PASSI A FARE LA BOX????
+    //MANNACCCCCCCCCIA
     public boolean initializeWorker(int index, Box requestedBox){
         if(myWorkers[index-1].initializePos(requestedBox)==true){
-            myWorkers[index-1].setWorkerId(index);
             return true;
         }
         return false;
@@ -108,10 +107,10 @@ public class Gamer {
      * @param boardToControl
      * @return 0 if you can't build otherwise it will return the index of the worker nearby
      */
-    public int checkPossibleBuild(Box finalBox, Board boardToControl,String gamerName){
+    public int checkPossibleBuild(Box finalBox, Board boardToControl){
         for(int i=finalBox.getRow()-1;i<=finalBox.getRow()+1;i++){
             for(int j=finalBox.getColumn()-1;j<=finalBox.getColumn()+1;j++){
-                if(!boardToControl.getBox(i,j).notWorker() && boardToControl.getBox(i,j).getWorker().getGamerName()==gamerName){
+                if(!boardToControl.getBox(i,j).notWorker() && boardToControl.getBox(i,j).getWorker().getGamerName()==name){
                     return boardToControl.getBox(i,j).getWorker().getWorkerId();
                 }
             }
@@ -128,16 +127,15 @@ public class Gamer {
         return false;
     }
 
-    public boolean playBlock(Board board,int row, int column,String gamerName){
+    public boolean playBlock(Board board,int row, int column){
         boolean movedBlock=false;
 
-        int indexWorker=checkPossibleBuild(board.getBox(row,column),board, gamerName);
+        int indexWorker=checkPossibleBuild(board.getBox(row,column),board);
         movedBlock=myGod.moveBlock(myWorkers[indexWorker], board.getBox(row,column),myGod.getGodName());
         if(movedBlock==true){
             return true;
         }
         return false;
-
     }
 
     public boolean checkWin( int indexWorkerMoved,Board board, int row, int column){ //index già giusto

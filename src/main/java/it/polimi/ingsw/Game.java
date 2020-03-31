@@ -135,7 +135,7 @@ public class Game {
                 Scanner col2 = new Scanner(System.in);
                 int column2= Integer.parseInt(col2.nextLine());
 
-                movedBlock=gamers.get(i).playBlock(board,row2,column2,gamers.get(i).getName());
+                movedBlock=gamers.get(i).playBlock(board,row2,column2);
             }
 
             i++;

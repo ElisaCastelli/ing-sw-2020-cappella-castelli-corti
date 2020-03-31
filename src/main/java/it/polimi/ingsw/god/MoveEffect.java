@@ -209,8 +209,8 @@ public class MoveEffect extends GodDecorator {
         else if (workerPos.getRow()-pos.getRow()==1) {//va sopra
             newRow=newRow-1;
         }
-        pos.setRow(newRow);
-        pos.setColumn(newColumn);
+        //pos.setRow(newRow);
+        //pos.setColumn(newColumn);
         return pos;
     }
 }

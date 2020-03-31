@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
+import it.polimi.ingsw.building.*;
 
-import it.polimi.ingsw.building.Building;
 
 /**
  * This class represents the boxes that make up the board
@@ -54,22 +54,6 @@ public class Box {
         return column;
     }
 
-    /**
-     * Setter to change row
-     * @param row
-     */
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    /**
-     * Setter to change columnn
-     * @param column
-     */
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
     public Worker getWorker() {
         return worker;
     }
@@ -119,7 +103,6 @@ public class Box {
     //HO FATTO ILA!
     public void setWorker(Worker worker){
         this.worker=worker;
-        this.worker.setActualBox(this);
     }
 
     /**

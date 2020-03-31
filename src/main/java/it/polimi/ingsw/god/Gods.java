@@ -40,7 +40,7 @@ public class Gods implements God {
         Box boxWorker=worker.getActualBox();
         int heightWorker=worker.getHeight();
         int counterPos=pos.getCounter();
-
+        //i puntatori sono giusti, pos puntatore alla box della board, boxWorker puntatore alla posizionne inziale tramite worker
         if (boxWorker.reachable(pos) && pos.notWorker() && counterPos!=4) {
 
             if (upDownOrStayAtTheSameLevel(counterPos,heightWorker)==1) {
