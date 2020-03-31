@@ -181,6 +181,11 @@ public class MoveEffect extends GodDecorator {
         return false;
     }
 
+    @Override
+    public String getGodName() {
+        return null;
+    }
+
     /**
      * This method controls the own worker direction so the enemy worker moves at the same direction
      * @param worker Which worker is applied the move

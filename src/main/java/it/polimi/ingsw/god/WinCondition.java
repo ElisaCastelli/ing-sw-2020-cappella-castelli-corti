@@ -42,4 +42,9 @@ public class WinCondition extends GodDecorator {
     public boolean checkWin(Box initialPos, Box finalBox, String godName) {
         return super.checkWin(initialPos, finalBox, godName);
     }
+
+    @Override
+    public String getGodName() {
+        return null;
+    }
 }
