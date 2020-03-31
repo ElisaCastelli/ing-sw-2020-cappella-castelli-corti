@@ -15,7 +15,7 @@ public class Game {
     /**
      * this is the array list of the players
      */
-    private ArrayList<Gamer> gamers;
+    private ArrayList<Player> players;
     /**
      * This integer attribute is the number of the players
      */
@@ -28,7 +28,7 @@ public class Game {
      */
     Game(){
         board= new Board();
-        gamers= new ArrayList<>();
+        players= new ArrayList<>();
         nPlayers=0;
         //finito=false;
     }
@@ -38,8 +38,8 @@ public class Game {
      */
     public void sortGamers(){
         for(int i=0;i<nPlayers-1;i++){
-            if(gamers.get(i).getAge()>gamers.get(i+1).getAge()){
-                gamers.get(i).swap(gamers.get(i+1));
+            if(players.get(i).getAge()>players.get(i+1).getAge()){
+                players.get(i).swap(players.get(i+1));
             }
         }
     }
@@ -50,7 +50,7 @@ public class Game {
      * Then it manages turns by alternating players until one player wins or each player dies
      */
     public void play(){
-        Gamer gamer;
+        Player player;
         int indexWorker=0;
         //players management
         System.out.println("Inserire numero di giocatore: ");
@@ -64,8 +64,8 @@ public class Game {
             Scanner gamerAge = new Scanner(System.in);
             int playerAge=Integer.parseInt(gamerAge.nextLine());
             ///TO DO!!!!! togliere board dal costruttore
-            gamer=new Gamer(nomePlayer, playerAge /*, board*/);
-            gamers.add(p,gamer);
+            player=new Player(nomePlayer, playerAge);
+            players.add(p,player);
         }
         //TO DO gamers.sort()
         sortGamers();
@@ -88,7 +88,7 @@ public class Game {
                     System.out.print("Colonna dove voglio muovermi: ");
                     Scanner c = new Scanner(System.in);
                     int column = Integer.parseInt(c.nextLine());
-                    workerCorrect=gamers.get(p).initializeWorker(indexWorker, board.getBox(row, column));
+                    workerCorrect=players.get(p).initializeWorker(indexWorker, board.getBox(row, column));
                 }
             }
         }
@@ -116,11 +116,11 @@ public class Game {
                 System.out.println("Colonna dove voglio muovermi:");
                 Scanner col = new Scanner(System.in);
                 column = Integer.parseInt(col.nextLine());
-                movedWorker=gamers.get(i).playWorker(indexWorkerMoved-1,board,row,column);
+                movedWorker=players.get(i).playWorker(indexWorkerMoved-1,board,row,column);
 
             }
 
-            win=gamers.get(i).checkWin(indexWorkerMoved-1,board,row,column);
+            win=players.get(i).checkWin(indexWorkerMoved-1,board,row,column);
             if (win==true){
                 //cambia stato e termino
             }
@@ -135,11 +135,11 @@ public class Game {
                 Scanner col2 = new Scanner(System.in);
                 int column2= Integer.parseInt(col2.nextLine());
 
-                movedBlock=gamers.get(i).playBlock(board,row2,column2);
+                movedBlock=players.get(i).playBlock(board,row2,column2);
             }
 
             i++;
-            if(i==gamers.size()){
+            if(i==players.size()){
                 i=0;
             }
         }
