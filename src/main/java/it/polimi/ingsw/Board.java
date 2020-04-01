@@ -17,10 +17,10 @@ public class Board {
      * Constructor without parameters
      */
     Board(){
-        matrix= new Box[DIM][DIM];
-        for(int i=0;i<DIM;i++){
-            for(int j=0;j<DIM;j++){
-                matrix[i][j]=new Box(i,j);
+        matrix = new Box[DIM][DIM];
+        for(int i=0; i < DIM; i++){
+            for(int j = 0; j < DIM; j++){
+                matrix[i][j] = new Box(i, j);
             }
         }
     }
@@ -29,8 +29,8 @@ public class Board {
      * This method launches the method clear for each box of the matrix
      */
     public void clear(){
-        for(int i=0;i<DIM;i++){
-            for(int j=0;j<DIM;j++){
+        for(int i = 0; i < DIM; i++){
+            for(int j = 0; j < DIM; j++){
                 matrix[i][j].clear();
             }
         }
@@ -40,12 +40,12 @@ public class Board {
      * @return true if each box of the matrix is empty else return false
      */
     public boolean isEmpty(){
-        boolean trovato=false;
-        int i=0,j=0;
-        while(!trovato && i<DIM){
-                while(!trovato && j<DIM){
+        boolean trovato = false;
+        int i = 0, j = 0;
+        while(!trovato && i < DIM){
+                while(!trovato && j < DIM){
                     if(matrix[i][j].isEmpty()){
-                        trovato=true;
+                        trovato = true;
                     }
                     j++;
                 }

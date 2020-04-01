@@ -32,10 +32,10 @@ public class Box {
      * Constructor with parameters
      */
     public Box(int row, int column){ //controllare r e c da 0 a 5
-        building=new Building();
-        this.row=row;
-        this.column=column;
-        worker=null;
+        building = new Building();
+        this.row = row;
+        this.column = column;
+        worker  =null;
     }
 
     /**
@@ -66,7 +66,9 @@ public class Box {
      */
     public void clear(){
         building.clear();
-        if(worker!=null)worker.clear();
+        if( worker != null ){
+            worker.clear();
+        }
         worker=null;
     }
 
@@ -74,7 +76,9 @@ public class Box {
      * This method remove the worker from the box
      */
     public void clearWorker(){
-        if(worker!=null)worker.clear();
+        if( worker != null ){
+            worker.clear();
+        }
         worker=null;
     }
 
@@ -82,7 +86,9 @@ public class Box {
      * @return true if there is NOT a worker in the box, else return false
      */
     public boolean notWorker(){
-        if(worker==null) return true;
+        if( worker == null ){
+            return true;
+        }
         else return false;
     }
 
@@ -91,9 +97,9 @@ public class Box {
      * @return true if there isn't any building or worker, else return false
      */
     public boolean isEmpty(){
-        boolean vuota=true;
-        if(building.getArrayOfBlocks().size()!=0 || worker!=null){
-            vuota=false;
+        boolean vuota = true;
+        if((building.getArrayOfBlocks().size() != 0) || (worker != null)){
+            vuota = false;
         }
         return vuota;
     }
@@ -102,7 +108,7 @@ public class Box {
     //PERCHE IN QUESTO CASO NON CONTROLLA SE IL WORKER E' POSIZIONATO IN UN'ALTRA CASELLA
     //HO FATTO ILA!
     public void setWorker(Worker worker){
-        this.worker=worker;
+        this.worker = worker;
     }
 
     /**
@@ -118,11 +124,11 @@ public class Box {
      * @return true if boxToReach is reachable from this, else return false
      */
     public boolean reachable(Box boxToReach){
-        boolean reachable=false;
-        int row2= boxToReach.getRow();
-        int column2=boxToReach.getColumn();
-        if(this.row-row2<=1 || row2-this.row<=1 || column2-this.column<=1 || this.column-column2<=1){
-            reachable=true;
+        boolean reachable = false;
+        int row2 = boxToReach.getRow();
+        int column2 = boxToReach.getColumn();
+        if(this.row-row2 <= 1 || row2-this.row <= 1 || column2-this.column <= 1 || this.column-column2 <= 1){
+            reachable = true;
         }
         return reachable;
     }
@@ -131,13 +137,13 @@ public class Box {
      * This method prints the content of the box
      */
     public void print(){
-        if(worker!=null) {
+        if( worker!=null ) {
             System.out.print("["+worker.toString()+"] ");
         }
-        else if (building!=null){
+        else if ( building!=null ){
             building.print();
         }
-        System.out.print("["+building.getArrayOfBlocks().size()+"] ");
+        System.out.print("[" + building.getArrayOfBlocks().size() + "] ");
     }
 }
 
