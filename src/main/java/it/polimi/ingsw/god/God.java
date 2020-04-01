@@ -11,6 +11,8 @@ public interface God {
      * This attribute is the God name
      */
     String godName = "";
+    String description="";
+    String effect="";
 
     /**
      * This method moves the chosen worker to the new position on the board

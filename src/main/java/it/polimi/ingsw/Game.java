@@ -21,7 +21,7 @@ public class Game {
      * This integer attribute is the number of the players
      */
     private  int nPlayers;
-    private ArrayList<God> godsCard;
+    private ArrayList<God> godsArray;
 
     /**
      * Constructor without parameters
@@ -30,7 +30,7 @@ public class Game {
         board = new Board();
         players = new ArrayList<>();
         nPlayers = 0;
-        godsCard = new ArrayList<God>();
+        godsArray = new ArrayList<God>();
     }
 
     /**
@@ -81,6 +81,17 @@ public class Game {
         return Integer.parseInt(worker.nextLine());
     }
 
+    public God askGodCard(){
+        System.out.println(" Quale carta vuoi scegliere? ");
+        Scanner godCard = new Scanner(System.in);
+        String nameCard= godCard.nextLine();
+        return godsArray.get(godsArray.indexOf(nameCard));
+    }
+
+    public void parseXML(){
+
+    }
+
     /**
      * This method starts the game
      * First of all it manages the insertion of players and the setting of the workers for each of them
@@ -88,6 +99,7 @@ public class Game {
      */
     public void play(){
         Player player;
+        God godDrawn;
         int indexWorker = 0;
 
         //1- PLAYER MANAGEMENT
@@ -103,9 +115,15 @@ public class Game {
         //TO DO gamers.sort()
         sortGamers();
 
-        //CARDS MANAGEMENT
+        //2-CARDS MANAGEMENT
+        parseXML();
+        for(int p = 0; p < nPlayers; p++){
+            godDrawn = askGodCard();
+            players.get(p).setGod(godDrawn);
+        }
 
-        //WORKERS SETTING
+
+        //3-WORKERS SETTING
         //un ciclo per ogni giocatore
         for(int p = 0 ; p < nPlayers; p++){
             //due cicli per le pedine
@@ -126,7 +144,7 @@ public class Game {
 
         board.print();
 
-        //TURNS MANAGEMENT
+        //4-TURNS MANAGEMENT
         int i = 0;
         int indexWorkerMoved = 0;
         boolean movedWorker = false;
@@ -138,6 +156,7 @@ public class Game {
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i <= nPlayers){
             //boolean sipuoMuovere=gamers.get(i).checkPossibleMove(actualBox,board)
             //TO DO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
+            //Movimento
             while( !movedWorker ){
 
                 //GRAFICA
@@ -153,7 +172,7 @@ public class Game {
             if (win == true){
                 //cambia stato e termino
             }
-
+            //Costruzione
             while( !movedBlock ){
 
                 //GRAFICA

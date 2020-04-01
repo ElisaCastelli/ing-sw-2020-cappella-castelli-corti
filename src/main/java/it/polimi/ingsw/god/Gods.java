@@ -11,7 +11,8 @@ public class Gods implements God {
      * This attribute is the name of the God
      */
     private String godName;
-
+    private String description;
+    private String effect;
     /**
      * This constructor instantiates a God with the given godName
      * @param godName Name of the God to be instantiated

@@ -41,8 +41,8 @@ public class Player {
         myGod = null;
     }
 
-    public void setGod(String nameGod){
-        myGod = new Gods(nameGod);
+    public void setGod(God god){
+        myGod = god;
         //TO DO swtch in base al nome decidere decorator
     }
 
