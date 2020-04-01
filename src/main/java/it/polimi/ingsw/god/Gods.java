@@ -13,6 +13,8 @@ public class Gods implements God {
     private String godName;
     private String description;
     private String effect;
+
+
     /**
      * This constructor instantiates a God with the given godName
      * @param godName Name of the God to be instantiated
@@ -20,12 +22,32 @@ public class Gods implements God {
     /*public Gods(){
         godName="";
     }*/
+    public Gods(){};
     public Gods ( String godName ) {
         this.godName=godName;
     }
 
     public String getGodName() { return godName; }
     public void setGodName ( String godName ) { this.godName = godName; }
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String getEffect() {
+        return effect;
+    }
+
+    @Override
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
 
     /**
      * This method implements the basic worker move: a chosen worker moves to a new position that must be unoccupied

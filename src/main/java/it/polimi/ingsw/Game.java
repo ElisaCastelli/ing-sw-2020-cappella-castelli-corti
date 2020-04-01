@@ -1,8 +1,12 @@
 package it.polimi.ingsw;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import it.polimi.ingsw.god.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+
 
 /**
  * This is the main class that represents the game
@@ -85,10 +89,47 @@ public class Game {
         System.out.println(" Quale carta vuoi scegliere? ");
         Scanner godCard = new Scanner(System.in);
         String nameCard= godCard.nextLine();
-        return godsArray.get(godsArray.indexOf(nameCard));
+        God godDrawn = godsArray.get(godsArray.indexOf(nameCard));
+        godsArray.remove(godsArray.indexOf(nameCard));
+        return godDrawn;
     }
 
     public void parseXML(){
+        try {
+            File inputFile = new File("./god.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+
+            doc.getDocumentElement().normalize();
+
+            NodeList nList = doc.getElementsByTagName("god");
+
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+
+                God g= new Gods();
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    g.setGodName(eElement
+                            .getElementsByTagName("name")
+                            .item(0)
+                            .getTextContent());
+                    g.setDescription(eElement
+                            .getElementsByTagName("description")
+                            .item(0)
+                            .getTextContent());
+                    g.setEffect(eElement
+                            .getElementsByTagName("effect")
+                            .item(0)
+                            .getTextContent());
+                    godsArray.add(temp,g);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

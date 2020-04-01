@@ -41,4 +41,9 @@ public interface God {
      */
     boolean checkWin ( Box initialPos, Box finalBox, String godName );
     String getGodName();
+    void setGodName(String newName);
+    String getDescription();
+    void setDescription(String newDescription);
+    String getEffect();
+    void setEffect(String effect);
 }
