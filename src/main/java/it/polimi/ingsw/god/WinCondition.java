@@ -71,4 +71,29 @@ public class WinCondition extends GodDecorator {
     public String getGodName() {
         return null;
     }
+
+    @Override
+    public void setGodName(String newName) {
+
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setDescription(String newDescription) {
+
+    }
+
+    @Override
+    public String getEffect() {
+        return null;
+    }
+
+    @Override
+    public void setEffect(String effect) {
+
+    }
 }

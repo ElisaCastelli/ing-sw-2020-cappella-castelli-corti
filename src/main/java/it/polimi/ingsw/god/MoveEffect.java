@@ -192,11 +192,6 @@ public class MoveEffect extends GodDecorator {
         return super.checkWin ( initialPos, finalBox, godName );
     }
 
-    @Override
-    public String getGodName() {
-        return null;
-    }
-
     /**
      * This method controls the own worker direction so the enemy worker moves at the same direction
      * @param worker Which worker is applied the move
@@ -223,5 +218,34 @@ public class MoveEffect extends GodDecorator {
         //pos.setRow(newRow);
         //pos.setColumn(newColumn);
         return pos;
+    }
+    @Override
+    public String getGodName() {
+        return null;
+    }
+
+    @Override
+    public void setGodName(String newName) {
+
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setDescription(String newDescription) {
+
+    }
+
+    @Override
+    public String getEffect() {
+        return null;
+    }
+
+    @Override
+    public void setEffect(String effect) {
+
     }
 }

@@ -6,13 +6,13 @@ public class BuildingTest extends TestCase {
     Building buildingTest=new Building();
 
     public void testBuild() {
-        buildingTest.build(1);
+        buildingTest.build();
         assertEquals("Base{blockName='Base'}",buildingTest.getBlocksNameInArray(0));
-        buildingTest.build(2);
+        buildingTest.build();
         assertEquals("Middle{blockName='Middle'}",buildingTest.getBlocksNameInArray(1));
-        buildingTest.build(3);
+        buildingTest.build();
         assertEquals("Top{blockName='Top'}",buildingTest.getBlocksNameInArray(2));
-        buildingTest.build(4);
+        buildingTest.build();
         assertEquals("Dome{blockName='Dome'}",buildingTest.getBlocksNameInArray(3));
     }
 

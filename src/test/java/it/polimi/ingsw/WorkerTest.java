@@ -4,8 +4,8 @@ import junit.framework.TestCase;
 
 public class WorkerTest extends TestCase {
     Board boardTest=new Board();
-    Worker workerTest1= new Worker(1,boardTest.getBox(1,1));
-    Worker workerTest2=new Worker(2,boardTest.getBox(2,2));
+    Worker workerTest1= new Worker(1,"Paolo");
+    Worker workerTest2=new Worker(2,"Carlo");
 
 
     public void testGetHeight() {
