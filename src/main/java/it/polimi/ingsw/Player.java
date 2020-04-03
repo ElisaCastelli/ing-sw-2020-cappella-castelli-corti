@@ -43,7 +43,7 @@ public class Player {
 
     public void setGod(God god){
         myGod = god;
-        //TO DO swtch in base al nome decidere decorator
+        //TODO swtch in base al nome decidere decorator
     }
 
     public String getName() {
@@ -121,23 +121,17 @@ public class Player {
         return 0;
     }
 
-    public boolean playWorker(int indexWorker, Board board, int row, int column){
+    public int playWorker(int indexWorker, Board board, int row, int column){
         int movedWorker = 0;
         movedWorker = myGod.moveWorker( myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName() );
-        if( movedWorker == 1 ){
-            return true;
-        }
-        return false;
+        return  movedWorker;
     }
 
-    public boolean playBlock( Board board, int row, int column){
+    public int playBlock( Board board, int row, int column){
         int movedBlock = 0;
         int indexWorker = checkPossibleBuild(board.getBox(row, column), board);
         movedBlock = myGod.moveBlock( myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName() );
-        if( movedBlock == 1){
-            return true;
-        }
-        return false;
+        return movedBlock;
     }
 
     public boolean checkWin(int indexWorkerMoved, Board board, int row, int column){ //index già giusto

@@ -25,7 +25,7 @@ public class Dome implements Block {
     /**
      * set the identifier as an int
      * for now is not used
-     * TO DO remember that is not verified the identifier
+     * TODO remember that is not verified the identifier
      * @param blockIdentifier is the identifier for building correctly
      */
     public void setBlockIdentifier(int blockIdentifier) {

@@ -153,7 +153,7 @@ public class Game {
             player = new Player(nomePlayer, playerAge);
             players.add(p,player);
         }
-        //TO DO gamers.sort()
+        //TODO gamers.sort()
         sortGamers();
 
         //2-CARDS MANAGEMENT
@@ -188,23 +188,23 @@ public class Game {
         //4-TURNS MANAGEMENT
         int i = 0;
         int indexWorkerMoved = 0;
-        boolean movedWorker = false;
+        int movedWorker = 0;
         boolean win = false;
         boolean dead = false;
-        boolean movedBlock = false;
+        int movedBlock = 0;
         int row = 0, column = 0;
 
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i <= nPlayers){
             //boolean sipuoMuovere=gamers.get(i).checkPossibleMove(actualBox,board)
-            //TO DO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
+            //TODO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
             //Movimento
-            while( !movedWorker ){
+            while( movedWorker ==0){
 
                 //GRAFICA
                 indexWorkerMoved = askWorker();
                 row = askRow();
                 column = askColumn();
-
+//TODO DA RICHIEDERE AL GIOCATORE "PROMETEO " SE PRIMA VUOLE MUOVERE UN BLOCCO SE NON SALE
                 movedWorker = players.get(i).playWorker(indexWorkerMoved-1,board,row,column);
 
             }
@@ -214,7 +214,7 @@ public class Game {
                 //cambia stato e termino
             }
             //Costruzione
-            while( !movedBlock ){
+            while( movedBlock ==0 ){
 
                 //GRAFICA
                 int row2 = askRow();
