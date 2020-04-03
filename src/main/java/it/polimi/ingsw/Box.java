@@ -119,6 +119,14 @@ public class Box {
     }
 
     /**
+     * this method is used by Atlas to build a dome at any case
+     * @param domeIdentifier is set to 4 to identify the Dome
+     */
+    public void build(int domeIdentifier){
+        building.build(domeIdentifier);
+    };
+
+    /**
      * This method checks if the parameter box2 is reachable starting from this box
      * @param boxToReach is the box I want to reach
      * @return true if boxToReach is reachable from this, else return false

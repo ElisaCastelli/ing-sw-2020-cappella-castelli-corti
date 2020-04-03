@@ -82,13 +82,13 @@ public class Worker {
      * @return a boolean that is true if the worker is set in the requested position
      */
     public boolean initializePos(Box requestedBox){
-        if(requestedBox.notWorker()){
-            requestedBox.setWorker(this);
-            actualBox=requestedBox;
-            System.out.println("the box is now occupied by this worker");
+        if( requestedBox.notWorker () ){
+            requestedBox.setWorker( this );
+            actualBox=requestedBox ;
+            System.out.println( "the box is now occupied by this worker" );
             return true;
         }else {
-            System.out.println("the box is occupied");
+            System.out.println( "the box is occupied" );
             return false;
         }
     }

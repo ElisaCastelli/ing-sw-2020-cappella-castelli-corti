@@ -31,6 +31,14 @@ public class Building {
             //arrayOfBlocks.get(3).print();
         }
     }
+
+    /**
+     * this method is used by Atlas to build a dome at any case
+     * @param domeIdent is set to 4 to identify the Dome
+     */
+    public void build(int domeIdent){
+        arrayOfBlocks.add(getBlock(domeIdent));
+    }
     /**
      * @param blockIdentifier is an int passed by the method Build to build the rightful block
      * @return the block created to Build so that can be added to arrayOfBlocks
