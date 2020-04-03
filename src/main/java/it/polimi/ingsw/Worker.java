@@ -7,10 +7,10 @@ public class Worker {
     private String gamerName;
 
     public Worker(){
-        workerId=0;
-        height=0;
-        actualBox=null;
-        gamerName="";
+        workerId = 0;
+        height = 0;
+        actualBox = null;
+        gamerName = "";
     }
 
     public Worker(int workerId, String gamerName) {
@@ -81,7 +81,7 @@ public class Worker {
      * @param requestedBox is the box where the player wants to put the worker
      * @return a boolean that is true if the worker is set in the requested position
      */
-    public boolean initializePos(Box requestedBox){
+    public boolean initializePos( Box requestedBox ){
         if( requestedBox.notWorker () ){
             requestedBox.setWorker( this );
             actualBox=requestedBox ;

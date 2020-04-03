@@ -84,19 +84,19 @@ public class Player {
      * @param requestedBox is the box where i want to set the worker
      * @return true if initialization is successful, else false
      */
-    public boolean initializeWorker(int index, Box requestedBox){
-        if(myWorkers[index-1].initializePos(requestedBox)==true){
+    public boolean initializeWorker( int index , Box requestedBox){
+        if( myWorkers[ index - 1 ].initializePos( requestedBox ) == true ){
             return true;
         }
         return false;
     }
 
-    public boolean checkPossibleMove(Box actualBox,Board boardToControl){
-        for(int i = actualBox.getRow()-1; i <= actualBox.getRow()+1; i++){
-            for(int j = actualBox.getColumn()-1; j <= actualBox.getColumn()+1; j++){
-                if((boardToControl.getBox(i,j).notWorker() && (boardToControl.getBox(i,j).getCounter() != 4))
-                        && (((boardToControl.getBox(i,j).getCounter() - actualBox.getCounter()) == 1)
-                        || ((actualBox.getCounter()-boardToControl.getBox(i,j).getCounter()) >= 0))){
+    public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
+        for( int i = actualBox.getRow() - 1 ; i <= actualBox.getRow() + 1 ; i++ ){
+            for( int j = actualBox.getColumn() - 1; j <= actualBox.getColumn() + 1 ; j++){
+                if( ( boardToControl.getBox( i , j ).notWorker() && ( boardToControl.getBox( i , j ).getCounter() != 4))
+                        && ( ( ( boardToControl.getBox( i , j ).getCounter() - actualBox.getCounter() ) == 1)
+                        || ( ( actualBox.getCounter() - boardToControl.getBox( i , j ).getCounter() ) >= 0))){
                     return true;
                 }
             }
@@ -110,39 +110,38 @@ public class Player {
      * @param boardToControl
      * @return 0 if you can't build otherwise it will return the index of the worker nearby
      */
-    public int checkPossibleBuild(Box finalBox, Board boardToControl){
-        for(int i = finalBox.getRow()-1; i <= finalBox.getRow()+1; i++){
-            for(int j = finalBox.getColumn()-1; j <= finalBox.getColumn()+1; j++){
-                if(!boardToControl.getBox(i,j).notWorker() && boardToControl.getBox(i,j).getWorker().getGamerName() == name){
-                    return boardToControl.getBox(i,j).getWorker().getWorkerId();
+    public int checkPossibleBuild( Box finalBox, Board boardToControl ){
+        for( int i = finalBox.getRow() - 1; i <= finalBox.getRow() + 1 ; i++ ){
+            for( int j = finalBox.getColumn() - 1; j <= finalBox.getColumn() + 1 ; j++ ){
+                if( !boardToControl.getBox( i , j ).notWorker() && boardToControl.getBox( i , j ).getWorker().getGamerName() == name){
+                    return boardToControl.getBox( i , j ).getWorker().getWorkerId();
                 }
             }
         }
         return 0;
     }
 
-    public boolean playWorker(int indexWorker, Board board, int row,int column){
-        boolean movedWorker = false;
-        movedWorker = myGod.moveWorker(myWorkers[indexWorker], board.getBox(row,column), myGod.getGodName());
-        if(movedWorker==true){
+    public boolean playWorker(int indexWorker, Board board, int row, int column){
+        int movedWorker = 0;
+        movedWorker = myGod.moveWorker( myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName() );
+        if( movedWorker == 1 ){
             return true;
         }
         return false;
     }
 
-    public boolean playBlock(Board board,int row, int column){
-        boolean movedBlock = false;
-
+    public boolean playBlock( Board board, int row, int column){
+        int movedBlock = 0;
         int indexWorker = checkPossibleBuild(board.getBox(row, column), board);
-        movedBlock = myGod.moveBlock(myWorkers[indexWorker], board.getBox(row,column), myGod.getGodName());
-        if(movedBlock == true){
+        movedBlock = myGod.moveBlock( myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName() );
+        if( movedBlock == 1){
             return true;
         }
         return false;
     }
 
     public boolean checkWin(int indexWorkerMoved, Board board, int row, int column){ //index già giusto
-        if(myGod.checkWin(board.getBox(row, column), myWorkers[indexWorkerMoved].getActualBox(),myGod.getGodName()) == true){
+        if( myGod.checkWin( board.getBox ( row , column ) , myWorkers[ indexWorkerMoved ].getActualBox() , myGod.getGodName() ) == true){
             //gamerManager.moveToWin();
             return true;
         }

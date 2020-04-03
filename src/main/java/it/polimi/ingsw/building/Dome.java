@@ -7,8 +7,8 @@ public class Dome implements Block {
     private String blockName;
 
     public Dome() {
-        this.blockIdentifier =4;
-        this.blockName="Dome";
+        this.blockIdentifier = 4;
+        this.blockName = "Dome";
     }
     /**
      * @return the int of the identifier of the block
