@@ -43,6 +43,9 @@ public interface God {
      * @return False if the player doesn't win; true if the player wins
      */
     boolean checkWin ( Box initialPos, Box finalBox, String godName );
+
+    int upDownOrStayAtTheSameLevel ( int counterBuilding, int counterWorker );
+
     String getGodName();
     void setGodName(String newName);
     String getDescription();

@@ -48,6 +48,11 @@ public abstract class GodDecorator implements God {
         return false;
     }
 
+    @Override
+    public int upDownOrStayAtTheSameLevel(int counterBuilding, int counterWorker) {
+        return this.newGod.upDownOrStayAtTheSameLevel( counterBuilding, counterWorker);
+    }
+
     public GodDecorator() {
         super();
     }
@@ -56,57 +61,46 @@ public abstract class GodDecorator implements God {
     public String getGodName() {
         return null;
     }
-
     @Override
     public void setGodName(String newName) {
 
     }
-
     @Override
     public String getDescription() {
         return null;
     }
-
     @Override
     public void setDescription(String newDescription) {
 
     }
-
     @Override
     public String getEffect() {
         return null;
     }
-
     @Override
     public void setEffect(String effect) {
 
     }
-
     @Override
     public Worker getLastWorker() {
         return null;
     }
-
     @Override
     public void setLastWorker(Worker lastWorker) {
 
     }
-
     @Override
     public Box getLastBox() {
         return null;
     }
-
     @Override
     public void setLastBox(Box lastBox) {
 
     }
-
     @Override
     public String getLastGod() {
         return null;
     }
-
     @Override
     public void setLastGod(String lastGod) {
 

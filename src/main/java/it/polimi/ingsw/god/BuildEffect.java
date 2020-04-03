@@ -23,7 +23,7 @@ public class BuildEffect extends GodDecorator {
     }
 
     /**
-     * This method calls the basic moveBlock in the Gods class
+     *
      * @param worker Which worker is applied the move
      * @param pos Position on the board where the worker builds a building block
      * @param godName The God name card
@@ -31,26 +31,41 @@ public class BuildEffect extends GodDecorator {
      */
     @Override
     public int moveBlock ( Worker worker, Box pos, String godName ) {
-        /*if ( godName.equals ( "Atlas" ) ) {
-        //Creare un metodo che mi faccia costruire una cupola ovunque voglia e capire come dire che si vuole costruire una cupola e non il blocco giusto della sequenza
-            if (  ) {
-                return true;
+        if ( godName.equals ( "Atlas" ) ) {
+        //Capire come dire che si vuole costruire una cupola e non il blocco giusto della sequenza
+            if ( pos.notWorker() ) {
+                Box boxWorker = worker.getActualBox();
+                int counterPos = pos.getCounter();
+
+                if ( boxWorker.reachable(pos) && pos.notWorker() && counterPos != 4 ) {
+                    pos.build(4);
+                    return 1;
+                }
+                return 0;
             }
             else {
                 return super.moveBlock ( worker, pos, godName );
             }
         }
         else if ( godName.equals ( "Demeter" ) ) {
-        //Capire come costruire due volte, ma non nello stesso posto
-            if (  ) {
-                return true;
+            int returnMoveBlock;
+            if ( super.getLastWorker() == null ){
+                returnMoveBlock = super.moveBlock ( worker, pos, godName );
+                if ( returnMoveBlock == 1 ) {
+                    super.setLastWorker( worker );
+                    super.setLastBox( pos );
+                    return 2;
+                }
             }
             else {
-                return super.moveBlock ( worker, pos, godName );
+                Box oldBox = super.getLastBox();
+                if ( oldBox != pos ) {
+                    return super.moveBlock( worker, pos, godName);
+                }
             }
-         }*/
-         else if ( godName.equals ( "Hephaestus" ) ) {
-         //Capire come costruire due blocchi nella stessa casella (1-2 o 2-3 livello, no dome)
+            return 0;
+         }
+        else if ( godName.equals ( "Hephaestus" ) ) {
             int returnMoveBlock;
             if ( super.getLastWorker() == null ){
                 returnMoveBlock = super.moveBlock ( worker, pos, godName );
@@ -98,65 +113,58 @@ public class BuildEffect extends GodDecorator {
     }
 
     @Override
+    public int upDownOrStayAtTheSameLevel(int counterBuilding, int counterWorker) {
+        return super.upDownOrStayAtTheSameLevel(counterBuilding, counterWorker);
+    }
+
+    @Override
     public String getGodName() {
         return null;
     }
-
     @Override
     public void setGodName(String newName) {
 
     }
-
     @Override
     public String getDescription() {
         return null;
     }
-
     @Override
     public void setDescription(String newDescription) {
 
     }
-
     @Override
     public String getEffect() {
         return null;
     }
-
     @Override
     public void setEffect(String effect) {
 
     }
-
     @Override
     public int hashCode() {
         return super.hashCode();
     }
-
     @Override
     public Worker getLastWorker() {
         return null;
     }
-
     @Override
     public void setLastWorker(Worker lastWorker) {
 
     }
-
     @Override
     public Box getLastBox() {
         return null;
     }
-
     @Override
     public void setLastBox(Box lastBox) {
 
     }
-
     @Override
     public String getLastGod() {
         return null;
     }
-
     @Override
     public void setLastGod(String lastGod) {
 

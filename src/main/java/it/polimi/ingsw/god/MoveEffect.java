@@ -11,7 +11,6 @@ public class MoveEffect extends GodDecorator {
     public MoveEffect ( God newGod ) {
         super ( newGod );
     }
-    public Gods actualGod;
 
     /**
      *
@@ -33,14 +32,23 @@ public class MoveEffect extends GodDecorator {
                 return super.moveWorker ( worker, pos, godName );
             }
         }
-        /*else if ( godName.equals ( "Artemis" ) ) {
-            if ( ) { Capire come fare la doppia mossa sullo stesso worker
-                return moveWorker ( worker, pos );
+        else if ( godName.equals ( "Artemis" ) ) {
+            if ( super.getLastWorker() == null ){
+                if ( super.moveWorker ( worker, pos, godName ) == 1 ) {
+                    super.setLastWorker( worker );
+                    super.setLastBox( worker.getActualBox() );
+                    return 2;
+                }
             }
             else {
-                return moveTwice ( worker, pos );
+                Box oldBox = super.getLastBox();
+                Worker oldWorker = super.getLastWorker();
+                if ( oldBox != pos && oldWorker == worker ) {
+                    return super.moveWorker( worker, pos, godName);
+                }
             }
-        }*/
+            return 0;
+        }
         else if ( godName.equals ( "Athena" ) ) {
             if ( pos.getCounter() - worker.getHeight() == 1 )
             {//Capire come tenere conto che una volta che atena sale gli altri giocatori non possono salire durante il loro turno
@@ -81,37 +89,26 @@ public class MoveEffect extends GodDecorator {
             int heightWorker = worker.getHeight();
             Worker enemyWorker = pos.getWorker();
 
-            if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
+            if ( super.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
                 worker.setActualBox ( pos );
                 worker.setHeight ( heightWorker + 1 );
                 enemyWorker.setActualBox ( workerBox );
                 enemyWorker.setHeight ( counterPos - 1 );
                 return true;
             }
-            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ){
+            else if ( super.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ){
                 worker.setActualBox ( pos );
                 worker.setHeight ( counterPos );
                 enemyWorker.setActualBox ( workerBox );
                 enemyWorker.setHeight ( heightWorker );
                 return true;
             }
-            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
+            else if ( super.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
                 worker.setActualBox ( pos );
                 enemyWorker.setActualBox ( workerBox );
                 return true;
             }
         }
-        return false;
-    }
-
-    /**
-     * This method implements the ability to move the worker twice, but it must not move back to the initial place
-     * (Artemis ability)
-     * @param worker Which worker is applied the move
-     * @param pos Position on the board where the worker wants to go
-     * @return False if the move is not possible; true if we do the move because it passes all the controls
-     */
-    public boolean moveTwice ( Worker worker, Box pos ) {
         return false;
     }
 
@@ -131,7 +128,7 @@ public class MoveEffect extends GodDecorator {
             int heightWorker=worker.getHeight();
             Worker enemyWorker = pos.getWorker();
 
-            if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
+            if ( super.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
                 newEnemyPosition = directionControl ( worker, pos );
                 if ( newEnemyPosition.getRow() >= 0 && newEnemyPosition.getRow() <= 4 && newEnemyPosition.getColumn() >=0 && newEnemyPosition.getColumn() <= 4 ) {
                     if ( newEnemyPosition.notWorker() && newEnemyPosition.getCounter() != 4 ) {
@@ -144,7 +141,7 @@ public class MoveEffect extends GodDecorator {
                 }
                 return false;
             }
-            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ) {
+            else if ( super.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ) {
                 newEnemyPosition = directionControl ( worker , pos );
                 if ( newEnemyPosition.getRow() >= 0 && newEnemyPosition.getRow() <= 4 && newEnemyPosition.getColumn() >= 0 && newEnemyPosition.getColumn() <= 4 ) {
                     if ( newEnemyPosition.notWorker() && newEnemyPosition.getCounter() !=4 ) {
@@ -157,7 +154,7 @@ public class MoveEffect extends GodDecorator {
                 }
                 return false;
             }
-            else if ( actualGod.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
+            else if ( super.upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
                 newEnemyPosition = directionControl ( worker, pos );
                 if ( newEnemyPosition.getRow() >= 0 && newEnemyPosition.getRow() <= 4 && newEnemyPosition.getColumn() >= 0 && newEnemyPosition.getColumn() <= 4 ) {
                     if ( newEnemyPosition.notWorker() && newEnemyPosition.getCounter() != 4) {
@@ -223,68 +220,36 @@ public class MoveEffect extends GodDecorator {
         //pos.setColumn(newColumn);
         return pos;
     }
+
     @Override
-    public String getGodName() {
-        return null;
+    public int upDownOrStayAtTheSameLevel(int counterBuilding, int counterWorker) {
+        return super.upDownOrStayAtTheSameLevel(counterBuilding, counterWorker);
     }
 
     @Override
-    public void setGodName(String newName) {
-
-    }
-
+    public String getGodName() { return null; }
     @Override
-    public String getDescription() {
-        return null;
-    }
-
+    public void setGodName(String newName) {}
     @Override
-    public void setDescription(String newDescription) {
-
-    }
-
+    public String getDescription() { return null; }
     @Override
-    public String getEffect() {
-        return null;
-    }
-
+    public void setDescription(String newDescription) {}
     @Override
-    public void setEffect(String effect) {
-
-    }
-
+    public String getEffect() { return null; }
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
+    public void setEffect(String effect) {}
     @Override
-    public Worker getLastWorker() {
-        return null;
-    }
-
+    public int hashCode() { return super.hashCode(); }
     @Override
-    public void setLastWorker(Worker lastWorker) {
-
-    }
-
+    public Worker getLastWorker() { return null; }
     @Override
-    public Box getLastBox() {
-        return null;
-    }
-
+    public void setLastWorker(Worker lastWorker) {}
     @Override
-    public void setLastBox(Box lastBox) {
-
-    }
-
+    public Box getLastBox() { return null; }
     @Override
-    public String getLastGod() {
-        return null;
-    }
-
+    public void setLastBox(Box lastBox) {}
     @Override
-    public void setLastGod(String lastGod) {
-
-    }
+    public String getLastGod() { return null; }
+    @Override
+    public void setLastGod(String lastGod) {}
 }

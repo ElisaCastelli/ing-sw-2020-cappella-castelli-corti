@@ -21,14 +21,15 @@ public class Gods implements God {
     private Box lastBox;
     private String lastGod;
 
-    /**
-     * This constructor instantiates a God with the given godName
-     * @param godName Name of the God to be instantiated
-     */
+
     /*public Gods(){
         godName="";
     }*/
     public Gods(){};
+    /**
+     * This constructor instantiates a God with the given godName
+     * @param godName Name of the God to be instantiated
+     */
     public Gods ( String godName ) { this.godName=godName; }
 
     public String getGodName() { return godName; }
@@ -103,8 +104,6 @@ public class Gods implements God {
                     worker.setActualBox ( pos );
                     return 1;
             }
-            //se si prova un caso in cui non entra in nessuna delle tre condizioni significa che la mossa non è valida
-            //in quanto sale di troppi livelli (upDownOrStayAtTheSameLevel==4)
         }
         return 0;
     }
