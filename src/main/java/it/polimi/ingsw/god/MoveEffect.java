@@ -21,11 +21,13 @@ public class MoveEffect extends GodDecorator {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker ( Worker worker, Box pos, String godName ) {
+    public int moveWorker ( Worker worker, Box pos, String godName ) {
 
         if ( godName.equals ( "Apollo" ) ) {
             if ( !pos.notWorker() ) {
-                return switchWorkers ( worker, pos );
+                if ( switchWorkers ( worker, pos ) )
+                    return 1;
+                return 0;
             }
             else {
                 return super.moveWorker ( worker, pos, godName );
@@ -44,7 +46,7 @@ public class MoveEffect extends GodDecorator {
             {//Capire come tenere conto che una volta che atena sale gli altri giocatori non possono salire durante il loro turno
                 worker.setHeight ( pos.getCounter() );
                 worker.setActualBox ( pos );
-                return true;
+                return 1; //Sbagliato (forse)
             }
             else {
                 return moveWorker ( worker, pos, godName );
@@ -52,14 +54,16 @@ public class MoveEffect extends GodDecorator {
         }
         else if ( godName.equals ( "Minotaur" ) ) {
             if ( !pos.notWorker() ) {
-                return shiftWorker ( worker, pos );
+                if ( shiftWorker ( worker, pos ) )
+                    return 1;
+                return 0;
             }
             else
             {
                 return super.moveWorker ( worker, pos, godName );
             }
         }
-        return false;
+        return 0;
     }
 
     /**
@@ -176,7 +180,7 @@ public class MoveEffect extends GodDecorator {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock ( Worker worker, Box pos, String godName ) {
+    public int moveBlock ( Worker worker, Box pos, String godName ) {
         return super.moveBlock ( worker, pos, godName );
     }
 
@@ -246,6 +250,41 @@ public class MoveEffect extends GodDecorator {
 
     @Override
     public void setEffect(String effect) {
+
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public Worker getLastWorker() {
+        return null;
+    }
+
+    @Override
+    public void setLastWorker(Worker lastWorker) {
+
+    }
+
+    @Override
+    public Box getLastBox() {
+        return null;
+    }
+
+    @Override
+    public void setLastBox(Box lastBox) {
+
+    }
+
+    @Override
+    public String getLastGod() {
+        return null;
+    }
+
+    @Override
+    public void setLastGod(String lastGod) {
 
     }
 }

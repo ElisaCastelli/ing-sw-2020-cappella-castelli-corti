@@ -14,6 +14,12 @@ public class Gods implements God {
     private String description;
     private String effect;
 
+    /**
+     * Last moves attributes
+     */
+    private Worker lastWorker;
+    private Box lastBox;
+    private String lastGod;
 
     /**
      * This constructor instantiates a God with the given godName
@@ -23,12 +29,29 @@ public class Gods implements God {
         godName="";
     }*/
     public Gods(){};
-    public Gods ( String godName ) {
-        this.godName=godName;
-    }
+    public Gods ( String godName ) { this.godName=godName; }
 
     public String getGodName() { return godName; }
     public void setGodName ( String godName ) { this.godName = godName; }
+    public Worker getLastWorker() {
+        return lastWorker;
+    }
+    public void setLastWorker(Worker lastWorker) {
+        this.lastWorker = lastWorker;
+    }
+    public Box getLastBox() {
+        return lastBox;
+    }
+    public void setLastBox(Box lastBox) {
+        this.lastBox = lastBox;
+    }
+    public String getLastGod() {
+        return lastGod;
+    }
+    public void setLastGod(String lastGod) {
+        this.lastGod = lastGod;
+    }
+
     @Override
     public String getDescription() {
         return description;
@@ -59,7 +82,7 @@ public class Gods implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker ( Worker worker, Box pos, String godName ) {
+    public int moveWorker ( Worker worker, Box pos, String godName ) {
         Box boxWorker = worker.getActualBox();
         int heightWorker = worker.getHeight();
         int counterPos = pos.getCounter();
@@ -69,21 +92,21 @@ public class Gods implements God {
             if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
                     worker.setHeight ( heightWorker + 1 );
                     worker.setActualBox ( pos );
-                    return true;
+                    return 1;
             }
             else if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ) {
                     worker.setHeight ( counterPos );
                     worker.setActualBox ( pos );
-                    return true;
+                    return 1;
             }
             else if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
                     worker.setActualBox ( pos );
-                    return true;
+                    return 1;
             }
             //se si prova un caso in cui non entra in nessuna delle tre condizioni significa che la mossa non è valida
             //in quanto sale di troppi livelli (upDownOrStayAtTheSameLevel==4)
         }
-        return false;
+        return 0;
     }
 
     /**
@@ -94,15 +117,15 @@ public class Gods implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock ( Worker worker, Box pos, String godName ) {
+    public int moveBlock ( Worker worker, Box pos, String godName ) {
         Box boxWorker = worker.getActualBox();
         int counterPos = pos.getCounter();
 
         if ( boxWorker.reachable(pos) && pos.notWorker() && counterPos != 4 ) {
             pos.build();
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
 
     /**
@@ -139,4 +162,6 @@ public class Gods implements God {
         }
         return 4;
     }
+
+
 }

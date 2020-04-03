@@ -11,8 +11,11 @@ public interface God {
      * This attribute is the God name
      */
     String godName = "";
-    String description="";
-    String effect="";
+    String description = "";
+    String effect = "";
+    Worker lastWorker = null;
+    Box lastBox = null;
+    String lastGod = "";
 
     /**
      * This method moves the chosen worker to the new position on the board
@@ -21,7 +24,7 @@ public interface God {
      * @param godName The God name card
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
-    boolean moveWorker ( Worker worker, Box pos, String godName );
+    int moveWorker ( Worker worker, Box pos, String godName );
 
     /**
      * This method builds a building block in a position on the board by a chosen worker
@@ -30,7 +33,7 @@ public interface God {
      * @param godName The God name card
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
-    boolean moveBlock ( Worker worker, Box pos, String godName );
+    int moveBlock ( Worker worker, Box pos, String godName );
 
     /**
      * This method checks if the player's won
@@ -46,4 +49,10 @@ public interface God {
     void setDescription(String newDescription);
     String getEffect();
     void setEffect(String effect);
+    Worker getLastWorker();
+    void setLastWorker(Worker lastWorker);
+    Box getLastBox();
+    void setLastBox(Box lastBox);
+    String getLastGod();
+    void setLastGod(String lastGod);
 }

@@ -20,7 +20,7 @@ public abstract class GodDecorator implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveWorker ( Worker worker, Box pos, String godName ) {
+    public int moveWorker ( Worker worker, Box pos, String godName ) {
         return this.newGod.moveWorker ( worker, pos, godName );
     }
 
@@ -32,7 +32,7 @@ public abstract class GodDecorator implements God {
      * @return False if the move is not possible; true if we do the move because it passes all the controls
      */
     @Override
-    public boolean moveBlock ( Worker worker, Box pos, String godName ) {
+    public int moveBlock ( Worker worker, Box pos, String godName ) {
         return this.newGod.moveBlock ( worker, pos, godName );
     }
 
@@ -46,5 +46,69 @@ public abstract class GodDecorator implements God {
     @Override
     public boolean checkWin ( Box initialPos, Box finalBox, String godName ) {
         return false;
+    }
+
+    public GodDecorator() {
+        super();
+    }
+
+    @Override
+    public String getGodName() {
+        return null;
+    }
+
+    @Override
+    public void setGodName(String newName) {
+
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setDescription(String newDescription) {
+
+    }
+
+    @Override
+    public String getEffect() {
+        return null;
+    }
+
+    @Override
+    public void setEffect(String effect) {
+
+    }
+
+    @Override
+    public Worker getLastWorker() {
+        return null;
+    }
+
+    @Override
+    public void setLastWorker(Worker lastWorker) {
+
+    }
+
+    @Override
+    public Box getLastBox() {
+        return null;
+    }
+
+    @Override
+    public void setLastBox(Box lastBox) {
+
+    }
+
+    @Override
+    public String getLastGod() {
+        return null;
+    }
+
+    @Override
+    public void setLastGod(String lastGod) {
+
     }
 }
