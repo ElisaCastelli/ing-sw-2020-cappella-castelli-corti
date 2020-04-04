@@ -44,6 +44,8 @@ public class MoveEffect extends GodDecorator {
                 Box oldBox = super.getLastBox();
                 Worker oldWorker = super.getLastWorker();
                 if ( oldBox != pos && oldWorker == worker ) {
+                    super.setLastWorker( null );
+                    super.setLastBox( null );
                     return super.moveWorker( worker, pos, godName);
                 }
             }

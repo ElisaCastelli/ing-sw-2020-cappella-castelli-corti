@@ -60,6 +60,8 @@ public class BuildEffect extends GodDecorator {
             else {
                 Box oldBox = super.getLastBox();
                 if ( oldBox != pos ) {
+                    super.setLastWorker( null );
+                    super.setLastBox( null );
                     return super.moveBlock( worker, pos, godName);
                 }
             }
@@ -82,6 +84,8 @@ public class BuildEffect extends GodDecorator {
                 Worker oldWorker = super.getLastWorker();
                 //Forse il worker potrebbe non essere lo stesso
                 if ( oldBox == pos && oldWorker == worker ) {
+                    super.setLastWorker( null );
+                    super.setLastBox( null );
                     return super.moveBlock( worker, pos, godName);
                 }
             }
