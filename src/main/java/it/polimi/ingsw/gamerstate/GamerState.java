@@ -9,4 +9,6 @@ public class GamerState {
     public boolean checkWin(Box boxReach, Box boxStart, String godName){return false;};
     public boolean checkPossibleMove( Box actualBox , Board boardToControl){ return false;};
     public int checkPossibleBuild( Box finalBox, Board boardToControl, String name ){ return 0;}
+    //TODO controlla valore di ritorno
+    public boolean checkWorkers(Box actualBoxW1, Box actualBoxW2, Board boardToControl){ return true;};
 }

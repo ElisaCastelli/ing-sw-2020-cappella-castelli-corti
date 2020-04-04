@@ -83,4 +83,7 @@ public class GamerStateManager {
     public int checkPossibleBuild( Box finalBox, Board boardToControl,  String name ){
         return currentState.checkPossibleBuild(finalBox, boardToControl,name);
     }
+    public boolean checkWorkers(Box actualBoxW1, Box actualBoxW2, Board boardToControl){
+            return currentState.checkWorkers(actualBoxW1, actualBoxW2, boardToControl);
+    }
 }

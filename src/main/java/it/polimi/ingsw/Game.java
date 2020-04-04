@@ -21,6 +21,11 @@ public class Game {
      * this is the array list of the players
      */
     private ArrayList<Player> players;
+
+    /**
+     * this is the array list of the players
+     */
+    private ArrayList<Player> playersDead;
     /**
      * This integer attribute is the number of the players
      */
@@ -39,6 +44,7 @@ public class Game {
     Game(){
         board = new Board();
         players = new ArrayList<>();
+        playersDead = new ArrayList<>();
         nPlayers = 0;
         godsArray = new ArrayList<God>();
         cardUsed = new ArrayList<God>();
@@ -175,10 +181,10 @@ public class Game {
         }
         for(int p = 0; p < nPlayers; p++){
             if(players.get(p).getMyGod().getGodName()=="Athena") {
-                //players.get(p).getMyGod().setObeservers(cardUsed);
+                players.get(p).getMyGod().setObservers(cardUsed);
                 //SETTO AGLI ALTRI ATENA COME SOGGETTO OSSERVATO
                 for(int p2=0; p2<nPlayers && p2!=p; p2++){
-                    //players.get(p).getMyGod().setSubject(players.get(p).getMyGod());
+                    players.get(p).getMyGod().setSubject(players.get(p).getMyGod());
                 }
             }
         }
@@ -214,9 +220,18 @@ public class Game {
         int row = 0, column = 0;
 
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i <= nPlayers){
+            players.get(i).goPlay();
 
-            //boolean sipuoMuovere=players.get(i).checkPossibleMove(actualBox,board);
-            //TODO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
+            boolean canMove=players.get(i).checkWorkers(board);
+            if(!canMove ){
+                if(nPlayers==3){
+                    playersDead.add(players.get(i));
+                    players.remove(i);
+                }else{
+                    //gioco finito
+                }
+            }
+
             //Movimento
             while( movedWorker ==0){
 

@@ -96,6 +96,10 @@ public class Player {
         return false;
     }
 
+    public void goPlay(){
+        gamerManager.goPlaying();
+    }
+
     public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
         return gamerManager.checkPossibleMove(actualBox, boardToControl);
     }
@@ -129,6 +133,10 @@ public class Player {
     public boolean checkWin(int indexWorkerMoved, Board board, int row, int column) { //index già giusto
         // posizione di partenza e posizione di arrivo
         return gamerManager.checkWin(board.getBox(row, column), myWorkers[indexWorkerMoved].getActualBox(), myGod.getGodName());
+    }
+
+    public boolean checkWorkers( Board boardToControl){
+        return gamerManager.checkWorkers(myWorkers[0].getActualBox(), myWorkers[1].getActualBox(), boardToControl);
     }
 
     /*public static void main( String[] args )

@@ -21,8 +21,10 @@ public class IsPlaying extends GamerState{
     @Override
     public int moveBlock(Worker worker, Box pos, String godName){
         System.out.println("Costruisco"); //costruzione effettiva
-        gamerManager.setCurrentState(gamerManager.getIsWaiting());
-        gamerManager.goWaiting();
+        int movedBlock = 0;
+        if(movedBlock==1){
+            gamerManager.goWaiting();
+        }
         return myGod.moveBlock( worker , pos , godName );
     }
 
@@ -35,6 +37,7 @@ public class IsPlaying extends GamerState{
         return false;
     }
 
+
     @Override
     public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
         for( int i = actualBox.getRow() - 1 ; i <= actualBox.getRow() + 1 ; i++ ){
@@ -46,6 +49,14 @@ public class IsPlaying extends GamerState{
                 }
             }
         }
+        return false;
+    }
+//true posso muovermi false morto
+    public boolean checkWorkers(Box actualBoxW1, Box actualBoxW2, Board boardToControl){
+        if( checkPossibleMove ( actualBoxW1, boardToControl ) && checkPossibleMove ( actualBoxW2, boardToControl ) ){
+            return true;
+        }
+        gamerManager.goDead();
         return false;
     }
 
