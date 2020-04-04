@@ -1,47 +1,42 @@
 package it.polimi.ingsw.gamerstate;
 
+import it.polimi.ingsw.*;
+import it.polimi.ingsw.god.*;
+
 public class GamerStateManager {
     private GamerState isPlaying;
     private GamerState isWaiting;
     private GamerState dead;
     private GamerState win;
-
     private GamerState currentState;
+    private God myGod;
 
 
-
-    public GamerStateManager(){
-        isPlaying=new IsPlaying(this);
-        isWaiting=new IsWaiting(this);
-        dead=new Dead(this);
-        win=new Win(this);
-        currentState= isWaiting;
+    public GamerStateManager(God myGod){
+        isPlaying = new IsPlaying(this);
+        isWaiting = new IsWaiting(this);
+        dead = new Dead(this);
+        win = new Win(this);
+        myGod = this.myGod;
+        currentState = isWaiting;
     }
-
+    public God getMyGod() {
+        return myGod;
+    }
     public GamerState getIsPlaying() {
         return isPlaying;
-    }
-    public void setIsPlaying(GamerState isPlaying) {
-        this.isPlaying = isPlaying;
     }
     public GamerState getIsWaiting() {
         return isWaiting;
     }
-    public void setIsWaiting(GamerState isWaiting) {
-        this.isWaiting = isWaiting;
-    }
     public GamerState getDead() {
         return dead;
-    }
-    public void setDead(GamerState dead) {
-        this.dead = dead;
     }
     public GamerState getWin() {
         return win;
     }
-    public void setWin(GamerState win) {
-        this.win = win;
-    }
+
+
     public void setCurrentState(GamerState newState ){
         currentState=newState;
     };
@@ -49,10 +44,43 @@ public class GamerStateManager {
         return currentState;
     };
 
-    public void goNext(){
-        currentState.goNext(this);
+
+    public void goPlaying(){
+        if(currentState==isWaiting){
+            setCurrentState(isPlaying);
+        }
+
     };
-    public void move(){
-        currentState.move();
+    public void goWaiting(){
+        if(currentState==isPlaying){
+            setCurrentState(isWaiting);
+        }
+
+    };
+    public void goDead(){
+        if(currentState==isPlaying || currentState==isWaiting){
+            setCurrentState(dead);
+        }
+
+    };
+    public void goWin(){
+        if(currentState==isPlaying){
+            setCurrentState(win);
+        }
+    };
+    public int moveWorker ( Worker worker, Box pos, String godName ){
+        return currentState.moveWorker(worker,pos,godName);
+    }
+    public int moveBlock(Worker worker, Box pos, String godName){
+        return currentState.moveBlock(worker, pos, godName);
+    }
+    public boolean checkWin(Box boxReach, Box boxStart, String godName){
+        return currentState.checkWin(boxReach, boxStart, godName);
+    };
+    public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
+        return currentState.checkPossibleMove(actualBox, boardToControl);
+    }
+    public int checkPossibleBuild( Box finalBox, Board boardToControl,  String name ){
+        return currentState.checkPossibleBuild(finalBox, boardToControl,name);
     }
 }

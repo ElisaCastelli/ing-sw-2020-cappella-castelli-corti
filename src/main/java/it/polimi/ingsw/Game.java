@@ -25,8 +25,14 @@ public class Game {
      * This integer attribute is the number of the players
      */
     private  int nPlayers;
+    /**
+     * Array of all cards
+     */
     private ArrayList<God> godsArray;
-
+    /**
+     * Array of drawn cards
+     */
+    private ArrayList<God> cardUsed;
     /**
      * Constructor without parameters
      */
@@ -35,6 +41,7 @@ public class Game {
         players = new ArrayList<>();
         nPlayers = 0;
         godsArray = new ArrayList<God>();
+        cardUsed = new ArrayList<God>();
     }
 
     /**
@@ -86,6 +93,9 @@ public class Game {
     }
 
     public God askGodCard(){
+        for(int g = 0; g < godsArray.size(); g++){
+            //godsArray.print();
+        }
         System.out.println(" Quale carta vuoi scegliere? ");
         Scanner godCard = new Scanner(System.in);
         String nameCard= godCard.nextLine();
@@ -132,7 +142,7 @@ public class Game {
         }
 
     }
-
+//sotto atena lista osservatori
     /**
      * This method starts the game
      * First of all it manages the insertion of players and the setting of the workers for each of them
@@ -161,8 +171,17 @@ public class Game {
         for(int p = 0; p < nPlayers; p++){
             godDrawn = askGodCard();
             players.get(p).setGod(godDrawn);
+            cardUsed.add(godDrawn);
         }
-
+        for(int p = 0; p < nPlayers; p++){
+            if(players.get(p).getMyGod().getGodName()=="Athena") {
+                //players.get(p).getMyGod().setObeservers(cardUsed);
+                //SETTO AGLI ALTRI ATENA COME SOGGETTO OSSERVATO
+                for(int p2=0; p2<nPlayers && p2!=p; p2++){
+                    //players.get(p).getMyGod().setSubject(players.get(p).getMyGod());
+                }
+            }
+        }
 
         //3-WORKERS SETTING
         //un ciclo per ogni giocatore
@@ -195,7 +214,8 @@ public class Game {
         int row = 0, column = 0;
 
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i <= nPlayers){
-            //boolean sipuoMuovere=gamers.get(i).checkPossibleMove(actualBox,board)
+
+            //boolean sipuoMuovere=players.get(i).checkPossibleMove(actualBox,board);
             //TODO!!!! controllo gamers.get(p).getState ? if morto metodo che toglie giocatore se sono 3 altrimenti termina
             //Movimento
             while( movedWorker ==0){
