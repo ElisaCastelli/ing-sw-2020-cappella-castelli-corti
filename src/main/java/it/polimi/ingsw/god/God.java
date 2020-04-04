@@ -58,4 +58,13 @@ public interface God {
     void setLastBox(Box lastBox);
     String getLastGod();
     void setLastGod(String lastGod);
+
+    /**
+     * METODI PER OSSERVATORE
+     *
+     */
+    void subscribeObserver(Observer observer);
+    void unSubscribeObserver(Observer observer);
+    void notifyObserver();
+
 }

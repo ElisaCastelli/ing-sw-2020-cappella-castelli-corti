@@ -56,4 +56,5 @@ public class BoardTest extends TestCase {
         assertEquals(2,boardTest.getBox(1,2).getColumn());
         assertNotSame(new Box(0,1,2),boardTest.getBox(1,2));
     }*/
+
 }

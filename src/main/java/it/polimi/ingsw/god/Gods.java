@@ -3,10 +3,19 @@ package it.polimi.ingsw.god;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
+import java.util.ArrayList;
+
 /**
  * This is God concrete class which implements the basic moves of the workers and of the build
  */
-public class Gods implements God {
+public class Gods implements God, Observer{
+    /**
+     * ATTRIBUTI PER L'OSSERVATORE
+     */
+    private God subject;
+    private ArrayList<Observer> observers;
+
+
     /**
      * This attribute is the name of the God
      */
@@ -32,6 +41,16 @@ public class Gods implements God {
      */
     public Gods ( String godName ) { this.godName=godName; }
 
+    //INIZIALIZZAZIONE SE ATENA E' LA CARTA
+    public void setObservers(ArrayList<Observer> observers) {
+        this.observers = observers;
+    }
+
+    public void setSubject(God subject) {
+        this.subject = subject;
+    }
+
+    //////
     public String getGodName() { return godName; }
     public void setGodName ( String godName ) { this.godName = godName; }
     public Worker getLastWorker() {
@@ -51,7 +70,9 @@ public class Gods implements God {
     }
     public void setLastGod(String lastGod) {
         this.lastGod = lastGod;
+        notifyObserver();
     }
+
 
     @Override
     public String getDescription() {
@@ -163,4 +184,41 @@ public class Gods implements God {
     }
 
 
+    @Override
+    public void update(String godName) {
+        lastGod=godName;
+    }
+
+    @Override
+    public void subscribe() {
+        this.subject.subscribeObserver(this);
+        System.out.println("Subscribed successfully.");
+
+    }
+
+    @Override
+    public void unSubscribe() {
+        this.subject.unSubscribeObserver(this);
+        System.out.println("Unsubscribed successfully.");
+    }
+
+    @Override
+    public void subscribeObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribeObserver(Observer observer) {
+        int index = observers.indexOf(observer);
+        observers.remove(index);
+
+    }
+
+    @Override
+    public void notifyObserver() {
+        System.out.println();
+        for(Observer observer : observers){
+            observer.update("Athena");
+        }
+    }
 }
