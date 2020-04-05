@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * This is God concrete class which implements the basic moves of the workers and of the build
  */
-public class Gods implements God, Observer{
+public class Gods implements God{
     /**
      * ATTRIBUTI PER L'OSSERVATORE
      */

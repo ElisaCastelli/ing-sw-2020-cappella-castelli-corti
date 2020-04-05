@@ -37,7 +37,7 @@ public class Game {
     /**
      * Array of drawn cards
      */
-    private ArrayList<God> cardUsed;
+    private ArrayList<Observer> cardUsed;
     /**
      * Constructor without parameters
      */
@@ -47,7 +47,7 @@ public class Game {
         playersDead = new ArrayList<>();
         nPlayers = 0;
         godsArray = new ArrayList<God>();
-        cardUsed = new ArrayList<God>();
+        cardUsed = new ArrayList<Observer>();
     }
 
     /**
@@ -184,7 +184,9 @@ public class Game {
                 players.get(p).getMyGod().setObservers(cardUsed);
                 //SETTO AGLI ALTRI ATENA COME SOGGETTO OSSERVATO
                 for(int p2=0; p2<nPlayers && p2!=p; p2++){
-                    players.get(p).getMyGod().setSubject(players.get(p).getMyGod());
+                    players.get(p2).getMyGod().subscribe();
+                    players.get(p).getMyGod().setSubject(players.get(p2).getMyGod());
+                    players.get(p).getMyGod().subscribeObserver(players.get(p2).getMyGod());
                 }
             }
         }

@@ -6,7 +6,7 @@ import it.polimi.ingsw.Worker;
 /**
  * This interface represents the God for the decorator pattern
  */
-public interface God {
+public interface God extends Observer{
     /**
      * This attribute is the God name
      */
