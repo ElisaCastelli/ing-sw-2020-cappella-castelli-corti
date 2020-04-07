@@ -181,12 +181,13 @@ public class Game {
         }
         for(int p = 0; p < nPlayers; p++){
             if(players.get(p).getMyGod().getGodName()=="Athena") {
-                players.get(p).getMyGod().setObservers(cardUsed);
+               // players.get(p).getMyGod().setObservers(cardUsed);
                 //SETTO AGLI ALTRI ATENA COME SOGGETTO OSSERVATO
-                for(int p2=0; p2<nPlayers && p2!=p; p2++){
-                    players.get(p2).getMyGod().subscribe();
-                    players.get(p).getMyGod().setSubject(players.get(p2).getMyGod());
-                    players.get(p).getMyGod().subscribeObserver(players.get(p2).getMyGod());
+                for(int p2=0; p2<nPlayers; p2++){
+                    if(p2!=p){
+                        players.get(p2).getMyGod().setSubject(players.get(p).getMyGod());
+                        players.get(p2).getMyGod().subscribe();
+                    }
                 }
             }
         }
