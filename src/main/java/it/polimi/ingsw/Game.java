@@ -37,7 +37,7 @@ public class Game {
     /**
      * Array of drawn cards
      */
-    private ArrayList<Observer> cardUsed;
+    private ArrayList<God> cardUsed;
     private Move lastMove = new Move();
     /**
      * Constructor without parameters
@@ -47,8 +47,8 @@ public class Game {
         players = new ArrayList<>();
         playersDead = new ArrayList<>();
         nPlayers = 0;
-        godsArray = new ArrayList<God>();
-        cardUsed = new ArrayList<Observer>();
+        godsArray = new ArrayList<>();
+        cardUsed = new ArrayList<>();
     }
 
     /**
@@ -179,18 +179,6 @@ public class Game {
             godDrawn = askGodCard();
             players.get(p).setGod(godDrawn);
             cardUsed.add(godDrawn);
-        }
-        for(int p = 0; p < nPlayers; p++){
-            if(players.get(p).getMyGod().getGodName()=="Athena") {
-               // players.get(p).getMyGod().setObservers(cardUsed);
-                //SETTO AGLI ALTRI ATENA COME SOGGETTO OSSERVATO
-                for(int p2=0; p2<nPlayers; p2++){
-                    if(p2!=p){
-                        players.get(p2).getMyGod().setSubject(players.get(p).getMyGod());
-                        players.get(p2).getMyGod().subscribe();
-                    }
-                }
-            }
         }
 
         //3-WORKERS SETTING

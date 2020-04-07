@@ -4,8 +4,6 @@ import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
-import java.util.ArrayList;
-
 /**
  * This class represents a god concrete decorator which implements the Gods that have a worker move effect
  */
@@ -243,46 +241,4 @@ public class MoveEffect extends GodDecorator {
     public void setEffect(String effect) {}
     @Override
     public int hashCode() { return super.hashCode(); }
-
-
-    //METODI OBSERVER
-    @Override
-    public void subscribeObserver(Observer observer) {
-
-    }
-
-    @Override
-    public void unSubscribeObserver(Observer observer) {
-
-    }
-
-    @Override
-    public void notifyObserver(Move lastMove) {
-
-    }
-
-    @Override
-    public void update(Move lastMove) {
-
-    }
-
-    @Override
-    public void subscribe() {
-
-    }
-
-    @Override
-    public void unSubscribe() {
-
-    }
-
-    @Override
-    public void setObservers(ArrayList<Observer> observers) {
-
-    }
-
-    @Override
-    public void setSubject(God subject) {
-
-    }
 }

@@ -7,7 +7,7 @@ import it.polimi.ingsw.Worker;
 /**
  * This interface represents the God for the decorator pattern
  */
-public interface God extends Observer{
+public interface God {
     /**
      * This attribute is the God name
      */
@@ -56,12 +56,5 @@ public interface God extends Observer{
     void setEffect(String effect);
     Move getLastMove();
     void setLastMove(Move lastMove);
-    /**
-     * METODI PER OSSERVATORE
-     *
-     */
-    void subscribeObserver(Observer observer);
-    void unSubscribeObserver(Observer observer);
-    void notifyObserver(Move lastMove);
 
 }
