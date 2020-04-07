@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 /**
@@ -13,9 +14,10 @@ public interface God extends Observer{
     String godName = "";
     String description = "";
     String effect = "";
-    Worker lastWorker = null;
+    Move lastMove= null;
+    /*Worker lastWorker = null;
     Box lastBox = null;
-    String lastGod = "";
+    String lastGod = "";*/
 
     /**
      * This method moves the chosen worker to the new position on the board
@@ -52,19 +54,14 @@ public interface God extends Observer{
     void setDescription(String newDescription);
     String getEffect();
     void setEffect(String effect);
-    Worker getLastWorker();
-    void setLastWorker(Worker lastWorker);
-    Box getLastBox();
-    void setLastBox(Box lastBox);
-    String getLastGod();
-    void setLastGod(String lastGod);
-
+    Move getLastMove();
+    void setLastMove(Move lastMove);
     /**
      * METODI PER OSSERVATORE
      *
      */
     void subscribeObserver(Observer observer);
     void unSubscribeObserver(Observer observer);
-    void notifyObserver();
+    void notifyObserver(Move lastMove);
 
 }

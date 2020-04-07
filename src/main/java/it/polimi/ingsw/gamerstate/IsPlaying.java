@@ -18,6 +18,7 @@ public class IsPlaying extends GamerState{
         movedWorker=myGod.moveWorker( worker , pos , godName );
         return movedWorker;
     }
+
     @Override
     public int moveBlock(Worker worker, Box pos, String godName){
         System.out.println("Costruisco"); //costruzione effettiva

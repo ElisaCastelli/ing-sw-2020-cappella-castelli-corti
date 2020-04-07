@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 import java.util.ArrayList;
@@ -51,19 +52,17 @@ public class BuildEffect extends GodDecorator {
         }
         else if ( godName.equals ( "Demeter" ) ) {
             int returnMoveBlock;
-            if ( super.getLastWorker() == null ){
+            if ( super.getLastMove().getWorker() == null ){
                 returnMoveBlock = super.moveBlock ( worker, pos, godName );
                 if ( returnMoveBlock == 1 ) {
-                    super.setLastWorker( worker );
-                    super.setLastBox( pos );
+                    super.getLastMove().setWorker( worker );
+                    super.getLastMove().setBoxReached( pos );
                     return 2;
                 }
             }
             else {
-                Box oldBox = super.getLastBox();
+                Box oldBox = super.getLastMove().getBoxReached();
                 if ( oldBox != pos ) {
-                    super.setLastWorker( null );
-                    super.setLastBox( null );
                     return super.moveBlock( worker, pos, godName);
                 }
             }
@@ -71,23 +70,23 @@ public class BuildEffect extends GodDecorator {
          }
         else if ( godName.equals ( "Hephaestus" ) ) {
             int returnMoveBlock;
-            if ( super.getLastWorker() == null ){
+            if ( super.getLastMove().getWorker() == null ){
                 returnMoveBlock = super.moveBlock ( worker, pos, godName );
                 if ( returnMoveBlock == 1 && pos.getCounter() <= 2 ) {
-                    super.setLastWorker( worker );
-                    super.setLastBox( pos );
+                    super.getLastMove().setWorker( worker );
+                    super.getLastMove().setBoxReached( pos );
                     return 2;
                 }
                 else if ( returnMoveBlock == 1 )
                     return 1;
             }
             else {
-                Box oldBox = super.getLastBox();
-                Worker oldWorker = super.getLastWorker();
+                Box oldBox = super.getLastMove().getBoxReached();
+                Worker oldWorker = super.getLastMove().getWorker();
                 //Forse il worker potrebbe non essere lo stesso
                 if ( oldBox == pos && oldWorker == worker ) {
-                    super.setLastWorker( null );
-                    super.setLastBox( null );
+                    super.getLastMove().setWorker( null );
+                    super.getLastMove().setBoxReached( null );
                     return super.moveBlock( worker, pos, godName);
                 }
             }
@@ -151,30 +150,7 @@ public class BuildEffect extends GodDecorator {
     public int hashCode() {
         return super.hashCode();
     }
-    @Override
-    public Worker getLastWorker() {
-        return null;
-    }
-    @Override
-    public void setLastWorker(Worker lastWorker) {
 
-    }
-    @Override
-    public Box getLastBox() {
-        return null;
-    }
-    @Override
-    public void setLastBox(Box lastBox) {
-
-    }
-    @Override
-    public String getLastGod() {
-        return null;
-    }
-    @Override
-    public void setLastGod(String lastGod) {
-
-    }
 //METODI OBSERVER
     @Override
     public void subscribeObserver(Observer observer) {
@@ -187,12 +163,12 @@ public class BuildEffect extends GodDecorator {
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver(Move lastMove) {
 
     }
 
     @Override
-    public void update(String godName) {
+    public void update(Move lastMove) {
 
     }
 

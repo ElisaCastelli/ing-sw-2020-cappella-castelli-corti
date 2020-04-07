@@ -38,6 +38,7 @@ public class Game {
      * Array of drawn cards
      */
     private ArrayList<Observer> cardUsed;
+    private Move lastMove = new Move();
     /**
      * Constructor without parameters
      */
@@ -225,6 +226,7 @@ public class Game {
         while(/*MOETDO PER CONTROLLARE FINE DEL GIOCO &&*/ i <= nPlayers){
             players.get(i).goPlay();
 
+            //checkWorkers sposta lo stato in dead se non posso muovermi
             boolean canMove=players.get(i).checkWorkers(board);
             if(!canMove ){
                 if(nPlayers==3){
@@ -243,7 +245,34 @@ public class Game {
                 row = askRow();
                 column = askColumn();
 //TODO DA RICHIEDERE AL GIOCATORE "PROMETEO " SE PRIMA VUOLE MUOVERE UN BLOCCO SE NON SALE
+                //nel caso del minotauro serve solo a capire se c'è un avversario
                 movedWorker = players.get(i).playWorker(indexWorkerMoved-1,board,row,column);
+                lastMove=players.get(i).getMyGod().getLastMove();
+                if(movedWorker!=2){
+                    players.get(i).getMyGod().getLastMove().clear();
+                }
+                if(movedWorker==3){
+                    Box temp = lastMove.getDirection();
+                    //muovo l'avversario
+                    int indexAvversario=0;
+                    boolean find=false;
+                    int indexPlayer=0;
+                    while(find==false && indexPlayer< nPlayers){
+                        if(lastMove.getBoxReached().getWorker().getGamerName()== players.get(indexPlayer).getName()){
+                            indexAvversario=indexPlayer;
+                            find=true;
+                        }
+                        indexPlayer++;
+                    }
+                    int indexWorkerAvv = lastMove.getBoxReached().getWorker().getWorkerId();
+                    movedWorker = players.get(indexAvversario).playWorker(indexWorkerAvv-1,board,temp.getRow(),temp.getColumn());
+                    if(movedWorker==1){
+                        players.get(i).getMyGod().getLastMove().clear();
+                    }
+                    //mi muovo dove c'era l'avversario
+                    movedWorker = players.get(i).playWorker(indexWorkerMoved-1,board,row,column);
+                }
+
 
             }
             //check win
@@ -259,6 +288,10 @@ public class Game {
                 int column2 = askColumn();
 
                 movedBlock = players.get(i).playBlock(board,row2,column2);
+                lastMove=players.get(i).getMyGod().getLastMove();
+                if(movedWorker!=2){
+                    players.get(i).getMyGod().getLastMove().clear();
+                }
             }
 
             //passo al giocatore successivo e se sono all'ultimo ritorno al primo

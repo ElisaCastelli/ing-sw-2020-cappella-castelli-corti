@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 /**
@@ -82,27 +83,11 @@ public abstract class GodDecorator implements God {
 
     }
     @Override
-    public Worker getLastWorker() {
-        return null;
+    public Move getLastMove(){
+        return newGod.getLastMove();
     }
     @Override
-    public void setLastWorker(Worker lastWorker) {
-
-    }
-    @Override
-    public Box getLastBox() {
-        return null;
-    }
-    @Override
-    public void setLastBox(Box lastBox) {
-
-    }
-    @Override
-    public String getLastGod() {
-        return null;
-    }
-    @Override
-    public void setLastGod(String lastGod) {
-
+    public void setLastMove(Move lastMove){
+        newGod.setLastMove(lastMove);
     }
 }

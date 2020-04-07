@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 import java.util.ArrayList;
@@ -26,9 +27,11 @@ public class Gods implements God{
     /**
      * Last moves attributes
      */
-    private Worker lastWorker;
+    private Move lastMove;
+
+    /*private Worker lastWorker;
     private Box lastBox;
-    private String lastGod;
+    private String lastGod;*/
 
 
     /*public Gods(){
@@ -53,26 +56,6 @@ public class Gods implements God{
     //////
     public String getGodName() { return godName; }
     public void setGodName ( String godName ) { this.godName = godName; }
-    public Worker getLastWorker() {
-        return lastWorker;
-    }
-    public void setLastWorker(Worker lastWorker) {
-        this.lastWorker = lastWorker;
-    }
-    public Box getLastBox() {
-        return lastBox;
-    }
-    public void setLastBox(Box lastBox) {
-        this.lastBox = lastBox;
-    }
-    public String getLastGod() {
-        return lastGod;
-    }
-    public void setLastGod(String lastGod) {
-        this.lastGod = lastGod;
-        notifyObserver();
-    }
-
 
     @Override
     public String getDescription() {
@@ -94,6 +77,16 @@ public class Gods implements God{
         this.effect = effect;
     }
 
+    @Override
+    public Move getLastMove() {
+        return lastMove;
+    }
+
+    @Override
+    public void setLastMove(Move lastMove) {
+        this.lastMove = lastMove;
+    }
+
     /**
      * This method implements the basic worker move: a chosen worker moves to a new position that must be unoccupied
      * (not containing a worker or a dome) and must be next to the worker.
@@ -108,24 +101,42 @@ public class Gods implements God{
         Box boxWorker = worker.getActualBox();
         int heightWorker = worker.getHeight();
         int counterPos = pos.getCounter();
+
         //i puntatori sono giusti, pos puntatore alla box della board, boxWorker puntatore alla posizionne inziale tramite worker
         if ( boxWorker.reachable(pos) && pos.notWorker() && counterPos != 4 ) {
 
             if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 1 ) {
                     worker.setHeight ( heightWorker + 1 );
                     worker.setActualBox ( pos );
+                    lastMove.setWorker(worker);
+                    lastMove.setBoxStart(boxWorker);
+                    lastMove.setBoxReached(pos);
+                    lastMove.setGodName(godName);
+                    lastMove.setMoveup(true);
                     return 1;
             }
             else if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 2 ) {
                     worker.setHeight ( counterPos );
                     worker.setActualBox ( pos );
+                    lastMove.setWorker(worker);
+                    lastMove.setBoxStart(boxWorker);
+                    lastMove.setBoxReached(pos);
+                    lastMove.setGodName(godName);
+                    lastMove.setMoveup(false);
                     return 1;
             }
             else if ( upDownOrStayAtTheSameLevel ( counterPos, heightWorker ) == 3 ) {
                     worker.setActualBox ( pos );
+                    lastMove.setWorker(worker);
+                    lastMove.setBoxStart(boxWorker);
+                    lastMove.setBoxReached(pos);
+                    lastMove.setGodName(godName);
+                    lastMove.setMoveup(false);
                     return 1;
             }
+
         }
+
         return 0;
     }
 
@@ -185,8 +196,8 @@ public class Gods implements God{
 
 
     @Override
-    public void update(String godName) {
-        lastGod=godName;
+    public void update(Move last) {
+        lastMove=last;
     }
 
     @Override
@@ -215,10 +226,10 @@ public class Gods implements God{
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver(Move lastMove) {
         System.out.println();
         for(Observer observer : observers){
-            observer.update("Athena");
+            observer.update(lastMove);
         }
     }
 }

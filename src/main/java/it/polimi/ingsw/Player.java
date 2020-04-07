@@ -98,6 +98,7 @@ public class Player {
 
     public void goPlay(){
         gamerManager.goPlaying();
+
     }
 
     public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
@@ -117,7 +118,6 @@ public class Player {
     //0 mossa niente 1 mossa ok 2 mosse strane
     public int playWorker(int indexWorker, Board board, int row, int column){
         int movedWorker = 0;
-        gamerManager.goPlaying();
         movedWorker = gamerManager.moveWorker(myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName());
         return  movedWorker;
     }

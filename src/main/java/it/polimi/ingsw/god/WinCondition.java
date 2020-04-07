@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 import java.util.ArrayList;
@@ -102,30 +103,7 @@ public class WinCondition extends GodDecorator {
     public int hashCode() {
         return super.hashCode();
     }
-    @Override
-    public Worker getLastWorker() {
-        return null;
-    }
-    @Override
-    public void setLastWorker(Worker lastWorker) {
 
-    }
-    @Override
-    public Box getLastBox() {
-        return null;
-    }
-    @Override
-    public void setLastBox(Box lastBox) {
-
-    }
-    @Override
-    public String getLastGod() {
-        return null;
-    }
-    @Override
-    public void setLastGod(String lastGod) {
-
-    }
     //METODI OBSERVER
     @Override
     public void subscribeObserver(Observer observer) {
@@ -138,12 +116,12 @@ public class WinCondition extends GodDecorator {
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver(Move lastMove) {
 
     }
 
     @Override
-    public void update(String godName) {
+    public void update(Move lastMove) {
 
     }
 

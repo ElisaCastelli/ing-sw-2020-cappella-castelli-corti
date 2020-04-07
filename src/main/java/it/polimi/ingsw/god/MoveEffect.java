@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 import java.util.ArrayList;
@@ -35,19 +36,17 @@ public class MoveEffect extends GodDecorator {
             }
         }
         else if ( godName.equals ( "Artemis" ) ) {
-            if ( super.getLastWorker() == null ){
+            if ( super.getLastMove().getWorker() == null ){
                 if ( super.moveWorker ( worker, pos, godName ) == 1 ) {
-                    super.setLastWorker( worker );
-                    super.setLastBox( worker.getActualBox() );
+                    super.getLastMove().setWorker(worker);
+                    super.getLastMove().setBoxStart( worker.getActualBox() );
                     return 2;
                 }
             }
             else {
-                Box oldBox = super.getLastBox();
-                Worker oldWorker = super.getLastWorker();
+                Box oldBox = super.getLastMove().getBoxStart();
+                Worker oldWorker = super.getLastMove().getWorker();
                 if ( oldBox != pos && oldWorker == worker ) {
-                    super.setLastWorker( null );
-                    super.setLastBox( null );
                     return super.moveWorker( worker, pos, godName);
                 }
             }
@@ -244,18 +243,8 @@ public class MoveEffect extends GodDecorator {
     public void setEffect(String effect) {}
     @Override
     public int hashCode() { return super.hashCode(); }
-    @Override
-    public Worker getLastWorker() { return null; }
-    @Override
-    public void setLastWorker(Worker lastWorker) {}
-    @Override
-    public Box getLastBox() { return null; }
-    @Override
-    public void setLastBox(Box lastBox) {}
-    @Override
-    public String getLastGod() { return null; }
-    @Override
-    public void setLastGod(String lastGod) {}
+
+
     //METODI OBSERVER
     @Override
     public void subscribeObserver(Observer observer) {
@@ -268,12 +257,12 @@ public class MoveEffect extends GodDecorator {
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObserver(Move lastMove) {
 
     }
 
     @Override
-    public void update(String godName) {
+    public void update(Move lastMove) {
 
     }
 
