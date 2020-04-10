@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.gamerstate.GamerStateManager;
 import it.polimi.ingsw.god.God;
-import it.polimi.ingsw.god.Gods;
+
 
 public class Player {
     /**

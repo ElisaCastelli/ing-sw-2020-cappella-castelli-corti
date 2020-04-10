@@ -1,60 +1,40 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
-import it.polimi.ingsw.Move;
 import it.polimi.ingsw.Worker;
 
 /**
  * This interface represents the God for the decorator pattern
  */
 public interface God {
+
     /**
-     * This attribute is the God name
+     * These attributes are the God name, his ability description and the decorators that it use
      */
     String godName = "";
     String description = "";
     String effect = "";
-    Move lastMove= null;
-    /*Worker lastWorker = null;
-    Box lastBox = null;
-    String lastGod = "";*/
 
     /**
      * This method moves the chosen worker to the new position on the board
      * @param worker Which worker is applied the move
      * @param pos Position on the board where the worker wants to go
-     * @param godName The God name card
-     * @return False if the move is not possible; true if we do the move because it passes all the controls
+     * @return False if you can do another move; true if the move has done successfully
      */
-    int moveWorker ( Worker worker, Box pos, String godName );
+    boolean moveWorker(Worker worker, Box pos );
 
     /**
-     * This method builds a building block in a position on the board by a chosen worker
-     * @param worker Which worker is applied the move
+     * This method builds a building block in a position on the board
      * @param pos Position on the board where the worker builds a building block
-     * @param godName The God name card
-     * @return False if the move is not possible; true if we do the move because it passes all the controls
+     * @return False if you can do another construction; true if the move has done successfully
      */
-    int moveBlock ( Worker worker, Box pos, String godName );
+    boolean moveBlock ( Box pos );
 
     /**
-     * This method checks if the player's won
+     * This methods checks if the player win
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox Position on the board where the worker arrives
-     * @param godName The God name card
      * @return False if the player doesn't win; true if the player wins
      */
-    boolean checkWin ( Box initialPos, Box finalBox, String godName );
-
-    int upDownOrStayAtTheSameLevel ( int counterBuilding, int counterWorker );
-
-    String getGodName();
-    void setGodName(String newName);
-    String getDescription();
-    void setDescription(String newDescription);
-    String getEffect();
-    void setEffect(String effect);
-    Move getLastMove();
-    void setLastMove(Move lastMove);
-
+    boolean checkWin ( Box initialPos, Box finalBox );
 }
