@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import java.util.ArrayList;
+
 /**
  * This class represents the board where the game will be played
  */
@@ -76,6 +78,20 @@ public class Board {
         return matrix[row][column];
     }
 
+    public ArrayList<Box> getNextTo(int row, int column){
+        ArrayList<Box> nextTo = new ArrayList<>();
+        nextTo.add(getBox(row, column));
+        for(int r = row-1 ; r <= row+1; r++){
+            for(int c = column-1; c <= column+1; c++){
+                if(r>=0 && r<5 && c>=0 && c<5){
+                    nextTo.add(getBox(r,c));
+                }
+                else
+                    nextTo.add(null);
+            }
+        }
+        return nextTo;
+    }
     /*public static void main( String[] args ){
         Board b= new Board();
         b.clear();
