@@ -9,11 +9,14 @@ import it.polimi.ingsw.Worker;
 public interface God {
 
     /**
-     * These attributes are the God name, his ability description and the decorators that it use
+     * These attributes are the God name, his ability description and the decorators that it is gone to use
      */
     String godName = "";
     String description = "";
     String effect = "";
+
+
+    //boolean checkPossibleMove (Worker worker);
 
     /**
      * This method moves the chosen worker to the new position on the board

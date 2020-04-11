@@ -3,6 +3,9 @@ package it.polimi.ingsw.god;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
+/**
+ * This class implements the ability to build before the worker move: you can build, move a worker at the same level or lower, and then build again.
+ */
 public class BuildBeforeWorkerMove extends MoveTwice {
 
     private boolean workerMoved = false;
@@ -10,10 +13,9 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     public BuildBeforeWorkerMove(God newGod) {
         super(newGod);
     }
-
+//todo Finire commento
     /**
-     * This method moves the chosen worker to the new position on the board
-     *
+     * This method implements two cases of the worker move because of this ability:
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -32,8 +34,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     }
 
     /**
-     * This method builds a building block in a position on the board
-     *
+     * This method implements two cases of the build move: one build before the worker move, one build after the worker move
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */

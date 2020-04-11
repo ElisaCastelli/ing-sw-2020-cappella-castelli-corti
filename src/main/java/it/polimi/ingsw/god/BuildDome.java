@@ -3,7 +3,7 @@ package it.polimi.ingsw.god;
 import it.polimi.ingsw.Box;
 
 /**
- * This class implements the ability to build a Dome everywhere even it is not at the fourth level
+ * This class implements the ability to build a Dome everywhere even the player is not building at the fourth level
  */
 public class BuildDome extends GodDecorator {
 
@@ -13,8 +13,8 @@ public class BuildDome extends GodDecorator {
 
     /**
      * This method is able to build a Dome everywhere
-     * @param pos Position on the board where the worker builds a building block
-     * @return False if you can do another construction; true if the move has done successfully
+     * @param pos Position on the board where the worker wants to build a dome
+     * @return true because the move has done successfully in any case
      */
     @Override
     public boolean moveBlock(Box pos) {

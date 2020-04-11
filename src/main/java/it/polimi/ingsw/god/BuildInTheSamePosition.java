@@ -12,8 +12,8 @@ public class BuildInTheSamePosition extends MoveTwice {
     }
 
     /**
-     *
-     * @param pos Position on the board where the worker builds a building block
+     * This method is able to build twice in the same position, but the second time the player cannot build a dome
+     * @param pos Position on the board where the worker builds a building block or two building blocks
      * @return False if you can do another construction; true if the move has done successfully
      */
     @Override

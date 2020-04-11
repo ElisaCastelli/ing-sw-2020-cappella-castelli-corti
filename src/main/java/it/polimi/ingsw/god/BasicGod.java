@@ -13,24 +13,25 @@ public class BasicGod implements God {
     private String effect;
 
     /**
-     *
+     * This method implements the worker move from its start position to its final position
      * @param worker Which worker is applied the move
      * @param pos Position on the board where the worker wants to go
-     * @return
+     * @return Always true because the move succeeded
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
         Box myBox = worker.getActualBox();
         worker.setActualBox( pos );
         worker.setHeight( pos.getCounter() );
+        pos.setWorker( worker );
         myBox.clearWorker();
         return true;
     }
 
     /**
-     *
+     * This method implements the basic block move which builds the correct block in a given position
      * @param pos Position on the board where the worker builds a building block
-     * @return
+     * @return Always true because the move succeded
      */
     @Override
     public boolean moveBlock(Box pos) {
@@ -39,7 +40,7 @@ public class BasicGod implements God {
     }
 
     /**
-     *
+     * This method implements the basic winning rule: if the worker moves up a maximum of one level and it is level 3, the player wins.
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox Position on the board where the worker arrives
      * @return False if the player doesn't win, true if the player wins
