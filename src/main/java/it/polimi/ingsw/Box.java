@@ -1,6 +1,8 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.building.*;
 
+import java.util.ArrayList;
+
 
 /**
  * This class represents the boxes that make up the board
@@ -22,8 +24,7 @@ public class Box {
      * This attribute indicates the column of the matrix where the box is located
      */
     private int column;
-
-
+    private ArrayList<Box> boxesNextTo = new ArrayList<>();
 
     /**
      *
@@ -31,11 +32,12 @@ public class Box {
      * @param column column of the box
      * Constructor with parameters
      */
-    public Box(int row, int column){ //controllare r e c da 0 a 5
+    public Box(int row, int column, ArrayList<Box> boxesNextTo){ //controllare r e c da 0 a 5
         building = new Building();
         this.row = row;
         this.column = column;
         worker  =null;
+        this.boxesNextTo = boxesNextTo;
     }
 
     /**
@@ -54,14 +56,6 @@ public class Box {
         return column;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
     public Worker getWorker() {
         return worker;
     }
@@ -69,6 +63,11 @@ public class Box {
     public int getCounter(){
         return building.getArrayOfBlocks().size();
     }
+
+    public ArrayList<Box> getBoxesNextTo() {
+        return boxesNextTo;
+    }
+
     /**
      * This method clear the attributes of a box setting them on default values
      */

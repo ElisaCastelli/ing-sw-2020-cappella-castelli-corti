@@ -22,7 +22,7 @@ public class Board {
         matrix = new Box[DIM][DIM];
         for(int i=0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
-                matrix[i][j] = new Box(i, j);
+                matrix[i][j] = new Box(i, j, getNextTo(i,j));
             }
         }
     }
