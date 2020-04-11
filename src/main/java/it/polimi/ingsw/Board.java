@@ -78,9 +78,9 @@ public class Board {
         return matrix[row][column];
     }
 
+    //Quinta pos è quella che ho chiesto
     public ArrayList<Box> getNextTo(int row, int column){
         ArrayList<Box> nextTo = new ArrayList<>();
-        nextTo.add(getBox(row, column));
         for(int r = row-1 ; r <= row+1; r++){
             for(int c = column-1; c <= column+1; c++){
                 if(r>=0 && r<5 && c>=0 && c<5){
