@@ -16,6 +16,16 @@ public abstract class GodDecorator implements God {
     }
 
     /**
+     * This method checks which positions can get reached by a worker
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public boolean checkPossibleMove(Worker worker) {
+        return this.newGod.checkPossibleMove( worker );
+    }
+
+    /**
      * This method moves the chosen worker to the new position on the board
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go

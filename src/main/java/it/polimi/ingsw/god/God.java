@@ -15,8 +15,12 @@ public interface God {
     String description = "";
     String effect = "";
 
-
-    //boolean checkPossibleMove (Worker worker);
+    /**
+     * This method checks which positions can get reached by a worker
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    boolean checkPossibleMove (Worker worker);
 
     /**
      * This method moves the chosen worker to the new position on the board

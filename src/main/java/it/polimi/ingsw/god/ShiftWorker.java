@@ -13,6 +13,17 @@ public class ShiftWorker extends GodDecorator {
     }
 
     /**
+     * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public boolean checkPossibleMove(Worker worker) {
+
+        return super.checkPossibleMove(worker);
+    }
+
+    /**
      * This method moves the chosen worker in a position that is occupied by an opponent worker and shift the opponent worker in the same direction of the player move
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go

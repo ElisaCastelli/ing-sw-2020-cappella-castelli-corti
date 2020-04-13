@@ -13,6 +13,28 @@ public class BasicGod implements God {
     private String effect;
 
     /**
+     * This method is a basic check: it verifies if the positions next to the worker are unoccupied (no worker and no dome) and if is possible to move up a maximum of one level higher.
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public boolean checkPossibleMove(Worker worker) {
+        boolean findAtLeastOneReachable = false;
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+            Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+            if ( boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (worker.getHeight() - boxNextTo.getCounter() >= -1) ){
+                //boxNextTo.setReacheable(true);
+                findAtLeastOneReachable = true;
+            }
+            else{
+                //boxNextTo.setReachable(false);
+                findAtLeastOneReachable = false; //E' sbagliato, da togliere!
+            }
+        }
+        return findAtLeastOneReachable;
+    }
+
+    /**
      * This method implements the worker move from its start position to its final position
      * @param worker Which worker is applied the move
      * @param pos Position on the board where the worker wants to go

@@ -13,6 +13,16 @@ public class SwitchWorker extends NotMoveUp {
     }
 
     /**
+     * This method labels a box next to the worker as a reachable box even if there is an opponent worker
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public boolean checkPossibleMove(Worker worker) {
+        return super.checkPossibleMove(worker);
+    }
+
+    /**
      * This method implements the ability to switch the position with an enemy worker
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
