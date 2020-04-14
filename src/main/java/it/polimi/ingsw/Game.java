@@ -125,7 +125,7 @@ public class Game {
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
 
-                God g= new Gods();
+                God g= new BasicGod();
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     g.setGodName(eElement

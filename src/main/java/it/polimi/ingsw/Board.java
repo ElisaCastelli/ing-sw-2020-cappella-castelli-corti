@@ -83,7 +83,7 @@ public class Board {
         ArrayList<Box> nextTo = new ArrayList<>();
         for(int r = row-1 ; r <= row+1; r++){
             for(int c = column-1; c <= column+1; c++){
-                if(r>=0 && r<5 && c>=0 && c<5){
+                if( r>=0 && r<5 && c>=0 && c<5 && (r!=0 && c!=0) ){
                     nextTo.add(getBox(r,c));
                 }
                 else

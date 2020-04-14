@@ -24,6 +24,7 @@ public class Box {
      * This attribute indicates the column of the matrix where the box is located
      */
     private int column;
+    private boolean reachable;
     private ArrayList<Box> boxesNextTo = new ArrayList<>();
 
     /**
@@ -66,6 +67,14 @@ public class Box {
 
     public ArrayList<Box> getBoxesNextTo() {
         return boxesNextTo;
+    }
+
+    public boolean isReachable() {
+        return reachable;
+    }
+
+    public void setReachable(boolean reachable) {
+        this.reachable = reachable;
     }
 
     /**
@@ -133,19 +142,10 @@ public class Box {
         building.build(domeIdentifier);
     };
 
-    /**
-     * This method checks if the parameter box2 is reachable starting from this box
-     * @param boxToReach is the box I want to reach
-     * @return true if boxToReach is reachable from this, else return false
-     */
-    public boolean reachable(Box boxToReach){
-        boolean reachable = false;
-        int row2 = boxToReach.getRow();
-        int column2 = boxToReach.getColumn();
-        if(this.row-row2 <= 1 || row2-this.row <= 1 || column2-this.column <= 1 || this.column-column2 <= 1){
-            reachable = true;
+    public void clearBoxesNextTo(){
+        for(int index=0; index < boxesNextTo.size(); index++){
+            boxesNextTo.get(index).setReachable(false);
         }
-        return reachable;
     }
 
     /**
