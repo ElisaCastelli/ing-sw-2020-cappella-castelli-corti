@@ -13,7 +13,27 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     public BuildBeforeWorkerMove(God newGod) {
         super(newGod);
     }
-//todo Finire commento
+
+    /**
+     * This method checks which positions can get reached by a worker
+     *
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
+    }
+
+    //todo Finire commento
     /**
      * This method implements two cases of the worker move because of this ability:
      * @param worker Which worker is applied the move
@@ -45,5 +65,17 @@ public class BuildBeforeWorkerMove extends MoveTwice {
         else if ( !workerMoved && super.firstTime )
             return super.moveTwice( pos );
         return super.moveTwice( pos );
+    }
+
+    /**
+     * This methods checks if the player win
+     *
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox   Position on the board where the worker arrives
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox) {
+        return super.checkWin(initialPos, finalBox);
     }
 }

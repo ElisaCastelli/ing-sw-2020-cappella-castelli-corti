@@ -13,6 +13,24 @@ public class OpponentBlock extends GodDecorator {
     }
 
     /**
+     * This method checks which positions can get reached by a worker
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
+    }
+
+    /**
      * This method implements a block to the other player if the given worker moves up a maximum of one level
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
@@ -25,5 +43,28 @@ public class OpponentBlock extends GodDecorator {
         else
             super.moveUp = false;
         return super.moveWorker(worker, pos);
+    }
+
+    /**
+     * This method builds a building block in a position on the board
+     *
+     * @param pos Position on the board where the worker builds a building block
+     * @return False if you can do another construction; true if the move has done successfully
+     */
+    @Override
+    public boolean moveBlock(Box pos) {
+        return super.moveBlock(pos);
+    }
+
+    /**
+     * This methods checks if the player win
+     *
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox   Position on the board where the worker arrives
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox) {
+        return super.checkWin(initialPos, finalBox);
     }
 }

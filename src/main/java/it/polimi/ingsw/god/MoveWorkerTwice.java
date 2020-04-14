@@ -13,6 +13,32 @@ public class MoveWorkerTwice extends MoveTwice {
     }
 
     /**
+     * This method checks which positions can get reached by a worker
+     *
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
+        if (!super.firstTime){
+            for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+                Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+                if ( super.samePosition(boxNextTo) )
+                    boxNextTo.setReachable(false);
+            }
+        }
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
+    }
+
+    /**
      * This method implements the ability to move twice the same worker and it don't allow to go back at the first move start position
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
@@ -23,5 +49,28 @@ public class MoveWorkerTwice extends MoveTwice {
         if ( !super.samePosition( pos ))
             return super.moveTwice( worker, pos );
         return super.moveWorker(worker, pos);
+    }
+
+    /**
+     * This method builds a building block in a position on the board
+     *
+     * @param pos Position on the board where the worker builds a building block
+     * @return False if you can do another construction; true if the move has done successfully
+     */
+    @Override
+    public boolean moveBlock(Box pos) {
+        return super.moveBlock(pos);
+    }
+
+    /**
+     * This methods checks if the player win
+     *
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox   Position on the board where the worker arrives
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox) {
+        return super.checkWin(initialPos, finalBox);
     }
 }

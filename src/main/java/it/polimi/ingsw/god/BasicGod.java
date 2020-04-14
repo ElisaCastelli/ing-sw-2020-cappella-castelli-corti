@@ -18,20 +18,26 @@ public class BasicGod implements God {
      * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
-    public boolean checkPossibleMove(Worker worker) {
-        boolean findAtLeastOneReachable = false;
-        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+    public void setPossibleMove(Worker worker) {
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if ( boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (worker.getHeight() - boxNextTo.getCounter() >= -1) ){
-                //boxNextTo.setReacheable(true);
-                findAtLeastOneReachable = true;
-            }
-            else{
-                //boxNextTo.setReachable(false);
-                findAtLeastOneReachable = false; //E' sbagliato, da togliere!
+            if ( boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (boxNextTo.getCounter() - worker.getHeight() <= 1) ){
+                boxNextTo.setReachable(true);
             }
         }
-        return findAtLeastOneReachable;
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
+            Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+            if (boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
+                boxNextTo.setReachable(true);
+            }
+        }
     }
 
     /**

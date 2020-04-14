@@ -6,7 +6,7 @@ import it.polimi.ingsw.Worker;
 /**
  * This class implements the ability to switch the position with an enemy worker
  */
-public class SwitchWorker extends NotMoveUp {
+public class SwitchWorker extends GodDecorator {
 
     public SwitchWorker(God newGod) {
         super(newGod);
@@ -15,11 +15,24 @@ public class SwitchWorker extends NotMoveUp {
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
-    public boolean checkPossibleMove(Worker worker) {
-        return super.checkPossibleMove(worker);
+    public void setPossibleMove(Worker worker) {
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+            Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+            if (!boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1)){
+                boxNextTo.setReachable(true);
+            }
+        }
+        super.setPossibleMove(worker);
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
     }
 
     /**
@@ -39,5 +52,28 @@ public class SwitchWorker extends NotMoveUp {
             return true;
         }
         return super.moveWorker(worker, pos);
+    }
+
+    /**
+     * This method builds a building block in a position on the board
+     *
+     * @param pos Position on the board where the worker builds a building block
+     * @return False if you can do another construction; true if the move has done successfully
+     */
+    @Override
+    public boolean moveBlock(Box pos) {
+        return super.moveBlock(pos);
+    }
+
+    /**
+     * This methods checks if the player win
+     *
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox   Position on the board where the worker arrives
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox) {
+        return super.checkWin(initialPos, finalBox);
     }
 }

@@ -18,9 +18,22 @@ public class ShiftWorker extends GodDecorator {
      * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
-    public boolean checkPossibleMove(Worker worker) {
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+            Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+            if (!boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1) && directionControl(worker, boxNextTo) == null){
+                boxNextTo.setReachable(false);
+            }
+        }
+    }
 
-        return super.checkPossibleMove(worker);
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
     }
 
     /**
@@ -41,6 +54,29 @@ public class ShiftWorker extends GodDecorator {
     }
 
     /**
+     * This method builds a building block in a position on the board
+     *
+     * @param pos Position on the board where the worker builds a building block
+     * @return False if you can do another construction; true if the move has done successfully
+     */
+    @Override
+    public boolean moveBlock(Box pos) {
+        return super.moveBlock(pos);
+    }
+
+    /**
+     * This methods checks if the player win
+     *
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox   Position on the board where the worker arrives
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox) {
+        return super.checkWin(initialPos, finalBox);
+    }
+
+    /**
      * This method checks own worker direction compared to the opponent worker so the enemy worker moves along the same
      * direction
      * @param worker Which worker is applied the move
@@ -48,13 +84,12 @@ public class ShiftWorker extends GodDecorator {
      * @return Position where the opponent worker have to move
      */
     public Box directionControl (Worker worker, Box pos) {
-//todo Secondo me, questo controllo conviene farlo anche nella checkPossibleMove così controlliamo lì che non ci sia un worker o una cupola nella nuova posizione del nemico, mentre in moveWorker diamo per scontato che la mossa vada a buon fine
         Box workerPos = worker.getActualBox();
         if ( (workerPos.getColumn() - pos.getColumn() == 1) && (workerPos.getRow() - pos.getRow() == 1) ){
             return pos.getBoxesNextTo().get(0); //va in alto a sinistra
         }
         else if ( (workerPos.getColumn() - pos.getColumn() == 1) && (pos.getRow() - workerPos.getRow() == 1) ){
-            return pos.getBoxesNextTo().get(6); //va in basso a sinistra
+            return pos.getBoxesNextTo().get(5); //va in basso a sinistra
         }
         else if ( workerPos.getColumn() - pos.getColumn() == 1 ){
             return pos.getBoxesNextTo().get(3); //va a sinistra
@@ -63,16 +98,16 @@ public class ShiftWorker extends GodDecorator {
             return pos.getBoxesNextTo().get(2); //va in alto a destra
         }
         else if ( (pos.getColumn() - workerPos.getColumn() == 1) && (pos.getRow() - workerPos.getRow() == 1) ){
-            return pos.getBoxesNextTo().get(8); //va in basso a destra
+            return pos.getBoxesNextTo().get(7); //va in basso a destra
         }
         else if ( pos.getColumn() - workerPos.getColumn() == 1 ){
-            return pos.getBoxesNextTo().get(5); //va a destra
+            return pos.getBoxesNextTo().get(4); //va a destra
         }
         else if ( workerPos.getRow() - pos.getRow() == 1 ){
             return pos.getBoxesNextTo().get(1); //va in alto
         }
         else {
-            return pos.getBoxesNextTo().get(7); //va in basso
+            return pos.getBoxesNextTo().get(6); //va in basso
         }
     }
 }

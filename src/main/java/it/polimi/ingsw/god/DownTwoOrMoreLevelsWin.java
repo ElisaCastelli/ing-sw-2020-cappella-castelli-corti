@@ -1,6 +1,7 @@
 package it.polimi.ingsw.god;
 
 import it.polimi.ingsw.Box;
+import it.polimi.ingsw.Worker;
 
 /**
  * This class implements the ability to win if the worker moves down two or more levels lower
@@ -9,6 +10,48 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
 
     public DownTwoOrMoreLevelsWin(God newGod) {
         super(newGod);
+    }
+
+    /**
+     * This method checks which positions can get reached by a worker
+     *
+     * @param worker Which worker is the check applied
+     * @return False if there are no positions that can get reached, otherwise return always true
+     */
+    @Override
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
+    }
+
+    /**
+     * This method moves the chosen worker to the new position on the board
+     *
+     * @param worker Which worker is applied the move
+     * @param pos    Position on the board where the worker wants to go
+     * @return False if you can do another move; true if the move has done successfully
+     */
+    @Override
+    public boolean moveWorker(Worker worker, Box pos) {
+        return super.moveWorker(worker, pos);
+    }
+
+    /**
+     * This method builds a building block in a position on the board
+     *
+     * @param pos Position on the board where the worker builds a building block
+     * @return False if you can do another construction; true if the move has done successfully
+     */
+    @Override
+    public boolean moveBlock(Box pos) {
+        return super.moveBlock(pos);
     }
 
     /**

@@ -21,8 +21,16 @@ public abstract class GodDecorator implements God {
      * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
-    public boolean checkPossibleMove(Worker worker) {
-        return this.newGod.checkPossibleMove( worker );
+    public void setPossibleMove(Worker worker) {
+        this.newGod.setPossibleMove( worker );
+    }
+
+    /**
+     * @param worker
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        this.newGod.setPossibleBuild(worker);
     }
 
     /**

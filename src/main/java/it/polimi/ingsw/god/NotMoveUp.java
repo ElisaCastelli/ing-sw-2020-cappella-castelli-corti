@@ -12,7 +12,22 @@ public class NotMoveUp extends GodDecorator {
         super(newGod);
     }
 
-    //todo il controllo che non può salire va fatto sulla checkPossibleMove, non sul moveWorker (Tenere in conto che noi diamo al giocatore solo le mosse che può fare)
+    /**
+     * This method checks which positions can get reached by a worker
+     *
+     * @param worker Which worker is the check applied
+     */
+    @Override
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+            Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+            if (boxNextTo.getCounter() - worker.getHeight() == 1 && !super.moveUp ){
+                boxNextTo.setReachable(false);
+            }
+        }
+    }
+
     /**
      * This method doesn't allow to move up, if an opponent player uses this ability
      * @param worker Which worker is applied the move
@@ -24,6 +39,29 @@ public class NotMoveUp extends GodDecorator {
         if ( canMoveUp( worker, pos) )
             return super.moveWorker(worker, pos);
         return false;
+    }
+
+    /**
+     * This method builds a building block in a position on the board
+     *
+     * @param pos Position on the board where the worker builds a building block
+     * @return False if you can do another construction; true if the move has done successfully
+     */
+    @Override
+    public boolean moveBlock(Box pos) {
+        return super.moveBlock(pos);
+    }
+
+    /**
+     * This methods checks if the player win
+     *
+     * @param initialPos Position on the board where the worker starts to move
+     * @param finalBox   Position on the board where the worker arrives
+     * @return False if the player doesn't win; true if the player wins
+     */
+    @Override
+    public boolean checkWin(Box initialPos, Box finalBox) {
+        return super.checkWin(initialPos, finalBox);
     }
 
     public boolean canMoveUp (Worker worker, Box finalBox) {
