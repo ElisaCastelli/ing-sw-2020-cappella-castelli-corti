@@ -63,10 +63,9 @@ public class Player {
         return age;
     }
 
-    public God getMyGod() {
-        return myGod;
+    public Box getWorkerBox(int indexWorker){
+        return myWorkers[indexWorker].getActualBox();
     }
-
     /**
      * This method changes the attributes of a gamer with attributes of another, and the other way around
      * @param player2
@@ -101,42 +100,54 @@ public class Player {
 
     }
 
-    public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
-        return gamerManager.checkPossibleMove(actualBox, boardToControl);
+    public void goWaiting(){
+        gamerManager.goWaiting();
     }
 
-    /**
-     *
-     * @param finalBox
-     * @param boardToControl
-     * @return 0 if you can't build otherwise it will return the index of the worker nearby
-     */
-    public int checkPossibleBuild( Box finalBox, Board boardToControl ){
-        return gamerManager.checkPossibleBuild(finalBox,boardToControl,name);
+    public void goWin(){
+        gamerManager.goWin();
     }
 
-    //0 mossa niente 1 mossa ok 2 mosse strane
-    public int playWorker(int indexWorker, Board board, int row, int column){
-        int movedWorker = 0;
-        movedWorker = gamerManager.moveWorker(myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName());
+    public void goDead(){
+        gamerManager.goDead();
+    }
+
+    public void setPossibleMove( int indexWorker ){
+         gamerManager.setPossibleMove(myWorkers[indexWorker]);
+    }
+
+
+    public void setPossibleBuild( int indexWorker ){
+        gamerManager.setPossibleBuild(myWorkers[indexWorker]);
+    }
+
+
+    public boolean playWorker(int indexWorker, Box pos){
+        boolean movedWorker = false;
+        movedWorker = gamerManager.moveWorker(myWorkers [ indexWorker ] , pos);
         return  movedWorker;
     }
 
-    public int playBlock( Board board, int row, int column){
-        int movedBlock = 0;
-        int indexWorker = checkPossibleBuild(board.getBox(row, column), board);
-        movedBlock = gamerManager.moveBlock( myWorkers [ indexWorker ] , board.getBox( row , column ) , myGod.getGodName() );
+    public boolean playBlock( Box pos){
+        boolean movedBlock = false;
+        movedBlock = gamerManager.moveBlock( pos );
         return movedBlock;
     }
 
 //salgo al terzo
-    public boolean checkWin(int indexWorkerMoved, Board board, int row, int column) { //index già giusto
+    public boolean checkWin(Box startedBox, Box finalBox) { //index già giusto
         // posizione di partenza e posizione di arrivo
-        return gamerManager.checkWin(board.getBox(row, column), myWorkers[indexWorkerMoved].getActualBox(), myGod.getGodName());
+        return gamerManager.checkWin(startedBox, finalBox);
     }
 
-    public boolean checkWorkers( Board boardToControl){
-        return gamerManager.checkWorkers(myWorkers[0].getActualBox(), myWorkers[1].getActualBox(), boardToControl);
+    public boolean checkWorkers(){
+        gamerManager.setPossibleMove(myWorkers[0]);
+        boolean firstWorker = myWorkers[0].getActualBox().checkPossible();
+        myWorkers[0].getActualBox().clearBoxesNextTo();
+        gamerManager.setPossibleMove(myWorkers[1]);
+        boolean secondWorker = myWorkers[1].getActualBox().checkPossible();
+        myWorkers[1].getActualBox().clearBoxesNextTo();
+        return (firstWorker || secondWorker);
     }
 
     /*public static void main( String[] args )

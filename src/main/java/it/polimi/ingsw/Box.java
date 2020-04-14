@@ -148,7 +148,7 @@ public class Box {
         }
     }
 
-    public boolean checkPossibleMove(){
+    public boolean checkPossible(){
         boolean possible=false;
         int index=0;
         while(index < boxesNextTo.size() && !possible){
@@ -159,6 +159,8 @@ public class Box {
         }
         return possible;
     }
+
+
 
     /**
      * This method prints the content of the box

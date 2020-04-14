@@ -15,7 +15,11 @@ public interface God {
     String description = "";
     String effect = "";
 
+    void setGodName(String godName);
 
+    void setDescription(String description);
+
+    void setEffect(String effect);
 
     /**
      * This method checks which positions can get reached by a worker

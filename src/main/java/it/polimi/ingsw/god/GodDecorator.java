@@ -15,6 +15,8 @@ public abstract class GodDecorator implements God {
         this.newGod = newGod;
     }
 
+
+
     /**
      * This method checks which positions can get reached by a worker
      * @param worker Which worker is the check applied

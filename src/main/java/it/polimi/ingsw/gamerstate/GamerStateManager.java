@@ -68,20 +68,20 @@ public class GamerStateManager {
             setCurrentState(win);
         }
     };
-    public int moveWorker ( Worker worker, Box pos, String godName ){
-        return currentState.moveWorker(worker,pos,godName);
+    public boolean moveWorker ( Worker worker, Box pos ){
+        return currentState.moveWorker(worker,pos);
     }
-    public int moveBlock(Worker worker, Box pos, String godName){
-        return currentState.moveBlock(worker, pos, godName);
+    public boolean moveBlock( Box pos){
+        return currentState.moveBlock( pos);
     }
-    public boolean checkWin(Box boxReach, Box boxStart, String godName){
-        return currentState.checkWin(boxReach, boxStart, godName);
-    };
-    public boolean checkPossibleMove( Box actualBox , Board boardToControl ){
-        return currentState.checkPossibleMove(actualBox, boardToControl);
+    public boolean checkWin(Box boxReach, Box boxStart){
+        return currentState.checkWin(boxReach, boxStart);
     }
-    public int checkPossibleBuild( Box finalBox, Board boardToControl,  String name ){
-        return currentState.checkPossibleBuild(finalBox, boardToControl,name);
+    public void setPossibleMove( Worker worker ){
+        currentState.setPossibleMove(worker);
+    }
+    public void setPossibleBuild( Worker worker){
+        currentState.setPossibleBuild(worker);
     }
     public boolean checkWorkers(Box actualBoxW1, Box actualBoxW2, Board boardToControl){
             return currentState.checkWorkers(actualBoxW1, actualBoxW2, boardToControl);
