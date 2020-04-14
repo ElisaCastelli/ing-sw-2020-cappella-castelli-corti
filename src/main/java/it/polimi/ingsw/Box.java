@@ -148,6 +148,18 @@ public class Box {
         }
     }
 
+    public boolean checkPossibleMove(){
+        boolean possible=false;
+        int index=0;
+        while(index < boxesNextTo.size() && !possible){
+            if(boxesNextTo.get(index).isReachable()){
+                possible=true;
+            }
+            index++;
+        }
+        return possible;
+    }
+
     /**
      * This method prints the content of the box
      */
