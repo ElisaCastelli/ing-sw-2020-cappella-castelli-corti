@@ -37,7 +37,7 @@ public class Game {
      * Array of drawn cards
      */
     private ArrayList<God> cardUsed;
-
+    private UserInterface tastiera = new UserInterface();
 
     //private Move lastMove = new Move();
     /**
@@ -61,55 +61,6 @@ public class Game {
                 players.get(i).swap(players.get(i+1));
             }
         }
-    }
-
-
-    public void addNPlayer(){
-        System.out.println("Inserire numero di giocatore: ");
-        Scanner input = new Scanner(System.in);
-        nPlayers = Integer.parseInt(input.nextLine());
-    }
-
-    public String addNamePlayer(int indexPlayer){
-        System.out.print("Inserire nome del giocatore numero "+ indexPlayer +": ");
-        Scanner playerName = new Scanner(System.in);
-        return playerName.nextLine();
-    }
-
-    public int addAgePlayer(int indexPlayer){
-        System.out.print("Inserire età del giocatore numero "+ indexPlayer +": ");
-        Scanner gamerAge = new Scanner(System.in);
-       return Integer.parseInt(gamerAge.nextLine());
-    }
-
-    public int askRow(){
-        System.out.print("Riga: ");
-        Scanner r = new Scanner(System.in);
-        return Integer.parseInt(r.nextLine());
-    }
-
-    public int askColumn(){
-        System.out.print("Colonna dove voglio muovermi: ");
-        Scanner c = new Scanner(System.in);
-        return Integer.parseInt(c.nextLine());
-    }
-
-    public int askWorker(){
-        System.out.println("Pedina da muovere [1] 0 [2]:");
-        Scanner worker = new Scanner(System.in);
-        return Integer.parseInt(worker.nextLine());
-    }
-
-    public God askGodCard(){
-        for(int g = 0; g < godsArray.size(); g++){
-            //godsArray.print();
-        }
-        System.out.println(" Quale carta vuoi scegliere? ");
-        Scanner godCard = new Scanner(System.in);
-        String nameCard= godCard.nextLine();
-        God godDrawn = godsArray.get(godsArray.indexOf(nameCard));
-        godsArray.remove(godsArray.indexOf(nameCard));
-        return godDrawn;
     }
 
     public void parseXML(){
@@ -141,6 +92,41 @@ public class Game {
                             .getElementsByTagName("effect")
                             .item(0)
                             .getTextContent());
+                    if("Apollo".equals(g.getGodName())){
+                        new SwitchWorker(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Artemis".equals(g.getGodName())){
+                        new MoveWorkerTwice(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Athena".equals(g.getGodName())){
+                        new OpponentBlock(g);
+                    }
+                    else if("Atlas".equals(g.getGodName())){
+                        new BuildDome(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Demeter".equals(g.getGodName())){
+                        new OtherPositionToBuild(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Hephaestus".equals(g.getGodName())){
+                        new BuildInTheSamePosition(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Minotaur".equals(g.getGodName())){
+                        new ShiftWorker(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Pan".equals(g.getGodName())){
+                        new DownTwoOrMoreLevelsWin(g);
+                        new NotMoveUp(g);
+                    }
+                    else if("Prometheus".equals(g.getGodName())){
+                        new BuildBeforeWorkerMove(g);
+                        new NotMoveUp(g);
+                    }
                     godsArray.add(temp,g);
                 }
             }
@@ -153,11 +139,11 @@ public class Game {
 
     public void playerManagement(){
         Player player;
-        addNPlayer();
+        nPlayers=tastiera.addNPlayer();
         for(int p = 0; p < nPlayers; p++){
 
-            String nomePlayer = addNamePlayer(p);
-            int playerAge = addAgePlayer(p);
+            String nomePlayer = tastiera.addNamePlayer(p);
+            int playerAge = tastiera.addAgePlayer(p);
 
             player = new Player(nomePlayer, playerAge);
             players.add(p,player);
@@ -170,7 +156,7 @@ public class Game {
         God godDrawn;
         parseXML();
         for(int p = 0; p < nPlayers; p++){
-            godDrawn = askGodCard();
+            godDrawn = tastiera.askGodCard(godsArray);
             players.get(p).setGod(godDrawn);
             cardUsed.add(godDrawn);
         }
@@ -186,8 +172,8 @@ public class Game {
 
                     indexWorker = index + 1;
                     System.out.println( "Settare pedina numero " + (indexWorker));
-                    int row = askRow();
-                    int column = askColumn();
+                    int row = tastiera.askRow();
+                    int column = tastiera.askColumn();
 
                     workerCorrect=players.get(p).initializeWorker(indexWorker, board.getBox(row, column));
                 }
@@ -224,7 +210,7 @@ public class Game {
                 //Movimento
 
                 while(!chosenWorker){
-                    indexWorkerMoved = askWorker();
+                    indexWorkerMoved = tastiera.askWorker();
                     starterBox = players.get(i).getWorkerBox(indexWorkerMoved - 1);
                     players.get(i).setPossibleMove(indexWorkerMoved);
                     System.out.println("Hai scelto? 0 no 1 si");
@@ -238,8 +224,8 @@ public class Game {
                     }
                 }
                 while (!movedWorker) {
-                    row = askRow();
-                    column = askColumn();
+                    row = tastiera.askRow();
+                    column = tastiera.askColumn();
                     players.get(i).setPossibleMove(indexWorkerMoved);
                     movedWorker = players.get(i).playWorker(indexWorkerMoved - 1, board.getBox( row, column));
                     starterBox.clearBoxesNextTo();
@@ -262,8 +248,8 @@ public class Game {
                     else {
                         while (!movedBlock) {
                             players.get(i).setPossibleBuild(indexWorkerMoved-1);
-                            row = askRow();
-                            column = askColumn();
+                            row = tastiera.askRow();
+                            column = tastiera.askColumn();
 
                             movedBlock = players.get(i).playBlock(board.getBox(row, column));
                             players.get(i).getWorkerBox(indexWorkerMoved-1).clearBoxesNextTo();

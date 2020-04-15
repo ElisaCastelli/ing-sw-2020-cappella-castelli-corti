@@ -21,6 +21,8 @@ public interface God {
 
     void setEffect(String effect);
 
+    String getGodName();
+
     /**
      * This method checks which positions can get reached by a worker
      * @param worker Which worker is the check applied

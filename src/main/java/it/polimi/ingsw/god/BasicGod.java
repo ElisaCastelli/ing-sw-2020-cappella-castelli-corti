@@ -24,6 +24,10 @@ public class BasicGod implements God {
         this.effect = effect;
     }
 
+    public String getGodName(){
+        return godName;
+    }
+
     /**
      * This method is a basic check: it verifies if the positions next to the worker are unoccupied (no worker and no dome) and if is possible to move up a maximum of one level higher.
      * @param worker Which worker is the check applied
