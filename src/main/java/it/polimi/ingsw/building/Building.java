@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Building {
-    private ArrayList < Block > arrayOfBlocks;
+    private final ArrayList < Block > arrayOfBlocks;
 
     public Building () {
         arrayOfBlocks = new ArrayList <> () ;
@@ -38,7 +38,7 @@ public class Building {
      */
     public void build ( int domeIdent ) {
         arrayOfBlocks.add( getBlock( domeIdent ) );
-        while( arrayOfBlocks.size( ) <= 4 ) {
+        while( arrayOfBlocks.size( ) < 4 ) {
             arrayOfBlocks.add( getBlock(5 ) );
         }
     }

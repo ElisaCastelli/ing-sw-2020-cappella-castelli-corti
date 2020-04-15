@@ -23,7 +23,7 @@ public class Player {
     /**
      * This array of Workers contains two workers for each player
      */
-    private Worker myWorkers[];
+    private Worker[] myWorkers;
 
     GamerStateManager gamerManager;
 
@@ -38,6 +38,7 @@ public class Player {
         myWorkers[0] = new Worker(1,name);
         myWorkers[1] = new Worker(2,name);
         this.age = age;
+        //todo mygod da ricontrollare perchè sempre null
         myGod = null;
         gamerManager = new GamerStateManager(myGod);
     }
@@ -89,7 +90,7 @@ public class Player {
      * @return true if initialization is successful, else false
      */
     public boolean initializeWorker( int index , Box requestedBox){
-        if( myWorkers[ index - 1 ].initializePos( requestedBox ) == true ){
+        if(myWorkers[index - 1].initializePos(requestedBox)){
             return true;
         }
         return false;

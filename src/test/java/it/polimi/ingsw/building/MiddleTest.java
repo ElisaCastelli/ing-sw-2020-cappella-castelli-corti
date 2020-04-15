@@ -1,15 +1,18 @@
 package it.polimi.ingsw.building;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class MiddleTest extends TestCase {
-    Middle middleTest=new Middle();
+import static org.junit.jupiter.api.Assertions.*;
 
-    public void testGetBlockIdentifier() {
+class MiddleTest {
+    final Middle middleTest=new Middle();
+    @Test
+    void getBlockIdentifier() {
         assertEquals(2,middleTest.getBlockIdentifier());
     }
 
-    public void testGetBlockName() {
+    @Test
+    void getBlockName() {
         assertEquals("Middle",middleTest.getBlockName());
     }
 }

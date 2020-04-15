@@ -12,6 +12,26 @@ public class SwitchWorker extends GodDecorator {
         super(newGod);
     }
 
+    @Override
+    public void setGodName(String godName) {
+
+    }
+
+    @Override
+    public void setDescription(String description) {
+
+    }
+
+    @Override
+    public void setEffect(String effect) {
+
+    }
+
+    @Override
+    public String getGodName() {
+        return null;
+    }
+
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker
      * @param worker Which worker is the check applied
@@ -39,7 +59,7 @@ public class SwitchWorker extends GodDecorator {
      * This method implements the ability to switch the position with an enemy worker
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
-     * @return Alwayes true because the move has done successfully
+     * @return Always true because the move has done successfully
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {

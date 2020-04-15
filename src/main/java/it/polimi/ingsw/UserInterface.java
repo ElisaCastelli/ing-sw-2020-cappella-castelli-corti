@@ -43,12 +43,13 @@ public class UserInterface {
     }
 
     public God askGodCard(ArrayList<God> godsArray){
-        for(int g = 0; g < godsArray.size(); g++){
-            godsArray.get(g).toString();
+        for (God god : godsArray) {
+            System.out.println(god.toString());
         }
         System.out.println(" Quale carta vuoi scegliere? ");
         Scanner godCard = new Scanner(System.in);
         String nameCard= godCard.nextLine();
+        //todo il namecard non può essere visto come un indice credo
         God godDrawn = godsArray.get(godsArray.indexOf(nameCard));
         godsArray.remove(godsArray.indexOf(nameCard));
         return godDrawn;

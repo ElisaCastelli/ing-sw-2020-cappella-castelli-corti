@@ -4,7 +4,7 @@ public class Worker {
     private int workerId;
     private int height;
     private Box actualBox;
-    private String gamerName;
+    private final String gamerName;
 
     public Worker(){
         workerId = 0;
@@ -105,7 +105,7 @@ public class Worker {
 
     /**
      *
-     * @return the tostring of the worker
+     * @return the toString of the worker
      */
     @Override
     public String toString() {

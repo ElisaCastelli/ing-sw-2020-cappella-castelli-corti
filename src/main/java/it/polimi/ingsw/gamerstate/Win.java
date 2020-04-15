@@ -12,16 +12,16 @@ public class Win extends GamerState{
     }
 
     @Override
-    public int moveWorker(Worker worker, Box pos, String godName){
+    public boolean moveWorker(Worker worker, Box pos){
         System.out.println("Vittoria");
-        return 0;
+        return false;
     }
     @Override
-    public boolean checkPossibleMove( Box actualBox , Board boardToControl ) {
-        return super.checkPossibleMove(actualBox,boardToControl);
+    public void setPossibleMove( Worker worker ) {
+        super.setPossibleMove(worker);
     }
     @Override
-    public int checkPossibleBuild( Box finalBox, Board boardToControl, String name ){
-        return super.checkPossibleBuild(finalBox, boardToControl, name);
+    public void setPossibleBuild(Worker worker ){
+        super.setPossibleBuild(worker);
     }
 }

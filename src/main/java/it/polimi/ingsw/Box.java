@@ -25,7 +25,7 @@ public class Box {
      */
     private int column;
     private boolean reachable;
-    private ArrayList<Box> boxesNextTo = new ArrayList<>();
+    private ArrayList<Box> boxesNextTo;
 
     /**
      *
@@ -140,11 +140,11 @@ public class Box {
      */
     public void build(int domeIdentifier){
         building.build(domeIdentifier);
-    };
+    }
 
     public void clearBoxesNextTo(){
-        for(int index=0; index < boxesNextTo.size(); index++){
-            boxesNextTo.get(index).setReachable(false);
+        for (Box nextTo : boxesNextTo) {
+            nextTo.setReachable(false);
         }
     }
 
@@ -160,7 +160,13 @@ public class Box {
         return possible;
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
 
+    public void setColumn(int column) {
+        this.column = column;
+    }
 
     /**
      * This method prints the content of the box
@@ -171,8 +177,9 @@ public class Box {
         }
         else if ( building!=null ){
             building.print();
+            System.out.print("[" + building.getArrayOfBlocks().size() + "] ");
         }
-        System.out.print("[" + building.getArrayOfBlocks().size() + "] ");
+
     }
 }
 

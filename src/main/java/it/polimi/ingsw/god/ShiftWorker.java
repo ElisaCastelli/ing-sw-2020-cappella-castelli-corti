@@ -12,6 +12,26 @@ public class ShiftWorker extends GodDecorator {
         super(newGod);
     }
 
+    @Override
+    public void setGodName(String godName) {
+
+    }
+
+    @Override
+    public void setDescription(String description) {
+
+    }
+
+    @Override
+    public void setEffect(String effect) {
+
+    }
+
+    @Override
+    public String getGodName() {
+        return null;
+    }
+
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move
      * @param worker Which worker is the check applied

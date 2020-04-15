@@ -12,22 +12,23 @@ public class Dead extends GamerState{
     }
 
     @Override
-    public int moveWorker(Worker worker, Box pos, String godName){
+    public boolean moveWorker(Worker worker, Box pos){
         System.out.println("Morto");
-        return super.moveWorker(worker,pos,godName);
+        return super.moveWorker(worker,pos);
     }
     @Override
-    public int moveBlock(Worker worker, Box pos, String godName){
+    public boolean moveBlock(Box pos){
         System.out.println("Morto");
-        return super.moveBlock(worker,pos,godName);
+        return super.moveBlock(pos);
     }
 
     @Override
-    public boolean checkPossibleMove( Box actualBox , Board boardToControl ) {
-        return super.checkPossibleMove(actualBox,boardToControl);
+    public void setPossibleMove(Worker worker) {
+        super.setPossibleMove(worker);
     }
+
     @Override
-    public int checkPossibleBuild( Box finalBox, Board boardToControl, String name ){
-        return super.checkPossibleBuild(finalBox, boardToControl, name);
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
     }
 }

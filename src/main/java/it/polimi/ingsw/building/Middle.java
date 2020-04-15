@@ -3,8 +3,8 @@ package it.polimi.ingsw.building;
 import it.polimi.ingsw.building.Block;
 
 public class Middle implements Block {
-    private int blockIdentifier;
-    private String blockName;
+    private final int blockIdentifier;
+    private final String blockName;
 
     public Middle() {
         this.blockIdentifier = 2;
@@ -16,15 +16,7 @@ public class Middle implements Block {
     public int getBlockIdentifier() {
         return blockIdentifier;
     }
-    /**
-     * set the identifier as an int
-     * for now is not used
-     * TODO remember that is not verified the identifier
-     * @param blockIdentifier is the identifier for building correctly
-     */
-    public void setBlockIdentifier(int blockIdentifier) {
-        this.blockIdentifier = blockIdentifier;
-    }
+
     /**
      *@return the name of the block
      */

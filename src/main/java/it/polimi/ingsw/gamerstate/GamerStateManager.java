@@ -9,6 +9,7 @@ public class GamerStateManager {
     private GamerState dead;
     private GamerState win;
     private GamerState currentState;
+    //todo non passiamo mai il nome del dio quindi dovremmo toglierlo...
     private God myGod;
 
 
@@ -39,10 +40,11 @@ public class GamerStateManager {
 
     public void setCurrentState(GamerState newState ){
         currentState=newState;
-    };
+    }
+
     public GamerState getCurrentState(){
         return currentState;
-    };
+    }
 
 
     public void goPlaying(){
@@ -50,24 +52,28 @@ public class GamerStateManager {
             setCurrentState(isPlaying);
         }
 
-    };
+    }
+
     public void goWaiting(){
         if(currentState==isPlaying){
             setCurrentState(isWaiting);
         }
 
-    };
+    }
+
     public void goDead(){
         if(currentState==isPlaying || currentState==isWaiting){
             setCurrentState(dead);
         }
 
-    };
+    }
+
     public void goWin(){
         if(currentState==isPlaying){
             setCurrentState(win);
         }
-    };
+    }
+
     public boolean moveWorker ( Worker worker, Box pos ){
         return currentState.moveWorker(worker,pos);
     }

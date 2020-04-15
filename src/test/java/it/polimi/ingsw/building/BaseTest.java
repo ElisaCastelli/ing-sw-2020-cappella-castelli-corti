@@ -1,16 +1,18 @@
 package it.polimi.ingsw.building;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class BaseTest extends TestCase {
-    Base baseTest=new Base();
+import static org.junit.jupiter.api.Assertions.*;
 
-
-    public void testGetBlockIdentifier() {
+class BaseTest {
+    final Base baseTest=new Base();
+    @Test
+    void getBlockIdentifier() {
         assertEquals(1,baseTest.getBlockIdentifier());
     }
 
-    public void testGetBlockName() {
+    @Test
+    void getBlockName() {
         assertEquals("Base",baseTest.getBlockName());
     }
 }

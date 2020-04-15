@@ -5,7 +5,7 @@ public class Move {
     Worker worker;
     Box boxStart;
     Box boxReached;
-    boolean moveup;
+    boolean moveUp;
 
     public String getGodName() {
         return godName;
@@ -40,11 +40,11 @@ public class Move {
     }
 
     public boolean isMoveup() {
-        return moveup;
+        return moveUp;
     }
 
     public void setMoveup(boolean moveup) {
-        this.moveup = moveup;
+        this.moveUp = moveup;
     }
     public Box getDirection(){
         Box temp=worker.getActualBox();
@@ -67,6 +67,7 @@ public class Move {
         temp.setColumn(newColumn);
         return temp;
     }
+    //todo il metodo è vuoto
     public void clear(){
 
     }

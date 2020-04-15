@@ -1,15 +1,18 @@
 package it.polimi.ingsw.building;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class DomeTest extends TestCase {
-    Dome domeTest =new Dome();
+import static org.junit.jupiter.api.Assertions.*;
 
-    public void testGetBlockIdentifier() {
+class DomeTest {
+    final Dome domeTest =new Dome();
+    @Test
+    void getBlockIdentifier() {
         assertEquals(4,domeTest.getBlockIdentifier());
     }
 
-    public void testGetBlockName() {
-        assertEquals("Dome",domeTest.getBlockIdentifier());
+    @Test
+    void getBlockName() {
+        assertEquals("Dome",domeTest.getBlockName());
     }
 }

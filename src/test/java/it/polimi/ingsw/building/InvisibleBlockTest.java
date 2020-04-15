@@ -1,11 +1,14 @@
 package it.polimi.ingsw.building;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class InvisibleBlockTest extends TestCase {
-    InvisibleBlock invisibleBlock=new InvisibleBlock();
+import static org.junit.jupiter.api.Assertions.*;
 
-    public void testGetBlockName() {
+class InvisibleBlockTest {
+    final InvisibleBlock invisibleBlock=new InvisibleBlock();
+    @Test
+    void getBlockName() {
         assertEquals("I'm invisible",invisibleBlock.getBlockName());
     }
+
 }

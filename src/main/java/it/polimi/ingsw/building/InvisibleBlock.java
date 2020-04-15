@@ -1,7 +1,7 @@
 package it.polimi.ingsw.building;
 
 public class InvisibleBlock implements Block {
-    private String blockName;
+    private final String blockName;
 
     public InvisibleBlock () {
         this.blockName = "I'm Invisible";

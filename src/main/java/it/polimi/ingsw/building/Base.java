@@ -1,8 +1,8 @@
 package it.polimi.ingsw.building;
 
 public class Base implements Block {
-    private int blockIdentifier;
-    private String blockName;
+    private final int blockIdentifier;
+    private final String blockName;
 
     public Base() {
         this.blockIdentifier = 1;
@@ -20,15 +20,7 @@ public class Base implements Block {
     public String getBlockName() {
         return blockName;
     }
-    /**
-     * set the identifier as an int
-     * for now is not used
-     * TODO remember that is not verified the identifier
-     * @param blockIdentifier is the identifier for building correctly
-     */
-    public void setBlockIdentifier(int blockIdentifier) {
-        this.blockIdentifier = blockIdentifier;
-    }
+
     /**
      * @return this method print out the name of the block you have selected
      */

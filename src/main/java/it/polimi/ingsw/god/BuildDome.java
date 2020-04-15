@@ -12,6 +12,26 @@ public class BuildDome extends GodDecorator {
         super(newGod);
     }
 
+    @Override
+    public void setGodName(String godName) {
+
+    }
+
+    @Override
+    public void setDescription(String description) {
+
+    }
+
+    @Override
+    public void setEffect(String effect) {
+
+    }
+
+    @Override
+    public String getGodName() {
+        return null;
+    }
+
     /**
      * This method checks which positions can get reached by a worker
      *

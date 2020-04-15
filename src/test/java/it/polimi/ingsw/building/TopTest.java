@@ -1,15 +1,19 @@
 package it.polimi.ingsw.building;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class TopTest extends TestCase {
-    Top topTest=new Top();
+import static org.junit.jupiter.api.Assertions.*;
 
-    public void testGetBlockIdentifier() {
+class TopTest {
+    final Top topTest=new Top();
+
+    @Test
+    void getBlockIdentifier() {
         assertEquals(3,topTest.getBlockIdentifier());
     }
 
-    public void testGetBlockName() {
-        assertEquals("Top",topTest.getBlockIdentifier());
+    @Test
+    void getBlockName() {
+        assertEquals("Top",topTest.getBlockName());
     }
 }
