@@ -33,10 +33,8 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
     }
 
     /**
-     * This method checks which positions can get reached by a worker
-     *
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
@@ -44,7 +42,8 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {
@@ -53,7 +52,6 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
 
     /**
      * This method moves the chosen worker to the new position on the board
-     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -65,7 +63,6 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */

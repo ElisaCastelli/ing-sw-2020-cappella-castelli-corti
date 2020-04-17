@@ -35,12 +35,11 @@ public class ShiftWorker extends GodDecorator {
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
         super.setPossibleMove(worker);
-        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
             if (!boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1) && directionControl(worker, boxNextTo) == null){
                 boxNextTo.setReachable(false);
@@ -49,7 +48,8 @@ public class ShiftWorker extends GodDecorator {
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {

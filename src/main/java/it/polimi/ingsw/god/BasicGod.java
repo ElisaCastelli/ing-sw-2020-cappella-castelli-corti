@@ -29,9 +29,8 @@ public class BasicGod implements God {
     }
 
     /**
-     * This method is a basic check: it verifies if the positions next to the worker are unoccupied (no worker and no dome) and if is possible to move up a maximum of one level higher.
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
@@ -44,7 +43,8 @@ public class BasicGod implements God {
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {

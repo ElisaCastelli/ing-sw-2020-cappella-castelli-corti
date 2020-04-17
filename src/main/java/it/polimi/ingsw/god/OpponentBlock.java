@@ -33,9 +33,8 @@ public class OpponentBlock extends GodDecorator {
     }
 
     /**
-     * This method checks which positions can get reached by a worker
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
@@ -43,7 +42,8 @@ public class OpponentBlock extends GodDecorator {
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {
@@ -77,8 +77,7 @@ public class OpponentBlock extends GodDecorator {
     }
 
     /**
-     * This methods checks if the player win
-     *
+     * This methods checks if the player wins
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

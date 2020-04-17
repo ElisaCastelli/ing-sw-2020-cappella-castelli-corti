@@ -94,28 +94,28 @@ public class Game {
                             .item(0)
                             .getTextContent());
                     if("Apollo".equals(g.getGodName())){
-                        new SwitchWorker(new NotMoveUp(new MoveBeforeBuilt(g)));
+                        new SwitchWorker(new NotMoveUp(new MoveBeforeBuild(g)));
                     }
                     else if("Artemis".equals(g.getGodName())){
-                        new MoveWorkerTwice( new NotMoveUp(new MoveBeforeBuilt(g)));
+                        new MoveWorkerTwice( new NotMoveUp(new MoveBeforeBuild(g)));
                     }
                     else if("Athena".equals(g.getGodName())){
-                        new OpponentBlock(new MoveBeforeBuilt((g));
+                        new OpponentBlock(new MoveBeforeBuild(g));
                     }
                     else if("Atlas".equals(g.getGodName())){
-                        new BuildDome(new NotMoveUp(new MoveBeforeBuilt(g)));
+                        new BuildDome(new NotMoveUp(new MoveBeforeBuild(g)));
                     }
                     else if("Demeter".equals(g.getGodName())){
-                        new OtherPositionToBuild(new NotMoveUp(new MoveBeforeBuilt((g)));
+                        new OtherPositionToBuild(new NotMoveUp(new MoveBeforeBuild(g)));
                     }
                     else if("Hephaestus".equals(g.getGodName())){
-                        new BuildInTheSamePosition(new NotMoveUp(new MoveBeforeBuilt(g)));
+                        new BuildInTheSamePosition(new NotMoveUp(new MoveBeforeBuild(g)));
                     }
                     else if("Minotaur".equals(g.getGodName())){
-                        new ShiftWorker(new SwitchWorker(new NotMoveUp(new MoveBeforeBuilt((g)));
+                        new ShiftWorker(new SwitchWorker(new NotMoveUp(new MoveBeforeBuild(g))));
                     }
                     else if("Pan".equals(g.getGodName())){
-                        new DownTwoOrMoreLevelsWin(new NotMoveUp(new MoveBeforeBuilt((g)));
+                        new DownTwoOrMoreLevelsWin(new NotMoveUp(new MoveBeforeBuild(g)));
                     }
                     else if("Prometheus".equals(g.getGodName())){
                         new BuildBeforeWorkerMove(new NotMoveUp(g));
@@ -206,9 +206,9 @@ public class Game {
                     starterBox = players.get(i).getWorkerBox(indexWorkerMoved - 1);
                     players.get(i).setPossibleMove(indexWorkerMoved);
                     System.out.println("Hai scelto? 0 no 1 si");
-                    Scanner scelta = new Scanner(System.in);
-                    int accendiamo = Integer.parseInt(scelta.nextLine());
-                    if(accendiamo==0){
+                    Scanner choice = new Scanner(System.in);
+                    int playerChoice = Integer.parseInt(choice.nextLine());
+                    if(playerChoice==0){
                         chosenWorker=false;
                     }
                     else{

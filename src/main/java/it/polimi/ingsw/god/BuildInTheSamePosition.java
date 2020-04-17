@@ -33,9 +33,8 @@ public class BuildInTheSamePosition extends MoveTwice {
     }
 
     /**
-     * This method checks which positions can get reached by a worker
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
@@ -43,7 +42,8 @@ public class BuildInTheSamePosition extends MoveTwice {
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker: during the second build move, the worker must build in the same position of the first build move
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {

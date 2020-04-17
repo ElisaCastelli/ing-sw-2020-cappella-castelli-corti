@@ -3,6 +3,8 @@ package it.polimi.ingsw.god;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
+import java.util.Scanner;
+
 /**
  * This class implements the ability to build before the worker move: you can build, move a worker at the same level or lower, and then build again.
  */
@@ -35,18 +37,28 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     }
 
     /**
-     * This method checks which positions can get reached by a worker
-     *
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
-        super.setPossibleMove(worker);
+        if ( !super.firstTime){
+            if ( super.moveUp ) {
+                super.moveUp = false;
+                super.setPossibleMove( worker );
+                super.moveUp = true;
+            }
+            else
+                super.setPossibleMove(worker);
+        }
+        else {
+            super.setPossibleMove(worker);
+        }
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {
@@ -62,12 +74,9 @@ public class BuildBeforeWorkerMove extends MoveTwice {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        if ( super.firstTime ) {
+        if ( super.firstTime || (worker.getHeight() - pos.getCounter() >= 0) ) {
             workerMoved = true;
-            return super.moveWorker(worker, pos);
-        }
-        else if ( worker.getHeight() - pos.getCounter() >= 0 ) {
-            workerMoved = true;
+
             return super.moveWorker(worker, pos);
         }
         return false;
@@ -82,8 +91,17 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     public boolean moveBlock(Box pos) {
         if ( super.firstTime && workerMoved )
             return super.moveBlock( pos );
-        else if ( !workerMoved && super.firstTime )
-            return super.moveTwice( pos );
+        else if ( !workerMoved && super.firstTime ) {
+            int wantToBuild;
+            System.out.print("Vuoi costruire? ");
+            Scanner r = new Scanner(System.in);
+            wantToBuild = Integer.parseInt(r.nextLine());
+            if (wantToBuild == 1)
+                return super.moveTwice( pos );
+            else
+                return true;
+        }
+
         return super.moveTwice( pos );
     }
 

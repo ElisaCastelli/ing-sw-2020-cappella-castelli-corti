@@ -33,16 +33,14 @@ public class MoveWorkerTwice extends MoveTwice {
     }
 
     /**
-     * This method checks which positions can get reached by a worker
-     *
+     * This method tells which positions can get reached by a worker: during the second worker move, the worker cannot move back to the starter position of the first worker move
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {
         super.setPossibleMove(worker);
         if (!super.firstTime){
-            for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+            for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
                 if ( super.samePosition(boxNextTo) )
                     boxNextTo.setReachable(false);
@@ -51,7 +49,8 @@ public class MoveWorkerTwice extends MoveTwice {
     }
 
     /**
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {
@@ -73,7 +72,6 @@ public class MoveWorkerTwice extends MoveTwice {
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
@@ -83,8 +81,7 @@ public class MoveWorkerTwice extends MoveTwice {
     }
 
     /**
-     * This methods checks if the player win
-     *
+     * This methods checks if the player wins
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

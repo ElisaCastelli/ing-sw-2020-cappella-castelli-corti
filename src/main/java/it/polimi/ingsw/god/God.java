@@ -24,7 +24,7 @@ public interface God {
     String getGodName();
 
     /**
-     * This method checks which positions can get reached by a worker
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
      */
     void setPossibleMove (Worker worker);

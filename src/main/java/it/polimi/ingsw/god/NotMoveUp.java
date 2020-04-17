@@ -33,19 +33,27 @@ public class NotMoveUp extends GodDecorator {
     }
 
     /**
-     * This method checks which positions can get reached by a worker
-     *
+     * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleMove(Worker worker) {
         super.setPossibleMove(worker);
-        for (int indexBoxNextTo = 0; indexBoxNextTo < 9; indexBoxNextTo++) {
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
             if (boxNextTo.getCounter() - worker.getHeight() == 1 && !super.moveUp ){
                 boxNextTo.setReachable(false);
             }
         }
+    }
+
+    /**
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
     }
 
     /**
