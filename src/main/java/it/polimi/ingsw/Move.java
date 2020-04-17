@@ -67,8 +67,4 @@ public class Move {
         temp.setColumn(newColumn);
         return temp;
     }
-    //todo il metodo è vuoto
-    public void clear(){
-
-    }
 }

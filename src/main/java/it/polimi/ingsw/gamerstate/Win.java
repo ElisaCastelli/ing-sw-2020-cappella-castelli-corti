@@ -4,10 +4,8 @@ import it.polimi.ingsw.*;
 import it.polimi.ingsw.god.*;
 
 public class Win extends GamerState{
-    private final GamerStateManager gamerManager;
-    private God myGod;
+    private final God myGod;
     public Win(GamerStateManager gamerManager){
-        this.gamerManager=gamerManager;
         myGod=gamerManager.getMyGod();
     }
 

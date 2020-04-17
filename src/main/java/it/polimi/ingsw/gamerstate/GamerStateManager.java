@@ -4,10 +4,10 @@ import it.polimi.ingsw.*;
 import it.polimi.ingsw.god.*;
 
 public class GamerStateManager {
-    private GamerState isPlaying;
-    private GamerState isWaiting;
-    private GamerState dead;
-    private GamerState win;
+    private final GamerState isPlaying;
+    private final GamerState isWaiting;
+    private final GamerState dead;
+    private final GamerState win;
     private GamerState currentState;
 
     private God myGod;
@@ -78,7 +78,7 @@ public class GamerStateManager {
         return currentState.moveWorker(worker,pos);
     }
     public boolean moveBlock( Box pos){
-        return currentState.moveBlock( pos);
+        return currentState.moveBlock(pos);
     }
     public boolean checkWin(Box boxReach, Box boxStart){
         return currentState.checkWin(boxReach, boxStart);

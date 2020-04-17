@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildingBaseTest {
-    Base base=new Base();
-    BuildingBase building=new BuildingBase();
+    final Base base=new Base();
+    final BuildingBase building=new BuildingBase();
     @Test
     void getBlock() {
         assertEquals(base.toString(),building.getBlock().toString());

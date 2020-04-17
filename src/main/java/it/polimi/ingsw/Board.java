@@ -13,7 +13,7 @@ public class Board {
     /**
      * Matrix of boxes that represents the playing board
      */
-    private Box[][] matrix;
+    private final Box[][] matrix;
 
     /**
      * Constructor without parameters

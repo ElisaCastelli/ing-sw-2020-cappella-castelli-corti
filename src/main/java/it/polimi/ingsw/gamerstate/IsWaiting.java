@@ -4,11 +4,9 @@ import it.polimi.ingsw.*;
 import it.polimi.ingsw.god.*;
 
 public class IsWaiting extends GamerState{
-    private final GamerStateManager gamerManager;
-    private God myGod;
+    private final God myGod;
 
     public IsWaiting(GamerStateManager gamerManager){
-        this.gamerManager=gamerManager;
         myGod=gamerManager.getMyGod();
     }
 

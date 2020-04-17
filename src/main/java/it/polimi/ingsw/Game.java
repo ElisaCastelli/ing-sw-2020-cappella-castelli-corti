@@ -38,7 +38,7 @@ public class Game {
      */
     private ArrayList<God> cardUsed;
 
-    private UserInterface tastiera = new UserInterface();
+    private final UserInterface tastiera = new UserInterface();
 
     //private Move lastMove = new Move();
     /**
@@ -156,7 +156,7 @@ public class Game {
     }
 
     public void workersSetting(){
-        int indexWorker = 0;
+        int indexWorker;
         for(int p = 0 ; p < nPlayers; p++){
             //due cicli per le pedine
             for(int index = 0 ; index < 2; index++){
@@ -178,8 +178,7 @@ public class Game {
         int i = 0;
         int indexWorkerMoved = 0;
         boolean movedWorker = false;
-        boolean win = false;
-        boolean dead = false;
+        boolean win;
         boolean movedBlock = false;
         boolean chosenWorker = false;
         int row = 0, column = 0;

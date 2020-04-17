@@ -4,20 +4,11 @@ public class Worker {
     private int workerId;
     private int height;
     private Box actualBox;
-    private final String gamerName;
 
-    public Worker(){
-        workerId = 0;
-        height = 0;
-        actualBox = null;
-        gamerName = "";
-    }
-
-    public Worker(int workerId, String gamerName) {
+    public Worker(int workerId) {
         this.workerId = workerId;
         height=0;
         actualBox=null;
-        this.gamerName=gamerName;
     }
 
     /**
@@ -66,14 +57,6 @@ public class Worker {
      */
     public void setActualBox(Box actualBox) {
         this.actualBox = actualBox;
-    }
-
-    /**
-     *
-     * @return string of the name of the gamer who owns the worker
-     */
-    public String getGamerName() {
-        return gamerName;
     }
 
     /**
