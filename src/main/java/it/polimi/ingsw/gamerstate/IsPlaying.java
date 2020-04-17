@@ -12,15 +12,12 @@ public class IsPlaying extends GamerState{
     @Override
     public boolean moveWorker(Worker worker, Box pos){
         System.out.println("Muovo"); //mossa effettiva
-        boolean movedWorker = false;
-        movedWorker= myGod.moveWorker( worker , pos);
-        return movedWorker;
+        return myGod.moveWorker( worker , pos);
     }
 
     @Override
     public boolean moveBlock( Box pos){
         System.out.println("Costruisco"); //costruzione effettiva
-        boolean movedBlock = false;
         return myGod.moveBlock(pos);
     }
 

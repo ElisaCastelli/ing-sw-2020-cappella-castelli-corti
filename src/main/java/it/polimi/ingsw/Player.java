@@ -66,6 +66,7 @@ public class Player {
     public Box getWorkerBox(int indexWorker){
         return myWorkers[indexWorker].getActualBox();
     }
+
     /**
      * This method changes the attributes of a gamer with attributes of another, and the other way around
      * @param player2
@@ -89,12 +90,11 @@ public class Player {
      * @return true if initialization is successful, else false
      */
     public boolean initializeWorker( int index , Box requestedBox){
-        return myWorkers[index - 1].initializePos(requestedBox);
+        return myWorkers[index].initializePos(requestedBox);
     }
 
     public void goPlay(){
         gamerManager.goPlaying();
-
     }
 
     public void goWaiting(){
@@ -113,11 +113,9 @@ public class Player {
          gamerManager.setPossibleMove(myWorkers[indexWorker]);
     }
 
-
     public void setPossibleBuild( int indexWorker ){
         gamerManager.setPossibleBuild(myWorkers[indexWorker]);
     }
-
 
     public boolean playWorker(int indexWorker, Box pos){
         boolean movedWorker;
@@ -131,12 +129,12 @@ public class Player {
         return movedBlock;
     }
 
-//salgo al terzo
     public boolean checkWin(Box startedBox, Box finalBox) { //index già giusto
         // posizione di partenza e posizione di arrivo
         return gamerManager.checkWin(startedBox, finalBox);
     }
 
+    //controlla che entrambe le pedine possono muoversi
     public boolean checkWorkers(){
         gamerManager.setPossibleMove(myWorkers[0]);
         boolean firstWorker = myWorkers[0].getActualBox().checkPossible();
@@ -147,17 +145,12 @@ public class Player {
         return (firstWorker || secondWorker);
     }
 
-    /*public static void main( String[] args )
-    {
-        Board b= new Board();
-        Gamer g= new Gamer("Io",b);
-        Box box= new Box(0,1,1);
-        if(g.initializeWorker(1,box)==true){
-            System.out.println("ok");
-        }
-        else{
-            System.out.println("mannaggia la miseria");
-        }
+    public boolean checkBuilding(int indexWorker){
+        gamerManager.setPossibleBuild(myWorkers[indexWorker]);
+        boolean canBuild = myWorkers[indexWorker].getActualBox().checkPossible();
+        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
+        return canBuild;
+    }
 
-    }*/
+
 }

@@ -1,11 +1,9 @@
 package it.polimi.ingsw;
 
-import java.io.File;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 import it.polimi.ingsw.god.*;
-import org.w3c.dom.*;
-import javax.xml.parsers.*;
+import it.polimi.ingsw.parse.ParserXML;
 
 
 /**
@@ -38,8 +36,7 @@ public class Game {
      */
     private ArrayList<God> cardUsed;
 
-    private final UserInterface tastiera = new UserInterface();
-
+    private ParserXML parser = new ParserXML();
     //private Move lastMove = new Move();
     /**
      * Constructor without parameters
@@ -64,224 +61,78 @@ public class Game {
         }
     }
 
-    public void parseXML(){
-        try {
-            File inputFile = new File("./god.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-
-            doc.getDocumentElement().normalize();
-
-            NodeList nList = doc.getElementsByTagName("god");
-
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
-
-                God g= new BasicGod();
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    g.setGodName(eElement
-                            .getElementsByTagName("name")
-                            .item(0)
-                            .getTextContent());
-                    g.setDescription(eElement
-                            .getElementsByTagName("description")
-                            .item(0)
-                            .getTextContent());
-                    g.setEffect(eElement
-                            .getElementsByTagName("effect")
-                            .item(0)
-                            .getTextContent());
-                    if("Apollo".equals(g.getGodName())){
-                        new SwitchWorker(new NotMoveUp(new MoveBeforeBuild(g)));
-                    }
-                    else if("Artemis".equals(g.getGodName())){
-                        new MoveWorkerTwice( new NotMoveUp(new MoveBeforeBuild(g)));
-                    }
-                    else if("Athena".equals(g.getGodName())){
-                        new OpponentBlock(new MoveBeforeBuild(g));
-                    }
-                    else if("Atlas".equals(g.getGodName())){
-                        new BuildDome(new NotMoveUp(new MoveBeforeBuild(g)));
-                    }
-                    else if("Demeter".equals(g.getGodName())){
-                        new OtherPositionToBuild(new NotMoveUp(new MoveBeforeBuild(g)));
-                    }
-                    else if("Hephaestus".equals(g.getGodName())){
-                        new BuildInTheSamePosition(new NotMoveUp(new MoveBeforeBuild(g)));
-                    }
-                    else if("Minotaur".equals(g.getGodName())){
-                        new ShiftWorker(new SwitchWorker(new NotMoveUp(new MoveBeforeBuild(g))));
-                    }
-                    else if("Pan".equals(g.getGodName())){
-                        new DownTwoOrMoreLevelsWin(new NotMoveUp(new MoveBeforeBuild(g)));
-                    }
-                    else if("Prometheus".equals(g.getGodName())){
-                        new BuildBeforeWorkerMove(new NotMoveUp(g));
-                    }
-                    godsArray.add(temp,g);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void setNPlayers(int nPlayers){
+        this.nPlayers=nPlayers;
     }
 
-    public void playerManagement(){
-        Player player;
-        nPlayers=tastiera.addNPlayer();
-        for(int p = 0; p < nPlayers; p++){
-
-            String nomePlayer = tastiera.addNamePlayer(p);
-            int playerAge = tastiera.addAgePlayer(p);
-
-            player = new Player(nomePlayer, playerAge);
-            players.add(p,player);
-        }
-        //TODO gamers.sort()
-        sortGamers();
+    public void addPlayer(String name, int age){
+        players.add(new Player(name,age));
     }
 
-    public void cardsManagement(){
-        God godDrawn;
-        parseXML();
-        for(int p = 0; p < nPlayers; p++){
-            godDrawn = tastiera.askGodCard(godsArray);
-            players.get(p).setGod(godDrawn);
-            cardUsed.add(godDrawn);
-        }
+    public ArrayList<God> showCards(){
+        parser.parseBase();
+        parser.setEffects();
+        return parser.getGodsArray();
     }
 
-    public void workersSetting(){
-        int indexWorker;
-        for(int p = 0 ; p < nPlayers; p++){
-            //due cicli per le pedine
-            for(int index = 0 ; index < 2; index++){
-                boolean workerCorrect = false;
-                while(!workerCorrect) {
-
-                    indexWorker = index + 1;
-                    System.out.println( "Settare pedina numero " + (indexWorker));
-                    int row = tastiera.askRow();
-                    int column = tastiera.askColumn();
-
-                    workerCorrect=players.get(p).initializeWorker(indexWorker, board.getBox(row, column));
-                }
-            }
-        }
+    public void chooseCard(int playerIndex, int godCard){
+        players.get(playerIndex).setGod(parser.getGod(godCard));
     }
 
-    public void turnManagement(){
-        int i = 0;
-        int indexWorkerMoved = 0;
-        boolean movedWorker = false;
-        boolean win;
-        boolean movedBlock = false;
-        boolean chosenWorker = false;
-        int row = 0, column = 0;
-        Box starterBox=null;
-
-        while(/* game manager &&*/ i <= nPlayers){
-
-            players.get(i).goPlay();
-
-            boolean canMove=players.get(i).checkWorkers();
-
-            if( !canMove ){
-                playersDead.add(players.get(i));
-                players.remove(i);
-                if(players.size()==1){
-                    //GAME MANAGER
-                    players.get(0).goWin();
-                }
-            }
-            else {
-                //Movimento
-
-                while(!chosenWorker){
-                    indexWorkerMoved = tastiera.askWorker();
-                    starterBox = players.get(i).getWorkerBox(indexWorkerMoved - 1);
-                    players.get(i).setPossibleMove(indexWorkerMoved);
-                    System.out.println("Hai scelto? 0 no 1 si");
-                    Scanner choice = new Scanner(System.in);
-                    int playerChoice = Integer.parseInt(choice.nextLine());
-                    if(playerChoice==0){
-                        chosenWorker=false;
-                    }
-                    else{
-                        chosenWorker=true;
-                    }
-                }
-                while (!movedWorker) {
-                    row = tastiera.askRow();
-                    column = tastiera.askColumn();
-                    players.get(i).setPossibleMove(indexWorkerMoved);
-                    movedWorker = players.get(i).playWorker(indexWorkerMoved - 1, board.getBox( row, column));
-                    starterBox.clearBoxesNextTo();
-                }
-
-                //check win
-                win = players.get(i).checkWin(starterBox, board.getBox( row, column));
-                if (win) {
-                    players.get(i).goWin();
-                    //fine gioco
-                }
-                else {
-                    //Costruzione
-                    players.get(i).setPossibleBuild(indexWorkerMoved-1);
-                    if(!players.get(i).getWorkerBox(indexWorkerMoved-1).checkPossible()){
-                        players.get(i).getWorkerBox(indexWorkerMoved-1).clearBoxesNextTo();
-                        players.get(i).goDead();
-                        players.remove(i);
-                    }
-                    else {
-                        while (!movedBlock) {
-                            players.get(i).setPossibleBuild(indexWorkerMoved-1);
-                            row = tastiera.askRow();
-                            column = tastiera.askColumn();
-
-                            movedBlock = players.get(i).playBlock(board.getBox(row, column));
-                            players.get(i).getWorkerBox(indexWorkerMoved-1).clearBoxesNextTo();
-                        }
-                    }
-                }
-                players.get(i).goWaiting();
-            }
-            //passo al giocatore successivo e se sono all'ultimo ritorno al primo
-            i++;
-            if( i == players.size() ){
-                i = 0;
-            }
-        }
+    public void initializeWorker(int indexPlayer, int indexWorker, int row, int column){
+        players.get(indexPlayer).initializeWorker(indexWorker-1, board.getBox(row, column));
     }
 
-    /**
-     * This method starts the game
-     * First of all it manages the insertion of players and the setting of the workers for each of them
-     * Then it manages turns by alternating players until one player wins or each player dies
-     */
-    public void play(){
-
-        //1- PLAYER MANAGEMENT
-        playerManagement();
-
-        //2-CARDS MANAGEMENT
-        cardsManagement();
-
-        //3-WORKERS SETTING
-        workersSetting();
-
-        //4-TURNS MANAGEMENT
-        turnManagement();
+    public void startTurn(int indexPlayer){
+        players.get(indexPlayer).goPlay();
     }
 
-    public static void main( String[] args )
-    {
-        Game g= new Game();
-        g.play();
+    public boolean canMove(int indexPlayer){
+        return players.get(indexPlayer).checkWorkers();
     }
+
+    public void setBoxReachable(int indexPlayer, int indexWorker){
+        players.get(indexPlayer).setPossibleMove(indexWorker-1);
+    }
+
+    public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column){
+        Box starterBox = players.get(indexPlayer).getWorkerBox(indexWorker - 1);
+        boolean movedPlayer = players.get(indexPlayer).playWorker(indexWorker - 1, board.getBox( row, column));
+        starterBox.clearBoxesNextTo();
+        return movedPlayer;
+    }
+
+    public boolean canBuild(int indexPlayer, int indexWorker){
+        return players.get(indexPlayer).checkBuilding(indexWorker-1);
+    }
+
+    public void setBoxBuilding(int indexPlayer, int indexWorker){
+        players.get(indexPlayer).setPossibleBuild(indexWorker-1);
+    }
+
+    public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column){
+        boolean movedBlock = players.get(indexPlayer).playBlock(board.getBox(row, column));
+        players.get(indexPlayer).getWorkerBox(indexWorker-1).clearBoxesNextTo();
+        return movedBlock;
+    }
+
+    public void finishTurn(int indexPlayer){
+        players.get(indexPlayer).goWaiting();
+    }
+
+    public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
+        return players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker));
+    }
+
+    public void setWinningPlayer(int indexPlayer){
+        players.get(indexPlayer).goWin();
+    }
+
+    public void setDeadPlayer(int indexPlayer){
+        players.get(indexPlayer).goDead();
+        playersDead.add(players.get(indexPlayer));
+        players.remove(indexPlayer);
+    }
+
 }
 
