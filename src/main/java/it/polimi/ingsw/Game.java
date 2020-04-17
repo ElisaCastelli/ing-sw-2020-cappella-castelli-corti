@@ -37,6 +37,7 @@ public class Game {
      * Array of drawn cards
      */
     private ArrayList<God> cardUsed;
+
     private UserInterface tastiera = new UserInterface();
 
     //private Move lastMove = new Move();
@@ -93,39 +94,31 @@ public class Game {
                             .item(0)
                             .getTextContent());
                     if("Apollo".equals(g.getGodName())){
-                        new SwitchWorker(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new SwitchWorker(g));
                     }
                     else if("Artemis".equals(g.getGodName())){
-                        new MoveWorkerTwice(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp( new MoveWorkerTwice(g));
                     }
                     else if("Athena".equals(g.getGodName())){
                         new OpponentBlock(g);
                     }
                     else if("Atlas".equals(g.getGodName())){
-                        new BuildDome(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new BuildDome(g));
                     }
                     else if("Demeter".equals(g.getGodName())){
-                        new OtherPositionToBuild(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new OtherPositionToBuild(g));
                     }
                     else if("Hephaestus".equals(g.getGodName())){
-                        new BuildInTheSamePosition(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new BuildInTheSamePosition(g));
                     }
                     else if("Minotaur".equals(g.getGodName())){
-                        new ShiftWorker(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new ShiftWorker(new SwitchWorker(g)));
                     }
                     else if("Pan".equals(g.getGodName())){
-                        new DownTwoOrMoreLevelsWin(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new DownTwoOrMoreLevelsWin(g));
                     }
                     else if("Prometheus".equals(g.getGodName())){
-                        new BuildBeforeWorkerMove(g);
-                        new NotMoveUp(g);
+                        new NotMoveUp(new BuildBeforeWorkerMove(g));
                     }
                     godsArray.add(temp,g);
                 }
@@ -266,7 +259,6 @@ public class Game {
         }
     }
 
-//sotto atena lista osservatori
     /**
      * This method starts the game
      * First of all it manages the insertion of players and the setting of the workers for each of them

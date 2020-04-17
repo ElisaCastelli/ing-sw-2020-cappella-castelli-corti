@@ -18,10 +18,10 @@ public class Win extends GamerState{
     }
     @Override
     public void setPossibleMove( Worker worker ) {
-        super.setPossibleMove(worker);
+        myGod.setPossibleMove(worker);
     }
     @Override
     public void setPossibleBuild(Worker worker ){
-        super.setPossibleBuild(worker);
+        myGod.setPossibleBuild(worker);
     }
 }

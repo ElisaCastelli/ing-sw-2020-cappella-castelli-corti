@@ -9,7 +9,7 @@ public class GamerStateManager {
     private GamerState dead;
     private GamerState win;
     private GamerState currentState;
-    //todo non passiamo mai il nome del dio quindi dovremmo toglierlo...
+
     private God myGod;
 
 
@@ -89,7 +89,5 @@ public class GamerStateManager {
     public void setPossibleBuild( Worker worker){
         currentState.setPossibleBuild(worker);
     }
-    public boolean checkWorkers(Box actualBoxW1, Box actualBoxW2, Board boardToControl){
-            return currentState.checkWorkers(actualBoxW1, actualBoxW2, boardToControl);
-    }
+
 }

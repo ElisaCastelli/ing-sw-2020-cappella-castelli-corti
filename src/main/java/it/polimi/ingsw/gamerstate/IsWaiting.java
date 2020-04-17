@@ -20,16 +20,16 @@ public class IsWaiting extends GamerState{
 
     @Override
     public boolean moveBlock(Box pos) {
-        return super.moveBlock(pos);
+        return myGod.moveBlock(pos);
     }
 
     @Override
     public void setPossibleMove(Worker worker) {
-        super.setPossibleMove(worker);
+        myGod.setPossibleMove(worker);
     }
 
     @Override
     public void setPossibleBuild(Worker worker) {
-        super.setPossibleBuild(worker);
+        myGod.setPossibleBuild(worker);
     }
 }

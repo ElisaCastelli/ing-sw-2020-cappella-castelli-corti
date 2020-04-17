@@ -13,6 +13,5 @@ public class GamerState {
     public void setPossibleMove( Worker worker ){ }
 
     public void setPossibleBuild( Worker worker){ }
-    //TODO controlla valore di ritorno
-    public boolean checkWorkers(Box actualBoxW1, Box actualBoxW2, Board boardToControl){ return true;}
+
 }

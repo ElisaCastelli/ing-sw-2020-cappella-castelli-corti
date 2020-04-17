@@ -48,10 +48,9 @@ public class UserInterface {
         }
         System.out.println(" Quale carta vuoi scegliere? ");
         Scanner godCard = new Scanner(System.in);
-        String nameCard= godCard.nextLine();
-        //todo il namecard non può essere visto come un indice credo
-        God godDrawn = godsArray.get(godsArray.indexOf(nameCard));
-        godsArray.remove(godsArray.indexOf(nameCard));
+        int numCard= Integer.parseInt(godCard.nextLine());
+        God godDrawn = godsArray.get(numCard);
+        godsArray.remove(numCard);
         return godDrawn;
     }
 

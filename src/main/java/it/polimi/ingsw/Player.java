@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.gamerstate.GamerStateManager;
+import it.polimi.ingsw.god.BasicGod;
 import it.polimi.ingsw.god.God;
 
 
@@ -38,14 +39,12 @@ public class Player {
         myWorkers[0] = new Worker(1,name);
         myWorkers[1] = new Worker(2,name);
         this.age = age;
-        //todo mygod da ricontrollare perchè sempre null
-        myGod = null;
+        myGod = new BasicGod();
         gamerManager = new GamerStateManager(myGod);
     }
 
     public void setGod(God god){
         myGod = god;
-        //TODO swtch in base al nome decidere decorator
     }
 
     public String getName() {
