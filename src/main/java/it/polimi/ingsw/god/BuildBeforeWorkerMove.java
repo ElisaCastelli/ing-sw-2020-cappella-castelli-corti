@@ -46,7 +46,6 @@ public class BuildBeforeWorkerMove extends MoveTwice {
             if ( super.moveUp ) {
                 super.moveUp = false;
                 super.setPossibleMove( worker );
-                super.moveUp = true;
             }
             else
                 super.setPossibleMove(worker);
@@ -76,7 +75,6 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     public boolean moveWorker(Worker worker, Box pos) {
         if ( super.firstTime || (worker.getHeight() - pos.getCounter() >= 0) ) {
             workerMoved = true;
-
             return super.moveWorker(worker, pos);
         }
         return false;
