@@ -24,9 +24,9 @@ public class Player {
     /**
      * This array of Workers contains two workers for each player
      */
-    private Worker[] myWorkers;
+    private final Worker[] myWorkers;
 
-    GamerStateManager gamerManager;
+    final GamerStateManager gamerManager;
 
     /**
      * Constructor with name and board as parameters
@@ -36,8 +36,8 @@ public class Player {
     Player(String name, int age){
         this.name = name;
         myWorkers = new Worker[2];
-        myWorkers[0] = new Worker(1,name);
-        myWorkers[1] = new Worker(2,name);
+        myWorkers[0] = new Worker(1);
+        myWorkers[1] = new Worker(2);
         this.age = age;
         myGod = new BasicGod();
         gamerManager = new GamerStateManager(myGod);
@@ -89,10 +89,7 @@ public class Player {
      * @return true if initialization is successful, else false
      */
     public boolean initializeWorker( int index , Box requestedBox){
-        if(myWorkers[index - 1].initializePos(requestedBox)){
-            return true;
-        }
-        return false;
+        return myWorkers[index - 1].initializePos(requestedBox);
     }
 
     public void goPlay(){
@@ -123,13 +120,13 @@ public class Player {
 
 
     public boolean playWorker(int indexWorker, Box pos){
-        boolean movedWorker = false;
+        boolean movedWorker;
         movedWorker = gamerManager.moveWorker(myWorkers [ indexWorker ] , pos);
         return  movedWorker;
     }
 
     public boolean playBlock( Box pos){
-        boolean movedBlock = false;
+        boolean movedBlock;
         movedBlock = gamerManager.moveBlock( pos );
         return movedBlock;
     }

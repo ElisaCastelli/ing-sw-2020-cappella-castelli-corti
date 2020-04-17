@@ -11,7 +11,7 @@ public class Box {
     /**
      * This attribute is a building that can be built in this box
      */
-    private Building building;
+    private final Building building;
     /**
      * This attribute is a worker that can occupy this box
      */
@@ -25,7 +25,7 @@ public class Box {
      */
     private int column;
     private boolean reachable;
-    private ArrayList<Box> boxesNextTo;
+    private final ArrayList<Box> boxesNextTo;
 
     /**
      *
@@ -102,10 +102,7 @@ public class Box {
      * @return true if there is NOT a worker in the box, else return false
      */
     public boolean notWorker(){
-        if( worker == null ){
-            return true;
-        }
-        else return false;
+        return worker == null;
     }
 
     /**
@@ -120,9 +117,6 @@ public class Box {
         return vuota;
     }
 
-    ///TODO...MA IL SETWORKER LO UTILIZZI QUANDO SPOSTI IL WORKER SULLA BOARD DA UNA POS ALL'ALTRA?
-    //PERCHE IN QUESTO CASO NON CONTROLLA SE IL WORKER E' POSIZIONATO IN UN'ALTRA CASELLA
-    //HO FATTO ILA!
     public void setWorker(Worker worker){
         this.worker = worker;
     }
