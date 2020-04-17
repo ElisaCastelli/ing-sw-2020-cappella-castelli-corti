@@ -94,31 +94,31 @@ public class Game {
                             .item(0)
                             .getTextContent());
                     if("Apollo".equals(g.getGodName())){
-                        new NotMoveUp(new SwitchWorker(g));
+                        new SwitchWorker(new NotMoveUp(new MoveBeforeBuilt(g)));
                     }
                     else if("Artemis".equals(g.getGodName())){
-                        new NotMoveUp( new MoveWorkerTwice(g));
+                        new MoveWorkerTwice( new NotMoveUp(new MoveBeforeBuilt(g)));
                     }
                     else if("Athena".equals(g.getGodName())){
-                        new OpponentBlock(g);
+                        new OpponentBlock(new MoveBeforeBuilt((g));
                     }
                     else if("Atlas".equals(g.getGodName())){
-                        new NotMoveUp(new BuildDome(g));
+                        new BuildDome(new NotMoveUp(new MoveBeforeBuilt(g)));
                     }
                     else if("Demeter".equals(g.getGodName())){
-                        new NotMoveUp(new OtherPositionToBuild(g));
+                        new OtherPositionToBuild(new NotMoveUp(new MoveBeforeBuilt((g)));
                     }
                     else if("Hephaestus".equals(g.getGodName())){
-                        new NotMoveUp(new BuildInTheSamePosition(g));
+                        new BuildInTheSamePosition(new NotMoveUp(new MoveBeforeBuilt(g)));
                     }
                     else if("Minotaur".equals(g.getGodName())){
-                        new NotMoveUp(new ShiftWorker(new SwitchWorker(g)));
+                        new ShiftWorker(new SwitchWorker(new NotMoveUp(new MoveBeforeBuilt((g)));
                     }
                     else if("Pan".equals(g.getGodName())){
-                        new NotMoveUp(new DownTwoOrMoreLevelsWin(g));
+                        new DownTwoOrMoreLevelsWin(new NotMoveUp(new MoveBeforeBuilt((g)));
                     }
                     else if("Prometheus".equals(g.getGodName())){
-                        new NotMoveUp(new BuildBeforeWorkerMove(g));
+                        new BuildBeforeWorkerMove(new NotMoveUp(g));
                     }
                     godsArray.add(temp,g);
                 }

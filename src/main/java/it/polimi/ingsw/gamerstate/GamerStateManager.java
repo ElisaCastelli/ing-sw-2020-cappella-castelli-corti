@@ -10,20 +10,16 @@ public class GamerStateManager {
     private GamerState win;
     private GamerState currentState;
 
-    private God myGod;
 
 
     public GamerStateManager(God myGod){
-        isPlaying = new IsPlaying(this);
-        isWaiting = new IsWaiting(this);
-        dead = new Dead(this);
-        win = new Win(this);
-        myGod = this.myGod;
+        isPlaying = new IsPlaying(myGod);
+        isWaiting = new IsWaiting(myGod);
+        dead = new Dead(myGod);
+        win = new Win(myGod);
         currentState = isWaiting;
     }
-    public God getMyGod() {
-        return myGod;
-    }
+
     public GamerState getIsPlaying() {
         return isPlaying;
     }

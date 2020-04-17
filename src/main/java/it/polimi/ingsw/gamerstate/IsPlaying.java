@@ -4,11 +4,9 @@ import it.polimi.ingsw.*;
 import it.polimi.ingsw.god.*;
 
 public class IsPlaying extends GamerState{
-    private final GamerStateManager gamerManager;
     private God myGod;
-    public IsPlaying(GamerStateManager gamerManager){
-        this.gamerManager=gamerManager;
-        this.myGod=gamerManager.getMyGod();
+    public IsPlaying(God myGod){
+        this.myGod=myGod;
     }
 
     @Override
