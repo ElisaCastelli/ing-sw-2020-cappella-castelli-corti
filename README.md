@@ -1,5 +1,4 @@
 # Prova Finale Ingegneria del Software 2020
-# JUnitIntro: minimal  project with JUNIT
 
 ## Gruppo AM21
 
