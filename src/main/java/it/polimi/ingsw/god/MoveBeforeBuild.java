@@ -1,8 +1,10 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
+import java.util.ArrayList;
 public class MoveBeforeBuild extends GodDecorator {
 
     private boolean isWorkerMoved;
@@ -12,22 +14,22 @@ public class MoveBeforeBuild extends GodDecorator {
     }
 
     @Override
-    public void setGodName(String godName) {
+    public void setName(String godName) {
 
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setEffect(ArrayList<String> effects) {
 
     }
 
     @Override
-    public void setEffect(String effect) {
-
+    public String getName() {
+        return null;
     }
 
     @Override
-    public String getGodName() {
+    public ArrayList<String> getEffects() {
         return null;
     }
 

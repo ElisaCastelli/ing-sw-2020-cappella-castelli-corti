@@ -1,31 +1,35 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.Worker;
 import it.polimi.ingsw.Box;
+
+import java.util.ArrayList;
 
 /**
  * This is God concrete class which implements the basic moves of the workers and of the build
  */
 public class BasicGod implements God {
 
-    private String godName;
-    private String description;
-    private String effect;
 
-    public void setGodName(String godName) {
-        this.godName = godName;
+    private String name;
+    private ArrayList<String> effects;
+
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEffect(ArrayList<String> effects) {
+        this.effects = effects;
     }
 
-    public void setEffect(String effect) {
-        this.effect = effect;
+    public String getName(){
+        return name;
     }
 
-    public String getGodName(){
-        return godName;
+    public ArrayList<String> getEffects() {
+        return effects;
     }
 
     /**

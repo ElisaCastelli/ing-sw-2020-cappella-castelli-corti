@@ -1,11 +1,15 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
+
+import java.util.ArrayList;
 
 /**
  * This class implements the ability to shift an opponent worker in a new position
  */
+
 public class ShiftWorker extends GodDecorator {
 
     public ShiftWorker(God newGod) {
@@ -13,25 +17,23 @@ public class ShiftWorker extends GodDecorator {
     }
 
     @Override
-    public void setGodName(String godName) {
+    public void setName(String godName) {
 
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setEffect(ArrayList<String> effects) {
 
     }
 
     @Override
-    public void setEffect(String effect) {
-
-    }
-
-    @Override
-    public String getGodName() {
+    public String getName() {
         return null;
     }
-
+    @Override
+    public ArrayList<String> getEffects() {
+        return null;
+    }
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move
      * @param worker Which worker is the check applied

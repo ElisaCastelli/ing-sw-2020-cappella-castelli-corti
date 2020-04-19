@@ -1,11 +1,15 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
+
+import java.util.ArrayList;
 
 /**
  *This class implements the ability to not move up of the opponent workers
  */
+
 public class NotMoveUp extends GodDecorator {
 
     public NotMoveUp(God newGod) {
@@ -13,22 +17,23 @@ public class NotMoveUp extends GodDecorator {
     }
 
     @Override
-    public void setGodName(String godName) {
+    public void setName(String godName) {
+
+    }
+
+
+    @Override
+    public void setEffect(ArrayList<String> effects) {
 
     }
 
     @Override
-    public void setDescription(String description) {
-
+    public String getName() {
+        return null;
     }
 
     @Override
-    public void setEffect(String effect) {
-
-    }
-
-    @Override
-    public String getGodName() {
+    public ArrayList<String> getEffects() {
         return null;
     }
 

@@ -3,6 +3,8 @@ package it.polimi.ingsw.god;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
+import java.util.ArrayList;
+
 /**
  * This interface represents the God for the decorator pattern
  */
@@ -11,17 +13,16 @@ public interface God {
     /**
      * These attributes are the God name, his ability description and the decorators that it is gone to use
      */
-    String godName = "";
-    String description = "";
-    String effect = "";
+    String name = "";
+    ArrayList<String> effects = new ArrayList<>();
 
-    void setGodName(String godName);
+    void setName(String name);
 
-    void setDescription(String description);
+    void setEffect(ArrayList<String> effects);
 
-    void setEffect(String effect);
+    String getName();
 
-    String getGodName();
+    ArrayList<String> getEffects();
 
     /**
      * This method tells which positions can get reached by a worker

@@ -1,11 +1,15 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
+
+import java.util.ArrayList;
 
 /**
  * This class implements the ability to build twice in two different positions
  */
+
 public class OtherPositionToBuild extends MoveTwice {
 
     public OtherPositionToBuild(God newGod) {
@@ -13,25 +17,24 @@ public class OtherPositionToBuild extends MoveTwice {
     }
 
     @Override
-    public void setGodName(String godName) {
+    public void setName(String godName) {
+
+    }
+
+
+    @Override
+    public void setEffect(ArrayList<String> effects) {
 
     }
 
     @Override
-    public void setDescription(String description) {
-
-    }
-
-    @Override
-    public void setEffect(String effect) {
-
-    }
-
-    @Override
-    public String getGodName() {
+    public String getName() {
         return null;
     }
-
+    @Override
+    public ArrayList<String> getEffects() {
+        return null;
+    }
     /**
      * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied

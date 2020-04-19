@@ -18,11 +18,20 @@ public class Board {
     /**
      * Constructor without parameters
      */
-    Board(){
+    public Board(){
         matrix = new Box[DIM][DIM];
         for(int i=0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
-                matrix[i][j] = new Box(i, j, getNextTo(i,j));
+                matrix[i][j] = new Box(i, j);
+            }
+        }
+        setBoxesNext();
+    }
+
+    public void setBoxesNext(){
+        for(int i=0; i < DIM; i++){
+            for(int j = 0; j < DIM; j++){
+                matrix[i][j].setBoxesNextTo(getNextTo(i,j));
             }
         }
     }
@@ -83,21 +92,16 @@ public class Board {
         ArrayList<Box> nextTo = new ArrayList<>();
         for(int r = row-1 ; r <= row+1; r++){
             for(int c = column-1; c <= column+1; c++){
-                if( r>=0 && r<5 && c>=0 && c<5 && (r!=0 && c!=0) ){
-                    nextTo.add(getBox(r,c));
+                if(!(r==row && c==column)){
+                    if( r>=0 && r<5 && c>=0 && c<5 ){
+                        nextTo.add(getBox(r,c));
+                    }
+                    else
+                        nextTo.add(null);
                 }
-                else
-                    nextTo.add(null);
             }
         }
         return nextTo;
     }
-    /*public static void main( String[] args ){
-        Board b= new Board();
-        b.clear();
-        b.build(0,0);
-        b.build(0,0);
-        b.build(1,2);
-        b.print();
-    }*/
+
 }

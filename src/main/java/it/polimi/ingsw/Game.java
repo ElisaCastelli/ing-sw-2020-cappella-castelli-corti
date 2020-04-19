@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 
 import java.util.ArrayList;
 import it.polimi.ingsw.god.*;
-import it.polimi.ingsw.parse.ParserXML;
+import it.polimi.ingsw.parse.CardCreator;
 
 
 /**
@@ -36,7 +36,7 @@ public class Game {
      */
     private ArrayList<God> cardUsed;
 
-    private ParserXML parser = new ParserXML();
+    private CardCreator parser = new CardCreator();
     //private Move lastMove = new Move();
     /**
      * Constructor without parameters
@@ -69,14 +69,12 @@ public class Game {
         players.add(new Player(name,age));
     }
 
-    public ArrayList<God> showCards(){
-        parser.parseBase();
-        parser.setEffects();
-        return parser.getGodsArray();
-    }
+    /*public ArrayList<God> showCards(){
+        return parser.parseCard();
+    }*/
 
     public void chooseCard(int playerIndex, int godCard){
-        players.get(playerIndex).setGod(parser.getGod(godCard));
+        //players.get(playerIndex).setGod(parser.parseCard().get(godCard));
     }
 
     public void initializeWorker(int indexPlayer, int indexWorker, int row, int column){

@@ -1,12 +1,18 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
 /**
  * This abstract class handles the different concrete decorators
  */
+
 public abstract class GodDecorator implements God {
+
+
+
 
     protected final God newGod;
     protected boolean moveUp;

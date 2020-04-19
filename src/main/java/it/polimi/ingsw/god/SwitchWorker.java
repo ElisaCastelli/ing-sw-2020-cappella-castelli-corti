@@ -1,11 +1,15 @@
 package it.polimi.ingsw.god;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
+
+import java.util.ArrayList;
 
 /**
  * This class implements the ability to switch the position with an enemy worker
  */
+
 public class SwitchWorker extends GodDecorator {
 
     public SwitchWorker(God newGod) {
@@ -13,22 +17,21 @@ public class SwitchWorker extends GodDecorator {
     }
 
     @Override
-    public void setGodName(String godName) {
+    public void setName(String godName) {
 
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setEffect(ArrayList<String> effects) {
 
     }
 
     @Override
-    public void setEffect(String effect) {
-
+    public String getName() {
+        return null;
     }
-
     @Override
-    public String getGodName() {
+    public ArrayList<String> getEffects() {
         return null;
     }
 
