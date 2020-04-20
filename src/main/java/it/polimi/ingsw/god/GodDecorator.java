@@ -1,7 +1,6 @@
 package it.polimi.ingsw.god;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 

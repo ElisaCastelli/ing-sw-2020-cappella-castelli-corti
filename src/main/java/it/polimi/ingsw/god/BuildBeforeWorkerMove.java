@@ -1,6 +1,5 @@
 package it.polimi.ingsw.god;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
@@ -71,7 +70,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     /**
      * This method implements two cases of the worker move because of this ability:
      * @param worker Which worker is applied the move
-     * @param pos    Position on the board where the worker wants to go
+     * @param pos Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
      */
     @Override

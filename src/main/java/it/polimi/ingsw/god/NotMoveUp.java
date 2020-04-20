@@ -1,6 +1,5 @@
 package it.polimi.ingsw.god;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.god;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.Worker;
 import it.polimi.ingsw.Box;
 
@@ -40,8 +38,13 @@ public class BasicGod implements God {
     public void setPossibleMove(Worker worker) {
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if ( boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (boxNextTo.getCounter() - worker.getHeight() <= 1) ){
+            if (boxNextTo!=null && boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (boxNextTo.getCounter() - worker.getHeight() <= 1) ){
                 boxNextTo.setReachable(true);
+            }
+            if(boxNextTo!=null){
+                System.out.println("è raggiungibile?:"+boxNextTo.isReachable());
+            }else{
+                System.out.println("è raggiungibile?:"+false);
             }
         }
     }
@@ -54,8 +57,13 @@ public class BasicGod implements God {
     public void setPossibleBuild(Worker worker) {
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
+            if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
                 boxNextTo.setReachable(true);
+            }
+            if(boxNextTo!=null){
+                System.out.println("Posso costruire?:"+boxNextTo.isReachable());
+            }else{
+                System.out.println("Posso costruire?:"+false);
             }
         }
     }

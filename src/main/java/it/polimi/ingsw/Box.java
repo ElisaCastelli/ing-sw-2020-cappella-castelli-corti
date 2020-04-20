@@ -104,9 +104,6 @@ public class Box {
      * This method remove the worker from the box
      */
     public void clearWorker(){
-        if( worker != null ){
-            worker.clear();
-        }
         worker=null;
     }
 

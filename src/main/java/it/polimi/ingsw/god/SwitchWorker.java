@@ -1,6 +1,5 @@
 package it.polimi.ingsw.god;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.Box;
 import it.polimi.ingsw.Worker;
 
@@ -43,7 +42,7 @@ public class SwitchWorker extends GodDecorator {
     public void setPossibleMove(Worker worker) {
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (!boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1)){
+            if (boxNextTo!=null && !boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1)){
                 boxNextTo.setReachable(true);
             }
         }
