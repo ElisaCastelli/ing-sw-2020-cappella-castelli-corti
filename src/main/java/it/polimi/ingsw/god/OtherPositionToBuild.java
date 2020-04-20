@@ -54,8 +54,13 @@ public class OtherPositionToBuild extends MoveTwice {
         if (!super.firstTime) {
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-                if (boxNextTo.getCounter() != 4 && boxNextTo.notWorker() && super.samePosition(boxNextTo)) {
+                if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker() && super.samePosition(boxNextTo)) {
                     boxNextTo.setReachable(false);
+                }
+                if(boxNextTo!=null){
+                    System.out.println("Posso costruire?:"+boxNextTo.isReachable());
+                }else{
+                    System.out.println("Posso costruire?:"+false);
                 }
             }
         }

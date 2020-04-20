@@ -18,6 +18,10 @@ public abstract class GodDecorator implements God {
         this.newGod = newGod;
     }
 
+    public boolean isMoveUp() {
+        return moveUp;
+    }
+
     /**
      * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied

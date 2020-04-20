@@ -37,6 +37,11 @@ public class OpponentBlock extends GodDecorator {
         return null;
     }
 
+    @Override
+    public boolean isMoveUp() {
+        return super.isMoveUp();
+    }
+
     /**
      * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
@@ -67,6 +72,7 @@ public class OpponentBlock extends GodDecorator {
             super.moveUp = true;
         else
             super.moveUp = false;
+        System.out.println("ho impostato il moveup:"+isMoveUp());
         return super.moveWorker(worker, pos);
     }
 

@@ -41,10 +41,19 @@ public class ShiftWorker extends GodDecorator {
     @Override
     public void setPossibleMove(Worker worker) {
         super.setPossibleMove(worker);
+
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (!boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1) && directionControl(worker, boxNextTo) == null){
+
+            if (boxNextTo!=null && !boxNextTo.notWorker() && boxNextTo.getCounter() - worker.getHeight() <= 1
+                    && (directionControl(worker, boxNextTo) == null || (!directionControl(worker, boxNextTo).notWorker() || directionControl(worker, boxNextTo).getCounter() == 4))){
                 boxNextTo.setReachable(false);
+            }
+
+            if(boxNextTo!=null){
+                System.out.println("è raggiungibile?:"+boxNextTo.isReachable());
+            }else{
+                System.out.println("è raggiungibile?:"+false);
             }
         }
     }
@@ -108,28 +117,28 @@ public class ShiftWorker extends GodDecorator {
     public Box directionControl (Worker worker, Box pos) {
         Box workerPos = worker.getActualBox();
         if ( (workerPos.getColumn() - pos.getColumn() == 1) && (workerPos.getRow() - pos.getRow() == 1) ){
-            return pos.getBoxesNextTo().get(0); //va in alto a sinistra
+            return pos.getBoxesNextTo().get(0); //go up left
         }
         else if ( (workerPos.getColumn() - pos.getColumn() == 1) && (pos.getRow() - workerPos.getRow() == 1) ){
-            return pos.getBoxesNextTo().get(5); //va in basso a sinistra
+            return pos.getBoxesNextTo().get(5); //go down left
         }
         else if ( workerPos.getColumn() - pos.getColumn() == 1 ){
-            return pos.getBoxesNextTo().get(3); //va a sinistra
+            return pos.getBoxesNextTo().get(3); //go left
         }
         else if ( (pos.getColumn() - workerPos.getColumn() == 1) && (workerPos.getRow() - pos.getRow() == 1) ){
-            return pos.getBoxesNextTo().get(2); //va in alto a destra
+            return pos.getBoxesNextTo().get(2); //go up right
         }
         else if ( (pos.getColumn() - workerPos.getColumn() == 1) && (pos.getRow() - workerPos.getRow() == 1) ){
-            return pos.getBoxesNextTo().get(7); //va in basso a destra
+            return pos.getBoxesNextTo().get(7); //go down right
         }
         else if ( pos.getColumn() - workerPos.getColumn() == 1 ){
-            return pos.getBoxesNextTo().get(4); //va a destra
+            return pos.getBoxesNextTo().get(4); //go right
         }
         else if ( workerPos.getRow() - pos.getRow() == 1 ){
-            return pos.getBoxesNextTo().get(1); //va in alto
+            return pos.getBoxesNextTo().get(1); //go up
         }
         else {
-            return pos.getBoxesNextTo().get(6); //va in basso
+            return pos.getBoxesNextTo().get(6); //go down
         }
     }
 }

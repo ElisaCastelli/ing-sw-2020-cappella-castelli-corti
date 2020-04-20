@@ -61,7 +61,7 @@ class SwitchWorkerTest {
         god.moveWorker(worker3,board.getBox(2,3));
         assertEquals(3,board.getBox(2,3).getWorker().getWorkerId());
         assertNull(board.getBox(3,3).getWorker());
-        assertEquals(true,board.getBox(3,3).notWorker());
+        assertTrue(board.getBox(3, 3).notWorker());
         //god.setPossibleMove(worker3);
         //worker3.getActualBox().clearBoxesNextTo();
 
@@ -71,8 +71,9 @@ class SwitchWorkerTest {
         god.moveWorker(worker,board.getBox(0,1));
         assertEquals(1,board.getBox(0,1).getWorker().getWorkerId());
         assertEquals(2,board.getBox(1,1).getWorker().getWorkerId());
-        assertEquals(false,board.getBox(0,1).notWorker());
-        assertEquals(false,board.getBox(1,1).notWorker());
+        assertFalse(board.getBox(0, 1).notWorker());
+        assertFalse(board.getBox(1, 1).notWorker());
+
         //CONTROLLO CHE NON POSSO COSTRUIRE INTORNO PER VEDERE SE HA FATTO CASINO CHE GLI WORKER
         god.setPossibleBuild(worker);
         worker.getActualBox().clearBoxesNextTo();
@@ -81,5 +82,4 @@ class SwitchWorkerTest {
         god.setPossibleBuild(worker3);
         worker3.getActualBox().clearBoxesNextTo();
     }
-
 }
