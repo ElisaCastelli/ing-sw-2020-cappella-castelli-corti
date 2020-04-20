@@ -33,7 +33,7 @@ public class Player {
      * @param age
      * @param name
      */
-    Player(String name, int age){
+    public Player(String name, int age){
         this.name = name;
         myWorkers = new Worker[2];
         myWorkers[0] = new Worker(1);
@@ -77,10 +77,6 @@ public class Player {
         player2.setAge( this.age );
         this.setName( newPlayer.name );
         this.setAge( newPlayer.age );
-    }
-
-    public void print(){
-        System.out.println(name+ " " +age);
     }
 
     /**

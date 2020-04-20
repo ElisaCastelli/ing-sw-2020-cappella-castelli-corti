@@ -31,7 +31,7 @@ public class Board {
     public void setBoxesNext(){
         for(int i=0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
-                matrix[i][j].setBoxesNextTo(getNextTo(i,j));
+                matrix[i][j].setBoxesNextTo(getBoxesNextTo(i,j));
             }
         }
     }
@@ -66,18 +66,6 @@ public class Board {
     }
 
     /**
-     * This method prints the content of the entire board
-     */
-    public void print() {
-        for (int i = 0; i < DIM; i++) {
-            for (int j = 0; j < DIM; j++) {
-                matrix[i][j].print();
-            }
-            System.out.println();
-        }
-    }
-
-    /**
      *
      * @param row indicates the row of the box in the matrix i want
      * @param column indicates the column of the box in the matrix i want
@@ -88,7 +76,7 @@ public class Board {
     }
 
     //Quinta pos è quella che ho chiesto
-    public ArrayList<Box> getNextTo(int row, int column){
+    public ArrayList<Box> getBoxesNextTo(int row, int column){
         ArrayList<Box> nextTo = new ArrayList<>();
         for(int r = row-1 ; r <= row+1; r++){
             for(int c = column-1; c <= column+1; c++){
@@ -102,6 +90,18 @@ public class Board {
             }
         }
         return nextTo;
+    }
+
+    /**
+     * This method prints the content of the entire board
+     */
+    public void print() {
+        for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
+                matrix[i][j].print();
+            }
+            System.out.println();
+        }
     }
 
 }

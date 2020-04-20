@@ -2,6 +2,10 @@ package it.polimi.ingsw;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
 import it.polimi.ingsw.god.*;
 import it.polimi.ingsw.parse.CardCreator;
 
@@ -54,15 +58,26 @@ public class Game {
      * Method to sort gamers by age
      */
     public void sortGamers(){
-        for(int i = 0; i < nPlayers-1; i++){
-            if(players.get(i).getAge() > players.get(i+1).getAge()){
-                players.get(i).swap(players.get(i+1));
+        Collections.sort(players, new Comparator<Player>() {
+            @Override public int compare(Player p1, Player p2) {
+                return p1.getAge() - p2.getAge(); // Ascending
             }
-        }
+
+        });
     }
 
+    public Player getPlayer(int index){
+        return players.get(index);
+    }
     public void setNPlayers(int nPlayers){
         this.nPlayers=nPlayers;
+    }
+    public int getnPlayers(){
+        return nPlayers;
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return players;
     }
 
     public void addPlayer(String name, int age){
@@ -77,8 +92,8 @@ public class Game {
         //players.get(playerIndex).setGod(parser.parseCard().get(godCard));
     }
 
-    public void initializeWorker(int indexPlayer, int indexWorker, int row, int column){
-        players.get(indexPlayer).initializeWorker(indexWorker-1, board.getBox(row, column));
+    public void initializeWorker(int indexPlayer, int indexWorker, Box box){
+        players.get(indexPlayer).initializeWorker(indexWorker-1, box);
     }
 
     public void startTurn(int indexPlayer){

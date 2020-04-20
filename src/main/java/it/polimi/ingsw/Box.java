@@ -25,7 +25,7 @@ public class Box {
      */
     private int column;
     private boolean reachable;
-    private final ArrayList<Box> boxesNextTo;
+    private ArrayList<Box> boxesNextTo;
 
     /**
      *
@@ -33,12 +33,12 @@ public class Box {
      * @param column column of the box
      * Constructor with parameters
      */
-    public Box(int row, int column, ArrayList<Box> boxesNextTo){ //controllare r e c da 0 a 5
+    public Box(int row, int column){ //controllare r e c da 0 a 5
         building = new Building();
         this.row = row;
         this.column = column;
         worker  =null;
-        this.boxesNextTo = boxesNextTo;
+        reachable=false;
     }
 
     /**
@@ -65,8 +65,20 @@ public class Box {
         return building.getArrayOfBlocks().size();
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
     public ArrayList<Box> getBoxesNextTo() {
         return boxesNextTo;
+    }
+
+    public void setBoxesNextTo(ArrayList<Box> boxesNextTo){
+        this.boxesNextTo = boxesNextTo;
     }
 
     public boolean isReachable() {
@@ -111,7 +123,7 @@ public class Box {
      */
     public boolean isEmpty(){
         boolean vuota = true;
-        if((building.getArrayOfBlocks().size() != 0) || (worker != null)){
+        if((getCounter() != 0) || (worker != null)){
             vuota = false;
         }
         return vuota;
@@ -138,28 +150,24 @@ public class Box {
 
     public void clearBoxesNextTo(){
         for (Box nextTo : boxesNextTo) {
-            nextTo.setReachable(false);
+            if(nextTo!=null){
+                nextTo.setReachable(false);
+            }
         }
     }
 
     public boolean checkPossible(){
         boolean possible=false;
         int index=0;
-        while(index < boxesNextTo.size() && !possible){
-            if(boxesNextTo.get(index).isReachable()){
-                possible=true;
+        while((index < boxesNextTo.size()) && !possible){
+            if(boxesNextTo.get(index)!=null){
+                if(boxesNextTo.get(index).isReachable()){
+                    possible=true;
+                }
             }
             index++;
         }
         return possible;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 
     /**
