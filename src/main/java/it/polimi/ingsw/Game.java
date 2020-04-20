@@ -40,7 +40,7 @@ public class Game {
      */
     private ArrayList<God> cardUsed;
 
-    private CardCreator parser = new CardCreator();
+    //private CardCreator parser = new CardCreator();
     //private Move lastMove = new Move();
     /**
      * Constructor without parameters

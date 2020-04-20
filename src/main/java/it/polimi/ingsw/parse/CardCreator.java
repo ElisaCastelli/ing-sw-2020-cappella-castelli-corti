@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardCreator {
+
     public ArrayList<God> parseCard(){
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<God> g= new ArrayList<>();

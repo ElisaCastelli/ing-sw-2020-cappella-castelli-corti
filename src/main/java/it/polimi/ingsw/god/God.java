@@ -31,8 +31,8 @@ public interface God {
     void setPossibleMove (Worker worker);
 
     /**
-     *
-     * @param worker
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
      */
     void setPossibleBuild (Worker worker);
 
