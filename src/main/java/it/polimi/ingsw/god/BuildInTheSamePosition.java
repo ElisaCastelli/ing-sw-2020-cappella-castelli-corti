@@ -57,7 +57,7 @@ public class BuildInTheSamePosition extends MoveTwice {
         else {
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-                if (super.samePosition( boxNextTo) && boxNextTo.getCounter() <= 2) {
+                if (boxNextTo != null && super.samePosition( boxNextTo) && boxNextTo.getCounter() <= 2) {
                     boxNextTo.setReachable(true);
                 }
             }
@@ -82,15 +82,13 @@ public class BuildInTheSamePosition extends MoveTwice {
      */
     @Override
     public boolean moveBlock(Box pos) {
-        if ( super.firstTime )
+        if (super.firstTime && pos.getCounter() <= 1)
             return super.moveTwice( pos );
-        else if ( pos.getCounter() <= 2 && super.samePosition( pos ))
+        else if ( super.firstTime )
+            return super.moveBlock( pos );
+        else if (super.samePosition( pos ))
             return super.moveTwice( pos );
-        else {
-            super.firstTime = true;
-            super.oldBoxMove = null;
-            return true;
-        }
+        return false;
     }
 
     /**
