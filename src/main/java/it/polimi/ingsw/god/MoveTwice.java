@@ -19,7 +19,6 @@ public abstract class MoveTwice extends GodDecorator {
      * This method checks which positions can get reached by a worker
      *
      * @param worker Which worker is the check applied
-     * @return False if there are no positions that can get reached, otherwise return always true
      */
     @Override
     public void setPossibleMove(Worker worker) {

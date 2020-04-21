@@ -43,11 +43,6 @@ public class BasicGod implements God {
             if (boxNextTo != null && boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (boxNextTo.getCounter() - worker.getHeight() <= 1) ){
                 boxNextTo.setReachable(true);
             }
-            if(boxNextTo!=null){
-                System.out.println("è raggiungibile?:"+boxNextTo.isReachable());
-            }else{
-                System.out.println("è raggiungibile?:"+false);
-            }
         }
     }
 

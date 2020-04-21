@@ -76,7 +76,7 @@ public class Building {
         return arrayOfBlocks.get( pos ).toString();
     }
     /**
-     * @return the array is a list of the block that was created in a Box and as a size>=0
+     * @return the array is a list of the block that was created in a Box
      */
     public ArrayList<Block> getArrayOfBlocks () {
         return arrayOfBlocks;
