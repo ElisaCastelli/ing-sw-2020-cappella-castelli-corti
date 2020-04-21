@@ -15,10 +15,11 @@ class ShiftWorkerTest {
         Worker worker2=new Worker(2);
         Worker worker3=new Worker(3);
         Board board = new Board();
-        board.setBoxesNext();
+
         worker.initializePos(board.getBox(1,1));
         worker2.initializePos(board.getBox(0,0));
         worker3.initializePos(board.getBox(3,3));
+
         //NON MI DEVE FAR SPOSTARE IN ALTO
         god.setPossibleMove(worker);
         worker.getActualBox().clearBoxesNextTo();
