@@ -45,16 +45,21 @@ public class BuildBeforeWorkerMove extends MoveTwice {
      */
     @Override
     public void setPossibleMove(Worker worker) {
-        if ( !super.firstTime){
-            if ( super.moveUp ) {
-                super.moveUp = false;
-                super.setPossibleMove( worker );
-            }
-            else
-                super.setPossibleMove(worker);
-        }
-        else {
+        if(super.firstTime){
             super.setPossibleMove(worker);
+        }else{
+            super.setPossibleMove(worker);
+            for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
+                Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+                if (boxNextTo!=null && boxNextTo.getCounter() - worker.getHeight() == 1 ){
+                    boxNextTo.setReachable(false);
+                }
+                if(boxNextTo!=null){
+                    System.out.println("è raggiungibile?:"+boxNextTo.isReachable());
+                }else{
+                    System.out.println("è raggiungibile?:"+false);
+                }
+            }
         }
     }
 
@@ -76,11 +81,8 @@ public class BuildBeforeWorkerMove extends MoveTwice {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        if ( super.firstTime || (worker.getHeight() - pos.getCounter() >= 0) ) {
-            workerMoved = true;
-            return super.moveWorker(worker, pos);
-        }
-        return false;
+        workerMoved=true;
+        return super.moveWorker(worker,pos);
     }
 
     /**
@@ -90,20 +92,16 @@ public class BuildBeforeWorkerMove extends MoveTwice {
      */
     @Override
     public boolean moveBlock(Box pos) {
-        if ( super.firstTime && workerMoved )
-            return super.moveBlock( pos );
-        else if ( !workerMoved && super.firstTime ) {
-            int wantToBuild;
-            System.out.print("Vuoi costruire? ");
-            Scanner r = new Scanner(System.in);
-            wantToBuild = Integer.parseInt(r.nextLine());
-            if (wantToBuild == 1)
-                return super.moveTwice( pos );
-            else
-                return true;
+        if( super.firstTime && workerMoved ){//basic move
+            workerMoved=false;
+            return super.moveBlock(pos);
+        }else if(super.firstTime){//first time of decorator move
+            super.moveTwice(pos);
+            return true;
+        }else{//second time of decorator move
+            workerMoved=false;
+            return super.moveTwice(pos);
         }
-
-        return super.moveTwice( pos );
     }
 
     /**

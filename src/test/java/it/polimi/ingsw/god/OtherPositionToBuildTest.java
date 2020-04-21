@@ -39,15 +39,15 @@ class OtherPositionToBuildTest {
         god.setPossibleBuild(worker2);
         worker2.getActualBox().clearBoxesNextTo();
 
-        //SECONDA MOSSA NON DOVE PRIMA
+        //second move but not in the same position
         assertFalse(god.moveBlock(board.getBox(1,2)));
-        System.out.println("ho costruito in 1,2 la-:"+ board.getBox(1,2).getCounter());
+        System.out.println("build in 1,2 with counter-:"+ board.getBox(1,2).getCounter());
         god.setPossibleBuild(worker);
         worker.getActualBox().clearBoxesNextTo();
         System.out.println("il worker 2");
         god.setPossibleBuild(worker2);
         worker2.getActualBox().clearBoxesNextTo();
-        System.out.println("ora nella 1,2 non posso costruire");
+        System.out.println("now in 1,2 i can't build");
     }
 
     @Test
@@ -61,16 +61,16 @@ class OtherPositionToBuildTest {
         worker2.initializePos(board.getBox(1,1));
         worker3.initializePos(board.getBox(3,3));
 
-        //SECONDA MOSSA
+        //second move
         assertFalse(god.moveBlock(board.getBox(1,2)));
         assertEquals(1,board.getBox(1,2).getCounter());
-        System.out.println("ho costruito in 1,2 la-:"+ board.getBox(1,2).getCounter());
+        System.out.println("build in 1,2 with counter-:"+ board.getBox(1,2).getCounter());
         god.setPossibleBuild(worker);
         worker.getActualBox().clearBoxesNextTo();
-        System.out.println("il worker 2");
+        System.out.println("worker 2");
         god.setPossibleBuild(worker2);
         worker2.getActualBox().clearBoxesNextTo();
-        System.out.println("ora nella 1,2 non posso costruire");
+        System.out.println("now in 1,2 i can't build");
 
         assertFalse(god.moveBlock(board.getBox(1,2)));
         assertEquals(1,board.getBox(1,2).getCounter());
