@@ -12,7 +12,7 @@ import it.polimi.ingsw.Worker;
 public abstract class GodDecorator implements God {
 
     protected final God newGod;
-    protected boolean moveUp;
+    protected static boolean moveUp;
 
     public GodDecorator ( God newGod ) {
         this.newGod = newGod;

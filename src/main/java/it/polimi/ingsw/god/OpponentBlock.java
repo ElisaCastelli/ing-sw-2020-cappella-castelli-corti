@@ -69,9 +69,9 @@ public class OpponentBlock extends GodDecorator {
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
         if ( pos.getCounter() - worker.getHeight() == 1)
-            super.moveUp = true;
+            moveUp = true;
         else
-            super.moveUp = false;
+            moveUp = false;
         System.out.println("ho impostato il moveup:"+isMoveUp());
         return super.moveWorker(worker, pos);
     }

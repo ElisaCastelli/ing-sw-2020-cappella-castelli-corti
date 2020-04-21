@@ -46,7 +46,7 @@ public class MoveWorkerTwice extends MoveTwice {
         if (!super.firstTime){
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-                if ( super.samePosition(boxNextTo) )
+                if (boxNextTo != null && super.samePosition(boxNextTo) )
                     boxNextTo.setReachable(false);
             }
         }
@@ -62,7 +62,7 @@ public class MoveWorkerTwice extends MoveTwice {
     }
 
     /**
-     * This method implements the ability to move twice the same worker and it doesn't allow to go back at the first move start position
+     * This method implements the ability to move twice the same worker and it doesn't allow to move back at the first move start position
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully

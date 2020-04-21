@@ -64,7 +64,7 @@ public class MoveBeforeBuild extends GodDecorator {
     }
 
     /**
-     * This method builds a building block in a position on the board
+     * This method does not allow the moveBlock if it is called before the moveWorker
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */

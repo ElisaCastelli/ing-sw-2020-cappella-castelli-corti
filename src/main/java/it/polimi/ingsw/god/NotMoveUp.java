@@ -9,7 +9,6 @@ import java.util.ArrayList;
 /**
  *This class implements the ability to not move up of the opponent workers
  */
-
 public class NotMoveUp extends GodDecorator {
 
     public NotMoveUp(God newGod) {
@@ -46,7 +45,7 @@ public class NotMoveUp extends GodDecorator {
         super.setPossibleMove(worker);
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (boxNextTo.getCounter() - worker.getHeight() == 1 && !super.moveUp ){
+            if (boxNextTo != null && boxNextTo.getCounter() - worker.getHeight() == 1 && moveUp){
                 boxNextTo.setReachable(false);
             }
         }
@@ -69,7 +68,7 @@ public class NotMoveUp extends GodDecorator {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        if ( canMoveUp( worker, pos) )
+        if ( canMoveUp( worker, pos) ) //Si potrebbe togliere perchè è un controllo già fatto in set
             return super.moveWorker(worker, pos);
         return false;
     }
@@ -98,6 +97,6 @@ public class NotMoveUp extends GodDecorator {
     }
 
     public boolean canMoveUp (Worker worker, Box finalBox) {
-        return super.moveUp || (finalBox.getCounter() - worker.getHeight() != 1);
+        return moveUp || (finalBox.getCounter() - worker.getHeight() != 1);
     }
 }

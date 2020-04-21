@@ -48,8 +48,6 @@ class OtherPositionToBuildTest {
         god.setPossibleBuild(worker2);
         worker2.getActualBox().clearBoxesNextTo();
         System.out.println("ora nella 1,2 non posso costruire");
-        //todo non controlla con quale worker fa la mossa
-
     }
 
     @Test
@@ -73,7 +71,7 @@ class OtherPositionToBuildTest {
         god.setPossibleBuild(worker2);
         worker2.getActualBox().clearBoxesNextTo();
         System.out.println("ora nella 1,2 non posso costruire");
-        //todo non controlla con quale worker fa la mossa
+
         assertFalse(god.moveBlock(board.getBox(1,2)));
         assertEquals(1,board.getBox(1,2).getCounter());
 
