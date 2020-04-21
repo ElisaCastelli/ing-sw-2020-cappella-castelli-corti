@@ -40,7 +40,7 @@ public class Game {
      */
     private ArrayList<God> cardUsed;
 
-    //private CardCreator parser = new CardCreator();
+    private CardCreator parser = new CardCreator();
     //private Move lastMove = new Move();
     /**
      * Constructor without parameters
@@ -84,16 +84,17 @@ public class Game {
         players.add(new Player(name,age));
     }
 
-    /*public ArrayList<God> showCards(){
+    public ArrayList<BasicGod> showCards() throws Exception {
         return parser.parseCard();
-    }*/
-
-    public void chooseCard(int playerIndex, int godCard){
-        //players.get(playerIndex).setGod(parser.parseCard().get(godCard));
     }
 
-    public void initializeWorker(int indexPlayer, int indexWorker, Box box){
-        players.get(indexPlayer).initializeWorker(indexWorker-1, box);
+    public void chooseCard(int playerIndex, int godCard) throws Exception {
+        players.get(playerIndex).setGod(godsArray.get(godCard));
+    }
+
+    //index worker 1 o 2, nelle altre classi arriva già a -1
+    public boolean initializeWorker(int indexPlayer, int indexWorker, Box box){
+        return players.get(indexPlayer).initializeWorker(indexWorker-1, box);
     }
 
     public void startTurn(int indexPlayer){
@@ -109,8 +110,12 @@ public class Game {
     }
 
     public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column){
+        boolean movedPlayer= false;
         Box starterBox = players.get(indexPlayer).getWorkerBox(indexWorker - 1);
-        boolean movedPlayer = players.get(indexPlayer).playWorker(indexWorker - 1, board.getBox( row, column));
+        players.get(indexPlayer).setPossibleMove(indexWorker);
+        if(board.getBox(row,column).isReachable()){
+             movedPlayer= players.get(indexPlayer).playWorker(indexWorker - 1, board.getBox( row, column));
+        }
         starterBox.clearBoxesNextTo();
         return movedPlayer;
     }
@@ -124,7 +129,11 @@ public class Game {
     }
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column){
-        boolean movedBlock = players.get(indexPlayer).playBlock(board.getBox(row, column));
+        boolean movedBlock = false;
+        players.get(indexPlayer).setPossibleBuild(indexWorker);
+        if(board.getBox(row,column).isReachable()){
+            movedBlock=players.get(indexPlayer).playBlock(indexWorker,board.getBox(row, column));
+        }
         players.get(indexPlayer).getWorkerBox(indexWorker-1).clearBoxesNextTo();
         return movedBlock;
     }

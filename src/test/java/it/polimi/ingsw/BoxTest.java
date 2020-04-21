@@ -52,9 +52,9 @@ class BoxTest {
     @Test
     void setReachable() {
         box.setReachable(true);
-        assertEquals(true, box.isReachable());
+        assertTrue(box.isReachable());
         box.setReachable(false);
-        assertEquals(false, box.isReachable());
+        assertFalse(box.isReachable());
     }
 
     @Test
@@ -68,9 +68,9 @@ class BoxTest {
     void notWorker() {
         boolean worker= box.notWorker();
         if(box.getWorker()!=null){
-            assertEquals(false, worker);
+            assertFalse(worker);
         }else{
-            assertEquals(true,worker);
+            assertTrue(worker);
         }
     }
 
@@ -79,7 +79,7 @@ class BoxTest {
         boolean empty= box.isEmpty();
         if(empty){
             assertEquals(0, box.getCounter());
-            assertEquals(null,box.getWorker());
+            assertNull(box.getWorker());
         }else{
             assertNotEquals(0, box.getCounter());
             assertNotEquals(null,box.getWorker());
@@ -90,7 +90,7 @@ class BoxTest {
         box.clearBoxesNextTo();
         for(int index=0;index<8;index++){
             if(box.getBoxesNextTo().get(index)!=null){
-                assertEquals(false,box.getBoxesNextTo().get(index).isReachable());
+                assertFalse(box.getBoxesNextTo().get(index).isReachable());
             }
         }
     }
@@ -99,11 +99,11 @@ class BoxTest {
     void checkPossible() {
         box.clearBoxesNextTo();
         box.getBoxesNextTo().get(7).setReachable(true);
-        assertEquals(true,box.checkPossible());
+        assertTrue(box.checkPossible());
         box.clearBoxesNextTo();
         if(box.getBoxesNextTo().get(0)!=null){
             box.getBoxesNextTo().get(0).setReachable(true);
         }
-        assertEquals(false,box.checkPossible());
+        assertFalse(box.checkPossible());
     }
 }

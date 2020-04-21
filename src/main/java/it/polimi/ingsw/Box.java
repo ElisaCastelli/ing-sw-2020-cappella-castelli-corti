@@ -167,6 +167,18 @@ public class Box {
         return possible;
     }
 
+    public boolean isNext(Box box){
+        int i=0;
+        boolean next=false;
+        while(i<8 && !next){
+           if(boxesNextTo.get(i)==box){
+               next=true;
+           }
+            i++;
+        }
+        return next;
+    }
+
     /**
      * This method prints the content of the box
      */

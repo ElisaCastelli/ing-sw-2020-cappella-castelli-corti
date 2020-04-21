@@ -14,7 +14,7 @@ class BoardTest {
         boardTest.clear();
         for(int r=0;r<5;r++){
             for(int c=0;c<5;c++){
-                assertEquals(true,boardTest.getBox(r, c).isEmpty());
+                assertTrue(boardTest.getBox(r, c).isEmpty());
             }
         }
     }
@@ -22,7 +22,7 @@ class BoardTest {
     @Test
     void isEmpty() {
         boardTest.clear();
-        assertEquals(true,boardTest.isEmpty());
+        assertTrue(boardTest.isEmpty());
     }
 
 
@@ -43,19 +43,19 @@ class BoardTest {
             for(int column=0; column<5; column++){
                 boardTest.getBoxesNextTo(row,column);
                 if(row==0 && column==0){
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(0));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(1));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(2));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(3));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(0));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(1));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(2));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(3));
                     assertEquals(boardTest.getBox(row, (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(4));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(5));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(5));
                     assertEquals(boardTest.getBox((row+1),column), boardTest.getBox(row,column).getBoxesNextTo().get(6));
                     assertEquals(boardTest.getBox((row+1),(column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(7));
                 }
                 else if(row==0 && column<4){
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(0));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(1));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(2));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(0));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(1));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(2));
                     assertEquals(boardTest.getBox(row, (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(3));
                     assertEquals(boardTest.getBox(row, (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(4));
                     assertEquals(boardTest.getBox((row+1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(5));
@@ -63,34 +63,34 @@ class BoardTest {
                     assertEquals(boardTest.getBox((row+1), (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(7));
                 }
                 else if(row==0 && column==4){
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(0));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(1));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(2));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(0));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(1));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(2));
                     assertEquals(boardTest.getBox(row, (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(3));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(4));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(4));
                     assertEquals(boardTest.getBox((row+1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(5));
                     assertEquals(boardTest.getBox((row+1), (column)), boardTest.getBox(row,column).getBoxesNextTo().get(6));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(7));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(7));
                 }
                 else if(column==0 && row<4){
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(0));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(0));
                     assertEquals(boardTest.getBox((row-1),column), boardTest.getBox(row,column).getBoxesNextTo().get(1));
                     assertEquals(boardTest.getBox((row-1), (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(2));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(3));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(3));
                     assertEquals(boardTest.getBox(row, (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(4));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(5));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(5));
                     assertEquals(boardTest.getBox((row+1), (column)), boardTest.getBox(row,column).getBoxesNextTo().get(6));
                     assertEquals(boardTest.getBox((row+1), (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(7));
                 }
                 else if( row==4 && column==0 ){
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(0));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(0));
                     assertEquals(boardTest.getBox((row-1),column), boardTest.getBox(row,column).getBoxesNextTo().get(1));
                     assertEquals(boardTest.getBox((row-1), (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(2));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(3));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(3));
                     assertEquals(boardTest.getBox(row, (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(4));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(5));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(6));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(7));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(5));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(6));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(7));
                 }
                 else if(row == 4 && column<4){
                     assertEquals(boardTest.getBox((row-1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(0));
@@ -98,28 +98,28 @@ class BoardTest {
                     assertEquals(boardTest.getBox((row-1), (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(2));
                     assertEquals(boardTest.getBox(row, (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(3));
                     assertEquals(boardTest.getBox(row, (column+1)), boardTest.getBox(row,column).getBoxesNextTo().get(4));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(5));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(6));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(7));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(5));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(6));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(7));
                 } else if (row==4 && column==4) {
                     assertEquals(boardTest.getBox((row-1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(0));
                     assertEquals(boardTest.getBox((row-1),column), boardTest.getBox(row,column).getBoxesNextTo().get(1));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(2));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(2));
                     assertEquals(boardTest.getBox(row, (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(3));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(4));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(5));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(6));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(7));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(4));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(5));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(6));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(7));
                 }
                 else if(row<4 && column==4){
                     assertEquals(boardTest.getBox((row-1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(0));
                     assertEquals(boardTest.getBox((row-1),column), boardTest.getBox(row,column).getBoxesNextTo().get(1));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(2));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(2));
                     assertEquals(boardTest.getBox(row, (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(3));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(4));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(4));
                     assertEquals(boardTest.getBox((row+1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(5));
                     assertEquals(boardTest.getBox((row+1), (column)), boardTest.getBox(row,column).getBoxesNextTo().get(6));
-                    assertEquals(null, boardTest.getBox(row,column).getBoxesNextTo().get(7));
+                    assertNull(boardTest.getBox(row, column).getBoxesNextTo().get(7));
                 }
                 else{
                     assertEquals(boardTest.getBox((row-1), (column-1)), boardTest.getBox(row,column).getBoxesNextTo().get(0));

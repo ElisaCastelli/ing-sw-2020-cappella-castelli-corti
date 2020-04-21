@@ -1,47 +1,73 @@
 [
-{
-  "name": "Apollo", "effects":[
-  "MoveBeforeBuild", "NotMoveUp", "SwitchWorker"
-]
-},
-{
-"name": "Artemis", "effects":[
-"MoveBeforeBuild", "NotMoveUp", "MoveWorkerTwice"
-]
-},
-{
-"name": "Athena", "effects":[
-"MoveBeforeBuild", "OpponentBlock"
-]
-},
-{
-"name": "Atlas", "effects":[
-"MoveBeforeBuild", "NotMoveUp", "BuildDome"
-]
-},
-{
-"name": "Demeter", "effects":[
-"MoveBeforeBuild", "NotMoveUp", "OtherPositionToBuild"
-]
-},
-{
-"name": "Hephaestus", "effects":[
-"MoveBeforeBuild", "NotMoveUp", "BuildInTheSamePosition"
-]
-},
-{
-"name": "Minotaur", "effects":[
-"MoveBeforeBuild", "NotMoveUp", "ShiftWorker", "SwitchWorker"
-]
-},
-{
-"name": "Pan", "effects":[
-"MoveBeforeBuild", "NotMoveUp", "DownTwoOrMoreLevelsWin"
-]
-},
-{
-"name": "Prometheus", "effects":[
-"NotMoveUp", "BuildBeforeWorkerMove"
-]
-}
-]
+    {
+      "name": "Apollo",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "SwitchWorker"
+      ]
+    },
+    {
+      "name": "Artemis",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "MoveWorkerTwice"
+      ]
+    },
+    {
+      "name": "Athena",
+      "effects": [
+        "MoveBeforeBuild",
+        "OpponentBlock"
+      ]
+    },
+    {
+      "name": "Atlas",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "BuildDome"
+      ]
+    },
+    {
+      "name": "Demeter",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "OtherPositionToBuild"
+      ]
+    },
+    {
+      "name": "Hephaestus",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "BuildInTheSamePosition"
+      ]
+    },
+    {
+      "name": "Minotaur",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "ShiftWorker",
+        "SwitchWorker"
+      ]
+    },
+    {
+      "name": "Pan",
+      "effects": [
+        "MoveBeforeBuild",
+        "NotMoveUp",
+        "DownTwoOrMoreLevelsWin"
+      ]
+    },
+    {
+      "name": "Prometheus",
+      "effects": [
+        "NotMoveUp",
+        "BuildBeforeWorkerMove"
+      ]
+    }
+  ]

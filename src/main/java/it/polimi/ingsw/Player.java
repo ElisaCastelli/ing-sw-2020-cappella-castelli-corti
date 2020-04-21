@@ -68,18 +68,6 @@ public class Player {
     }
 
     /**
-     * This method changes the attributes of a gamer with attributes of another, and the other way around
-     * @param player2
-     */
-    public void swap(Player player2){
-        Player newPlayer = new Player( player2.name, player2.age);
-        player2.setName( this.name );
-        player2.setAge( this.age );
-        this.setName( newPlayer.name );
-        this.setAge( newPlayer.age );
-    }
-
-    /**
      * This method sets the first position of a worker
      * @param index is the number of the worker i want to set
      * @param requestedBox is the box where i want to set the worker
@@ -114,14 +102,20 @@ public class Player {
     }
 
     public boolean playWorker(int indexWorker, Box pos){
-        boolean movedWorker;
-        movedWorker = gamerManager.moveWorker(myWorkers [ indexWorker ] , pos);
+        boolean movedWorker=false;
+        setPossibleMove(indexWorker);
+        if(pos.isReachable()) {
+            movedWorker = gamerManager.moveWorker(myWorkers[indexWorker], pos);
+        }
+        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
         return  movedWorker;
     }
 
-    public boolean playBlock( Box pos){
-        boolean movedBlock;
-        movedBlock = gamerManager.moveBlock( pos );
+    public boolean playBlock( int indexWorker, Box pos){
+        boolean movedBlock=false;
+        if(myWorkers[indexWorker].getActualBox().isNext(pos)){
+            movedBlock = gamerManager.moveBlock( pos );
+        }
         return movedBlock;
     }
 

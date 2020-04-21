@@ -26,19 +26,6 @@ class PlayerTest {
         assertEquals(boardTest.getBox(0,0),pTest.getWorkerBox(1));
     }
 
-    @Test
-    void swap() {
-        Player p2Test= new Player("b",12);
-        String name1= pTest.getName();
-        String name2 = p2Test.getName();
-        int age1= pTest.getAge();
-        int age2 = p2Test.getAge();
-        pTest.swap(p2Test);
-        assertEquals(name2, pTest.getName());
-        assertEquals(name1, p2Test.getName());
-        assertEquals(age2, pTest.getAge());
-        assertEquals(age1, p2Test.getAge());
-    }
 
     @Test
     void initializeWorker() {
@@ -54,7 +41,7 @@ class PlayerTest {
         pTest.initializeWorker(1,boardTest.getBox(1,1));
         pTest.setPossibleMove(1);
         for(int index=0; index<8; index++){
-            assertEquals(true,pTest.getWorkerBox(1).getBoxesNextTo().get(index).isReachable());
+            assertTrue(pTest.getWorkerBox(1).getBoxesNextTo().get(index).isReachable());
         }
     }
 
@@ -68,7 +55,7 @@ class PlayerTest {
         boardTest.getBox(0,0).build();
 
         pTest.setPossibleBuild(1);
-        assertEquals(false,pTest.getWorkerBox(1).getBoxesNextTo().get(0).isReachable());
+        assertFalse(pTest.getWorkerBox(1).getBoxesNextTo().get(0).isReachable());
     }
 
     @Test
@@ -76,12 +63,11 @@ class PlayerTest {
         boardTest.clear();
         pTest.goPlay();
         pTest.initializeWorker(1,boardTest.getBox(1,1));
-
         pTest.playWorker(1, boardTest.getBox(0,0));
         assertNotEquals(null, boardTest.getBox(0,0).getWorker());
-        assertEquals(null, boardTest.getBox(1,1).getWorker());
+        assertNull(boardTest.getBox(1, 1).getWorker());
 
-        //assertEquals(false, pTest.playWorker(1, boardTest.getBox(3,3)));
+        assertFalse(pTest.playWorker(1, boardTest.getBox(3, 3)));
     }
 
     @Test
@@ -90,13 +76,15 @@ class PlayerTest {
         boardTest.clear();
         pTest.goPlay();
         pTest.initializeWorker(1, boardTest.getBox(1,1));
-        pTest.playBlock(boardTest.getBox(1,2));
+        pTest.playBlock(1,boardTest.getBox(1,2));
         counter++;
         assertEquals((counter), boardTest.getBox(1,2).getCounter());
-        pTest.playBlock(boardTest.getBox(1,2));
+        pTest.playBlock(1,boardTest.getBox(1,2));
         counter++;
         assertEquals((counter), boardTest.getBox(1,2).getCounter());
-
+        assertFalse(pTest.playBlock(1, boardTest.getBox(4,4)));
+        pTest.playBlock(1,boardTest.getBox(2,2));
+        assertEquals(1, boardTest.getBox(2,2).getCounter());
     }
 
     @Test
@@ -110,7 +98,7 @@ class PlayerTest {
         boardTest.getBox(1,1).build();
         pTest.initializeWorker(1,boardTest.getBox(1,1));
         pTest.playWorker(1,boardTest.getBox(2,2));
-        assertEquals(true, pTest.checkWin(boardTest.getBox(1,1), boardTest.getBox(2,2)));
+        assertTrue(pTest.checkWin(boardTest.getBox(1, 1), boardTest.getBox(2, 2)));
     }
 
     @Test
@@ -126,10 +114,26 @@ class PlayerTest {
         boardTest.getBox(2,1).build();
         boardTest.getBox(2,0).build();
         boardTest.getBox(2,0).build();
-        //assertEquals(false,pTest.checkWorkers());
+        assertFalse(pTest.checkWorkers());
     }
 
     @Test
     void checkBuilding() {
+        pTest.initializeWorker(0,boardTest.getBox(0,0));
+        pTest.initializeWorker(1, boardTest.getBox(3,3));
+        boardTest.getBox(0,1).build();
+        boardTest.getBox(0,1).build();
+        boardTest.getBox(0,1).build();
+        boardTest.getBox(0,1).build();
+        boardTest.getBox(1,1).build();
+        boardTest.getBox(1,1).build();
+        boardTest.getBox(1,1).build();
+        boardTest.getBox(1,1).build();
+        boardTest.getBox(1,0).build();
+        boardTest.getBox(1,0).build();
+        boardTest.getBox(1,0).build();
+        boardTest.getBox(1,0).build();
+        assertFalse(pTest.checkBuilding(0));
+        assertTrue(pTest.checkBuilding(1));
     }
 }
