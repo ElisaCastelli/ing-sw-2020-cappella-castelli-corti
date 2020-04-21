@@ -18,7 +18,7 @@ class SwitchWorkerTest {
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
         Board board = new Board();
-        board.setBoxesNext();
+
         worker.initializePos(board.getBox(1,1));
         worker2.initializePos(board.getBox(0,1));
 
@@ -36,7 +36,7 @@ class SwitchWorkerTest {
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
         Board board = new Board();
-        board.setBoxesNext();
+
         worker.initializePos(board.getBox(1,1));
         worker2.initializePos(board.getBox(0,1));
 
@@ -53,7 +53,7 @@ class SwitchWorkerTest {
         Worker worker2=new Worker(2);
         Worker worker3=new Worker(3);
         Board board = new Board();
-        board.setBoxesNext();
+
         worker.initializePos(board.getBox(1,1));
         worker2.initializePos(board.getBox(0,1));
         worker3.initializePos(board.getBox(3,3));
