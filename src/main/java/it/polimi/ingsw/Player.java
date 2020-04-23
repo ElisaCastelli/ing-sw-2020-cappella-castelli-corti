@@ -30,8 +30,8 @@ public class Player {
 
     /**
      * Constructor with name and board as parameters
-     * @param age
-     * @param name
+     * @param age the age of a player
+     * @param name the name of a player
      */
     public Player(String name, int age){
         this.name = name;

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"it.polimi.ingsw"},{"l":"it.polimi.ingsw.building"},{"l":"it.polimi.ingsw.gamerstate"},{"l":"it.polimi.ingsw.god"},{"l":"it.polimi.ingsw.parse"}]
