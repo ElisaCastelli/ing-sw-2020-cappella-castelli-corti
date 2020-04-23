@@ -84,8 +84,12 @@ public class Game {
         players.add(new Player(name,age));
     }
 
-    public ArrayList<BasicGod> showCards() throws Exception {
-        return parser.parseCard();
+    public void loadCards() throws Exception {
+        godsArray= parser.parseCard();
+    }
+
+    public ArrayList<God> getCards(){
+        return godsArray;
     }
 
     public void chooseCard(int playerIndex, int godCard) throws Exception {

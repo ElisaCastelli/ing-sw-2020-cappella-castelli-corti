@@ -4,64 +4,30 @@ package it.polimi.ingsw.parse;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.god.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class CardCreator {
-    ArrayList<BasicGod> godsArray= new ArrayList<BasicGod>();
+    private ArrayList<God> cardsGod= new ArrayList<God>();
+    private  ArrayList<BasicGod> godsByJson = new ArrayList<BasicGod>();
+    private HashMap <String,Object> map = new HashMap<>();
 
-    public ArrayList<BasicGod> parseCard() throws Exception {
+    public CardCreator(){
+        setHashMap();
+    }
+    public ArrayList<God> parseCard() throws Exception {
         readCard();
-        BasicGod g;
-        for(int index=0; index < godsArray.size(); index++){
-            g=godsArray.get(index);
-            for(int indexEffects=0; indexEffects<g.getEffects().size(); indexEffects++){
-                if("MoveBeforeBuild".equals(g.getEffects().get(indexEffects))){
-                    new MoveBeforeBuild(g);
-                }
-                else if("NotMoveUp".equals(g.getEffects().get(indexEffects))){
-                    new NotMoveUp(g);
-                }
-                else if("MoveWorkerTwice".equals(g.getEffects().get(indexEffects))){
-                    new MoveWorkerTwice(g);
-                }
-                else if("OpponentBlock".equals(g.getEffects().get(indexEffects))){
-                    new OpponentBlock(g);
-                }
-                else if("BuildDome".equals(g.getEffects().get(indexEffects))){
-                    new BuildDome(g);
-                }
-                else if("OtherPositionToBuild".equals(g.getEffects().get(indexEffects))){
-                    new OtherPositionToBuild(g);
-                }
-                else if("BuildInTheSamePosition".equals(g.getEffects().get(indexEffects))){
-                    new BuildInTheSamePosition(g);
-                }
-                else if("ShiftWorker".equals(g.getEffects().get(indexEffects))){
-                    new ShiftWorker(g);
-                }
-                else if("SwitchWorker".equals(g.getEffects().get(indexEffects))){
-                    new SwitchWorker(g);
-                }
-                else if("DownTwoOrMoreLevelsWin".equals(g.getEffects().get(indexEffects))){
-
-                }
-            }
-        }
-        return godsArray;
+        setGodsByString();
+        return cardsGod;
     }
 
     public void readCard() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
-        ArrayList<BasicGod> g= new ArrayList<>();
+
         //legge tutto l'array di gods
         /*try{
             g = objectMapper.readValue(new File("gods.json"), new TypeReference<ArrayList<BasicGod>>(){});
@@ -79,13 +45,86 @@ public class CardCreator {
 
             //JsonNode node = mapper.readTree(parser);
             BasicGod godRead = mapper.readValue(parser, BasicGod.class);
-
+            godsByJson.add(godRead);
             // do whatever you need to do with this object
         }
 
         parser.close();
-        godsArray=g;
+
     }
+
+    public void setHashMap(){
+        BasicGod g = new BasicGod();
+        map.put("MoveBeforeBuild", new MoveBeforeBuild(g));
+        map.put("NotMoveUp",new NotMoveUp(g));
+        map.put("MoveWorkerTwice",new MoveWorkerTwice(g));
+        map.put("OpponentBlock",new OpponentBlock(g));
+        map.put("BuildDome",new BuildDome(g));
+        map.put("OtherPositionToBuild",new OtherPositionToBuild(g));
+        map.put("BuildInTheSamePosition",new BuildInTheSamePosition(g));
+        map.put("ShiftWorker",new ShiftWorker(g));
+        map.put("SwitchWorker",new SwitchWorker(g));
+        map.put("DownTwoOrMoreLevelsWin",new DownTwoOrMoreLevelsWin(g));
+    }
+
+    public void setGodsByString(){
+
+        BasicGod godJson;
+        for(int index=0; index < godsByJson.size(); index++){
+
+            God g = new BasicGod();
+            godJson=godsByJson.get(index);
+            g=godJson;
+
+            for(int indexEffects=0; indexEffects<godJson.getEffects().size(); indexEffects++){
+
+                if("MoveBeforeBuild".equals(godJson.getEffects().get(indexEffects))){
+                    g = new MoveBeforeBuild(g);
+                }
+                else if("NotMoveUp".equals(godJson.getEffects().get(indexEffects))){
+                    g = new NotMoveUp(g);
+                }
+                else if("MoveWorkerTwice".equals(godJson.getEffects().get(indexEffects))){
+                    g = new MoveWorkerTwice(g);
+                }
+                else if("OpponentBlock".equals(godJson.getEffects().get(indexEffects))){
+                    g = new OpponentBlock(g);
+                }
+                else if("BuildDome".equals(godJson.getEffects().get(indexEffects))){
+                    g = new BuildDome(g);
+                }
+                else if("OtherPositionToBuild".equals(godJson.getEffects().get(indexEffects))){
+                    g = new OtherPositionToBuild(g);
+                }
+                else if("BuildInTheSamePosition".equals(godJson.getEffects().get(indexEffects))){
+                    g = new BuildInTheSamePosition(g);
+                }
+                else if("ShiftWorker".equals(godJson.getEffects().get(indexEffects))){
+                    g = new ShiftWorker(g);
+                }
+                else if("SwitchWorker".equals(godJson.getEffects().get(indexEffects))){
+                    g = new SwitchWorker(g);
+                }
+                else if("DownTwoOrMoreLevelsWin".equals(godJson.getEffects().get(indexEffects))){
+                    g = new DownTwoOrMoreLevelsWin(g);
+                }
+
+            }
+            cardsGod.add( g);
+        }
+    }
+
+    public void setGodsByHashMap() {
+        BasicGod g;
+        for (int index = 0; index < godsByJson.size(); index++) {
+            g = godsByJson.get(index);
+            for (int indexEffects = 0; indexEffects < g.getEffects().size(); indexEffects++) {
+                String effect = g.getEffects().get(indexEffects);
+                //g=map.get(effect);
+            }
+        }
+    }
+
 
 }
 

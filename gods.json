@@ -2,72 +2,72 @@
     {
       "name": "Apollo",
       "effects": [
-        "MoveBeforeBuild",
+        "SwitchWorker",
         "NotMoveUp",
-        "SwitchWorker"
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Artemis",
       "effects": [
-        "MoveBeforeBuild",
+        "MoveWorkerTwice",
         "NotMoveUp",
-        "MoveWorkerTwice"
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Athena",
       "effects": [
-        "MoveBeforeBuild",
-        "OpponentBlock"
+        "OpponentBlock",
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Atlas",
       "effects": [
-        "MoveBeforeBuild",
+        "BuildDome",
         "NotMoveUp",
-        "BuildDome"
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Demeter",
       "effects": [
-        "MoveBeforeBuild",
+        "OtherPositionToBuild",
         "NotMoveUp",
-        "OtherPositionToBuild"
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Hephaestus",
       "effects": [
-        "MoveBeforeBuild",
+        "BuildInTheSamePosition",
         "NotMoveUp",
-        "BuildInTheSamePosition"
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Minotaur",
       "effects": [
-        "MoveBeforeBuild",
-        "NotMoveUp",
+        "SwitchWorker",
         "ShiftWorker",
-        "SwitchWorker"
+        "NotMoveUp",
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Pan",
       "effects": [
-        "MoveBeforeBuild",
+        "DownTwoOrMoreLevelsWin",
         "NotMoveUp",
-        "DownTwoOrMoreLevelsWin"
+        "MoveBeforeBuild"
       ]
     },
     {
       "name": "Prometheus",
       "effects": [
-        "NotMoveUp",
-        "BuildBeforeWorkerMove"
+        "BuildBeforeWorkerMove",
+        "NotMoveUp"
       ]
     }
   ]
