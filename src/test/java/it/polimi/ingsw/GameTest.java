@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTest {
     Game gameTest = new Game();
     Board boardTest= new Board();
+
+    GameTest() throws Exception {
+    }
+
     @Test
     void sortGamers() {
         gameTest.addPlayer("a", 22);

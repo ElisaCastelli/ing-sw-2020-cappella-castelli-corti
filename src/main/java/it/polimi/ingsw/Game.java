@@ -45,7 +45,7 @@ public class Game {
     /**
      * Constructor without parameters
      */
-    Game(){
+    Game() throws Exception {
         board = new Board();
         players = new ArrayList<>();
         playersDead = new ArrayList<>();

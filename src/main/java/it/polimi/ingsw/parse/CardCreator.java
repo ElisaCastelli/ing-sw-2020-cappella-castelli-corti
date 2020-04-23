@@ -10,18 +10,25 @@ import it.polimi.ingsw.god.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CardCreator {
-    private ArrayList<God> cardsGod= new ArrayList<God>();
-    private  ArrayList<BasicGod> godsByJson = new ArrayList<BasicGod>();
-    private HashMap <String,Object> map = new HashMap<>();
 
-    public CardCreator(){
-        setHashMap();
-    }
-    public ArrayList<God> parseCard() throws Exception {
+    private ArrayList<God> cardsGod= new ArrayList<>();
+    private  ArrayList<BasicGod> godsByJson = new ArrayList<>();
+    private Map <String,God> map = new HashMap<>();
+    public ArrayList<God> godArrayListToHash = new ArrayList<>();
+
+    public CardCreator() throws Exception {
         readCard();
-        setGodsByString();
+        for ( int i =0; i < godsByJson.size(); i++ ){
+            godArrayListToHash.add(new BasicGod());
+        }
+    }
+
+    public ArrayList<God> parseCard() {
+        //setGodsByString();
+        setGodsByHashMap();
         return cardsGod;
     }
 
@@ -46,25 +53,27 @@ public class CardCreator {
             //JsonNode node = mapper.readTree(parser);
             BasicGod godRead = mapper.readValue(parser, BasicGod.class);
             godsByJson.add(godRead);
-            // do whatever you need to do with this object
         }
 
         parser.close();
 
     }
 
-    public void setHashMap(){
-        BasicGod g = new BasicGod();
-        map.put("MoveBeforeBuild", new MoveBeforeBuild(g));
-        map.put("NotMoveUp",new NotMoveUp(g));
-        map.put("MoveWorkerTwice",new MoveWorkerTwice(g));
-        map.put("OpponentBlock",new OpponentBlock(g));
-        map.put("BuildDome",new BuildDome(g));
-        map.put("OtherPositionToBuild",new OtherPositionToBuild(g));
-        map.put("BuildInTheSamePosition",new BuildInTheSamePosition(g));
-        map.put("ShiftWorker",new ShiftWorker(g));
-        map.put("SwitchWorker",new SwitchWorker(g));
-        map.put("DownTwoOrMoreLevelsWin",new DownTwoOrMoreLevelsWin(g));
+    public void setHashMap(God god){
+
+        map.put("MoveBeforeBuild", new MoveBeforeBuild(god));
+        map.put("NotMoveUp",new NotMoveUp(god));
+        map.put("MoveWorkerTwice",new MoveWorkerTwice(god));
+        map.put("OpponentBlock",new OpponentBlock(god));
+        map.put("BuildDome",new BuildDome(god));
+        map.put("BuildBeforeWorkerMove",new BuildBeforeWorkerMove(god));
+        map.put("OtherPositionToBuild",new OtherPositionToBuild(god));
+        map.put("BuildInTheSamePosition",new BuildInTheSamePosition(god));
+        map.put("ShiftWorker",new ShiftWorker(god));
+        map.put("SwitchWorker",new SwitchWorker(god));
+        map.put("BuildABlockUnderItself",new BuildABlockUnderItself(god));
+        map.put("BuildNotAlongThePerimeter",new BuildNotAlongThePerimeter(god));
+        map.put("MoveInfinityTimesAlongThePerimeter",new MoveInfinityTimesAlongThePerimeter(god));
     }
 
     public void setGodsByString(){
@@ -72,7 +81,7 @@ public class CardCreator {
         BasicGod godJson;
         for(int index=0; index < godsByJson.size(); index++){
 
-            God g = new BasicGod();
+            God g;
             godJson=godsByJson.get(index);
             g=godJson;
 
@@ -115,14 +124,26 @@ public class CardCreator {
     }
 
     public void setGodsByHashMap() {
-        BasicGod g;
+
         for (int index = 0; index < godsByJson.size(); index++) {
-            g = godsByJson.get(index);
-            for (int indexEffects = 0; indexEffects < g.getEffects().size(); indexEffects++) {
-                String effect = g.getEffects().get(indexEffects);
-                //g=map.get(effect);
+
+            God temp= godArrayListToHash.get(index);
+
+            for (int indexEffects = 0; indexEffects < godsByJson.get(index).getEffects().size(); indexEffects++) {
+                String effect = godsByJson.get(index).getEffects().get(indexEffects);
+                setHashMap(temp);
+                temp=map.get(effect);
             }
+            cardsGod.add(temp);
         }
+    }
+
+
+    public static void main (String[] args) throws Exception {
+
+        CardCreator cardCreator=new CardCreator();
+        cardCreator.parseCard();
+
     }
 
 
