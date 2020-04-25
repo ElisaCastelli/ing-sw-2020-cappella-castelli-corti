@@ -40,11 +40,11 @@ public class ShiftWorker extends GodDecorator {
     @Override
     public void setPossibleMove(Worker worker) {
         super.setPossibleMove(worker);
-        //todo Quando aggiungiamo i colori alle pedine dobbiamo aggiungere anche un controllo qui per capire se il worker adiacente è di un avversario o nostro
+
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
 
-            if (boxNextTo!=null && !boxNextTo.notWorker() && boxNextTo.getCounter() - worker.getHeight() <= 1
+            if (boxNextTo!=null && !worker.getColor().equals(boxNextTo.getWorker().getColor()) && !boxNextTo.notWorker() && boxNextTo.getCounter() - worker.getHeight() <= 1
                     && (directionControl(worker, boxNextTo) == null || (!directionControl(worker, boxNextTo).notWorker() || directionControl(worker, boxNextTo).getCounter() == 4))){
                 boxNextTo.setReachable(false);
             }

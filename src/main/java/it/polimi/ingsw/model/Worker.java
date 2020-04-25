@@ -2,15 +2,38 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Box;
 
-public class Worker {
-    private int workerId;
-    private int height;
-    private Box actualBox;
+/**
+ * This class is the Worker associated to the player during a match
+ */
 
-    public Worker(int workerId) {
+public class Worker {
+    /**
+     * this parameter is to identify the worker of the player
+     */
+    private int workerId;
+    /**
+     * this parameter is to identify the worker's height in the box in which it is
+     */
+    private int height;
+    /**
+     * this parameter is to identify the worker?s position in the Board
+     */
+    private Box actualBox;
+    /**
+     * this parameter is to identify the color of the player
+     */
+    private final Game.COLOR color;
+
+    /**
+     *
+     * @param workerId this parameter is to identify the worker of the player
+     * @param color this parameter is to identify the color of the player
+     */
+    public Worker(int workerId, Game.COLOR color) {
         this.workerId = workerId;
         height=0;
         actualBox=null;
+        this.color = color;
     }
 
     /**
@@ -59,6 +82,14 @@ public class Worker {
      */
     public void setActualBox(Box actualBox) {
         this.actualBox = actualBox;
+    }
+
+    /**
+     *
+     * @return the color associated with the player
+     */
+    public Game.COLOR getColor() {
+        return color;
     }
 
     /**

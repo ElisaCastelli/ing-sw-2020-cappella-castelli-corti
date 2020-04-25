@@ -20,6 +20,10 @@ public class Player {
      * This is the god card drawn by the player
      */
     private God myGod;
+    /**
+     * This is a String in Hexadecimal to identify the color associated with the player and his workers
+     */
+    private final Game.COLOR color;
 
     /**
      * This array of Workers contains two workers for each player
@@ -33,14 +37,15 @@ public class Player {
      * @param age the age of a player
      * @param name the name of a player
      */
-    public Player(String name, int age){
+    public Player(String name, int age, Game.COLOR color){
         this.name = name;
         myWorkers = new Worker[2];
-        myWorkers[0] = new Worker(1);
-        myWorkers[1] = new Worker(2);
+        myWorkers[0] = new Worker(1, color);
+        myWorkers[1] = new Worker(2,color);
         this.age = age;
         myGod = new BasicGod();
         gamerManager = new GamerStateManager(myGod);
+        this.color = color;
     }
 
     public void setGod(God god){

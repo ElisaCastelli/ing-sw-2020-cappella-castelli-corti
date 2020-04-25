@@ -45,7 +45,8 @@ public class FerryAnOpponentWorker extends MoveTwice {
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
 
-                if (boxNextTo != null && !boxNextTo.notWorker() && otherSide(worker, boxNextTo) != null && otherSide(worker, boxNextTo).notWorker() && otherSide(worker, boxNextTo).getCounter() != 4) {
+                if (boxNextTo != null && !boxNextTo.notWorker() && !worker.getColor().equals(boxNextTo.getWorker().getColor()) &&
+                        otherSide(worker, boxNextTo) != null && otherSide(worker, boxNextTo).notWorker() && otherSide(worker, boxNextTo).getCounter() != 4) {
                     boxNextTo.setReachable(true);
                 }
             }

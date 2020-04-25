@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.parse.CardCreator;
  * This is the main class that represents the game
  */
 
+
 public class Game {
     /**
      * This attribute is the playing board
@@ -23,6 +24,21 @@ public class Game {
      * this is the array list of the players
      */
     private ArrayList<Player> players;
+
+    /**
+     * This is a class enum made to choose the color associated with the player and his workers
+     */
+    public enum COLOR {
+
+        BLU("#005EA5"),
+        ORANGE("#FF7FF0"),
+        RED("#A71010");
+
+        COLOR(String c) {
+        }
+    }
+
+
     /**
      * this is the array list of the players
      */
@@ -82,8 +98,8 @@ public class Game {
         this.nPlayers=nPlayers;
     }
 
-    public void addPlayer(String name, int age){
-        players.add(new Player(name,age));
+    public void addPlayer(String name, int age, COLOR color){
+        players.add(new Player(name,age,color));
         sortGamers();
     }
 
