@@ -72,7 +72,10 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
      */
     @Override
     public boolean moveBlock(Box pos) {
-        return super.moveBlock(pos);
+        super.moveBlock(pos);
+        if (pos.getCounter() == 4)
+            completeTowers++;
+        return true;
     }
 
     /**

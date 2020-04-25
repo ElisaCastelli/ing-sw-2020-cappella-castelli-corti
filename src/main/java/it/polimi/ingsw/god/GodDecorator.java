@@ -13,6 +13,7 @@ public abstract class GodDecorator implements God {
 
     protected final God newGod;
     protected static boolean moveUp;
+    protected static int completeTowers;
 
     public GodDecorator ( God newGod ) {
         this.newGod = newGod;
@@ -21,6 +22,7 @@ public abstract class GodDecorator implements God {
     public boolean isMoveUp() {
         return moveUp;
     }
+
 
     /**
      * This method tells which positions can get reached by a worker
@@ -62,7 +64,7 @@ public abstract class GodDecorator implements God {
     }
 
     /**
-     * This methods checks if the player win
+     * This method checks if the player wins
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

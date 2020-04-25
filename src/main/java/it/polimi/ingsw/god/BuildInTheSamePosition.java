@@ -84,8 +84,12 @@ public class BuildInTheSamePosition extends MoveTwice {
     public boolean moveBlock(Box pos) {
         if (super.firstTime && pos.getCounter() <= 1)
             return super.moveTwice( pos );
-        else if ( super.firstTime )
-            return super.moveBlock( pos );
+        else if ( super.firstTime ){
+            super.moveBlock( pos );
+            if (pos.getCounter() == 4)
+                completeTowers++;
+            return true;
+        }
         else if (super.samePosition( pos ))
             return super.moveTwice( pos );
         return false;

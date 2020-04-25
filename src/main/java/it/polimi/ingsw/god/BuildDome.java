@@ -9,7 +9,6 @@ import java.util.ArrayList;
 /**
  * This class implements the ability to build a Dome everywhere even the player is not building at the fourth level
  */
-
 public class BuildDome extends GodDecorator {
 
     public BuildDome(God newGod) {
@@ -73,17 +72,23 @@ public class BuildDome extends GodDecorator {
      */
     @Override
     public boolean moveBlock(Box pos) {
-        //todo controllo che vuole costruire una dome non al 4 livello
+        //todo controllo che vuole costruire una dome non al 4 livello + test
         if (pos.getCounter() != 4) {
+            if (pos.getCounter() == 3)
+                completeTowers++;
             pos.build(4);
             return true;
         }
-        else
-            return super.moveBlock(pos);
+        else{
+            super.moveBlock(pos);
+            if (pos.getCounter() == 4)
+                completeTowers++;
+            return true;
+        }
     }
 
     /**
-     * This methods checks if the player wins
+     * This method checks if the player wins
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

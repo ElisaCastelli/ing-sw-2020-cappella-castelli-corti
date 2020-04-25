@@ -94,7 +94,10 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     public boolean moveBlock(Box pos) {
         if( super.firstTime && workerMoved ){//basic move
             workerMoved=false;
-            return super.moveBlock(pos);
+            super.moveBlock(pos);
+            if (pos.getCounter() == 4)
+                completeTowers++;
+            return true;
         }else if(super.firstTime){//first time of decorator move
             super.moveTwice(pos);
             return true;

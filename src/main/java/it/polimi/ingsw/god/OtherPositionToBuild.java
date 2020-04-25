@@ -21,7 +21,6 @@ public class OtherPositionToBuild extends MoveTwice {
 
     }
 
-
     @Override
     public void setEffect(ArrayList<String> effects) {
 
@@ -45,7 +44,7 @@ public class OtherPositionToBuild extends MoveTwice {
     }
 
     /**
-     * This method tells which positions can get built by a worker: during the second build move, the worker cannot
+     * This method tells which positions can get built by a worker: during the second build move, the worker cannot build
      * @param worker Which worker is the check applied
      */
     @Override

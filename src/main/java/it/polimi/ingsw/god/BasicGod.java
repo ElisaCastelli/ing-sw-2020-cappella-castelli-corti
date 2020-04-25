@@ -84,7 +84,7 @@ public class BasicGod implements God {
     /**
      * This method implements the basic block move which builds the correct block in a given position
      * @param pos Position on the board where the worker builds a building block
-     * @return Always true because the move succeded
+     * @return Always true because the move succeeded
      */
     @Override
     public boolean moveBlock(Box pos) {

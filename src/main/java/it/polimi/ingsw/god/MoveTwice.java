@@ -17,7 +17,6 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This method checks which positions can get reached by a worker
-     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -26,8 +25,16 @@ public abstract class MoveTwice extends GodDecorator {
     }
 
     /**
+     * This method tells which positions can get built by a worker
+     * @param worker Which worker is the check applied
+     */
+    @Override
+    public void setPossibleBuild(Worker worker) {
+        super.setPossibleBuild(worker);
+    }
+
+    /**
      * This method moves the chosen worker to the new position on the board
-     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -39,7 +46,6 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
@@ -50,7 +56,6 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This methods checks if the player win
-     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins
@@ -90,11 +95,15 @@ public abstract class MoveTwice extends GodDecorator {
         if ( firstTime ) {
             oldBoxMove = finalBox;
             super.moveBlock( finalBox );
+            if (finalBox.getCounter() == 4)
+                completeTowers++;
             firstTime = false;
             return false;
         }
         else {
             super.moveBlock( finalBox );
+            if (finalBox.getCounter() == 4)
+                completeTowers++;
             oldBoxMove = null;
             firstTime = true;
             return true;

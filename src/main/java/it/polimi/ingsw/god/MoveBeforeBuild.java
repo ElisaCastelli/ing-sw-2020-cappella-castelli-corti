@@ -83,7 +83,7 @@ public class MoveBeforeBuild extends GodDecorator {
     }
 
     /**
-     * This methods checks if the player wins
+     * This method checks if the player wins
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

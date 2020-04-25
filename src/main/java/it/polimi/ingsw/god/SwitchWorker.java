@@ -81,18 +81,19 @@ public class SwitchWorker extends GodDecorator {
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
     @Override
     public boolean moveBlock(Box pos) {
-        return super.moveBlock(pos);
+        super.moveBlock(pos);
+        if (pos.getCounter() == 4)
+            completeTowers++;
+        return true;
     }
 
     /**
-     * This methods checks if the player win
-     *
+     * This method checks if the player wins
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins
