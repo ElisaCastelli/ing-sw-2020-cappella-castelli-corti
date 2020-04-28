@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.model.Box;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.gameComponents.Box;
+import it.polimi.ingsw.model.gameComponents.Worker;
 
 /**
  * This abstract class handles the different concrete decorators

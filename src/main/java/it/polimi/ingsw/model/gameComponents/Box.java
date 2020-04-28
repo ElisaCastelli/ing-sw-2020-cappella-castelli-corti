@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.gameComponents;
 import it.polimi.ingsw.model.building.*;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.gameComponents.Board;
 import org.junit.jupiter.api.Test;
 
 

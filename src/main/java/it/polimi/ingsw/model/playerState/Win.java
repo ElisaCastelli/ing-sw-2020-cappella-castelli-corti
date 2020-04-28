@@ -1,10 +1,10 @@
-package it.polimi.ingsw.model.gamerstate;
+package it.polimi.ingsw.model.playerState;
 
 import it.polimi.ingsw.model.god.*;
-import it.polimi.ingsw.model.Box;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.gameComponents.Box;
+import it.polimi.ingsw.model.gameComponents.Worker;
 
-public class Win extends GamerState{
+public class Win extends PlayerState{
     private God myGod;
     public Win(God myGod){
         this.myGod=myGod;

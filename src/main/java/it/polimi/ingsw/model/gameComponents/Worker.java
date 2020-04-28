@@ -1,6 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.gameComponents;
 
-import it.polimi.ingsw.model.Box;
+import it.polimi.ingsw.model.Game;
 
 /**
  * This class is the Worker associated to the player during a match

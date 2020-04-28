@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Box;
+import it.polimi.ingsw.model.gameComponents.Board;
+import it.polimi.ingsw.model.gameComponents.Box;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

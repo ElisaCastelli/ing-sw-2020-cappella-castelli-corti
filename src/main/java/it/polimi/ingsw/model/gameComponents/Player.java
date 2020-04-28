@@ -1,6 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.gameComponents;
 
-import it.polimi.ingsw.model.gamerstate.GamerStateManager;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.playerState.PlayerStateManager;
 import it.polimi.ingsw.model.god.BasicGod;
 import it.polimi.ingsw.model.god.God;
 
@@ -30,7 +31,7 @@ public class Player {
      */
     private final Worker[] myWorkers;
 
-    final GamerStateManager gamerManager;
+    final PlayerStateManager gamerManager;
 
     /**
      * Constructor with name and board as parameters
@@ -44,7 +45,7 @@ public class Player {
         myWorkers[1] = new Worker(2,color);
         this.age = age;
         myGod = new BasicGod();
-        gamerManager = new GamerStateManager(myGod);
+        gamerManager = new PlayerStateManager(myGod);
         this.color = color;
     }
 
