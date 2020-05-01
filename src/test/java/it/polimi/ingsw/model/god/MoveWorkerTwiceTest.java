@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.model.Board;
+
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Worker;
+
+import it.polimi.ingsw.model.gameComponents.Board;
+import it.polimi.ingsw.model.gameComponents.Worker;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
