@@ -1,5 +1,5 @@
 it.polimi.ingsw
-it.polimi.ingsw.model.building
-it.polimi.ingsw.model.gamerstate
-it.polimi.ingsw.model.god
-it.polimi.ingsw.model.parse
+it.polimi.ingsw.server.model.building
+it.polimi.ingsw.server.model.gamerstate
+it.polimi.ingsw.server.model.god
+it.polimi.ingsw.server.model.parse
