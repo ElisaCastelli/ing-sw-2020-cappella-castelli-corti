@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,8 @@ class MoveWorkerTwiceTest {
     void setPossibleMove() {
         God god = new MoveWorkerTwice(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
-        Worker worker2=new Worker(2);
+        Worker myWorker = new Worker(1, Game.COLOR.BLU);
+        Worker worker2=new Worker(2,Game.COLOR.BLU);
 
         myWorker.initializePos(board.getBox(0,1));
         worker2.initializePos(board.getBox(1,1));
@@ -58,7 +59,7 @@ class MoveWorkerTwiceTest {
     void moveWorker() {
         God god = new MoveWorkerTwice(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
+        Worker myWorker = new Worker(1,Game.COLOR.BLU);
 
         myWorker.initializePos(board.getBox(0,1));
 

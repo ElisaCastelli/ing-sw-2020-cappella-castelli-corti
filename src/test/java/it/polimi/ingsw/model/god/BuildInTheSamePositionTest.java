@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class BuildInTheSamePositionTest {
     void setPossibleBuild() {
         God god=new BuildInTheSamePosition(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
+        Worker myWorker = new Worker(1, Game.COLOR.BLU);
         //Controllo e costruisco livello 1 e 2
         myWorker.initializePos(board.getBox(2, 4));
         god.setPossibleBuild(myWorker);
@@ -77,7 +78,7 @@ class BuildInTheSamePositionTest {
     void moveBlock() {
         God god=new BuildInTheSamePosition(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
+        Worker myWorker = new Worker(1,Game.COLOR.BLU);
 
         //Costruisco livello 1 e 2
         myWorker.initializePos(board.getBox(3, 1));

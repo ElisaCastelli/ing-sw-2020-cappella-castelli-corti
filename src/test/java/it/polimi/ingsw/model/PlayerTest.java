@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Player pTest = new Player("a",10);
+    Player pTest = new Player("a",10,Game.COLOR.BLU);
     Board boardTest = new Board();
     @Test
     void setName() {
@@ -25,7 +25,7 @@ class PlayerTest {
 
     @Test
     void getWorkerBox() {
-        Worker w = new Worker(1);
+        Worker w = new Worker(1,Game.COLOR.BLU);
         pTest.initializeWorker(1,boardTest.getBox(0,0));
         assertEquals(boardTest.getBox(0,0),pTest.getWorkerBox(1));
     }

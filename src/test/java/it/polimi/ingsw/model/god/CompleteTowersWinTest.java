@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -110,7 +111,7 @@ class CompleteTowersWinTest {
 
         assertTrue(hestia.moveBlock(board.getBox(2,3)));
         assertTrue(prometheus.moveBlock(board.getBox(2,3)));
-        Worker proWorker = new Worker(1);
+        Worker proWorker = new Worker(1, Game.COLOR.BLU);
         proWorker.initializePos(board.getBox(4,0));
         assertTrue(prometheus.moveWorker(proWorker, board.getBox(4,1)));
         assertTrue(prometheus.moveBlock(board.getBox(2,3)));

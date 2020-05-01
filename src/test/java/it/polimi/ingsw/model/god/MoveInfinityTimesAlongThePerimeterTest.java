@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class MoveInfinityTimesAlongThePerimeterTest {
     @Test
     void moveWorker() {
         God god = new MoveInfinityTimesAlongThePerimeter(new BasicGod());
-        Worker workerToMove = new Worker(1);
+        Worker workerToMove = new Worker(1, Game.COLOR.BLU);
         Board board = new Board();
 
         //Mossa normale

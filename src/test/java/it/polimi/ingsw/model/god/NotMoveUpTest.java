@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +14,8 @@ class NotMoveUpTest {
         God myGod = new NotMoveUp(new BasicGod());
         God opponentGod = new OpponentBlock(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
-        Worker opponentWorker = new Worker(2);
+        Worker myWorker = new Worker(1, Game.COLOR.BLU);
+        Worker opponentWorker = new Worker(2,Game.COLOR.BLU);
 
         myWorker.initializePos(board.getBox(4,2));
 
@@ -63,7 +64,7 @@ class NotMoveUpTest {
 
         //Prova con gli effetti del Minotauro
         God myGod2 = new NotMoveUp(new ShiftWorker(new SwitchWorker(new BasicGod())));
-        Worker opponentWorker2 = new Worker (3);
+        Worker opponentWorker2 = new Worker (3,Game.COLOR.BLU);
         opponentWorker2.initializePos(board.getBox(4,3));
 
         //Set normale: Atena non si è ancora mossa

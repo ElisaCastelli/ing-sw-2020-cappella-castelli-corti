@@ -16,9 +16,9 @@ class GameTest {
 
     @Test
     void sortGamers() {
-        gameTest.addPlayer("a", 22);
-        gameTest.addPlayer("b", 15);
-        gameTest.addPlayer("c", 42);
+        gameTest.addPlayer("a", 22,Game.COLOR.BLU);
+        gameTest.addPlayer("b", 15,Game.COLOR.BLU);
+        gameTest.addPlayer("c", 42,Game.COLOR.BLU);
         gameTest.sortGamers();
         assertEquals(15, gameTest.getPlayer(0).getAge() );
         assertEquals(22, gameTest.getPlayer(1).getAge() );
@@ -34,7 +34,7 @@ class GameTest {
     @Test
     void addPlayer() {
         int n= gameTest.getPlayers().size();
-        gameTest.addPlayer("a",11);
+        gameTest.addPlayer("a",11,Game.COLOR.BLU);
         n++;
         assertEquals(n,gameTest.getPlayers().size());
     }
@@ -42,8 +42,8 @@ class GameTest {
     @Test
     void initializeWorker() {
         boardTest.clear();
-        gameTest.addPlayer("a",22);
-        gameTest.addPlayer("b",12);
+        gameTest.addPlayer("a",22,Game.COLOR.BLU);
+        gameTest.addPlayer("b",12,Game.COLOR.BLU);
         gameTest.initializeWorker(0,1,boardTest.getBox(0,0));
         assertNotEquals(null,boardTest.getBox(0,0).getWorker());
         gameTest.initializeWorker(0,2,boardTest.getBox(0,1));
@@ -60,7 +60,7 @@ class GameTest {
     @Test
     void canMove() {
         boardTest.clear();
-        gameTest.addPlayer("a",22);
+        gameTest.addPlayer("a",22,Game.COLOR.BLU);
         gameTest.getPlayer(0).initializeWorker(0,boardTest.getBox(0,0));
         gameTest.getPlayer(0).initializeWorker(1,boardTest.getBox(1,0));
         assertTrue(gameTest.canMove(0));
@@ -73,7 +73,7 @@ class GameTest {
         boardTest.getBox(2,0).build();
         boardTest.getBox(2,0).build();
         assertFalse(gameTest.canMove(0));
-        gameTest.addPlayer("b",28);
+        gameTest.addPlayer("b",28,Game.COLOR.BLU);
         gameTest.getPlayer(1).initializeWorker(0,boardTest.getBox(2,3));
         gameTest.getPlayer(1).initializeWorker(1,boardTest.getBox(4,1));
         assertTrue(gameTest.canMove(1));
@@ -82,7 +82,7 @@ class GameTest {
     @Test
     void setBoxReachable() {
         boardTest.clear();
-        gameTest.addPlayer("a",22);
+        gameTest.addPlayer("a",22,Game.COLOR.BLU);
         gameTest.getPlayer(0).initializeWorker(0,boardTest.getBox(0,0));
         gameTest.getPlayer(0).initializeWorker(1,boardTest.getBox(1,0));
         gameTest.setBoxReachable(0,1);
@@ -93,8 +93,8 @@ class GameTest {
     @Test
     void movePlayer() {
         boardTest.clear();
-        gameTest.addPlayer("a",22);
-        gameTest.addPlayer("b",25);
+        gameTest.addPlayer("a",22,Game.COLOR.BLU);
+        gameTest.addPlayer("b",25,Game.COLOR.BLU);
         gameTest.sortGamers();
         gameTest.getPlayer(0).initializeWorker(0,boardTest.getBox(0,0));
         gameTest.getPlayer(0).initializeWorker(1,boardTest.getBox(1,0));
@@ -106,7 +106,7 @@ class GameTest {
     @Test
     void canBuild() {
         boardTest.clear();
-        gameTest.addPlayer("a",22);
+        gameTest.addPlayer("a",22,Game.COLOR.BLU);
         gameTest.getPlayer(0).initializeWorker(0,boardTest.getBox(0,0));
         assertTrue(gameTest.canBuild(0,1));
         boardTest.getBox(0,1).build();
@@ -127,7 +127,7 @@ class GameTest {
     @Test
     void setBoxBuilding() {
         boardTest.clear();
-        gameTest.addPlayer("a",22);
+        gameTest.addPlayer("a",22,Game.COLOR.BLU);
         gameTest.getPlayer(0).initializeWorker(0,boardTest.getBox(0,0));
         gameTest.getPlayer(0).initializeWorker(1,boardTest.getBox(1,0));
         gameTest.setBoxBuilding(0,1);

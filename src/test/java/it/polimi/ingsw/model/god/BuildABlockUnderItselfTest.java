@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class BuildABlockUnderItselfTest {
     @Test
     void setPossibleBuild() {
         God god = new BuildABlockUnderItself(new BasicGod());
-        Worker myWorker = new Worker(1);
+        Worker myWorker = new Worker(1, Game.COLOR.BLU);
         Board board = new Board();
 
         myWorker.initializePos(board.getBox(4,1));
@@ -70,7 +71,7 @@ class BuildABlockUnderItselfTest {
     @Test
     void moveBlock() {
         God god = new BuildABlockUnderItself(new BasicGod());
-        Worker myWorker = new Worker(1);
+        Worker myWorker = new Worker(1,Game.COLOR.BLU);
         Board board = new Board();
 
         myWorker.initializePos(board.getBox(0,0));

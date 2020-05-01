@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -12,9 +13,9 @@ class FerryAnOpponentWorkerTest {
     void setPossibleMove() {
         God god = new FerryAnOpponentWorker(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
-        Worker oppWorker = new Worker(2);
-        Worker othWorker = new Worker(3);
+        Worker myWorker = new Worker(1, Game.COLOR.BLU);
+        Worker oppWorker = new Worker(2,Game.COLOR.BLU);
+        Worker othWorker = new Worker(3,Game.COLOR.BLU);
 
         myWorker.initializePos(board.getBox(1,3));
         oppWorker.initializePos(board.getBox(0,4));
@@ -94,9 +95,9 @@ class FerryAnOpponentWorkerTest {
     void moveWorker() {
         God god = new FerryAnOpponentWorker(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1);
-        Worker oppWorker = new Worker(2);
-        Worker othWorker = new Worker(3);
+        Worker myWorker = new Worker(1,Game.COLOR.BLU);
+        Worker oppWorker = new Worker(2,Game.COLOR.BLU);
+        Worker othWorker = new Worker(3,Game.COLOR.BLU);
 
         myWorker.initializePos(board.getBox(1,3));
         oppWorker.initializePos(board.getBox(0,4));

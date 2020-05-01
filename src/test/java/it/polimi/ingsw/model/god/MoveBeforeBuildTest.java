@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class MoveBeforeBuildTest {
     @Test
     void moveBlock() {
         God god = new MoveBeforeBuild(new BasicGod());
-        Worker myWorker = new Worker(1);
+        Worker myWorker = new Worker(1, Game.COLOR.BLU);
         Board board = new Board();
 
         myWorker.initializePos(board.getBox(2,2));

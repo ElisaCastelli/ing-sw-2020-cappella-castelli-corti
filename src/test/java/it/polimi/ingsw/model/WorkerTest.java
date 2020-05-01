@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorkerTest {
-    Worker worker = new Worker(1);
+    Worker worker = new Worker(1,Game.COLOR.BLU);
 
 
     @Test
