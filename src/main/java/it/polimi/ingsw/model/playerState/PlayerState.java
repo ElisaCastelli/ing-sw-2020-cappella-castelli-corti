@@ -1,9 +1,9 @@
-package it.polimi.ingsw.model.gamerstate;
+package it.polimi.ingsw.model.playerState;
 
-import it.polimi.ingsw.model.Box;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.gameComponents.Box;
+import it.polimi.ingsw.model.gameComponents.Worker;
 
-public class GamerState {
+public class PlayerState {
     //public void goNext(GamerStateManager next){};
     public boolean moveWorker (Worker worker, Box pos){return false;}
 
@@ -14,5 +14,4 @@ public class GamerState {
     public void setPossibleMove( Worker worker ){ }
 
     public void setPossibleBuild( Worker worker){ }
-
 }

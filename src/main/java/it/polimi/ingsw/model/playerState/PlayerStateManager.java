@@ -1,19 +1,19 @@
-package it.polimi.ingsw.model.gamerstate;
+package it.polimi.ingsw.model.playerState;
 
-import it.polimi.ingsw.model.god.*;
-import it.polimi.ingsw.model.Box;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.gameComponents.Box;
+import it.polimi.ingsw.model.gameComponents.Worker;
+import it.polimi.ingsw.model.god.God;
 
-public class GamerStateManager {
-    private final GamerState isPlaying;
-    private final GamerState isWaiting;
-    private final GamerState dead;
-    private final GamerState win;
-    private GamerState currentState;
+public class PlayerStateManager {
+    private final PlayerState isPlaying;
+    private final PlayerState isWaiting;
+    private final PlayerState dead;
+    private final PlayerState win;
+    private PlayerState currentState;
 
 
 
-    public GamerStateManager(God myGod){
+    public PlayerStateManager(God myGod){
         isPlaying = new IsPlaying(myGod);
         isWaiting = new IsWaiting(myGod);
         dead = new Dead(myGod);
@@ -21,25 +21,25 @@ public class GamerStateManager {
         currentState = isWaiting;
     }
 
-    public GamerState getIsPlaying() {
+    public PlayerState getIsPlaying() {
         return isPlaying;
     }
-    public GamerState getIsWaiting() {
+    public PlayerState getIsWaiting() {
         return isWaiting;
     }
-    public GamerState getDead() {
+    public PlayerState getDead() {
         return dead;
     }
-    public GamerState getWin() {
+    public PlayerState getWin() {
         return win;
     }
 
 
-    public void setCurrentState(GamerState newState ){
+    public void setCurrentState(PlayerState newState ){
         currentState=newState;
     }
 
-    public GamerState getCurrentState(){
+    public PlayerState getCurrentState(){
         return currentState;
     }
 
@@ -86,5 +86,4 @@ public class GamerStateManager {
     public void setPossibleBuild( Worker worker){
         currentState.setPossibleBuild(worker);
     }
-
 }

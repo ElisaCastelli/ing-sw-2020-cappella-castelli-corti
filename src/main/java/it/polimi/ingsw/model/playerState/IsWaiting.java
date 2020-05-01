@@ -1,24 +1,25 @@
-package it.polimi.ingsw.model.gamerstate;
+package it.polimi.ingsw.model.playerState;
 
 import it.polimi.ingsw.model.god.*;
-import it.polimi.ingsw.model.Box;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.gameComponents.Box;
+import it.polimi.ingsw.model.gameComponents.Worker;
 
-public class Dead extends GamerState{
+public class IsWaiting extends PlayerState{
     private God myGod;
-    public Dead(God myGod){
+
+    public IsWaiting(God myGod){
         this.myGod=myGod;
     }
 
     @Override
     public boolean moveWorker(Worker worker, Box pos){
-        System.out.println("Morto");
+        System.out.println("Pausa NOOOOOOOOOOOO");
         return super.moveWorker(worker,pos);
     }
+
     @Override
-    public boolean moveBlock(Box pos){
-        System.out.println("Morto");
-        return super.moveBlock(pos);
+    public boolean moveBlock(Box pos) {
+        return myGod.moveBlock(pos);
     }
 
     @Override

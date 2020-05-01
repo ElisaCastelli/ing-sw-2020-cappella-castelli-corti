@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import it.polimi.ingsw.model.gameState.GameState;
+import it.polimi.ingsw.model.gameComponents.Board;
+import it.polimi.ingsw.model.gameComponents.Box;
+import it.polimi.ingsw.model.gameComponents.Player;
+import it.polimi.ingsw.model.gameState.GameStateManager;
 import it.polimi.ingsw.model.god.*;
 import it.polimi.ingsw.model.parse.CardCreator;
 
@@ -15,7 +18,7 @@ import it.polimi.ingsw.model.parse.CardCreator;
  */
 
 
-public class Game {
+public class Game implements GameModel{
     /**
      * This attribute is the playing board
      */
@@ -56,7 +59,7 @@ public class Game {
      */
     private ArrayList<God> cardUsed;
 
-    private GameState stateManager;
+    private GameStateManager stateManager;
     private CardCreator parser = new CardCreator();
     //private Move lastMove = new Move();
 
@@ -70,15 +73,9 @@ public class Game {
         nPlayers = 0;
         godsArray = new ArrayList<>();
         cardUsed = new ArrayList<>();
+        stateManager=new GameStateManager(players, playersDead);
     }
 
-
-    public Player getPlayer(int index){
-        return players.get(index);
-    }
-    public int getnPlayers(){
-        return nPlayers;
-    }
     /**
      * Method to sort gamers by age
      */
@@ -90,8 +87,8 @@ public class Game {
 
         });
     }
-    public ArrayList<Player> getPlayers(){
-        return players;
+    public void loadCards() throws Exception {
+        godsArray= parser.parseCard();
     }
 
     public void setNPlayers(int nPlayers){
@@ -103,9 +100,7 @@ public class Game {
         sortGamers();
     }
 
-    public void loadCards() throws Exception {
-        godsArray= parser.parseCard();
-    }
+
 
     public ArrayList<God> getCards() throws Exception {
         loadCards();
@@ -114,6 +109,7 @@ public class Game {
 
     public void chooseCard(int playerIndex, int godCard) throws Exception {
         players.get(playerIndex).setGod(godsArray.get(godCard));
+        cardUsed.add(godsArray.get(godCard));
     }
 
     //index worker 1 o 2, nelle altre classi arriva già a -1
@@ -126,74 +122,51 @@ public class Game {
     }
 
     public boolean canMove(int indexPlayer){
-        return players.get(indexPlayer).checkWorkers();
+        return stateManager.canMove(indexPlayer);
     }
 
     public void setBoxReachable(int indexPlayer, int indexWorker){
-        players.get(indexPlayer).setPossibleMove(indexWorker-1);
+       stateManager.setBoxReachable(indexPlayer, indexWorker);
     }
 
     public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column){
-        boolean movedPlayer= false;
-        Box starterBox = players.get(indexPlayer).getWorkerBox(indexWorker - 1);
-        players.get(indexPlayer).setPossibleMove(indexWorker);
-        if(board.getBox(row,column).isReachable()){
-             movedPlayer= players.get(indexPlayer).playWorker(indexWorker - 1, board.getBox( row, column));
-        }
-        starterBox.clearBoxesNextTo();
-        return movedPlayer;
+        return stateManager.movePlayer(indexPlayer,indexWorker,row,column,board);
     }
 
     public boolean canBuild(int indexPlayer, int indexWorker){
-        return players.get(indexPlayer).checkBuilding(indexWorker-1);
+        return stateManager.canBuild(indexPlayer, indexWorker);
     }
 
     public void setBoxBuilding(int indexPlayer, int indexWorker){
-        players.get(indexPlayer).setPossibleBuild(indexWorker-1);
+        stateManager.setBoxBuilding(indexPlayer, indexWorker);
     }
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column){
-        boolean movedBlock = false;
-        players.get(indexPlayer).setPossibleBuild(indexWorker);
-        if(board.getBox(row,column).isReachable()){
-            movedBlock=players.get(indexPlayer).playBlock(indexWorker,board.getBox(row, column));
-        }
-        players.get(indexPlayer).getWorkerBox(indexWorker-1).clearBoxesNextTo();
-        return movedBlock;
+        return stateManager.buildBlock(indexPlayer,indexWorker,row,column,board);
     }
 
     public void finishTurn(int indexPlayer){
-        players.get(indexPlayer).goWaiting();
+        stateManager.finishTurn(indexPlayer);
     }
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
-        return players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker));
+        return stateManager.checkWin(indexPlayer, startBox, indexWorker);
     }
 
     public boolean checkWinAfterBuild(){
-        boolean win=false;
-        int player = 0;
-        while(player< nPlayers && !win ){
-            int worker = 0;
-            while( worker<2 && !win){
-                win= players.get(player).checkWin(players.get(player).getWorkerBox(worker), players.get(player).getWorkerBox(worker));
-                worker++;
-            }
-            player++;
-        }
-        return win;
+        return stateManager.checkWinAfterBuild();
     }
 
 
     public void setWinningPlayer(int indexPlayer){
-        players.get(indexPlayer).goWin();
+        stateManager.setWinningPlayer(indexPlayer);
     }
 
     public void setDeadPlayer(int indexPlayer){
-        players.get(indexPlayer).goDead();
-        playersDead.add(players.get(indexPlayer));
-        players.remove(indexPlayer);
+        stateManager.setDeadPlayer(indexPlayer);
     }
-
+    public void setPause(){
+        stateManager.goPause();
+    }
 }
 
