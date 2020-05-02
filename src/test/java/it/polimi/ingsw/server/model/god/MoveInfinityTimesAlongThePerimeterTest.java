@@ -1,8 +1,9 @@
-package it.polimi.ingsw.model.god;
+package it.polimi.ingsw.server.model.god;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.server.model.gameComponents.Board;
+import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.gameComponents.Worker;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

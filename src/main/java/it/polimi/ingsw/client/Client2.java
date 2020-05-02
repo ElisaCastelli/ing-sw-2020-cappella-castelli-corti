@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,13 +9,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class Client {
+public class Client2 {
     private static InetAddress ip;
     private static int portNumber;
 
-    public Client(int portNumber) throws UnknownHostException {
+    public Client2(int portNumber) throws UnknownHostException {
         ip = InetAddress.getByName("localhost");
-        Client.portNumber =portNumber;
+        Client2.portNumber =portNumber;
     }
     public static void  main(String[] args) throws IOException {
 
@@ -33,6 +34,7 @@ public class Client {
             // information between client and client handler
             Scanner input = new Scanner(System.in);
             String toSend="";
+
             //riceve conferma di essere connesso
             System.out.println(inputStream.readUTF());
 

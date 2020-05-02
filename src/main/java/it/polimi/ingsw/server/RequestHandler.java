@@ -6,11 +6,12 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class RequestHandler implements Runnable{
+public class RequestHandler extends Thread{
+
     //private Scanner scanner = new Scanner(System.in);
     private final DataInputStream inputStream;
     private final DataOutputStream outputStream;
-    private Socket socket= null;
+    private Socket socket;
 
     public RequestHandler(Socket socket, DataInputStream inputStream, DataOutputStream outputStream){
         this.socket=socket;
@@ -20,21 +21,35 @@ public class RequestHandler implements Runnable{
 
     @Override
     public void run(){
+
         String out="Sei connesso";
-        String in = null;
+        String in ="";
+
         try {
-            in = inputStream.readUTF();
+            outputStream.writeUTF(out);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         while(!"exit".equals(in)){
+            // receive the answer from client
             try {
-                outputStream.writeUTF(out);
+                in = inputStream.readUTF();
+                System.out.println(in);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                outputStream.writeUTF("messaggio ricevuto");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        System.out.println("Client " + this.socket + " sends exit...");
+        System.out.println("Closing this connection.");
         try{
             inputStream.close();
             outputStream.close();
@@ -46,5 +61,6 @@ public class RequestHandler implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Connection closed");
     }
 }

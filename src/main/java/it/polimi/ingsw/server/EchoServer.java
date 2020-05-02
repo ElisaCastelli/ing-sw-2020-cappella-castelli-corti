@@ -10,32 +10,47 @@ import java.util.ArrayList;
 
 public class EchoServer {
     private ArrayList<Client> clientArray = new ArrayList<>();
-    private final String hostName;
-    private static int portNumber=1234;
 
-    public EchoServer(String hostName, int portNumber){
-        this.hostName=hostName;
-        this.portNumber=portNumber;
+    private static int portNumber;
+
+    public EchoServer(int portNumber){
+        EchoServer.portNumber =portNumber;
     }
     public void clientRequest(){
         //Infinite loop for getting client request
 
     }
 
-    public static void  main(String[] args, int argc) throws Exception{
+    public static void main(String[] args) throws Exception{
+
+        //inizializzazione fatta senza main
+        portNumber=1234;
 
         //Create server socket
         ServerSocket serverSocket = new ServerSocket(portNumber);
+        // running infinite loop for getting
+        // client request
+
         while(true){
-            Socket socket=null;
+            Socket socket = null;
+
             try{
+
                 socket = serverSocket.accept();
                 System.out.println("Un client si è connesso"+socket);
                 DataInputStream inputStream = new DataInputStream(socket.getInputStream());
                 DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-                Runnable requestHandler = new RequestHandler(socket, inputStream, outputStream);
-                requestHandler.run();
+
+                System.out.println("Assigning new thread for this client");
+
+                Thread requestHandler = new RequestHandler(socket, inputStream, outputStream);
+
+
+                // Invoking the start() method
+                requestHandler.start();
+
             }catch (Exception e){
+                socket.close();
                 System.out.println("Errore");
             }
         }
