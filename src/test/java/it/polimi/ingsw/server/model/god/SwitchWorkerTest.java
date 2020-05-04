@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.god;
+package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.Game;

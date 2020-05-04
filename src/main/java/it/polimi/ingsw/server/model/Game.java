@@ -92,7 +92,7 @@ public class Game implements GameModel{
 
         });
     }
-    public void loadCards() throws Exception {
+    public void loadCards() {
         godsArray= parser.parseCard();
     }
     public void setNPlayers(int nPlayers){
@@ -116,7 +116,7 @@ public class Game implements GameModel{
         return godsArray;
     }
 
-    public void chooseCard(int playerIndex, int godCard) throws Exception {
+    public void chooseCard(int playerIndex, int godCard) {
         players.get(playerIndex).setGod(godsArray.get(godCard));
         cardUsed.add(godsArray.get(godCard));
     }

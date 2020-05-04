@@ -1,22 +1,24 @@
 package it.polimi.ingsw.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import it.polimi.ingsw.ObjMessage;
+
+import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class RequestHandler extends Thread{
 
     //private Scanner scanner = new Scanner(System.in);
-    private final DataInputStream inputStream;
-    private final DataOutputStream outputStream;
+
+    private final ObjectOutputStream outputStream;
+    private final ObjectInputStream inputStream;
+
+
     private Socket socket;
 
-    public RequestHandler(Socket socket, DataInputStream inputStream, DataOutputStream outputStream){
+    public RequestHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream){
         this.socket=socket;
-        this.inputStream=inputStream;
         this.outputStream=outputStream;
+        this.inputStream=inputStream;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class RequestHandler extends Thread{
         String in ="";
 
         try {
-            outputStream.writeUTF(out);
+            outputStream.writeObject(out);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,14 +36,17 @@ public class RequestHandler extends Thread{
         while(!"exit".equals(in)){
             // receive the answer from client
             try {
-                in = inputStream.readUTF();
+                ObjMessage messageRecieved= (ObjMessage) inputStream.readObject();
+
+                in=messageRecieved.getName();
                 System.out.println(in);
 
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
             try {
-                outputStream.writeUTF("messaggio ricevuto");
+                ObjMessage objMessageToSend= new ObjMessage("messaggio ricevuto",43);
+                outputStream.writeObject(objMessageToSend);
 
             } catch (IOException e) {
                 e.printStackTrace();

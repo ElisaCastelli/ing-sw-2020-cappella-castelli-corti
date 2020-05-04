@@ -13,7 +13,7 @@ public class GameStateManager {
     private final GameState end;
     private GameState currentState;
 
-    public GameStateManager(ArrayList<Player> players, ArrayList<Player> playersDead) throws Exception {
+    public GameStateManager(ArrayList<Player> players, ArrayList<Player> playersDead) {
         going = new GoingState(players, playersDead, this);
         pause = new PauseState();
         //ready = new ReadyState();

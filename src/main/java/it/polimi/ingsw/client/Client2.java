@@ -17,7 +17,7 @@ public class Client2 {
         ip = InetAddress.getByName("localhost");
         Client2.portNumber =portNumber;
     }
-    public static void  main(String[] args) throws IOException {
+    public static void  main(String[] args) {
 
         try{
             //inizializzazione fatta senza main

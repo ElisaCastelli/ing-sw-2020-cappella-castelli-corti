@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import it.polimi.ingsw.ObjMessage;
+
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -16,7 +16,7 @@ public class Client {
         ip = InetAddress.getByName("localhost");
         Client.portNumber =portNumber;
     }
-    public static void  main(String[] args) throws IOException {
+    public static void  main(String[] args) {
 
         try{
             //inizializzazione fatta senza main
@@ -26,31 +26,41 @@ public class Client {
             // establish the connection with server port portnumber
             Socket clientSocket = new Socket(ip,portNumber);
             // obtaining input and out streams
-            DataInputStream inputStream = new DataInputStream(clientSocket.getInputStream());
-            DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
+
+            ObjectOutputStream oos= new ObjectOutputStream(clientSocket.getOutputStream());
+            ObjectInputStream ois= new ObjectInputStream(clientSocket.getInputStream());
 
             // the following loop performs the exchange of
             // information between client and client handler
             Scanner input = new Scanner(System.in);
             String toSend="";
             //riceve conferma di essere connesso
-            System.out.println(inputStream.readUTF());
+
+            System.out.println(ois.readObject());
 
             while(!"exit".equals(toSend)){
 
                 //send message to the server
                 toSend = input.nextLine();
-                outputStream.writeUTF(toSend);
+
+                ObjMessage objMessageTosend= new ObjMessage(toSend, 56);
+                oos.writeObject(objMessageTosend);
 
                 //receiving response by the server
-                String received = inputStream.readUTF();
-                System.out.println(received);
+
+                ObjMessage objRecivied= (ObjMessage) ois.readObject();
+                String received=objRecivied.getName();
+                int age=objRecivied.getAge();
+                System.out.println(received+" " + age);
 
             }
 
             System.out.println("Closing this connection : " + clientSocket);
-            inputStream.close();
-            outputStream.close();
+            //inputStream.close();
+            //outputStream.close();
+            ois.close();
+            oos.close();
+
             input.close();
             clientSocket.close();
             System.out.println("Connection closed");
