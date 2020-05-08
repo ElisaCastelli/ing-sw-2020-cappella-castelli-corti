@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.ObjMessage;
+import it.polimi.ingsw.network.ObjMessage;
 
 import java.io.*;
 import java.net.InetAddress;
