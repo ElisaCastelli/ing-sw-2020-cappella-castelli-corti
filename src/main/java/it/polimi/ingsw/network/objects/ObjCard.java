@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class ObjCard extends ObjMessage {
 
     private ArrayList<String> cards;
+    private ArrayList<String> cardsTemp;
     private int cardChose;
     private int player;
 
@@ -17,6 +18,19 @@ public class ObjCard extends ObjMessage {
     public void setCards(ArrayList<String> cards) {
         this.cards = cards;
     }
+
+    public ArrayList<String> getCardsTemp() {
+        return cardsTemp;
+    }
+
+    public void setCardsTemp(ArrayList<String> cardsTemp) {
+        this.cardsTemp = cardsTemp;
+    }
+
+    public void setPlayer(int player) {
+        this.player = player;
+    }
+
     public int getCardChose() {
         return cardChose;
     }

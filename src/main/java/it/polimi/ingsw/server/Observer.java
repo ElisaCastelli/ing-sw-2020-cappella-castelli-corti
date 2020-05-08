@@ -10,7 +10,7 @@ public interface Observer {
     void subscribe();
     int updateNPlayer();
     void updateAddPlayer();
-    God updatePlayerCard(int indexPlayer);
+    void updatePlayerCard(int indexPlayer);
     void updateInizializaWorker();
     Board updateBoard();
     GameState updateState();

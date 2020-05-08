@@ -15,9 +15,9 @@ public class VirtualView implements Observer {
     ProxyGameModel gameModel;
     Controller controller;
 
-    public VirtualView(ProxyGameModel gameModel, Controller controller){
-        this.gameModel=gameModel;
-        this.controller=controller;
+    public VirtualView() throws Exception {
+        gameModel= new ProxyGameModel();
+        controller= new Controller(gameModel);
     }
 
 
@@ -60,8 +60,8 @@ public class VirtualView implements Observer {
     }
 
     @Override
-    public God updatePlayerCard(int indexPlayer){
-        return gameModel.getPlayerCard(indexPlayer);
+    public void updatePlayerCard(int indexPlayer){
+        System.out.println("Carta aggiunta");
     }
 
     @Override

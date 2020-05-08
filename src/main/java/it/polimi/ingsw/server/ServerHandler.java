@@ -36,7 +36,6 @@ public class ServerHandler extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        close();
 
         listening();
     }
