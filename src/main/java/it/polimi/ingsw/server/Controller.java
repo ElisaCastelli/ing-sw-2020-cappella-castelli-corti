@@ -14,8 +14,8 @@ public class Controller  {
         gameModel.setNPlayers(nPlayers);
         gameModel.notifySetNPlayers();
     }
-    public void addPlayer(String name, int age, Game.COLOR color){
-        gameModel.addPlayer(name, age, color);
+    public void addPlayer(String name, int age){
+        gameModel.addPlayer(name, age);
         gameModel.notifyAddPlayer();
     }
     public void chooseCard(int playerIndex, int godCard) throws Exception {

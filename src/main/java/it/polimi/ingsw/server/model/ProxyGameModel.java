@@ -31,8 +31,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void addPlayer(String name, int age, Game.COLOR color) {
-        gameModel.addPlayer(name, age, color);
+    public void addPlayer(String name, int age) {
+        gameModel.addPlayer(name, age);
     }
 
     @Override
@@ -40,6 +40,19 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.getCards();
     }
 
+    @Override
+    public ArrayList<God> getCardUsed(){
+        return gameModel.getCardUsed();
+    }
+
+    @Override
+    public ArrayList<God> getTempCard(){
+        return gameModel.getTempCard();
+    }
+    @Override
+    public void chooseThreeCard(ArrayList<God> threeCard){
+        gameModel.chooseThreeCard(threeCard);
+    }
     @Override
     public void chooseCard(int playerIndex, int godCard) throws Exception {
         gameModel.chooseCard(playerIndex, godCard);

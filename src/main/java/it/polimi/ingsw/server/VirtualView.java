@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.model.playerState.PlayerState;
 
+import java.util.ArrayList;
+
 public class VirtualView implements Observer {
 
     ProxyGameModel gameModel;
@@ -34,13 +36,23 @@ public class VirtualView implements Observer {
         controller.setNPlayers(nPlayers);
     }
 
-    public void addPlayer(String name, int age, Game.COLOR color){
-        controller.addPlayer(name, age, color);
+    public void addPlayer(String name, int age){
+        controller.addPlayer(name, age);
     }
 
     @Override
     public void updateAddPlayer() {
         System.out.println("Giocatore aggiunto");
+    }
+
+    public ArrayList<God> getCard() throws Exception {
+        return gameModel.getCards();
+    }
+    public ArrayList<God> getTempCard(){
+       return gameModel.getTempCard();
+    }
+    public ArrayList<God> getCardUsed(){
+        return gameModel.getCardUsed();
     }
 
     public void setCard(int playerIndex, int godCard) throws Exception {

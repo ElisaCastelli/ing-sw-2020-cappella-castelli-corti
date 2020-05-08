@@ -12,9 +12,12 @@ public interface GameModel {
     Board getBoard();
     int getNPlayers();
     void setNPlayers(int nPlayers);
-    void addPlayer(String name, int age, Game.COLOR color);
+    void addPlayer(String name, int age);
     ArrayList<God> getCards()throws Exception;
     God getPlayerCard(int indexPlayer);
+    ArrayList<God> getTempCard();
+    ArrayList<God> getCardUsed();
+    void chooseThreeCard(ArrayList<God> threeCard);
     void chooseCard(int playerIndex, int godCard)throws Exception ;
     boolean initializeWorker(int indexPlayer, int indexWorker, Box box);
     GameState getState();

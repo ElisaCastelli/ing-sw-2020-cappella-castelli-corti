@@ -56,6 +56,8 @@ public class Game implements GameModel{
      * Array of all cards
      */
     private ArrayList<God> godsArray;
+
+    private ArrayList<God> tempCard;
     /**
      * Array of drawn cards
      */
@@ -101,7 +103,17 @@ public class Game implements GameModel{
     public int getNPlayers(){
         return nPlayers;
     }
-    public void addPlayer(String name, int age, COLOR color){
+    public void addPlayer(String name, int age){
+        Game.COLOR color;
+        if(players.size()==0){
+            color=COLOR.BLU;
+        }
+        else  if(players.size()==1){
+            color=COLOR.ORANGE;
+        }
+        else{
+            color=COLOR.RED;
+        }
         players.add(new Player(name,age,color));
         sortGamers();
     }
@@ -110,14 +122,26 @@ public class Game implements GameModel{
         return players.get(indexPlayer).getGod();
     }
 
+    public ArrayList<God> getTempCard(){
+        return tempCard;
+    }
+
+    public ArrayList<God> getCardUsed(){
+        return cardUsed;
+    }
 
     public ArrayList<God> getCards() throws Exception {
         loadCards();
         return godsArray;
     }
 
+    public void chooseThreeCard(ArrayList<God> threeCard){
+        tempCard=threeCard;
+    }
+
     public void chooseCard(int playerIndex, int godCard) {
         players.get(playerIndex).setGod(godsArray.get(godCard));
+        tempCard.remove(godsArray.get(godCard));
         cardUsed.add(godsArray.get(godCard));
     }
 
@@ -165,6 +189,7 @@ public class Game implements GameModel{
 
     public void finishTurn(int indexPlayer){
         stateManager.finishTurn(indexPlayer);
+        stateManager.startTurn(indexPlayer+1);
     }
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
