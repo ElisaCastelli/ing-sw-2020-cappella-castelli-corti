@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.server.model.Game;
+import it.polimi.ingsw.server.model.GameModel;
+import it.polimi.ingsw.server.model.ProxyGameModel;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,29 +14,27 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class EchoServer {
-    private ArrayList<Client> clientArray = new ArrayList<>();
-
+    private static ArrayList<Thread> clientArray = new ArrayList<>();
+    private static boolean gameStarted = false;
     private static int portNumber;
 
     public EchoServer(int portNumber){
         EchoServer.portNumber =portNumber;
     }
-    public void clientRequest(){
-        //Infinite loop for getting client request
-
-    }
 
     public static void main(String[] args) throws Exception{
-
         //inizializzazione fatta senza main
         portNumber=1234;
+        ProxyGameModel proxyGameModel = new ProxyGameModel();
+        Controller controller = new Controller(proxyGameModel);
+        VirtualView virtualView = new VirtualView( proxyGameModel, controller);
 
         //Create server socket
         ServerSocket serverSocket = new ServerSocket(portNumber);
+
         // running infinite loop for getting
         // client request
-
-        while(true){
+        while( !gameStarted || clientArray.size() != 0 ){
 
             Socket socket = new Socket();
 
@@ -44,20 +45,24 @@ public class EchoServer {
                 ObjectOutputStream oos= new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream ois= new ObjectInputStream(socket.getInputStream());
 
-
-
                 System.out.println("Assigning new thread for this client");
 
-                Thread requestHandler = new RequestHandler(socket,oos,ois);
-
+                Thread serverHandler = new ServerHandler(socket, oos, ois, virtualView);
+                clientArray.add(serverHandler);
+                if(clientArray.size() == 1){
+                    gameStarted = true;
+                }
 
                 // Invoking the start() method
-                requestHandler.start();
+                serverHandler.start();
 
             }catch (Exception e){
                 socket.close();
                 System.out.println("Errore");
             }
         }
+
+
     }
+
 }

@@ -36,7 +36,7 @@ public class CardCreator {
         ObjectMapper objectMapper = new ObjectMapper();
 
         ObjectMapper mapper = new ObjectMapper();
-        JsonParser parser = mapper.getFactory().createParser(new File("src/main/java/it/polimi/ingsw/model/parse/gods.json"));
+        JsonParser parser = mapper.getFactory().createParser(new File("src/main/java/it/polimi/ingsw/server/model/parse/gods.json"));
         if(parser.nextToken() != JsonToken.START_ARRAY) {
             throw new IllegalStateException("Expected an array");
         }

@@ -13,8 +13,8 @@ public class ProxyGameModel implements GameModel, Subject{
     private GameModel gameModel;
 
     private Observer observer;
-    public ProxyGameModel(Game gameModel){
-        this.gameModel=gameModel;
+    public ProxyGameModel() throws Exception {
+        this.gameModel = new Game();
     }
 
     @Override
