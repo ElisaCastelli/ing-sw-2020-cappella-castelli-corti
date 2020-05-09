@@ -12,9 +12,15 @@ import java.util.ArrayList;
 
 public class VisitorClient {
     private final ClientHandler clientHandler;
+    private boolean isPlaying;
+
 
     public VisitorClient(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
     public void visit(ObjNumPlayer objNumPlayer){

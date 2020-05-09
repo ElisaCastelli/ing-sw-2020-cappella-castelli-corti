@@ -27,9 +27,9 @@ public class Controller  {
         gameModel.notifyAddWorker();
         return init;
     }
-
     public void startGame(){
         gameModel.startGame();
+        gameModel.notifyPlayerStateStart(0);
     }
     public void startTurn(int indexPlayer) {
         gameModel.startTurn(indexPlayer);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ServerHandler extends Thread{
 
     private ArrayList<ServerHandler> clientArray;
-    private int indiceArrayDiClient;
+    private int indexArrayDiClient;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
@@ -36,7 +36,7 @@ public class ServerHandler extends Thread{
     }
 
     public void setIndiceArrayDiClient(int indiceArrayDiClient) {
-        this.indiceArrayDiClient = indiceArrayDiClient;
+        this.indexArrayDiClient = indiceArrayDiClient;
     }
 
     public ObjectOutputStream getOutputStream(){
@@ -55,7 +55,7 @@ public class ServerHandler extends Thread{
     public void run(){
         System.out.println("Sono in ascolto");
         //se sono il primo ad essermi connesso mando un messaggio al client per sapere il numero di giocatori
-        if(indiceArrayDiClient==1){
+        if(indexArrayDiClient==1){
             sendUpdate(new AskNPlayerEvent());
         }else{
             listening();
