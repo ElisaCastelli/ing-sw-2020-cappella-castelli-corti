@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.events.AskNPlayerEvent;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorServer;
 
@@ -9,8 +10,8 @@ import java.util.ArrayList;
 
 public class ServerHandler extends Thread{
 
-    //private Scanner scanner = new Scanner(System.in);
     private ArrayList<ServerHandler> clientArray;
+    private int indiceArrayDiClient;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
@@ -23,7 +24,7 @@ public class ServerHandler extends Thread{
         this.outputStream=outputStream;
         this.inputStream=inputStream;
         this.virtualView = virtualView;
-        nPlayer=0;
+        nPlayer=-1;
         clientArray=null;
     }
 
@@ -34,6 +35,10 @@ public class ServerHandler extends Thread{
         return virtualView;
     }
 
+    public void setIndiceArrayDiClient(int indiceArrayDiClient) {
+        this.indiceArrayDiClient = indiceArrayDiClient;
+    }
+
     public ObjectOutputStream getOutputStream(){
         return outputStream;
     }
@@ -42,7 +47,6 @@ public class ServerHandler extends Thread{
     public int getnPlayer(){
         return nPlayer;
     }
-
     public void setnPlayer(int nPlayer) {
         this.nPlayer = nPlayer;
     }
@@ -50,6 +54,13 @@ public class ServerHandler extends Thread{
     @Override
     public void run(){
         System.out.println("Sono in ascolto");
+        //se sono il primo ad essermi connesso mando un messaggio al client per sapere il numero di giocatori
+        if(indiceArrayDiClient==1){
+            sendUpdate(new AskNPlayerEvent());
+        }else{
+            listening();
+        }
+        //poi mi metto in ascolto del cient
         listening();
     }
 
@@ -65,16 +76,23 @@ public class ServerHandler extends Thread{
         }
     }
 
-    public void sendUpdate(ObjMessage objMessage) {
+    public void sendUpdateBroadcast(ObjMessage objMessage) {
         try {
             for(ServerHandler serverHandler: clientArray){
                 serverHandler.getOutputStream().writeObject(objMessage);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public void sendUpdate(ObjMessage objMessage) {
+        try {
+            outputStream.writeObject(objMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
