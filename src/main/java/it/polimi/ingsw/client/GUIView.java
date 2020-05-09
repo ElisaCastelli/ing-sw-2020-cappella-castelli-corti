@@ -94,7 +94,7 @@ import javafx.stage.Stage;
                 // add nodes to the flow pane
                 Label l = new Label("Utente "
                         + (int)(i + 1));
-                Image userImage;
+                Image userImage=null;
                 if(i==1) {
                     userImage = new Image("APOLLO_ALETTE E TORCICOLLO_min.jpg");
                 }
@@ -133,5 +133,5 @@ import javafx.stage.Stage;
 
             stage.show();
         }
-    }
+
 }

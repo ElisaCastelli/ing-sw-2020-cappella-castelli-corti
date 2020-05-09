@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server;
 
-import com.sun.security.ntlm.Server;
+
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.network.events.Ask3CardsEvent;
+import it.polimi.ingsw.network.events.AskNPlayerEvent;
+import it.polimi.ingsw.network.events.StartGameEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.GameModel;
@@ -13,47 +16,60 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class EchoServer {
-    private static ArrayList<Thread> clientArray = new ArrayList<>();
-    private static boolean gameStarted = false;
+    private static ArrayList<ServerHandler> clientArray = new ArrayList<>();
+    private static boolean notGameStarted = false;
     private static int portNumber;
     private static VirtualView virtualView;
-    private static int nPlayer;
+    private static int nPlayer=1;
 
     public EchoServer(int portNumber){
         EchoServer.portNumber =portNumber;
     }
 
 
-    public void waitForClient(ServerSocket serverSocket) throws IOException {
+    public static void acceptClient(ServerSocket serverSocket) throws IOException {
 
-        while( !gameStarted || clientArray.size() != 0 ){
+        Socket socket = new Socket();
 
-            Socket socket = new Socket();
+        try{
+            socket = serverSocket.accept();
+            System.out.println("Un client si è connesso" + socket);
 
-            try{
-                socket = serverSocket.accept();
-                System.out.println("Un client si è connesso"+socket);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-                ObjectOutputStream oos= new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream ois= new ObjectInputStream(socket.getInputStream());
+            System.out.println("Assigning new thread for this client");
 
-                System.out.println("Assigning new thread for this client");
+            ServerHandler serverHandler = new ServerHandler(socket, oos, ois, virtualView);
+            clientArray.add(serverHandler);
 
-                Thread serverHandler = new ServerHandler(socket, oos, ois, virtualView);
-                clientArray.add(serverHandler);
-                if(clientArray.size() == 1){
-                    gameStarted = true;
+
+            // Invoking the start() method
+            serverHandler.start();
+
+            if (clientArray.size()==1) {
+                serverHandler.sendUpdate(new AskNPlayerEvent());
+                while(serverHandler.getnPlayer()==0){
+
                 }
+                nPlayer=serverHandler.getnPlayer();
+            }
 
-                // Invoking the start() method
-                serverHandler.start();
-
-            }catch (Exception e){
+        }catch(Exception e){
                 socket.close();
                 System.out.println("Errore");
             }
-        }
     }
+
+    public static void startGame(){
+        for(ServerHandler serverHandler: clientArray){
+            serverHandler.setClientArray(clientArray);
+            serverHandler.sendUpdate(new StartGameEvent());
+        }
+        clientArray.get(0).sendUpdate(new Ask3CardsEvent());
+        notGameStarted=true;
+    }
+
     public static void main(String[] args) throws Exception{
         //inizializzazione fatta senza main
         portNumber=1234;
@@ -61,13 +77,18 @@ public class EchoServer {
 
         //Create server socket
         ServerSocket serverSocket = new ServerSocket(portNumber);
-
-        // running infinite loop for getting
-
-        // client request
-
-
-
+        while(true) {
+            // running infinite loop for getting
+            while (clientArray.size() != nPlayer) {
+                acceptClient(serverSocket);
+                notGameStarted=false;
+            }
+            if(!notGameStarted) {
+                startGame();
+            }
+        }
     }
+
+
 
 }

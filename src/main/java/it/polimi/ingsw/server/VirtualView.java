@@ -18,8 +18,8 @@ public class VirtualView implements Observer {
     public VirtualView() throws Exception {
         gameModel= new ProxyGameModel();
         controller= new Controller(gameModel);
+        subscribe();
     }
-
 
     @Override
     public void subscribe() {
@@ -29,7 +29,6 @@ public class VirtualView implements Observer {
     @Override
     public int updateNPlayer() {
         return gameModel.getNPlayers();
-        //oppure void e serverRefresh() che impacchetta e ritorna
     }
 
     public void setNPlayers(int nPlayers){
@@ -48,15 +47,21 @@ public class VirtualView implements Observer {
     public ArrayList<God> getCard() throws Exception {
         return gameModel.getCards();
     }
+
     public ArrayList<God> getTempCard(){
        return gameModel.getTempCard();
     }
+
     public ArrayList<God> getCardUsed(){
         return gameModel.getCardUsed();
     }
 
     public void setCard(int playerIndex, int godCard) throws Exception {
         controller.chooseCard(playerIndex, godCard);
+    }
+
+    public void startGame(){
+        controller.startGame();
     }
 
     @Override

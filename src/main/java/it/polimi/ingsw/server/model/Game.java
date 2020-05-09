@@ -158,6 +158,9 @@ public class Game implements GameModel{
         return players.get(indexPlayer).getState();
     }
 
+    public void startGame(){
+        players.get(0).goPlay();
+    }
 
     public void startTurn(int indexPlayer){
         players.get(indexPlayer).goPlay();

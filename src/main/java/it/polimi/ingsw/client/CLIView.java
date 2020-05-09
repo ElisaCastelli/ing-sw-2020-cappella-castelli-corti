@@ -1,4 +1,10 @@
 package it.polimi.ingsw.client;
 
-public class CLIView {
+public class CLIView extends View {
+    @Override
+    public void printAsk(String text){
+        System.out.println(text);
+    }
+
+
 }

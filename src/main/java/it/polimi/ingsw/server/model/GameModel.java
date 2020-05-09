@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
+import it.polimi.ingsw.server.model.gameComponents.Player;
 import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.model.playerState.PlayerState;
@@ -12,6 +13,7 @@ public interface GameModel {
     Board getBoard();
     int getNPlayers();
     void setNPlayers(int nPlayers);
+    void startGame();
     void addPlayer(String name, int age);
     ArrayList<God> getCards()throws Exception;
     God getPlayerCard(int indexPlayer);

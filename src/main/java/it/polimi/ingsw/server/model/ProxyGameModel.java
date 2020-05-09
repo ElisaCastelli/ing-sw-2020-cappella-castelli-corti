@@ -63,6 +63,11 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.getPlayerCard(indexPlayer);
     }
 
+
+    @Override
+    public void startGame(){
+        gameModel.startGame();
+    }
     @Override
     public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
         return gameModel.initializeWorker(indexPlayer, indexWorker, box);

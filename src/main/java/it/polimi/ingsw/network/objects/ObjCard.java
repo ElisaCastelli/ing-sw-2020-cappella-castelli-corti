@@ -2,28 +2,29 @@ package it.polimi.ingsw.network.objects;
 
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.server.model.god.God;
 
 import java.util.ArrayList;
 
 public class ObjCard extends ObjMessage {
 
-    private ArrayList<String> cards;
-    private ArrayList<String> cardsTemp;
+    private ArrayList<God> cards;
+    private ArrayList<God> cardsTemp;
     private int cardChose;
     private int player;
 
-    public ArrayList<String> getCards() {
+    public ArrayList<God> getCards() {
         return cards;
     }
-    public void setCards(ArrayList<String> cards) {
+    public void setCards(ArrayList<God> cards) {
         this.cards = cards;
     }
 
-    public ArrayList<String> getCardsTemp() {
+    public ArrayList<God> getCardsTemp() {
         return cardsTemp;
     }
 
-    public void setCardsTemp(ArrayList<String> cardsTemp) {
+    public void setCardsTemp(ArrayList<God> cardsTemp) {
         this.cardsTemp = cardsTemp;
     }
 
@@ -44,7 +45,7 @@ public class ObjCard extends ObjMessage {
     public ObjCard(){
         super();
     }
-    public ObjCard(ArrayList<String> cards, int cardChose) {
+    public ObjCard(ArrayList<God> cards, int cardChose) {
         this.cards = cards;
         this.cardChose = cardChose;
     }

@@ -28,6 +28,9 @@ public class Controller  {
         return init;
     }
 
+    public void startGame(){
+        gameModel.startGame();
+    }
     public void startTurn(int indexPlayer) {
         gameModel.startTurn(indexPlayer);
         gameModel.notifyPlayerStateStart(indexPlayer);

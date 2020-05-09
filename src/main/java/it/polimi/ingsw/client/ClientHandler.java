@@ -26,15 +26,6 @@ public class ClientHandler {
     }
 
     public void listening() {
-        String received = null;
-
-        try {
-            received = (String)inputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(received);
 
         while(true){
             try {

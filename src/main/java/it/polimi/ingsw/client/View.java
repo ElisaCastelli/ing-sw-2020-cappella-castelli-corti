@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
-public class View {
-
+public abstract class View {
+    public abstract void stampaRichiestaGiocatori();
+    public abstract void printAsk(String text);
 }

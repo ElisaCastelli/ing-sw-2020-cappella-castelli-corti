@@ -5,38 +5,51 @@ import it.polimi.ingsw.network.VisitorServer;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerHandler extends Thread{
 
     //private Scanner scanner = new Scanner(System.in);
-
+    private ArrayList<ServerHandler> clientArray;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
     private Socket socket;
+    private int nPlayer;
 
-    public VirtualView getVirtualView() {
-        return virtualView;
-    }
 
     public ServerHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView){
         this.socket=socket;
         this.outputStream=outputStream;
         this.inputStream=inputStream;
         this.virtualView = virtualView;
+        nPlayer=0;
+        clientArray=null;
+    }
+
+    public void setClientArray(ArrayList<ServerHandler> clientArray){
+        this.clientArray=clientArray;
+    }
+    public VirtualView getVirtualView() {
+        return virtualView;
+    }
+
+    public ObjectOutputStream getOutputStream(){
+        return outputStream;
+    }
+
+
+    public int getnPlayer(){
+        return nPlayer;
+    }
+
+    public void setnPlayer(int nPlayer) {
+        this.nPlayer = nPlayer;
     }
 
     @Override
     public void run(){
-
-        String out="Sei connesso";
-
-        try {
-            outputStream.writeObject(out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        System.out.println("Sono in ascolto");
         listening();
     }
 
@@ -54,11 +67,16 @@ public class ServerHandler extends Thread{
 
     public void sendUpdate(ObjMessage objMessage) {
         try {
-            outputStream.writeObject(objMessage);
+            for(ServerHandler serverHandler: clientArray){
+                serverHandler.getOutputStream().writeObject(objMessage);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public void close(){
         try {

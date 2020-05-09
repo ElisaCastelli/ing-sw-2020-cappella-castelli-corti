@@ -18,18 +18,15 @@ public class VisitorServer {
     public void visit(ObjNumPlayer objNumPlayer){
         serverHandler.getVirtualView().setNPlayers(objNumPlayer.getnPlayer());
         int nPlayer= serverHandler.getVirtualView().updateNPlayer();
-        ObjNumPlayer numPlayer = new ObjNumPlayer(nPlayer);
-        serverHandler.sendUpdate(numPlayer);
+        serverHandler.setnPlayer(nPlayer);
     }
 
     public void visit(ObjPlayer objPlayer){
         serverHandler.getVirtualView().addPlayer(objPlayer.getName(), objPlayer.getAge());
-        serverHandler.sendUpdate(new ObjAck());
     }
 
     public void visit(ObjCard objCard) throws Exception {
         serverHandler.getVirtualView().setCard(objCard.getPlayer(), objCard.getCardChose());
-        serverHandler.sendUpdate(new ObjAck());
     }
 
 
