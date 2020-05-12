@@ -15,14 +15,16 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
     }
 
     @Override
-    public void setName(String name) {}
+    public void setName(String name) {
+        super.setName(name);
+    }
 
     @Override
     public void setEffect(ArrayList<String> effects) {}
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

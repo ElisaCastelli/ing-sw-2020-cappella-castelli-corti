@@ -13,18 +13,18 @@ public class MoveBeforeBuild extends GodDecorator {
     }
 
     @Override
-    public void setName(String godName) {
+    public String getName() {
+        return super.getName();
+    }
 
+    @Override
+    public void setName(String godName) {
+        super.setName(godName);
     }
 
     @Override
     public void setEffect(ArrayList<String> effects) {
 
-    }
-
-    @Override
-    public String getName() {
-        return null;
     }
 
     @Override

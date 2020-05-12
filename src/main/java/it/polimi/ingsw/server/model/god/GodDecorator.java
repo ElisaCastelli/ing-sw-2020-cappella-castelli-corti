@@ -21,7 +21,13 @@ public abstract class GodDecorator implements God {
         return moveUp;
     }
 
+    public String getName(){
+        return newGod.getName();
+    }
 
+    public void setName(String name){
+        newGod.setName(name);
+    }
     /**
      * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied

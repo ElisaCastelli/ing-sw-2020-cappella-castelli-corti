@@ -8,46 +8,30 @@ import java.util.ArrayList;
 
 public class ObjCard extends ObjMessage {
 
-    private ArrayList<God> cards;
-    private ArrayList<God> cardsTemp;
-    private int cardChose;
-    private int player;
+    private ArrayList<Integer> cardsTemp;
+    private int cardChoose;
 
-    public ArrayList<God> getCards() {
-        return cards;
+    public ObjCard(ArrayList<Integer> cardsTemp){
+        this.cardsTemp=cardsTemp;
+        cardChoose=5;
     }
-    public void setCards(ArrayList<God> cards) {
-        this.cards = cards;
+    public ObjCard(int cardChoose){
+        this.cardChoose=cardChoose;
+        cardsTemp=null;
     }
 
-    public ArrayList<God> getCardsTemp() {
+
+    public ArrayList<Integer> getCardsTemp() {
         return cardsTemp;
     }
-
-    public void setCardsTemp(ArrayList<God> cardsTemp) {
+    public void setCardsTemp(ArrayList<Integer> cardsTemp) {
         this.cardsTemp = cardsTemp;
     }
-
-    public void setPlayer(int player) {
-        this.player = player;
-    }
-
     public int getCardChose() {
-        return cardChose;
+        return cardChoose;
     }
     public void setCardChose(int cardChose) {
-        this.cardChose = cardChose;
-    }
-    public int getPlayer() {
-        return player;
-    }
-
-    public ObjCard(){
-        super();
-    }
-    public ObjCard(ArrayList<God> cards, int cardChose) {
-        this.cards = cards;
-        this.cardChose = cardChose;
+        this.cardChoose = cardChose;
     }
 
     @Override

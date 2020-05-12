@@ -26,10 +26,10 @@ public class ClientHandler {
     }
 
     public void listening() {
-
         while(true){
+            ObjMessage objMessage = null;
             try {
-                ObjMessage objMessage = (ObjMessage)inputStream.readObject();
+                objMessage = (ObjMessage)inputStream.readObject();
                 objMessage.accept(new VisitorClient(this));
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

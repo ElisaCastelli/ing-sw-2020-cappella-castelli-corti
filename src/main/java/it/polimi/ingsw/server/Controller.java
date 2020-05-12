@@ -1,8 +1,13 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
+import it.polimi.ingsw.server.model.god.God;
+
+import java.util.ArrayList;
 
 public class Controller  {
     private ProxyGameModel gameModel;
@@ -10,18 +15,29 @@ public class Controller  {
     public Controller(ProxyGameModel gameModel){
         this.gameModel=gameModel;
     }
-    public void setNPlayers(int nPlayers){
+    public ObjNumPlayer setNPlayers(int nPlayers){
         gameModel.setNPlayers(nPlayers);
-        gameModel.notifySetNPlayers();
+        return gameModel.notifySetNPlayers();
     }
     public void addPlayer(String name, int age){
         gameModel.addPlayer(name, age);
         gameModel.notifyAddPlayer();
     }
-    public void chooseCard(int playerIndex, int godCard) throws Exception {
+
+    public AskCard setTempCard(ArrayList<Integer> threeCard) {
+        gameModel.chooseTempCard(threeCard);
+        return gameModel.notifyTempCard();
+    }
+
+
+    public AskCard setCard(int playerIndex, int godCard) throws Exception {
         gameModel.chooseCard(playerIndex, godCard);
         gameModel.notifyAddCard(playerIndex);
+        return gameModel.notifyTempCard();
     }
+
+
+
     public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
         boolean init= gameModel.initializeWorker(indexPlayer, indexWorker, box);
         gameModel.notifyAddWorker();

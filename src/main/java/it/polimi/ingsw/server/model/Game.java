@@ -4,6 +4,7 @@ package it.polimi.ingsw.server.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
@@ -65,7 +66,6 @@ public class Game implements GameModel{
 
     private GameStateManager stateManager;
     private CardCreator parser = new CardCreator();
-    //private Move lastMove = new Move();
 
     /**
      * Constructor without parameters
@@ -75,6 +75,7 @@ public class Game implements GameModel{
         players = new ArrayList<>();
         playersDead = new ArrayList<>();
         nPlayers = 0;
+        tempCard= new ArrayList<>();
         godsArray = new ArrayList<>();
         cardUsed = new ArrayList<>();
         stateManager=new GameStateManager(players, playersDead);
@@ -93,9 +94,6 @@ public class Game implements GameModel{
             }
 
         });
-    }
-    public void loadCards() {
-        godsArray= parser.parseCard();
     }
     public void setNPlayers(int nPlayers){
         this.nPlayers=nPlayers;
@@ -117,33 +115,61 @@ public class Game implements GameModel{
         players.add(new Player(name,age,color));
         sortGamers();
     }
-
+    public ArrayList<Player> getPlayerArray(){
+        return players;
+    }
+    public int searchByName(String name){
+        return players.stream().map(Player::getName).collect(Collectors.toList()).indexOf(name);
+    }
+    public void chooseTempCard(ArrayList<Integer> threeCard){
+       for(int i=0;i<nPlayers;i++){
+           if(threeCard.get(i)<godsArray.size()){
+               tempCard.add(godsArray.get(threeCard.get(i)));
+           }
+       }
+    }
+    public void chooseCard(int playerIndex, int indexCard) {
+        players.get(playerIndex).setGod(tempCard.get(indexCard));
+        tempCard.remove(godsArray.get(indexCard));
+        cardUsed.add(godsArray.get(indexCard));
+    }
     public God getPlayerCard(int indexPlayer){
         return players.get(indexPlayer).getGod();
     }
-
-    public ArrayList<God> getTempCard(){
-        return tempCard;
+    public void loadCards() {
+        godsArray= parser.parseCard();
+    }
+    public synchronized ArrayList<String> getCards() throws Exception {
+        if(godsArray.size()==0){
+            loadCards();
+        }
+        ArrayList<String> cards= new ArrayList<>();
+        for(int i=0; i<godsArray.size();i++){
+            cards.add(godsArray.get(i).getName());
+        }
+        return cards;
+    }
+    public ArrayList<String> getTempCard(){
+        ArrayList<String> temporanee= new ArrayList<>();
+        for(int i=0; i<tempCard.size();i++){
+            temporanee.add(tempCard.get(i).getName());
+        }
+        return temporanee;
+    }
+    public ArrayList<String> getCardUsed(){
+        ArrayList<String> drawnCard= new ArrayList<>();
+        for(int i=0; i<cardUsed.size();i++){
+            drawnCard.add(cardUsed.get(i).getName());
+        }
+        return drawnCard;
+    }
+    public void startGame(){
+        players.get(0).goPlay();
     }
 
-    public ArrayList<God> getCardUsed(){
-        return cardUsed;
-    }
 
-    public ArrayList<God> getCards() throws Exception {
-        loadCards();
-        return godsArray;
-    }
 
-    public void chooseThreeCard(ArrayList<God> threeCard){
-        tempCard=threeCard;
-    }
 
-    public void chooseCard(int playerIndex, int godCard) {
-        players.get(playerIndex).setGod(godsArray.get(godCard));
-        tempCard.remove(godsArray.get(godCard));
-        cardUsed.add(godsArray.get(godCard));
-    }
 
     //index worker 1 o 2, nelle altre classi arriva già a -1
     public boolean initializeWorker(int indexPlayer, int indexWorker, Box box){
@@ -158,9 +184,7 @@ public class Game implements GameModel{
         return players.get(indexPlayer).getState();
     }
 
-    public void startGame(){
-        players.get(0).goPlay();
-    }
+
 
     public void startTurn(int indexPlayer){
         players.get(indexPlayer).goPlay();
@@ -214,5 +238,6 @@ public class Game implements GameModel{
     public void setPause(){
         stateManager.goPause();
     }
+
 }
 

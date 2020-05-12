@@ -1,15 +1,20 @@
 package it.polimi.ingsw.server;
 
 
+import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.model.playerState.PlayerState;
 
+import java.util.ArrayList;
+
 public interface Observer {
     void subscribe();
-    int updateNPlayer();
+    ObjNumPlayer updateNPlayer();
     void updateAddPlayer();
+    AskCard updateTempCard();
     void updatePlayerCard(int indexPlayer);
     void updateInizializaWorker();
     Board updateBoard();
@@ -23,5 +28,6 @@ public interface Observer {
     boolean updateCanBuild(int indexPlayer, int indexWorker);
     void updateBuild();
     void updateFinishTurn();
+
     //void updateWinningPlayer();
 }

@@ -17,7 +17,7 @@ public class SwitchWorker extends GodDecorator {
 
     @Override
     public void setName(String godName) {
-
+        super.setName(godName);
     }
 
     @Override
@@ -27,8 +27,9 @@ public class SwitchWorker extends GodDecorator {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
+
     @Override
     public ArrayList<String> getEffects() {
         return null;

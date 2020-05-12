@@ -1,0 +1,40 @@
+package it.polimi.ingsw.network.objects;
+
+import it.polimi.ingsw.network.VisitorClient;
+import it.polimi.ingsw.network.VisitorServer;
+
+public class ObjState extends ObjMessage{
+
+    int indexPlayer;
+    int currentPlayer;
+
+    public ObjState(int indexPlayer, int currentPlayer){
+        this.indexPlayer=indexPlayer;
+        this.currentPlayer=currentPlayer;
+    }
+    public int getIndexPlayer() {
+        return indexPlayer;
+    }
+
+    public void setIndexPlayer(int indexPlayer) {
+        this.indexPlayer = indexPlayer;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    @Override
+    public void accept(VisitorServer visitorServer) {
+        visitorServer.visit(this);
+    }
+
+    @Override
+    public void accept(VisitorClient visitorClient) {
+        visitorClient.visit(this);
+    }
+}

@@ -6,6 +6,6 @@ import it.polimi.ingsw.network.VisitorServer;
 import java.io.Serializable;
 
 public abstract class ObjMessage implements Serializable {
-    public abstract void accept(VisitorServer visitorServer);
+    public abstract void accept(VisitorServer visitorServer) throws Exception;
     public abstract void accept(VisitorClient visitorClient);
 }

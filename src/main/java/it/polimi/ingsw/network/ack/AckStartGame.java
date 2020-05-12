@@ -1,10 +1,10 @@
-package it.polimi.ingsw.network.objects;
+package it.polimi.ingsw.network.ack;
 
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.objects.ObjMessage;
 
-public class ObjAck extends ObjMessage{
-    String ack;
+public class AckStartGame extends ObjMessage {
     @Override
     public void accept(VisitorServer visitorServer) {
         try {
@@ -16,10 +16,6 @@ public class ObjAck extends ObjMessage{
 
     @Override
     public void accept(VisitorClient visitorClient) {
-        try {
-            visitorClient.visit(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        throw new UnsupportedOperationException();
     }
 }

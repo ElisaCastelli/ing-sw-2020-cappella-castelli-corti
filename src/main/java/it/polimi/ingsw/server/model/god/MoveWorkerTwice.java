@@ -17,7 +17,7 @@ public class MoveWorkerTwice extends MoveTwice {
 
     @Override
     public void setName(String godName) {
-
+        super.setName(godName);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class MoveWorkerTwice extends MoveTwice {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

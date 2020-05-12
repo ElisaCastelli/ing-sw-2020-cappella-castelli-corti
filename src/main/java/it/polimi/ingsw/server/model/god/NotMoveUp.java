@@ -16,7 +16,7 @@ public class NotMoveUp extends GodDecorator {
 
     @Override
     public void setName(String godName) {
-
+        super.setName(godName);
     }
 
 
@@ -27,7 +27,7 @@ public class NotMoveUp extends GodDecorator {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

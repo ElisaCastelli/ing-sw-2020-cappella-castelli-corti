@@ -16,11 +16,11 @@ public interface God {
     String name = "";
     ArrayList<String> effects = new ArrayList<>();
 
+    String getName();
+
     void setName(String name);
 
     void setEffect(ArrayList<String> effects);
-
-    String getName();
 
     ArrayList<String> getEffects();
 

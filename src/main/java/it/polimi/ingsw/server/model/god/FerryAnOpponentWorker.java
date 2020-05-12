@@ -16,7 +16,7 @@ public class FerryAnOpponentWorker extends MoveTwice {
 
     @Override
     public void setName(String name) {
-
+        super.setName(name);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class FerryAnOpponentWorker extends MoveTwice {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

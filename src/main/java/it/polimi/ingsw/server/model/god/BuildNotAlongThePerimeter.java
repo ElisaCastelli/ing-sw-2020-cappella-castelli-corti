@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.god;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+import javax.naming.InterruptedNamingException;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,7 @@ public class BuildNotAlongThePerimeter extends MoveTwice {
 
     @Override
     public void setName(String name) {
-
+        super.setName(name);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class BuildNotAlongThePerimeter extends MoveTwice {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

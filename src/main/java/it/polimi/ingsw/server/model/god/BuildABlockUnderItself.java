@@ -16,7 +16,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     @Override
     public void setName(String name) {
-
+        super.setName(name);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

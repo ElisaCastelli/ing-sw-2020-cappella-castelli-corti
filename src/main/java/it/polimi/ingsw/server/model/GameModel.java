@@ -11,15 +11,17 @@ import java.util.ArrayList;
 
 public interface GameModel {
     Board getBoard();
+    ArrayList<Player> getPlayerArray();
     int getNPlayers();
     void setNPlayers(int nPlayers);
     void startGame();
     void addPlayer(String name, int age);
-    ArrayList<God> getCards()throws Exception;
+    int searchByName(String name);
+    ArrayList<String> getCards()throws Exception;
     God getPlayerCard(int indexPlayer);
-    ArrayList<God> getTempCard();
-    ArrayList<God> getCardUsed();
-    void chooseThreeCard(ArrayList<God> threeCard);
+    ArrayList<String> getTempCard();
+    ArrayList<String> getCardUsed();
+    void chooseTempCard(ArrayList<Integer> tempCard);
     void chooseCard(int playerIndex, int godCard)throws Exception ;
     boolean initializeWorker(int indexPlayer, int indexWorker, Box box);
     GameState getState();

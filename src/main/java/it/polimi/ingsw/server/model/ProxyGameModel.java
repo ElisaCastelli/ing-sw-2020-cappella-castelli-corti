@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
+import it.polimi.ingsw.server.model.gameComponents.Player;
 import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.Observer;
@@ -21,6 +24,11 @@ public class ProxyGameModel implements GameModel, Subject{
     public Board getBoard(){
         return gameModel.getBoard();
     }
+
+    @Override
+    public ArrayList<Player> getPlayerArray(){
+        return gameModel.getPlayerArray();
+    }
     @Override
     public int getNPlayers(){
         return gameModel.getNPlayers();
@@ -36,23 +44,36 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public ArrayList<God> getCards() throws Exception {
+    public int searchByName(String name){
+        return gameModel.searchByName(name);
+
+    }
+
+    @Override
+    public ArrayList<String> getCards() throws Exception {
         return gameModel.getCards();
     }
 
     @Override
-    public ArrayList<God> getCardUsed(){
-        return gameModel.getCardUsed();
-    }
-
-    @Override
-    public ArrayList<God> getTempCard(){
+    public ArrayList<String> getTempCard(){
         return gameModel.getTempCard();
     }
     @Override
-    public void chooseThreeCard(ArrayList<God> threeCard){
-        gameModel.chooseThreeCard(threeCard);
+    public void chooseTempCard(ArrayList<Integer> tempCard){
+        gameModel.chooseTempCard(tempCard);
     }
+
+
+
+
+
+
+
+    @Override
+    public ArrayList<String> getCardUsed(){
+        return gameModel.getCardUsed();
+    }
+
     @Override
     public void chooseCard(int playerIndex, int godCard) throws Exception {
         gameModel.chooseCard(playerIndex, godCard);
@@ -153,12 +174,17 @@ public class ProxyGameModel implements GameModel, Subject{
         this.observer=observer;
     }
     @Override
-    public void notifySetNPlayers(){
-        observer.updateNPlayer();
+    public ObjNumPlayer notifySetNPlayers(){
+        return observer.updateNPlayer();
     }
     @Override
     public void notifyAddPlayer(){
         observer.updateAddPlayer();
+    }
+
+    @Override
+    public AskCard notifyTempCard(){
+        return observer.updateTempCard();
     }
     @Override
     public void notifyAddCard(int indexPlayer){

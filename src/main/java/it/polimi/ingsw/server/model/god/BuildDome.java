@@ -16,7 +16,7 @@ public class BuildDome extends GodDecorator {
 
     @Override
     public void setName(String godName) {
-
+        super.setName(godName);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BuildDome extends GodDecorator {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

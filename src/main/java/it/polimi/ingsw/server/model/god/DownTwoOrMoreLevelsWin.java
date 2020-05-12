@@ -17,7 +17,7 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
 
     @Override
     public void setName(String godName) {
-
+        super.setName(godName);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DownTwoOrMoreLevelsWin extends GodDecorator {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

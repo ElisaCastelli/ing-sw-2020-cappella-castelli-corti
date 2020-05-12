@@ -19,7 +19,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
 
     @Override
     public void setName(String godName) {
-
+        super.setName(godName);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
 
     @Override
     public String getName() {
-        return null;
+        return super.getName();
     }
 
     @Override

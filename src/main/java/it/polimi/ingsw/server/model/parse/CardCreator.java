@@ -27,8 +27,8 @@ public class CardCreator {
     }
 
     public ArrayList<God> parseCard() {
-        //setGodsByString();
-        setGodsByHashMap();
+        setGodsByString();
+        //setGodsByHashMap();
         return cardsGod;
     }
 
@@ -119,14 +119,21 @@ public class CardCreator {
 
             God temp= godArrayListToHash.get(index);
 
+
             for (int indexEffects = 0; indexEffects < godsByJson.get(index).getEffects().size(); indexEffects++) {
                 String effect = godsByJson.get(index).getEffects().get(indexEffects);
                 setHashMap(temp);
                 temp=map.get(effect);
             }
+            temp.setName(godsByJson.get(index).getName());
             cardsGod.add(temp);
         }
     }
 
+    public static void main(String[] args) throws Exception{
+        CardCreator c = new CardCreator();
+        c.readCard();
+        c.setGodsByHashMap();
+    }
 }
 

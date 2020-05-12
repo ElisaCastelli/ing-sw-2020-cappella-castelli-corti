@@ -1,9 +1,13 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.objects.ObjCard;
+import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
+import it.polimi.ingsw.server.model.gameComponents.Player;
 import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.model.playerState.PlayerState;
@@ -14,11 +18,35 @@ public class VirtualView implements Observer {
 
     ProxyGameModel gameModel;
     Controller controller;
+    boolean ready;
+    int ackCounter;
 
     public VirtualView() throws Exception {
         gameModel= new ProxyGameModel();
         controller= new Controller(gameModel);
         subscribe();
+        ready=false;
+        ackCounter=0;
+    }
+
+    public synchronized boolean isReady() {
+        return ready;
+    }
+
+    public synchronized void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
+    public synchronized int getAckCounter() {
+        return ackCounter;
+    }
+
+    public synchronized void incCounter() {
+        ackCounter++;
+        if(ackCounter==gameModel.getNPlayers()){
+            ready=true;
+            ackCounter=0;
+        }
     }
 
     @Override
@@ -26,40 +54,71 @@ public class VirtualView implements Observer {
         gameModel.subscribeObserver(this);
     }
 
+    public ArrayList<Player> getPlayerArray(){
+        return gameModel.getPlayerArray();
+    }
+
+    public ObjNumPlayer setNPlayers(int nPlayers){
+        return controller.setNPlayers(nPlayers);
+    }
     @Override
-    public int updateNPlayer() {
-        return gameModel.getNPlayers();
+    public ObjNumPlayer updateNPlayer() {
+        return new ObjNumPlayer(gameModel.getNPlayers());
     }
 
-    public void setNPlayers(int nPlayers){
-        controller.setNPlayers(nPlayers);
-    }
 
-    public void addPlayer(String name, int age){
+    public synchronized void addPlayer(String name, int age){
         controller.addPlayer(name, age);
+        ackCounter++;
+        if(  ackCounter == gameModel.getNPlayers() ){
+            ready=true;
+            ackCounter=0;
+        }
     }
 
+    public int searchByName(String name){
+        return gameModel.searchByName(name);
+    }
+
+    //TODO da togliere
     @Override
     public void updateAddPlayer() {
         System.out.println("Giocatore aggiunto");
     }
 
-    public ArrayList<God> getCard() throws Exception {
+    public ArrayList<String> getCards() throws Exception {
         return gameModel.getCards();
     }
 
-    public ArrayList<God> getTempCard(){
+    public AskCard setTempCard(ArrayList<Integer> tempCard){
+        return controller.setTempCard(tempCard);
+    }
+
+    public AskCard setCard(int playerIndex, int godCard) throws Exception {
+        return controller.setCard(playerIndex, godCard);
+    }
+
+    @Override
+    public AskCard updateTempCard(){
+        return new AskCard(gameModel.getTempCard());
+    }
+
+
+
+
+
+
+    public ArrayList<String> getTempCard(){
        return gameModel.getTempCard();
     }
 
-    public ArrayList<God> getCardUsed(){
+
+
+
+
+    public ArrayList<String> getCardUsed(){
         return gameModel.getCardUsed();
     }
-
-    public void setCard(int playerIndex, int godCard) throws Exception {
-        controller.chooseCard(playerIndex, godCard);
-    }
-
     public void startGame(){
         controller.startGame();
     }
@@ -174,4 +233,6 @@ public class VirtualView implements Observer {
     public PlayerState updatePlayerState(int indexPlayer) {
         return gameModel.getPlayerState(indexPlayer);
     }
+
+
 }

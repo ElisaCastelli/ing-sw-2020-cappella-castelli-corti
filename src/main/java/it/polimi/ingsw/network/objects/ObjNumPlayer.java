@@ -25,10 +25,6 @@ public class ObjNumPlayer  extends ObjMessage{
 
     @Override
     public void accept(VisitorClient visitorClient) {
-        try {
-            visitorClient.visit(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        throw new UnsupportedOperationException();
     }
 }
