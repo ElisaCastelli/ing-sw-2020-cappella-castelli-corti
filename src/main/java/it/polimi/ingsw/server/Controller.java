@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
+import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
@@ -36,7 +37,10 @@ public class Controller  {
         return gameModel.notifyTempCard();
     }
 
-
+    public ObjState goPlayingNext(){
+        gameModel.goPlayingNext();
+        return gameModel.notifyWhoIsPlaying();
+    }
 
     public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
         boolean init= gameModel.initializeWorker(indexPlayer, indexWorker, box);

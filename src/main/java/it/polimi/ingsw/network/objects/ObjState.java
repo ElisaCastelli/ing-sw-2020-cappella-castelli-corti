@@ -8,6 +8,10 @@ public class ObjState extends ObjMessage{
     int indexPlayer;
     int currentPlayer;
 
+    public  ObjState(){
+        indexPlayer=-1;
+        currentPlayer=-1;
+    }
     public ObjState(int indexPlayer, int currentPlayer){
         this.indexPlayer=indexPlayer;
         this.currentPlayer=currentPlayer;

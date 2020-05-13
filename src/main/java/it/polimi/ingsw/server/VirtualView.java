@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.objects.ObjCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
+import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Board;
@@ -225,13 +226,13 @@ public class VirtualView implements Observer {
         controller.setPause();
     }
 
+
     @Override
-    public GameState updateState(){
-        return gameModel.getState();
-    }
-    @Override
-    public PlayerState updatePlayerState(int indexPlayer) {
-        return gameModel.getPlayerState(indexPlayer);
+    public ObjState updateWhoIsPlaying() {
+        ObjState objState= new ObjState();
+        objState.setCurrentPlayer(gameModel.whoIsPlaying());
+        return objState;
+
     }
 
 

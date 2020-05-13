@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
+import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.god.God;
@@ -18,9 +19,8 @@ public interface Observer {
     void updatePlayerCard(int indexPlayer);
     void updateInizializaWorker();
     Board updateBoard();
-    GameState updateState();
+    ObjState updateWhoIsPlaying();
     void updateStartTurn();
-    PlayerState updatePlayerState(int indexPlayer);
     void updateReachable();
     boolean updateCanMove(int indexPlayer);
     void updateMove();

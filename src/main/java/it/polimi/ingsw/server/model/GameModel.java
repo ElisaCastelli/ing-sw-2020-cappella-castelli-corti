@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
@@ -23,6 +24,8 @@ public interface GameModel {
     ArrayList<String> getCardUsed();
     void chooseTempCard(ArrayList<Integer> tempCard);
     void chooseCard(int playerIndex, int godCard)throws Exception ;
+    int whoIsPlaying();
+    ObjState goPlayingNext();
     boolean initializeWorker(int indexPlayer, int indexWorker, Box box);
     GameState getState();
     void startTurn(int indexPlayer);

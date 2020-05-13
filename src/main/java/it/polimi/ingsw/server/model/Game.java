@@ -146,13 +146,11 @@ public class Game implements GameModel{
                tempCard.add(godsArray.get(threeCard.get(i)));
            }
        }
-       goPlayNext();
     }
     public void chooseCard(int playerIndex, int indexCard) {
         players.get(playerIndex).setGod(tempCard.get(indexCard));
         tempCard.remove(godsArray.get(indexCard));
         cardUsed.add(godsArray.get(indexCard));
-        goPlayNext();
     }
     public God getPlayerCard(int indexPlayer){
         return players.get(indexPlayer).getGod();
@@ -189,7 +187,22 @@ public class Game implements GameModel{
     }
 
 
-
+    public int whoIsPlaying(){
+        int indexPlay=0;
+        boolean found=false;
+        while(!found && indexPlay<players.size()){
+            if(players.get(indexPlay).isPlaying()){
+                found=true;
+            }
+            else{
+                indexPlay++;
+            }
+        }
+        if(found)
+            return indexPlay;
+        else
+            return -1;
+    }
 
 
     //index worker 1 o 2, nelle altre classi arriva già a -1

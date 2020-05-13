@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
+import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
@@ -64,9 +65,14 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
 
-
-
-
+    @Override
+    public ObjState goPlayingNext(){
+        return gameModel.goPlayingNext();
+    }
+    @Override
+    public int whoIsPlaying(){
+        return gameModel.whoIsPlaying();
+    }
 
 
     @Override
@@ -89,6 +95,11 @@ public class ProxyGameModel implements GameModel, Subject{
     public void startGame(){
         gameModel.startGame();
     }
+
+
+
+
+
     @Override
     public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
         return gameModel.initializeWorker(indexPlayer, indexWorker, box);
@@ -99,10 +110,7 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.getState();
     }
 
-    @Override
-    public PlayerState getPlayerState(int indexPlayer){
-        return gameModel.getPlayerState(indexPlayer);
-    }
+
 
     @Override
     public void startTurn(int indexPlayer) {
@@ -197,15 +205,10 @@ public class ProxyGameModel implements GameModel, Subject{
         observer.updateBoard();
     }
 
-    @Override
-    public void notifyState(){
-        observer.updateState();
-    }
 
     @Override
-    public void notifyPlayerStateStart(int indexPlayer){
-        observer.updateStartTurn();
-        observer.updatePlayerState(indexPlayer);
+    public ObjState notifyWhoIsPlaying(){
+        return observer.updateWhoIsPlaying();
     }
 
     @Override
@@ -231,9 +234,5 @@ public class ProxyGameModel implements GameModel, Subject{
         observer.updateBuild();
         observer.updateBoard();
     }
-    @Override
-    public  void notifyPlayerStateWaiting(int indexPlayer){
-        observer.updateFinishTurn();
-        observer.updatePlayerState(indexPlayer);
-    }
+
 }
