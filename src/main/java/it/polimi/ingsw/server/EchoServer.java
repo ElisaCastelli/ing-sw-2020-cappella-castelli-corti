@@ -23,7 +23,7 @@ public class EchoServer {
         EchoServer.portNumber =portNumber;
     }
 
-    public static void acceptClient(ServerSocket serverSocket) throws IOException {
+    public static synchronized void acceptClient(ServerSocket serverSocket) throws IOException {
 
         Socket clientSocket = new Socket();
         try{
@@ -48,29 +48,28 @@ public class EchoServer {
         }
     }
 
-    public static void sendBroadCast(ObjMessage objMessage){
+    public static synchronized void sendBroadCast(ObjMessage objMessage){
         for(ServerHandler serverHandler : clientArray){
             serverHandler.sendUpdate(objMessage);
         }
     }
 
-    public static void initializeGame(){
+    public static synchronized void initializeGame(){
         if(!notGameStarted){
             initializePlayer();
             waitForPlayer();
             virtualView.startGame();
             sendBroadCast(new StartGameEvent(clientArray.size()));
-            waitForPlayer();
             notGameStarted=true;
         }
     }
 
-    public static void initializePlayer(){
+    public static synchronized void initializePlayer(){
         initializeClientArray();
         sendBroadCast(new AskPlayerEvent());
     }
 
-    public static void initializeClientArray(){
+    public static synchronized void initializeClientArray(){
         for(ServerHandler clientHandlers : clientArray){
             clientHandlers.setClientArray(clientArray);
         }
@@ -106,7 +105,4 @@ public class EchoServer {
             initializeGame();
         }
     }
-
-
-
 }

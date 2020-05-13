@@ -66,8 +66,8 @@ public class ProxyGameModel implements GameModel, Subject{
 
 
     @Override
-    public ObjState goPlayingNext(){
-        return gameModel.goPlayingNext();
+    public void goPlayingNext(){
+        gameModel.goPlayingNext();
     }
     @Override
     public int whoIsPlaying(){

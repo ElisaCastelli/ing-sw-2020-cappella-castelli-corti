@@ -25,7 +25,7 @@ public interface GameModel {
     void chooseTempCard(ArrayList<Integer> tempCard);
     void chooseCard(int playerIndex, int godCard)throws Exception ;
     int whoIsPlaying();
-    ObjState goPlayingNext();
+    void goPlayingNext();
     boolean initializeWorker(int indexPlayer, int indexWorker, Box box);
     GameState getState();
     void startTurn(int indexPlayer);

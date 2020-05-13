@@ -48,7 +48,6 @@ public class PlayerStateManager {
         if(currentState==isWaiting){
             setCurrentState(isPlaying);
         }
-
     }
 
     public void goWaiting(){

@@ -211,29 +211,31 @@ public class VirtualView implements Observer {
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
         return controller.checkWin(indexPlayer, startBox, indexWorker);
     }
+
     public boolean checkWinAfterBuild() {
         return controller.checkWinAfterBuild();
     }
+
     public void setWinningPlayer(int indexPlayer){
         controller.setWinningPlayer(indexPlayer);
     }
+
     public void setDeadPlayer(int indexPlayer){
         controller.setDeadPlayer(indexPlayer);
     }
-
 
     public void setPause(){
         controller.setPause();
     }
 
+    public ObjState goPlayingNext(){
+        return controller.goPlayingNext();
+    }
 
     @Override
     public ObjState updateWhoIsPlaying() {
-        ObjState objState= new ObjState();
+        ObjState objState = new ObjState();
         objState.setCurrentPlayer(gameModel.whoIsPlaying());
         return objState;
-
     }
-
-
 }

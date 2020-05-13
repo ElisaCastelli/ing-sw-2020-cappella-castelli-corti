@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.network.ack.AckPlayer;
 import it.polimi.ingsw.network.ack.AckStartGame;
 import it.polimi.ingsw.network.ack.AckState;
 import it.polimi.ingsw.network.ack.NackState;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.network.events.CloseConnectionClientEvent;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.ServerHandler;
 
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class VisitorServer {
@@ -28,7 +30,6 @@ public class VisitorServer {
         System.out.println("Ricevuto dati giocatore");
         serverHandler.setClientName(objPlayer.getName());
         serverHandler.getVirtualView().addPlayer(objPlayer.getName(), objPlayer.getAge());
-
     }
 
 
@@ -41,20 +42,23 @@ public class VisitorServer {
         int indexPlayer=serverHandler.getIndexPlayer();
         if(objCard.getCardsTemp().size()>0){
             System.out.println("Imposto carte temporanee");
-            AskCard tempCard= serverHandler.getVirtualView().setTempCard(objCard.getCardsTemp());
-
-            int indexRec= serverHandler.getIndexClient((indexPlayer+1));
-            ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
-            receiver.sendUpdate(tempCard);
+            AskCard tempCard = serverHandler.getVirtualView().setTempCard(objCard.getCardsTemp());
+            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+            serverHandler.sendUpdateBroadcast(objState);
+            //int indexRec= serverHandler.getIndexClient((indexPlayer+1));
+            //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
+            serverHandler.sendUpdateBroadcast(tempCard);
         }else{
             System.out.println("Carta scelta");
 
             AskCard askcard= serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
             serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
-            if(askcard.getCardTemp()!=null){
-                int indexRec= serverHandler.getIndexClient(indexPlayer+1);
-                ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
-                receiver.sendUpdate(askcard);
+            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+            serverHandler.sendUpdateBroadcast(objState);
+            if(askcard.getCardTemp().size() != 0){
+                //int indexRec= serverHandler.getIndexClient(indexPlayer+1);
+                //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
+                serverHandler.sendUpdateBroadcast(askcard);
             }
             else{
                 ObjInitialize objInitialize= serverHandler.gameData();
@@ -62,16 +66,22 @@ public class VisitorServer {
             }
         }
     }
-    public void visit(ObjState objstate){
+
+    public void visit(AckState ackState) {
 
     }
 
-    public void visit(AckState ackState) throws Exception {
+    public synchronized void visit(AckPlayer ackPlayer) throws Exception {
         serverHandler.getVirtualView().incCounter();
         serverHandler.waitForPlayer();
         ArrayList<String> cards= serverHandler.getVirtualView().getCards();
         Ask3CardsEvent askCards = new Ask3CardsEvent(cards);
-        serverHandler.sendUpdate(askCards);
+        serverHandler.sendUpdateBroadcast(askCards);
+
+        /*int indexRec = serverHandler.getIndexClient((0));
+        ServerHandler receiver = serverHandler.getClientArray().get(indexRec);
+        receiver.getOutputStream().reset();
+        receiver.sendUpdate(askCards);*/
     }
 
     public void visit(NackState nackState){

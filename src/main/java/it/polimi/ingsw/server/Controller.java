@@ -49,11 +49,9 @@ public class Controller  {
     }
     public void startGame(){
         gameModel.startGame();
-        gameModel.notifyPlayerStateStart(0);
     }
     public void startTurn(int indexPlayer) {
         gameModel.startTurn(indexPlayer);
-        gameModel.notifyPlayerStateStart(indexPlayer);
     }
     public void setBoxReachable(int indexPlayer, int indexWorker) {
         gameModel.setBoxReachable(indexPlayer, indexWorker);
@@ -75,7 +73,6 @@ public class Controller  {
     }
     public void finishTurn(int indexPlayer) {
         gameModel.finishTurn(indexPlayer);
-        gameModel.notifyPlayerStateWaiting(indexPlayer);
     }
 
 

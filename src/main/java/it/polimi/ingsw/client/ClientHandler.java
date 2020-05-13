@@ -21,6 +21,14 @@ public class ClientHandler {
         this.view = view;
     }
 
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
+
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
+    }
+
     public View getView() {
         return view;
     }

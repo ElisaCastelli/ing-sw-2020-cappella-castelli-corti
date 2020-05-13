@@ -81,17 +81,8 @@ public class Game implements GameModel{
         stateManager=new GameStateManager(players, playersDead);
     }
 
-    public void goPlayNext(){
-        int indexPlay=0;
-        boolean found=false;
-        while(!found && indexPlay<players.size()){
-            if(players.get(indexPlay).isPlaying()){
-                found=true;
-            }
-            else{
-                indexPlay++;
-            }
-        }
+    public void goPlayingNext(){
+        int indexPlay = whoIsPlaying();
         players.get(indexPlay).goWaiting();
         if(indexPlay==nPlayers){
             players.get(0).goPlay();
@@ -100,6 +91,7 @@ public class Game implements GameModel{
             players.get(indexPlay+1).goPlay();
         }
     }
+
     public Board getBoard(){
         return board;
     }

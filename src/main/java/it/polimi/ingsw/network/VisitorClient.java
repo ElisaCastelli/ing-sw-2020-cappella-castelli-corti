@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.client.ClientHandler;
+import it.polimi.ingsw.network.ack.AckPlayer;
 import it.polimi.ingsw.network.ack.AckStartGame;
 import it.polimi.ingsw.network.ack.AckState;
-import it.polimi.ingsw.network.ack.NackState;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 
@@ -55,29 +55,41 @@ public class VisitorClient {
     public void visit(ObjState objState){
         if(clientHandler.getView().getIndexPlayer() == -1){
             clientHandler.getView().setIndexPlayer(objState.getIndexPlayer());
-            System.out.println("sto settando l'indice del player quando inizia il gioco "+clientHandler.getView().getIndexPlayer());
-
+            System.out.println("sto settando l'indice del player quando inizia il gioco: "+clientHandler.getView().getIndexPlayer());
+            clientHandler.sendMessage(new AckPlayer());
         }
         if(clientHandler.getView().getIndexPlayer()==objState.getCurrentPlayer()){
             clientHandler.getView().setPlaying(true);
             System.out.println("Sto giocando");
+            clientHandler.sendMessage(new AckState());
         }else{
+            clientHandler.getView().setPlaying(false);
             System.out.println("Aspetta il tuo turno oh");
+            clientHandler.sendMessage(new AckState());
         }
-        clientHandler.sendMessage(new AckState());
     }
 
-    public void visit(Ask3CardsEvent ask3CardsEvent){
+    public void visit(Ask3CardsEvent ask3CardsEvent) {
+        if(clientHandler.getView().isPlaying()) {
             ArrayList<Integer> cardTemp = clientHandler.getView().ask3Card(ask3CardsEvent.getCardArray());
             System.out.println("Carte scelte");
             ObjCard objCard = new ObjCard(cardTemp);
             clientHandler.sendMessage(objCard);
+        }
+        else{
+            System.out.println("Stanno scegliendo le tre carte");
+        }
     }
 
     public void visit(AskCard askCard){
-        int card=clientHandler.getView().askCard(askCard.getCardTemp());
-        ObjCard objCard= new ObjCard(card);
-        clientHandler.sendMessage(objCard);
+        if(clientHandler.getView().isPlaying()) {
+            int card=clientHandler.getView().askCard(askCard.getCardTemp());
+            ObjCard objCard= new ObjCard(card);
+            clientHandler.sendMessage(objCard);
+        }
+        else {
+            System.out.println("Un avversario sta scegliendo una carta");
+        }
     }
 
     public void visit(ObjInitialize objInitialize){

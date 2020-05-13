@@ -93,6 +93,7 @@ public class ServerHandler extends Thread{
     public void setNameCard(String nameCard) {
         user.setNameCard(nameCard);
     }
+
     public ObjectOutputStream getOutputStream(){
         return outputStream;
     }

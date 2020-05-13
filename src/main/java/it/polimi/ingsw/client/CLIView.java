@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class CLIView extends View {
     private Scanner input = new Scanner(System.in);
-    private int indexPlayer;
+    private int indexPlayer = -1;
     private boolean isPlaying;
     private int nPlayer;
     private ArrayList<User> usersArray;
@@ -81,7 +81,7 @@ public class CLIView extends View {
         for(int i=0;i<cards.size();i++){
             scelte[i]=false;
         }
-        System.out.println("Scegli gli indici di tre carte");
+        System.out.println("Scegli gli indici di " + nPlayer + " carte");
         for(int cardIndex=0; cardIndex < cards.size();cardIndex++){
             System.out.println("[ "+cardIndex+ "] "+cards.get(cardIndex));
         }

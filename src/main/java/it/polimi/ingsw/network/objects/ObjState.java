@@ -34,7 +34,7 @@ public class ObjState extends ObjMessage{
 
     @Override
     public void accept(VisitorServer visitorServer) {
-        visitorServer.visit(this);
+        throw new UnsupportedOperationException();
     }
 
     @Override
