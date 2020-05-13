@@ -81,6 +81,25 @@ public class Game implements GameModel{
         stateManager=new GameStateManager(players, playersDead);
     }
 
+    public void goPlayNext(){
+        int indexPlay=0;
+        boolean found=false;
+        while(!found && indexPlay<players.size()){
+            if(players.get(indexPlay).isPlaying()){
+                found=true;
+            }
+            else{
+                indexPlay++;
+            }
+        }
+        players.get(indexPlay).goWaiting();
+        if(indexPlay==nPlayers){
+            players.get(0).goPlay();
+        }
+        else{
+            players.get(indexPlay+1).goPlay();
+        }
+    }
     public Board getBoard(){
         return board;
     }
@@ -127,11 +146,13 @@ public class Game implements GameModel{
                tempCard.add(godsArray.get(threeCard.get(i)));
            }
        }
+       goPlayNext();
     }
     public void chooseCard(int playerIndex, int indexCard) {
         players.get(playerIndex).setGod(tempCard.get(indexCard));
         tempCard.remove(godsArray.get(indexCard));
         cardUsed.add(godsArray.get(indexCard));
+        goPlayNext();
     }
     public God getPlayerCard(int indexPlayer){
         return players.get(indexPlayer).getGod();
@@ -179,12 +200,6 @@ public class Game implements GameModel{
     public GameState getState(){
         return stateManager.getCurrentState();
     }
-
-    public PlayerState getPlayerState(int indexPlayer){
-        return players.get(indexPlayer).getState();
-    }
-
-
 
     public void startTurn(int indexPlayer){
         players.get(indexPlayer).goPlay();

@@ -25,7 +25,6 @@ public interface GameModel {
     void chooseCard(int playerIndex, int godCard)throws Exception ;
     boolean initializeWorker(int indexPlayer, int indexWorker, Box box);
     GameState getState();
-    PlayerState getPlayerState(int indexPlayer);
     void startTurn(int indexPlayer);
     boolean canMove(int indexPlayer);
     void setBoxReachable(int indexPlayer, int indexWorker);

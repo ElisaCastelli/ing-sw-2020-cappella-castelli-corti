@@ -50,6 +50,7 @@ public class Player {
         this.color = color;
     }
 
+
     public void setGod(God god){
         myGod = god;
     }
@@ -68,8 +69,8 @@ public class Player {
     public int getAge() {
         return age;
     }
-    public PlayerState getState(){
-        return gamerManager.getCurrentState();
+    public boolean isPlaying(){
+        return gamerManager.isPlaying();
     }
     public Box getWorkerBox(int indexWorker){
         return myWorkers[indexWorker].getActualBox();

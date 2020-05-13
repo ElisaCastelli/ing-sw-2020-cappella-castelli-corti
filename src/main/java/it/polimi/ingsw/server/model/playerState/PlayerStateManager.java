@@ -70,7 +70,9 @@ public class PlayerStateManager {
             setCurrentState(win);
         }
     }
-
+    public boolean isPlaying(){
+        return currentState==isPlaying;
+    }
     public boolean moveWorker (Worker worker, Box pos ){
         return currentState.moveWorker(worker,pos);
     }
