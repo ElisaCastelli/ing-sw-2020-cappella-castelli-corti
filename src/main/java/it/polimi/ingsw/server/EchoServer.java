@@ -12,21 +12,22 @@ import java.util.ArrayList;
 
 public class EchoServer {
     private static ArrayList<ServerHandler> clientArray = new ArrayList<>();
+    private static ArrayList<ServerHandler> clientWaiting = new ArrayList<>();
     private static boolean notGameStarted = false;
-    private static boolean firstTime = true;
     private static boolean notGameFinished = false;
     private static int portNumber;
     private static VirtualView virtualView;
-    private static int nPlayer=1;
+    private static int nPlayer=0;
 
     public EchoServer(int portNumber){
         EchoServer.portNumber =portNumber;
     }
 
-    public static synchronized void acceptClient(ServerSocket serverSocket) throws IOException {
+    public static void acceptClient(ServerSocket serverSocket) throws IOException {
 
         Socket clientSocket = new Socket();
         try{
+            //si ferma qua ad aspettare un nuovo client
             clientSocket = serverSocket.accept();
             System.out.println("Un client si è connesso" + clientSocket);
 
@@ -39,7 +40,7 @@ public class EchoServer {
             clientArray.add(serverHandler);
 
             // Invoking the start() method
-            serverHandler.setIndexArrayDiClient(clientArray.size());
+            serverHandler.setIndexArrayDiClient(clientArray.size()-1);
             serverHandler.start();
 
         }catch(Exception e){
@@ -48,13 +49,18 @@ public class EchoServer {
         }
     }
 
-    public static synchronized void sendBroadCast(ObjMessage objMessage){
+    public static void sendBroadCast(ObjMessage objMessage){
         for(ServerHandler serverHandler : clientArray){
             serverHandler.sendUpdate(objMessage);
         }
     }
+    public static void send(ObjMessage objMessage,int indexArrayClient){
+        clientArray.get(indexArrayClient).sendUpdate(objMessage);
+    }
 
-    public static synchronized void initializeGame(){
+
+
+    public static void initializeGame(){
         if(!notGameStarted){
             initializePlayer();
             waitForPlayer();
@@ -64,12 +70,12 @@ public class EchoServer {
         }
     }
 
-    public static synchronized void initializePlayer(){
+    public static void initializePlayer(){
         initializeClientArray();
         sendBroadCast(new AskPlayerEvent());
     }
 
-    public static synchronized void initializeClientArray(){
+    public static void initializeClientArray(){
         for(ServerHandler clientHandlers : clientArray){
             clientHandlers.setClientArray(clientArray);
         }
@@ -81,6 +87,35 @@ public class EchoServer {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+        }
+        virtualView.setReady(false);
+    }
+    //non lo cacate è per dopo se vogliamo fare la lobby, non è mai richiamato
+    public void clientWaiting(ServerSocket serverSocket) throws IOException {
+        while(!virtualView.isReady()){
+
+            Socket clientSocket = new Socket();
+            try{
+                //si ferma qua ad aspettare un nuovo client
+                clientSocket = serverSocket.accept();
+                System.out.println("Un client si è connesso" + clientSocket);
+
+                ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+
+                System.out.println("Assigning new thread for this client");
+
+                ServerHandler serverHandler = new ServerHandler(clientSocket, oos, ois, virtualView);
+                clientWaiting.add(serverHandler);
+
+                // Invoking the start() method
+                serverHandler.setIndexArrayDiClient(clientWaiting.size()-1);
+                serverHandler.start();
+
+            }catch(Exception e){
+                clientSocket.close();
+                System.out.println("Errore");
             }
         }
         virtualView.setReady(false);
@@ -97,11 +132,12 @@ public class EchoServer {
 
             if(clientArray.size()==0){
                 acceptClient(serverSocket);
+                waitForPlayer();
+                nPlayer=clientArray.get(0).getNPlayer();
             }
-            while (clientArray.size() != clientArray.get(0).getNPlayer()) {
+            while (clientArray.size() != nPlayer) {
                 acceptClient(serverSocket);
             }
-            nPlayer=clientArray.get(0).getNPlayer();
             initializeGame();
         }
     }

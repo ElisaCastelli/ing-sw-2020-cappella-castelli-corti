@@ -1,19 +1,19 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.HeartBeatServer;
 import it.polimi.ingsw.network.User;
 import it.polimi.ingsw.network.events.AskNPlayerEvent;
+import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjInitialize;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorServer;
-import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.gameComponents.Player;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-
 public class ServerHandler extends Thread{
 
+    private final Object LOCK=new Object();
     private ArrayList<ServerHandler> clientArray;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
@@ -31,11 +31,8 @@ public class ServerHandler extends Thread{
         clientArray=new ArrayList<>();
     }
 
-    public String getUserName(){
+    public synchronized String getUserName(){
         return user.getName();
-    }
-    public ArrayList<ServerHandler> getClientArray() {
-        return clientArray;
     }
 
     public int getIndexClient(int indexPlayer){
@@ -55,9 +52,13 @@ public class ServerHandler extends Thread{
         return indexClient;
     }
 
+    public ArrayList<ServerHandler> getClientArray() {
+        return clientArray;
+    }
     public void setClientArray(ArrayList<ServerHandler> clientArray){
         this.clientArray=clientArray;
     }
+
     public void setClientName(String name){
         user.setName(name);
     }
@@ -82,8 +83,8 @@ public class ServerHandler extends Thread{
         return virtualView;
     }
 
-    public void setIndexArrayDiClient(int indiceArrayDiClient) {
-        user.setIndexArrayDiClient(indiceArrayDiClient);
+    public synchronized void setIndexArrayDiClient(int indexArrayDiClient) {
+        user.setIndexArrayDiClient(indexArrayDiClient);
     }
 
     public User getUser(){
@@ -121,7 +122,7 @@ public class ServerHandler extends Thread{
     public void run(){
         System.out.println("Sono in ascolto");
         //se sono il primo ad essermi connesso mando un messaggio al client per sapere il numero di giocatori
-        if(user.getIndexArrayDiClient()==1){
+        if(user.getIndexArrayDiClient()==0){
             sendUpdate(new AskNPlayerEvent());
         }else{
             listening();
@@ -143,17 +144,24 @@ public class ServerHandler extends Thread{
     }
 
     public void sendUpdateBroadcast(ObjMessage objMessage) {
-        try {
-            for(int index=0; index<clientArray.size();index++){
-                clientArray.get(index).getOutputStream().writeObject(objMessage);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("sto cercando di inviare un messaggio a tutti");
+       synchronized (LOCK){
+           try {
+               System.out.println("ci sono riusito");
+               for (ServerHandler serverHandler : clientArray) {
+                   serverHandler.getOutputStream().writeObject(objMessage);
+                   outputStream.flush();
+               }
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
+
     }
     public void sendUpdate(ObjMessage objMessage) {
         try {
             outputStream.writeObject(objMessage);
+            outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

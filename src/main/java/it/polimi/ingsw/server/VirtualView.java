@@ -42,13 +42,21 @@ public class VirtualView implements Observer {
         return ackCounter;
     }
 
-    public synchronized void incCounter() {
+    public synchronized void incCounterOpponent() {
         ackCounter++;
-        if(ackCounter==gameModel.getNPlayers()){
+        if(ackCounter == (gameModel.getNPlayers()-1)){
             ready=true;
             ackCounter=0;
         }
     }
+    public synchronized void incCounter() {
+        ackCounter++;
+        if(ackCounter == gameModel.getNPlayers()){
+            ready=true;
+            ackCounter=0;
+        }
+    }
+
 
     @Override
     public void subscribe() {

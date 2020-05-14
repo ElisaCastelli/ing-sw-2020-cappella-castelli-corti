@@ -10,7 +10,7 @@ import it.polimi.ingsw.network.events.CloseConnectionClientEvent;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.ServerHandler;
 
-import java.io.ObjectOutputStream;
+
 import java.util.ArrayList;
 
 public class VisitorServer {
@@ -24,6 +24,7 @@ public class VisitorServer {
     public void visit(ObjNumPlayer objNumPlayer){
         int nPlayer=serverHandler.getVirtualView().setNPlayers(objNumPlayer.getnPlayer()).getnPlayer();
         serverHandler.setnPlayer(nPlayer);
+        serverHandler.getVirtualView().setReady(true);
     }
 
     public void visit(ObjPlayer objPlayer){
@@ -33,45 +34,48 @@ public class VisitorServer {
     }
 
 
-    public synchronized void visit(AckStartGame ackStartGame) {
+    public void visit(AckStartGame ackStartGame) {
         serverHandler.setIndexPlayer(serverHandler.getVirtualView().searchByName(serverHandler.getUserName()));
         serverHandler.sendUpdate(new ObjState(serverHandler.getIndexPlayer(),0));
     }
 
-    public synchronized void visit(ObjCard objCard) throws Exception {
-        int indexPlayer=serverHandler.getIndexPlayer();
-        if(objCard.getCardsTemp().size()>0){
-            System.out.println("Imposto carte temporanee");
-            AskCard tempCard = serverHandler.getVirtualView().setTempCard(objCard.getCardsTemp());
-            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-            serverHandler.sendUpdateBroadcast(objState);
-            //int indexRec= serverHandler.getIndexClient((indexPlayer+1));
-            //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
-            serverHandler.sendUpdateBroadcast(tempCard);
-        }else{
-            System.out.println("Carta scelta");
+    public void visit(ObjTempCard objTempCard){
+        System.out.println("Imposto carte temporanee");
+        AskCard tempCard = serverHandler.getVirtualView().setTempCard(objTempCard.getCardsTemp());
+        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+        serverHandler.sendUpdateBroadcast(objState);
+        //ho aggiunto uesta riga e il corrispondente incremento degli ack sullo Ackstate
+        serverHandler.waitForPlayer();
 
-            AskCard askcard= serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
-            serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
-            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-            serverHandler.sendUpdateBroadcast(objState);
-            if(askcard.getCardTemp().size() != 0){
-                //int indexRec= serverHandler.getIndexClient(indexPlayer+1);
-                //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
-                serverHandler.sendUpdateBroadcast(askcard);
-            }
-            else{
-                ObjInitialize objInitialize= serverHandler.gameData();
-                serverHandler.sendUpdateBroadcast(objInitialize);
-            }
+        serverHandler.sendUpdateBroadcast(tempCard);
+    }
+
+    public void visit(ObjCard objCard) throws Exception {
+        System.out.println("Ricevo objCard");
+        int indexPlayer=serverHandler.getIndexPlayer();
+        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+        AskCard askcard = serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
+        serverHandler.sendUpdateBroadcast(objState);
+        //ho aggiunto uesta riga e il corrispondente incremento degli ack sullo Ackstate
+        serverHandler.waitForPlayer();
+
+        serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
+        if(askcard.getCardTemp().size() != 0){
+            serverHandler.sendUpdateBroadcast(askcard);
+        }
+        else{
+            System.out.println("Invio board");
+            ObjInitialize objInitialize= serverHandler.gameData();
+            serverHandler.sendUpdateBroadcast(objInitialize);
         }
     }
 
     public void visit(AckState ackState) {
-
+        serverHandler.getVirtualView().incCounterOpponent();
+        System.out.println("stoca**o di "+ serverHandler.getName());
     }
 
-    public synchronized void visit(AckPlayer ackPlayer) throws Exception {
+    public void visit(AckPlayer ackPlayer) throws Exception {
         serverHandler.getVirtualView().incCounter();
         serverHandler.waitForPlayer();
         ArrayList<String> cards= serverHandler.getVirtualView().getCards();
@@ -91,4 +95,40 @@ public class VisitorServer {
     public void visit(CloseConnectionClientEvent closeConnectionClientEvent){
         serverHandler.close();
     }
+
+    //COMMENTO IL VECCHIO METODO DI OBJCARD
+    /*public void visit(ObjCard objCard) throws Exception {
+        int indexPlayer=serverHandler.getIndexPlayer();
+
+        if(objCard.getCardsTemp().size()>0 && objCard.getCardChose()==-1){
+            System.out.println("Imposto carte temporanee");
+            AskCard tempCard = serverHandler.getVirtualView().setTempCard(objCard.getCardsTemp());
+            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+            serverHandler.sendUpdateBroadcast(objState);
+            serverHandler.waitForPlayer();
+
+            //int indexRec= serverHandler.getIndexClient((indexPlayer+1));
+            //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
+            serverHandler.sendUpdateBroadcast(tempCard);
+        }else{
+            System.out.println("Carta scelta");
+
+            AskCard askcard= serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
+            serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
+            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+            serverHandler.sendUpdateBroadcast(objState);
+            serverHandler.waitForPlayer();
+
+
+            if(askcard.getCardTemp().size() != 0){
+                //int indexRec= serverHandler.getIndexClient(indexPlayer+1);
+                //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
+                serverHandler.sendUpdateBroadcast(askcard);
+            }
+            else{
+                ObjInitialize objInitialize= serverHandler.gameData();
+                serverHandler.sendUpdateBroadcast(objInitialize);
+            }
+        }
+    }*/
 }

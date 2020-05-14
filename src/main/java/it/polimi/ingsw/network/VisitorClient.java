@@ -68,27 +68,29 @@ public class VisitorClient {
             clientHandler.sendMessage(new AckState());
         }
     }
-
     public void visit(Ask3CardsEvent ask3CardsEvent) {
         if(clientHandler.getView().isPlaying()) {
             ArrayList<Integer> cardTemp = clientHandler.getView().ask3Card(ask3CardsEvent.getCardArray());
             System.out.println("Carte scelte");
-            ObjCard objCard = new ObjCard(cardTemp);
+            ObjTempCard objCard = new ObjTempCard(cardTemp);
             clientHandler.sendMessage(objCard);
         }
         else{
             System.out.println("Stanno scegliendo le tre carte");
+            //AGGIUNGO QUESTA RIGA COME RITORNO DI STATO CAMBIATO
+            clientHandler.sendMessage(new AckState());
         }
     }
-
-    public void visit(AskCard askCard){
-        if(clientHandler.getView().isPlaying()) {
-            int card=clientHandler.getView().askCard(askCard.getCardTemp());
-            ObjCard objCard= new ObjCard(card);
+    public void visit(AskCard askCard) {
+        if (clientHandler.getView().isPlaying()) {
+            int card = clientHandler.getView().askCard(askCard.getCardTemp());
+            ObjCard objCard = new ObjCard(card);
+            System.out.println("invio carta scelta al server");
             clientHandler.sendMessage(objCard);
-        }
-        else {
+        } else {
             System.out.println("Un avversario sta scegliendo una carta");
+            //AGGIUNGO QUESTA RIGA COME RITORNO DI STATO CAMBIATO
+            clientHandler.sendMessage(new AckState());
         }
     }
 

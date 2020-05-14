@@ -84,7 +84,7 @@ public class Game implements GameModel{
     public void goPlayingNext(){
         int indexPlay = whoIsPlaying();
         players.get(indexPlay).goWaiting();
-        if(indexPlay==nPlayers){
+        if(indexPlay==nPlayers-1){
             players.get(0).goPlay();
         }
         else{
