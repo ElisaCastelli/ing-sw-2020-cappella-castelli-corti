@@ -9,14 +9,14 @@
 
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
-| Basic rules | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
-| Complete rules | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
-| Socket | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| Basic rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
+| Complete rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
+| Socket | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
 | GUI | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 | CLI | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 | Multiple games | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 | Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
-| Advanced Gods | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| Advanced Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 
 <!--
