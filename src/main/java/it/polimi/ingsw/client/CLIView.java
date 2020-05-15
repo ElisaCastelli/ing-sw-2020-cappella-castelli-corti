@@ -75,7 +75,7 @@ public class CLIView extends View {
     }
 
     @Override
-    public synchronized ArrayList<Integer> ask3Card(ArrayList<String> cards) {
+    public ArrayList<Integer> ask3Card(ArrayList<String> cards) {
         ArrayList<Integer> cardTemp= new ArrayList<>();
         boolean[] scelte= new boolean[cards.size()];
         for(int i=0;i<cards.size();i++){
@@ -98,7 +98,7 @@ public class CLIView extends View {
 
 
     @Override
-    public  synchronized int askCard(ArrayList<String> cards) {
+    public int askCard(ArrayList<String> cards) {
         boolean choose=false;
         int scelta=4;
         for(int index=0;index<cards.size();index++){

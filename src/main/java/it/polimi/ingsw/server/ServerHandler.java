@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.network.HeartBeatServer;
+//import it.polimi.ingsw.network.HeartBeatServer;
 import it.polimi.ingsw.network.User;
 import it.polimi.ingsw.network.events.AskNPlayerEvent;
-import it.polimi.ingsw.network.objects.ObjHeartBeat;
+//import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjInitialize;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorServer;
@@ -144,10 +144,10 @@ public class ServerHandler extends Thread{
     }
 
     public void sendUpdateBroadcast(ObjMessage objMessage) {
-        System.out.println("sto cercando di inviare un messaggio a tutti");
+        System.out.println("----> sto cercando di inviare un messaggio a tutti");
        synchronized (LOCK){
            try {
-               System.out.println("ci sono riusito");
+               System.out.println("----> ci sono riusito");
                for (ServerHandler serverHandler : clientArray) {
                    serverHandler.getOutputStream().writeObject(objMessage);
                    outputStream.flush();

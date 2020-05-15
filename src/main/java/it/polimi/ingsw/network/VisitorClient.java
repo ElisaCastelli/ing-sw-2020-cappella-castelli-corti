@@ -50,24 +50,37 @@ public class VisitorClient {
         clientHandler.sendMessage(ack);
     }
 
-
-
     public void visit(ObjState objState){
+        //se è la prima volta entra e ti setti il valore
         if(clientHandler.getView().getIndexPlayer() == -1){
             clientHandler.getView().setIndexPlayer(objState.getIndexPlayer());
             System.out.println("sto settando l'indice del player quando inizia il gioco: "+clientHandler.getView().getIndexPlayer());
-            clientHandler.sendMessage(new AckPlayer());
-        }
-        if(clientHandler.getView().getIndexPlayer()==objState.getCurrentPlayer()){
-            clientHandler.getView().setPlaying(true);
-            System.out.println("Sto giocando");
-            clientHandler.sendMessage(new AckState());
-        }else{
-            clientHandler.getView().setPlaying(false);
-            System.out.println("Aspetta il tuo turno oh");
-            clientHandler.sendMessage(new AckState());
+            //qua arrivavano tutti e tre perchè si dovevano settare il valore iniziale
+            //se sei anche il primo che deve giocare
+            if(clientHandler.getView().getIndexPlayer()==objState.getCurrentPlayer()) {
+                clientHandler.getView().setPlaying(true);
+                System.out.println("Devo giocare");
+                //invia un ackplayer(ne dovrà arrivare solo uno)
+                clientHandler.sendMessage(new AckPlayer());
+            }else{
+                clientHandler.getView().setPlaying(false);
+                System.out.println("Devo aspettare il mio turno");
+                //altrimenti mandi solo un ack(ne dovranno arrivare 2/3)
+                clientHandler.sendMessage(new AckState());
+            }
+        }else {//se non è la prima volta che ti arriva uno state
+            if (clientHandler.getView().getIndexPlayer() == objState.getCurrentPlayer()) {
+                clientHandler.getView().setPlaying(true);
+                System.out.println("Sto giocando");
+                clientHandler.sendMessage(new AckState());
+            } else {
+                clientHandler.getView().setPlaying(false);
+                System.out.println("Aspetta il tuo turno oh");
+                clientHandler.sendMessage(new AckState());
+            }
         }
     }
+
     public void visit(Ask3CardsEvent ask3CardsEvent) {
         if(clientHandler.getView().isPlaying()) {
             ArrayList<Integer> cardTemp = clientHandler.getView().ask3Card(ask3CardsEvent.getCardArray());

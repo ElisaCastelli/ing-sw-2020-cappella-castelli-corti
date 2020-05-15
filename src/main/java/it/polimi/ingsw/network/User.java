@@ -8,51 +8,51 @@ public class User {
     private int indexPlayer;
     private boolean initialized;
 
-    public synchronized int getIndexArrayDiClient() {
+    public int getIndexArrayDiClient() {
         return indexArrayDiClient;
     }
 
-    public synchronized void setIndexArrayDiClient(int indexArrayDiClient) {
+    public void setIndexArrayDiClient(int indexArrayDiClient) {
         this.indexArrayDiClient = indexArrayDiClient;
     }
 
-    public synchronized String getNameCard() {
+    public String getNameCard() {
         return nameCard;
     }
 
-    public synchronized void setNameCard(String nameCard) {
+    public void setNameCard(String nameCard) {
         this.nameCard = nameCard;
     }
 
-    public synchronized String getName() {
+    public String getName() {
         return name;
     }
 
-    public synchronized void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public synchronized int getnPlayer() {
+    public int getnPlayer() {
         return nPlayer;
     }
 
-    public synchronized void setnPlayer(int nPlayer) {
+    public void setnPlayer(int nPlayer) {
         this.nPlayer = nPlayer;
     }
 
-    public synchronized int getIndexPlayer() {
+    public int getIndexPlayer() {
         return indexPlayer;
     }
 
-    public synchronized void setIndexPlayer(int indexPlayer) {
+    public void setIndexPlayer(int indexPlayer) {
         this.indexPlayer = indexPlayer;
     }
 
-    public synchronized boolean isInitialized() {
+    public boolean isInitialized() {
         return initialized;
     }
 
-    public synchronized void setInitialized(boolean initialized) {
+    public void setInitialized(boolean initialized) {
         this.initialized = initialized;
     }
 }

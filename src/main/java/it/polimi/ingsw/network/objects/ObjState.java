@@ -5,6 +5,8 @@ import it.polimi.ingsw.network.VisitorServer;
 
 public class ObjState extends ObjMessage{
 
+    private static final long serialVersionUID = 1L;
+
     int indexPlayer;
     int currentPlayer;
 

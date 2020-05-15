@@ -41,24 +41,24 @@ public class VisitorServer {
 
     public void visit(ObjTempCard objTempCard){
         System.out.println("Imposto carte temporanee");
+        serverHandler.waitForPlayer();
         AskCard tempCard = serverHandler.getVirtualView().setTempCard(objTempCard.getCardsTemp());
         ObjState objState = serverHandler.getVirtualView().goPlayingNext();
         serverHandler.sendUpdateBroadcast(objState);
         //ho aggiunto uesta riga e il corrispondente incremento degli ack sullo Ackstate
         serverHandler.waitForPlayer();
-
         serverHandler.sendUpdateBroadcast(tempCard);
     }
 
     public void visit(ObjCard objCard) throws Exception {
         System.out.println("Ricevo objCard");
+        serverHandler.waitForPlayer();
         int indexPlayer=serverHandler.getIndexPlayer();
         ObjState objState = serverHandler.getVirtualView().goPlayingNext();
         AskCard askcard = serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
         serverHandler.sendUpdateBroadcast(objState);
         //ho aggiunto uesta riga e il corrispondente incremento degli ack sullo Ackstate
         serverHandler.waitForPlayer();
-
         serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
         if(askcard.getCardTemp().size() != 0){
             serverHandler.sendUpdateBroadcast(askcard);
@@ -76,16 +76,14 @@ public class VisitorServer {
     }
 
     public void visit(AckPlayer ackPlayer) throws Exception {
-        serverHandler.getVirtualView().incCounter();
         serverHandler.waitForPlayer();
         ArrayList<String> cards= serverHandler.getVirtualView().getCards();
-        Ask3CardsEvent askCards = new Ask3CardsEvent(cards);
-        serverHandler.sendUpdateBroadcast(askCards);
-
-        /*int indexRec = serverHandler.getIndexClient((0));
-        ServerHandler receiver = serverHandler.getClientArray().get(indexRec);
-        receiver.getOutputStream().reset();
-        receiver.sendUpdate(askCards);*/
+        Ask3CardsEvent ask3Cards = new Ask3CardsEvent(cards);
+        serverHandler.sendUpdateBroadcast(ask3Cards);
+    /*int indexRec = serverHandler.getIndexClient((0));
+    ServerHandler receiver = serverHandler.getClientArray().get(indexRec);
+    receiver.getOutputStream().reset();
+    receiver.sendUpdate(askCards);*/
     }
 
     public void visit(NackState nackState){

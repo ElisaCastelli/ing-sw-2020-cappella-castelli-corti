@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class AskCard extends Event{
 
+    private static final long serialVersionUID = -984771837456293048L;
+
     ArrayList<String> cardTemp;
 
     public AskCard(ArrayList<String> cardTemp){

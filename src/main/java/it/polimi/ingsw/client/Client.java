@@ -27,7 +27,7 @@ public class Client {
             ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
-            ClientHandler clientHandler = new ClientHandler(inputStream, outputStream, clientSocket, new CLIView());
+            ClientHandler clientHandler = new ClientHandler(inputStream, outputStream, clientSocket);
             clientHandler.listening();
         } catch (IOException e) {
             e.printStackTrace();

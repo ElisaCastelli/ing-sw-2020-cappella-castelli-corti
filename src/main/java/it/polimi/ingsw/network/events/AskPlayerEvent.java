@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
 public class AskPlayerEvent extends Event{
+
     @Override
     public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();

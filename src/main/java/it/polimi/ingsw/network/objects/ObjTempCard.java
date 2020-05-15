@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class ObjTempCard extends ObjMessage{
 
+    private static final long serialVersionUID = -3829471843029385138L;
+
     private ArrayList<Integer> cardsTemp;
     public ObjTempCard(ArrayList<Integer> cardsTemp){
         this.cardsTemp=cardsTemp;

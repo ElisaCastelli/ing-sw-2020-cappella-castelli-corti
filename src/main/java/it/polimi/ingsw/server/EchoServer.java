@@ -24,7 +24,6 @@ public class EchoServer {
     }
 
     public static void acceptClient(ServerSocket serverSocket) throws IOException {
-
         Socket clientSocket = new Socket();
         try{
             //si ferma qua ad aspettare un nuovo client

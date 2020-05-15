@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.network.HeartBeatClient;
-import it.polimi.ingsw.network.objects.ObjHeartBeat;
+//import it.polimi.ingsw.network.HeartBeatClient;
+//import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorClient;
 
@@ -14,14 +14,13 @@ public class ClientHandler {
     private final ObjectInputStream inputStream;
     private final ObjectOutputStream outputStream;
     private final Socket socket;
-    private final View view;
+    private View view;
     private final Object LOCK=new Object();
 
-    public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket, View view) {
+    public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket) {
         this.inputStream = inputStream;
         this.outputStream = outputStream;
         this.socket = socket;
-        this.view = view;
     }
 
     public ObjectInputStream getInputStream() {
@@ -37,6 +36,7 @@ public class ClientHandler {
     }
 
     public void listening() {
+        view = new CLIView();
         while(true){
             ObjMessage objMessage = null;
             try {
@@ -49,10 +49,10 @@ public class ClientHandler {
     }
 
     public void sendMessage(ObjMessage objMessage){
-        System.out.println("sto cercando di inviare un messaggio");
+        System.out.println("----> sto cercando di inviare un messaggio");
         synchronized (LOCK){
             try {
-                System.out.println("ci sono riuscito");
+                System.out.println("----> ci sono riuscito");
                 outputStream.writeObject(objMessage);
                 outputStream.flush();
             } catch (IOException e) {
