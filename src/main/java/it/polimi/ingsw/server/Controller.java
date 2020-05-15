@@ -3,10 +3,8 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
-import it.polimi.ingsw.server.model.god.God;
 
 import java.util.ArrayList;
 
@@ -22,7 +20,6 @@ public class Controller  {
     }
     public void addPlayer(String name, int age){
         gameModel.addPlayer(name, age);
-        gameModel.notifyAddPlayer();
     }
 
     public AskCard setTempCard(ArrayList<Integer> threeCard) {
@@ -30,10 +27,12 @@ public class Controller  {
         return gameModel.notifyTempCard();
     }
 
+    public void startGame(){
+        gameModel.startGame();
+    }
 
     public AskCard setCard(int playerIndex, int godCard) throws Exception {
         gameModel.chooseCard(playerIndex, godCard);
-        gameModel.notifyAddCard(playerIndex);
         return gameModel.notifyTempCard();
     }
 
@@ -42,17 +41,15 @@ public class Controller  {
         return gameModel.notifyWhoIsPlaying();
     }
 
-    public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
-        boolean init= gameModel.initializeWorker(indexPlayer, indexWorker, box);
+    public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
+        boolean init= gameModel.initializeWorker(indexPlayer, box1, box2);
         gameModel.notifyAddWorker();
         return init;
     }
-    public void startGame(){
-        gameModel.startGame();
-    }
-    public void startTurn(int indexPlayer) {
-        gameModel.startTurn(indexPlayer);
-    }
+
+
+
+
     public void setBoxReachable(int indexPlayer, int indexWorker) {
         gameModel.setBoxReachable(indexPlayer, indexWorker);
         gameModel.notifySetReachable();
@@ -71,10 +68,6 @@ public class Controller  {
         gameModel.notifyBuildBlock();
         return built;
     }
-    public void finishTurn(int indexPlayer) {
-        gameModel.finishTurn(indexPlayer);
-    }
-
 
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker) {

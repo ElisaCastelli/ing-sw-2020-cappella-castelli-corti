@@ -9,6 +9,7 @@ public class Client {
     private static InetAddress ip;
     private static int portNumber;
 
+
     public Client(int portNumber) throws UnknownHostException {
         ip = InetAddress.getByName("localhost");
         Client.portNumber =portNumber;

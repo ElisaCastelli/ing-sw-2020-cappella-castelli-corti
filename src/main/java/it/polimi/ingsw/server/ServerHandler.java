@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 //import it.polimi.ingsw.network.HeartBeatServer;
-import it.polimi.ingsw.network.User;
+import it.polimi.ingsw.network.ClientUser;
 import it.polimi.ingsw.network.events.AskNPlayerEvent;
 //import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjInitialize;

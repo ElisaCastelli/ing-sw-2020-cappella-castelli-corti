@@ -78,12 +78,12 @@ public class Player {
 
     /**
      * This method sets the first position of a worker
-     * @param index is the number of the worker i want to set
-     * @param requestedBox is the box where i want to set the worker
+     * @param box1 is the number of the worker i want to set
+     * @param box2 is the box where i want to set the worker
      * @return true if initialization is successful, else false
      */
-    public boolean initializeWorker( int index , Box requestedBox){
-        return myWorkers[index].initializePos(requestedBox);
+    public boolean initializeWorker( Box box1, Box box2){
+        return myWorkers[0].initializePos(box1) && myWorkers[1].initializePos(box2);
     }
 
     public void goPlay(){

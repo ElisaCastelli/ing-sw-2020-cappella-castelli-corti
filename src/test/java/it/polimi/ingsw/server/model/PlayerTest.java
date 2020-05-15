@@ -23,23 +23,23 @@ class PlayerTest {
         assertEquals(21,pTest.getAge());
     }
 
-    @Test
+    /*@Test
     void getWorkerBox() {
         Worker w = new Worker(1,Game.COLOR.BLU);
         pTest.initializeWorker(1,boardTest.getBox(0,0));
         assertEquals(boardTest.getBox(0,0),pTest.getWorkerBox(1));
-    }
+    }*/
 
 
-    @Test
+   /* @Test
     void initializeWorker() {
         int index=0;
         Box b = boardTest.getBox(0,0);
         pTest.initializeWorker(index,b);
         assertEquals(b,pTest.getWorkerBox(index));
-    }
+    }*/
 
-    @Test
+    /*@Test
     void setPossibleMove() {
         boardTest.clear();
         pTest.initializeWorker(1,boardTest.getBox(1,1));
@@ -47,9 +47,9 @@ class PlayerTest {
         for(int index=0; index<8; index++){
             assertTrue(pTest.getWorkerBox(1).getBoxesNextTo().get(index).isReachable());
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void setPossibleBuild() {
         boardTest.clear();
         pTest.initializeWorker(1,boardTest.getBox(1,1));
@@ -60,9 +60,9 @@ class PlayerTest {
 
         pTest.setPossibleBuild(1);
         assertFalse(pTest.getWorkerBox(1).getBoxesNextTo().get(0).isReachable());
-    }
+    }*/
 
-    @Test
+   /* @Test
     void playWorker() {
         boardTest.clear();
         pTest.goPlay();
@@ -139,5 +139,5 @@ class PlayerTest {
         boardTest.getBox(1,0).build();
         assertFalse(pTest.checkBuilding(0));
         assertTrue(pTest.checkBuilding(1));
-    }
+    }*/
 }

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client;
 
-//import it.polimi.ingsw.network.HeartBeatClient;
-//import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorClient;
 

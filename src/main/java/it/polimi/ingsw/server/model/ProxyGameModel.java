@@ -7,9 +7,7 @@ import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
 import it.polimi.ingsw.server.model.gameState.GameState;
-import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.Observer;
-import it.polimi.ingsw.server.model.playerState.PlayerState;
 
 import java.util.ArrayList;
 
@@ -22,10 +20,13 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
+    public void subscribeObserver(Observer observer) {
+        this.observer=observer;
+    }
+    @Override
     public Board getBoard(){
         return gameModel.getBoard();
     }
-
     @Override
     public ArrayList<Player> getPlayerArray(){
         return gameModel.getPlayerArray();
@@ -38,23 +39,19 @@ public class ProxyGameModel implements GameModel, Subject{
     public void setNPlayers(int nPlayers) {
         gameModel.setNPlayers(nPlayers);
     }
-
     @Override
     public void addPlayer(String name, int age) {
         gameModel.addPlayer(name, age);
     }
-
     @Override
     public int searchByName(String name){
         return gameModel.searchByName(name);
 
     }
-
     @Override
     public ArrayList<String> getCards() throws Exception {
         return gameModel.getCards();
     }
-
     @Override
     public ArrayList<String> getTempCard(){
         return gameModel.getTempCard();
@@ -63,8 +60,10 @@ public class ProxyGameModel implements GameModel, Subject{
     public void chooseTempCard(ArrayList<Integer> tempCard){
         gameModel.chooseTempCard(tempCard);
     }
-
-
+    @Override
+    public void chooseCard(int playerIndex, int godCard) throws Exception {
+        gameModel.chooseCard(playerIndex, godCard);
+    }
     @Override
     public void goPlayingNext(){
         gameModel.goPlayingNext();
@@ -73,49 +72,22 @@ public class ProxyGameModel implements GameModel, Subject{
     public int whoIsPlaying(){
         return gameModel.whoIsPlaying();
     }
-
-
     @Override
     public ArrayList<String> getCardUsed(){
         return gameModel.getCardUsed();
     }
-
-    @Override
-    public void chooseCard(int playerIndex, int godCard) throws Exception {
-        gameModel.chooseCard(playerIndex, godCard);
-    }
-
-    @Override
-    public God getPlayerCard(int indexPlayer){
-        return gameModel.getPlayerCard(indexPlayer);
-    }
-
-
     @Override
     public void startGame(){
         gameModel.startGame();
     }
-
-
-
-
-
     @Override
-    public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
-        return gameModel.initializeWorker(indexPlayer, indexWorker, box);
-    }
-
-    @Override
-    public GameState getState(){
-        return gameModel.getState();
+    public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
+        return gameModel.initializeWorker(indexPlayer, box1, box2);
     }
 
 
 
-    @Override
-    public void startTurn(int indexPlayer) {
-        gameModel.startTurn(indexPlayer);
-    }
+
 
     @Override
     public boolean canMove(int indexPlayer) {
@@ -148,11 +120,6 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void finishTurn(int indexPlayer) {
-        gameModel.finishTurn(indexPlayer);
-    }
-
-    @Override
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker) {
         return gameModel.checkWin(indexPlayer, startBox, indexWorker);
     }
@@ -178,38 +145,33 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void subscribeObserver(Observer observer) {
-        this.observer=observer;
+    public GameState getState(){
+        return gameModel.getState();
     }
+
+
+
+
+
+
     @Override
     public ObjNumPlayer notifySetNPlayers(){
         return observer.updateNPlayer();
     }
-    @Override
-    public void notifyAddPlayer(){
-        observer.updateAddPlayer();
-    }
-
-    @Override
+   @Override
     public AskCard notifyTempCard(){
         return observer.updateTempCard();
     }
-    @Override
-    public void notifyAddCard(int indexPlayer){
-        observer.updatePlayerCard(indexPlayer);
-    }
-
     @Override
     public void notifyAddWorker(){
         observer.updateInizializaWorker();
         observer.updateBoard();
     }
-
-
     @Override
     public ObjState notifyWhoIsPlaying(){
         return observer.updateWhoIsPlaying();
     }
+
 
     @Override
     public void notifySetReachable(){

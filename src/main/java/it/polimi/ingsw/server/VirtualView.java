@@ -4,23 +4,19 @@ import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.objects.ObjCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
-import it.polimi.ingsw.server.model.gameState.GameState;
-import it.polimi.ingsw.server.model.god.God;
-import it.polimi.ingsw.server.model.playerState.PlayerState;
 
 import java.util.ArrayList;
 
 public class VirtualView implements Observer {
 
-    ProxyGameModel gameModel;
-    Controller controller;
-    boolean ready;
-    int ackCounter;
+    private ProxyGameModel gameModel;
+    private Controller controller;
+    private boolean ready;
+    private int ackCounter;
 
     public VirtualView() throws Exception {
         gameModel= new ProxyGameModel();
@@ -29,19 +25,15 @@ public class VirtualView implements Observer {
         ready=false;
         ackCounter=0;
     }
-
     public synchronized boolean isReady() {
         return ready;
     }
-
     public synchronized void setReady(boolean ready) {
         this.ready = ready;
     }
-
     public synchronized int getAckCounter() {
         return ackCounter;
     }
-
     public synchronized void incCounterOpponent() {
         ackCounter++;
         if(ackCounter == (gameModel.getNPlayers()-1)){
@@ -57,16 +49,13 @@ public class VirtualView implements Observer {
         }
     }
 
-
     @Override
     public void subscribe() {
         gameModel.subscribeObserver(this);
     }
-
     public ArrayList<Player> getPlayerArray(){
         return gameModel.getPlayerArray();
     }
-
     public ObjNumPlayer setNPlayers(int nPlayers){
         return controller.setNPlayers(nPlayers);
     }
@@ -74,8 +63,6 @@ public class VirtualView implements Observer {
     public ObjNumPlayer updateNPlayer() {
         return new ObjNumPlayer(gameModel.getNPlayers());
     }
-
-
     public synchronized void addPlayer(String name, int age){
         controller.addPlayer(name, age);
         ackCounter++;
@@ -84,81 +71,48 @@ public class VirtualView implements Observer {
             ackCounter=0;
         }
     }
-
     public int searchByName(String name){
         return gameModel.searchByName(name);
     }
-
-    //TODO da togliere
-    @Override
-    public void updateAddPlayer() {
-        System.out.println("Giocatore aggiunto");
-    }
-
     public ArrayList<String> getCards() throws Exception {
         return gameModel.getCards();
     }
-
-    public AskCard setTempCard(ArrayList<Integer> tempCard){
+    public synchronized AskCard setTempCard(ArrayList<Integer> tempCard){
         return controller.setTempCard(tempCard);
     }
-
-    public AskCard setCard(int playerIndex, int godCard) throws Exception {
+    public synchronized AskCard setCard(int playerIndex, int godCard) throws Exception {
         return controller.setCard(playerIndex, godCard);
     }
-
     @Override
     public AskCard updateTempCard(){
         return new AskCard(gameModel.getTempCard());
     }
-
-
-
-
-
-
-    public ArrayList<String> getTempCard(){
-       return gameModel.getTempCard();
+    public synchronized ObjState goPlayingNext(){
+        return controller.goPlayingNext();
     }
-
-
-
-
-
-    public ArrayList<String> getCardUsed(){
-        return gameModel.getCardUsed();
+    @Override
+    public ObjState updateWhoIsPlaying() {
+        ObjState objState = new ObjState();
+        objState.setCurrentPlayer(gameModel.whoIsPlaying());
+        return objState;
     }
     public void startGame(){
         controller.startGame();
     }
-
-    @Override
-    public void updatePlayerCard(int indexPlayer){
-        System.out.println("Carta aggiunta");
-    }
-
     @Override
     public Board updateBoard(){
         return gameModel.getBoard();
     }
-
-    public boolean initializeWorker(int indexPlayer, int indexWorker, Box box) {
-        return controller.initializeWorker(indexPlayer, indexWorker, box);
+    public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
+        return controller.initializeWorker(indexPlayer, box1, box2);
     }
-
     @Override
     public void updateInizializaWorker(){
         System.out.println("Ho inizializzato la pedina");
     }
 
 
-    public void setStartState(int indexPlayer){
-        controller.startTurn(indexPlayer);
-    }
-    @Override
-    public void updateStartTurn(){
-        System.out.println("Inizio turno");
-    }
+
 
 
     @Override
@@ -207,14 +161,8 @@ public class VirtualView implements Observer {
         System.out.println("Costruito");
     }
 
-    public void setfinishTurn(int indexPlayer){
-        controller.finishTurn(indexPlayer);
-    }
 
-    @Override
-    public void updateFinishTurn(){
-        System.out.println("Fine turno");
-    }
+
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
         return controller.checkWin(indexPlayer, startBox, indexWorker);
@@ -236,14 +184,4 @@ public class VirtualView implements Observer {
         controller.setPause();
     }
 
-    public ObjState goPlayingNext(){
-        return controller.goPlayingNext();
-    }
-
-    @Override
-    public ObjState updateWhoIsPlaying() {
-        ObjState objState = new ObjState();
-        objState.setCurrentPlayer(gameModel.whoIsPlaying());
-        return objState;
-    }
 }

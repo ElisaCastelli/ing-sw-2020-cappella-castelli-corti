@@ -8,9 +8,7 @@ import it.polimi.ingsw.server.Observer;
 public interface Subject {
     void subscribeObserver(Observer observer);
     ObjNumPlayer notifySetNPlayers();
-    void notifyAddPlayer();
     AskCard notifyTempCard();
-    void notifyAddCard(int indexPlayer);
     void notifyAddWorker();
     ObjState notifyWhoIsPlaying();
     void notifySetReachable();

@@ -91,7 +91,6 @@ public class Game implements GameModel{
             players.get(indexPlay+1).goPlay();
         }
     }
-
     public Board getBoard(){
         return board;
     }
@@ -141,11 +140,8 @@ public class Game implements GameModel{
     }
     public void chooseCard(int playerIndex, int indexCard) {
         players.get(playerIndex).setGod(tempCard.get(indexCard));
-        tempCard.remove(godsArray.get(indexCard));
-        cardUsed.add(godsArray.get(indexCard));
-    }
-    public God getPlayerCard(int indexPlayer){
-        return players.get(indexPlayer).getGod();
+        cardUsed.add(tempCard.get(indexCard));
+        tempCard.remove(tempCard.get(indexCard));
     }
     public void loadCards() {
         godsArray= parser.parseCard();
@@ -176,9 +172,8 @@ public class Game implements GameModel{
     }
     public void startGame(){
         players.get(0).goPlay();
+        stateManager.start();
     }
-
-
     public int whoIsPlaying(){
         int indexPlay=0;
         boolean found=false;
@@ -198,16 +193,12 @@ public class Game implements GameModel{
 
 
     //index worker 1 o 2, nelle altre classi arriva già a -1
-    public boolean initializeWorker(int indexPlayer, int indexWorker, Box box){
-        return players.get(indexPlayer).initializeWorker(indexWorker-1, box);
+    public boolean initializeWorker(int indexPlayer, Box box1, Box box2){
+        return players.get(indexPlayer).initializeWorker(box1, box2);
     }
 
     public GameState getState(){
         return stateManager.getCurrentState();
-    }
-
-    public void startTurn(int indexPlayer){
-        players.get(indexPlayer).goPlay();
     }
 
     public boolean canMove(int indexPlayer){
@@ -232,11 +223,6 @@ public class Game implements GameModel{
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column){
         return stateManager.buildBlock(indexPlayer,indexWorker,row,column,board);
-    }
-
-    public void finishTurn(int indexPlayer){
-        stateManager.finishTurn(indexPlayer);
-        stateManager.startTurn(indexPlayer+1);
     }
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){

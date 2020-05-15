@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.ack.AckStartGame;
 import it.polimi.ingsw.network.ack.AckState;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
+import it.polimi.ingsw.server.model.gameComponents.Box;
 
 import java.util.ArrayList;
 
@@ -107,8 +108,17 @@ public class VisitorClient {
         }
     }
 
+    public void visit(AskInitializeWorker askInitializeWorker){
+        ArrayList<Box> boxes=clientHandler.getView().initializeWorker();
+        ObjWorkers objWorkers= new ObjWorkers(boxes.get(0),boxes.get(1));
+        clientHandler.sendMessage(objWorkers);
+    }
+
+    public void visit (UpdateBoardEvent updateBoardEvent){
+
+    }
     public void visit(ObjInitialize objInitialize){
         clientHandler.getView().setBoard(objInitialize.getBoard());
-        clientHandler.getView().setUsers(objInitialize.getUserArray());
+        //clientHandler.getView().setUsers(objInitialize.getUserArray());
     }
 }

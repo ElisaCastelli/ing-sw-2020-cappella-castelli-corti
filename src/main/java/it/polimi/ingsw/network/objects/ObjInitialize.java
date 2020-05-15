@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.objects;
 
-import it.polimi.ingsw.network.User;
+import it.polimi.ingsw.network.ClientUser;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.server.model.gameComponents.Board;

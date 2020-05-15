@@ -15,8 +15,8 @@ public class GoingState extends GameState{
         this.playersDead=playersDead;
         this.manager=manager;
     }
-    public boolean initializeWorker(int indexPlayer, int indexWorker, Box box){
-        return players.get(indexPlayer).initializeWorker(indexWorker-1, box);
+    public boolean initializeWorker(int indexPlayer, Box box1,Box box2){
+        return players.get(indexPlayer).initializeWorker(box1, box2);
     }
 
     public void startTurn(int indexPlayer){

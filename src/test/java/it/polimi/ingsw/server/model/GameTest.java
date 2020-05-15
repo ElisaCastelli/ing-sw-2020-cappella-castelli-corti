@@ -42,7 +42,7 @@ class GameTest {
         //assertEquals(n,gameTest.getPlayers().size());
     }
 
-    @Test
+    /*@Test
     void initializeWorker() {
         boardTest.clear();
         gameTest.addPlayer("a",22);
@@ -54,7 +54,7 @@ class GameTest {
         gameTest.initializeWorker(1,1,boardTest.getBox(2,0));
         assertNotEquals(null,boardTest.getBox(2,0).getWorker());
         assertFalse(gameTest.initializeWorker(1,2,boardTest.getBox(0,0)));
-    }
+    }*/
 
     @Test
     void startTurn() {

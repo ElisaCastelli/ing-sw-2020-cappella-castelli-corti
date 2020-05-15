@@ -80,12 +80,14 @@ public class VisitorServer {
         ArrayList<String> cards= serverHandler.getVirtualView().getCards();
         Ask3CardsEvent ask3Cards = new Ask3CardsEvent(cards);
         serverHandler.sendUpdateBroadcast(ask3Cards);
-    /*int indexRec = serverHandler.getIndexClient((0));
-    ServerHandler receiver = serverHandler.getClientArray().get(indexRec);
-    receiver.getOutputStream().reset();
-    receiver.sendUpdate(askCards);*/
     }
 
+    public void visit (ObjWorkers objWorkers){
+        //serverHandler.waitForPlayer();
+        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+        serverHandler.getVirtualView().initializeWorker(serverHandler.getIndexPlayer(), objWorkers.getBox1(), objWorkers.getBox2());
+        serverHandler.sendUpdateBroadcast(objState);
+    }
     public void visit(NackState nackState){
 
     }

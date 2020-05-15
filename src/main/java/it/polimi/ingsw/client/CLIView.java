@@ -1,12 +1,8 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.network.User;
+import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.gameComponents.Player;
-import it.polimi.ingsw.server.model.god.God;
-import it.polimi.ingsw.server.model.playerState.IsPlaying;
-import it.polimi.ingsw.server.model.playerState.IsWaiting;
-import it.polimi.ingsw.server.model.playerState.PlayerState;
+import it.polimi.ingsw.server.model.gameComponents.Box;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,7 +12,7 @@ public class CLIView extends View {
     private int indexPlayer = -1;
     private boolean isPlaying;
     private int nPlayer;
-    private ArrayList<User> usersArray;
+    private ArrayList<ClientUser> usersArray;
     private Board board;
 
 
@@ -27,7 +23,7 @@ public class CLIView extends View {
     }
 
     @Override
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(ArrayList<ClientUser> users) {
         usersArray=users;
     }
 
@@ -113,5 +109,30 @@ public class CLIView extends View {
             }
         }
         return scelta;
+    }
+
+    @Override
+    public ArrayList<Box> initializeWorker(){
+        ArrayList<Box> boxes= new ArrayList<>();
+        for(int indexWorker=0;indexWorker<2;indexWorker++){
+            board.print();
+            System.out.println("Posiziona la pedina "+indexWorker);
+            System.out.println("Riga: ");
+            int row= input.nextInt();
+            System.out.println("Colonna: ");
+            int column= input.nextInt();
+            if(board.getBox(row,column).notWorker()){
+                if(boxes.size()==1 && (boxes.get(0).getRow()!=row && boxes.get(1).getColumn()!=column)){
+                    boxes.add(board.getBox(row,column));
+                    //System.out.println("Casella gia' occupata");
+                }
+                else{
+                    boxes.add(board.getBox(row,column));
+                    //System.out.println("Casella assegnata");
+                }
+            }
+
+        }
+        return boxes;
     }
 }
