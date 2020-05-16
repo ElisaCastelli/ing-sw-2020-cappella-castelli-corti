@@ -4,8 +4,11 @@ package it.polimi.ingsw.client;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -13,9 +16,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    public class GUIView extends Application {
-        Button[][] matrix; //names the grid of buttons
+
+public class GUIView implements Initializable {
+    //Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
+    Button[][] matrix; //names the grid of buttons
         private static int SIZE = 5;
         private static int length = SIZE;
         private static int width = SIZE;
@@ -31,8 +39,11 @@ import javafx.stage.Stage;
 
         private Label lbl = new Label();
 
+    public GUIView() throws IOException {
+    }
 
-        public void background(){
+
+    public void background(){
             Image image = new Image("/SantoriniBoard.png");
             BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
@@ -134,4 +145,8 @@ import javafx.stage.Stage;
             stage.show();
         }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

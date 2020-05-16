@@ -27,6 +27,7 @@ public interface GameModel {
     void goPlayingNext();
     boolean initializeWorker(int indexPlayer,Box box1, Box box2);
     GameState getState();
+    ArrayList<Box> getWorkersPos(int indexPlayer);
     boolean canMove(int indexPlayer);
     void setBoxReachable(int indexPlayer, int indexWorker);
     boolean movePlayer(int indexPlayer, int indexWorker, int row, int column);

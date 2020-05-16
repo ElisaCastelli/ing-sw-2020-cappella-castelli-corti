@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
 import it.polimi.ingsw.network.objects.ObjCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
@@ -110,7 +111,11 @@ public class VirtualView implements Observer {
     public void updateInizializaWorker(){
         System.out.println("Ho inizializzato la pedina");
     }
-
+    public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove){
+        ArrayList<Box> positions= gameModel.getWorkersPos(indexPlayer);
+        AskWorkerToMoveEvent askWorkerToMoveEvent= new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(),1,positions.get(1).getRow(), positions.get(1).getColumn(), 2,firstMove);
+        return askWorkerToMoveEvent;
+    }
 
 
 

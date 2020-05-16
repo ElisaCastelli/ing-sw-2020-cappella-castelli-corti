@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gameComponents;
 
+import javafx.scene.chart.PieChart;
+
 import java.util.ArrayList;
 
 /**
@@ -91,6 +93,7 @@ public class Board {
         }
         return nextTo;
     }
+
 
     /**
      * This method prints the content of the entire board

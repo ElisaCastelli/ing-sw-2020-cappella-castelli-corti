@@ -190,8 +190,9 @@ public class Game implements GameModel{
         else
             return -1;
     }
-
-
+    public ArrayList<Box> getWorkersPos(int indexPlayer){
+       return players.get(indexPlayer).getWorkersBox();
+    }
     //index worker 1 o 2, nelle altre classi arriva già a -1
     public boolean initializeWorker(int indexPlayer, Box box1, Box box2){
         return players.get(indexPlayer).initializeWorker(box1, box2);

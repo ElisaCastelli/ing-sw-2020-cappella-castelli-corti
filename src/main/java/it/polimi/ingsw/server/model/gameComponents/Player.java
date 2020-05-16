@@ -6,6 +6,8 @@ import it.polimi.ingsw.server.model.playerState.PlayerStateManager;
 import it.polimi.ingsw.server.model.god.BasicGod;
 import it.polimi.ingsw.server.model.god.God;
 
+import java.util.ArrayList;
+
 
 public class Player {
     /**
@@ -75,7 +77,12 @@ public class Player {
     public Box getWorkerBox(int indexWorker){
         return myWorkers[indexWorker].getActualBox();
     }
-
+    public ArrayList<Box> getWorkersBox(){
+        ArrayList<Box> boxes = new ArrayList<>();
+        boxes.add(0,myWorkers[0].getActualBox());
+        boxes.add(1,myWorkers[1].getActualBox());
+        return boxes;
+    }
     /**
      * This method sets the first position of a worker
      * @param box1 is the number of the worker i want to set
