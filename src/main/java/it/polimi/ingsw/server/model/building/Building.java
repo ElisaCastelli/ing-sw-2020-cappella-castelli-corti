@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server.model.building;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Building {
+public class Building implements Serializable {
     private final ArrayList < Block > arrayOfBlocks;
 
     public Building () {

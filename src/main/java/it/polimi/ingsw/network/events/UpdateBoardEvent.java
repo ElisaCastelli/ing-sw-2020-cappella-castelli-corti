@@ -7,9 +7,26 @@ import it.polimi.ingsw.server.model.gameComponents.Board;
 
 public class UpdateBoardEvent extends ObjMessage {
     Board board;
-    public UpdateBoardEvent(Board board){
+    boolean showReachable;
+
+
+    public UpdateBoardEvent(Board board, boolean showReachable){
         this.board=board;
+        this.showReachable= showReachable;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public boolean isShowReachable() {
+        return showReachable;
+    }
+
+    public void setShowReachable(boolean showReachable) {
+        this.showReachable = showReachable;
+    }
+
     @Override
     public void accept(VisitorServer visitorServer) throws Exception {
         throw new UnsupportedOperationException();

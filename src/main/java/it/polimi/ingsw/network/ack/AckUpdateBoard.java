@@ -4,10 +4,9 @@ import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
-public class NackState extends ObjMessage {
-
+public class AckUpdateBoard extends ObjMessage {
     @Override
-    public void accept(VisitorServer visitorServer) {
+    public void accept(VisitorServer visitorServer) throws Exception {
         visitorServer.visit(this);
     }
 

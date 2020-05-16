@@ -1,13 +1,14 @@
 package it.polimi.ingsw.server.model.gameComponents;
 import it.polimi.ingsw.server.model.building.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
  * This class represents the boxes that make up the board
  */
-public class Box {
+public class Box implements Serializable {
     /**
      * This attribute is a building that can be built in this box
      */
@@ -184,13 +185,28 @@ public class Box {
      */
     public void print(){
         if( worker!=null ) {
-            System.out.print("["+worker.toString()+"] ");
+            System.out.print("[ "+worker.toString()+" ]");
         }
-        else if ( building!=null ){
+        else if ( building.getArrayOfBlocks().size() > 0 ){
             building.print();
-            System.out.print("[" + building.getArrayOfBlocks().size() + "] ");
+            System.out.print("[ " + building.getArrayOfBlocks().size() + " ]");
+        }else{
+            System.out.println("[ ]");
         }
 
+    }
+    /**
+     * This method prints an X inside the Box if it is reachable by the player
+     */
+    public void printReachable(){
+        if(this.reachable) {
+            System.out.println("[ X ]");
+        }else{
+            if( worker!=null ) {
+                System.out.print("[ O ]");
+            }else
+                System.out.println("[ ]");
+        }
     }
 }
 

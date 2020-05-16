@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.Observer;
@@ -11,7 +12,7 @@ public interface Subject {
     AskCard notifyTempCard();
     void notifyAddWorker();
     ObjState notifyWhoIsPlaying();
-    void notifySetReachable();
+    UpdateBoardEvent notifySetReachable();
     void notifyMovedWorker();
     void notifySetBuilding();
     void notifyBuildBlock();

@@ -39,6 +39,6 @@ public class ObjPlayer extends ObjMessage {
 
     @Override
     public void accept(VisitorClient visitorClient) {
-        visitorClient.visit(this);
+        throw new UnsupportedOperationException();
     }
 }

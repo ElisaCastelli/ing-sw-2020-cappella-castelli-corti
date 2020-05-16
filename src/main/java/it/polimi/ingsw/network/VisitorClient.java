@@ -1,9 +1,7 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.client.ClientHandler;
-import it.polimi.ingsw.network.ack.AckPlayer;
-import it.polimi.ingsw.network.ack.AckStartGame;
-import it.polimi.ingsw.network.ack.AckState;
+import it.polimi.ingsw.network.ack.*;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
@@ -19,18 +17,6 @@ public class VisitorClient {
         this.clientHandler = clientHandler;
     }
 
-
-    public void visit(ObjCard objCard) throws Exception {
-        clientHandler.getView();
-    }
-
-    public void visit(ObjPlayer objPlayer){
-        clientHandler.getView();
-    }
-
-    public void visit(AckStartGame ackStartGame){
-
-    }
     public void visit(AskNPlayerEvent askNPlayerEvent){
         int nPlayer=clientHandler.getView().askNPlayer();
         ObjNumPlayer objNumPlayer= new ObjNumPlayer(nPlayer);
@@ -115,10 +101,59 @@ public class VisitorClient {
     }
 
     public void visit (UpdateBoardEvent updateBoardEvent){
+        if(!clientHandler.getView().isPlaying()){
+            System.out.println("Someone is changing the Board: ");
+            clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
+            clientHandler.sendMessage(new AckUpdateBoard());
+        }else{
+            System.out.println("You recived an update of the Board: ");
+            clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
+        }
 
     }
     public void visit(ObjInitialize objInitialize){
         clientHandler.getView().setBoard(objInitialize.getBoard());
         //clientHandler.getView().setUsers(objInitialize.getUserArray());
     }
+
+
+
+    public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+        if (clientHandler.getView().isPlaying()) {
+            if(askWorkerToMoveEvent.isFirstAsk()){
+                ObjWokerToMove objWokerToMove= clientHandler.getView().askWorker(askWorkerToMoveEvent);
+                clientHandler.sendMessage(objWokerToMove);
+            }else{
+                ObjWokerToMove objWokerToMove= clientHandler.getView().AreYouSure(askWorkerToMoveEvent);
+                clientHandler.sendMessage(objWokerToMove);
+            }
+        }else{
+            System.out.println("Someone else is choosing the worker to move");
+            //TODO si potrebbe cambiare con un nuovo ack che fa la stessa cosa
+            clientHandler.sendMessage(new AckState());
+        }
+    }
+
+    public void visit(AskMoveEvent askMoveEvent){
+        if(clientHandler.getView().isPlaying()){
+            //Questa è la prima ask
+            if(askMoveEvent.isFirstTime()){
+                ObjMove objMove= clientHandler.getView().moveWorker(askMoveEvent);
+                clientHandler.sendMessage(objMove);
+            ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
+            }else {
+                ObjMove objMove= clientHandler.getView().anotherMove(askMoveEvent);
+                if(objMove.isDone()){
+                    clientHandler.sendMessage(new AckMove());
+                }else{
+                    clientHandler.sendMessage(objMove);
+                }
+            }
+        }else{
+            System.out.println("Someone else is moving his Worker");
+            clientHandler.sendMessage(new AckState());
+        }
+
+    }
+
 }

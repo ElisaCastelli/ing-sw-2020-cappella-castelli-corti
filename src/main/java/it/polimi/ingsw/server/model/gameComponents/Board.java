@@ -1,13 +1,12 @@
 package it.polimi.ingsw.server.model.gameComponents;
 
-import javafx.scene.chart.PieChart;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents the board where the game will be played
  */
-public class Board {
+public class Board implements Serializable {
     /**
      * Static attribute that indicates the number of rows and columns of  matrix that represents the board
      */
@@ -94,7 +93,6 @@ public class Board {
         return nextTo;
     }
 
-
     /**
      * This method prints the content of the entire board
      */
@@ -106,5 +104,15 @@ public class Board {
             System.out.println();
         }
     }
-
+    /**
+     * This method prints the content of the entire board with the reachable
+     */
+    public void printReachable() {
+        for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
+                matrix[i][j].printReachable();
+            }
+            System.out.println();
+        }
+    }
 }

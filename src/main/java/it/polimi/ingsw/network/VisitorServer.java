@@ -1,12 +1,7 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.network.ack.AckPlayer;
-import it.polimi.ingsw.network.ack.AckStartGame;
-import it.polimi.ingsw.network.ack.AckState;
-import it.polimi.ingsw.network.ack.NackState;
-import it.polimi.ingsw.network.events.Ask3CardsEvent;
-import it.polimi.ingsw.network.events.AskCard;
-import it.polimi.ingsw.network.events.CloseConnectionClientEvent;
+import it.polimi.ingsw.network.ack.*;
+import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.ServerHandler;
 
@@ -88,47 +83,60 @@ public class VisitorServer {
         serverHandler.getVirtualView().initializeWorker(serverHandler.getIndexPlayer(), objWorkers.getBox1(), objWorkers.getBox2());
         serverHandler.sendUpdateBroadcast(objState);
     }
-    public void visit(NackState nackState){
+
+    public void visit (ObjWokerToMove objWokerToMove){
+        serverHandler.waitForPlayer();
+        if(objWokerToMove.isReady()){
+            serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWokerToMove.getIndexWokerToMove(),objWokerToMove.getRow(),objWokerToMove.getColumn(),true,false));
+        }else{
+            int indexPlayer=serverHandler.getIndexPlayer();
+            UpdateBoardEvent updateBoardEvent= serverHandler.getVirtualView().setReachable(indexPlayer,objWokerToMove.getIndexWokerToMove());
+            updateBoardEvent.setShowReachable(true);
+            //mando la board a tutti così quello stronzo dopo mi dice se vuole cambiare pedina o fare una mossa
+            serverHandler.sendUpdateBroadcast(updateBoardEvent);
+            serverHandler.waitForPlayer();
+            ///TODO lo mando in broadcast o solo a lui? perchè devo ricordarmi di ricontrollare gli ack che mi arrivano
+            AskWorkerToMoveEvent askWorkerToMoveEvent= serverHandler.getVirtualView().getWorkersPos(indexPlayer,false);
+            serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
+        }
+
 
     }
+    ///mi serve per controllare che a tutti sia arrivata la board aggiornata
+    public void visit(AckUpdateBoard ackUpdateBoard){
+        serverHandler.getVirtualView().incCounterOpponent();
+    }
+
+    public void visit(ObjMove objMove){
+        serverHandler.waitForPlayer();
+        int indexPlayer=serverHandler.getIndexPlayer();
+        AskMoveEvent askMoveEvent=serverHandler.getVirtualView().move(indexPlayer,objMove.getIndexWokerToMove(),objMove.getRow(),objMove.getColumn());
+        UpdateBoardEvent updateBoardEvent=serverHandler.getVirtualView().updateBoard();
+        serverHandler.sendUpdateBroadcast(updateBoardEvent);
+        serverHandler.waitForPlayer();
+        ///check win/morto
+        if(/*ha vinto*/ ){
+            ///sendupdate.hai vinto
+            ///sendbroadcast senza io hai perso
+        }else{
+            if(askMoveEvent.isDone()){
+                serverHandler.sendUpdateBroadcast(new BuildEvent());
+            }else{
+                serverHandler.sendUpdateBroadcast(askMoveEvent);
+            }
+        }
+
+    }
+
+    ///Greta Rules
+    public void visit(AckMove ackMove){
+
+    }
+
+
 
     public void visit(CloseConnectionClientEvent closeConnectionClientEvent){
         serverHandler.close();
     }
 
-    //COMMENTO IL VECCHIO METODO DI OBJCARD
-    /*public void visit(ObjCard objCard) throws Exception {
-        int indexPlayer=serverHandler.getIndexPlayer();
-
-        if(objCard.getCardsTemp().size()>0 && objCard.getCardChose()==-1){
-            System.out.println("Imposto carte temporanee");
-            AskCard tempCard = serverHandler.getVirtualView().setTempCard(objCard.getCardsTemp());
-            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-            serverHandler.sendUpdateBroadcast(objState);
-            serverHandler.waitForPlayer();
-
-            //int indexRec= serverHandler.getIndexClient((indexPlayer+1));
-            //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
-            serverHandler.sendUpdateBroadcast(tempCard);
-        }else{
-            System.out.println("Carta scelta");
-
-            AskCard askcard= serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
-            serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
-            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-            serverHandler.sendUpdateBroadcast(objState);
-            serverHandler.waitForPlayer();
-
-
-            if(askcard.getCardTemp().size() != 0){
-                //int indexRec= serverHandler.getIndexClient(indexPlayer+1);
-                //ServerHandler receiver= serverHandler.getClientArray().get(indexRec);
-                serverHandler.sendUpdateBroadcast(askcard);
-            }
-            else{
-                ObjInitialize objInitialize= serverHandler.gameData();
-                serverHandler.sendUpdateBroadcast(objInitialize);
-            }
-        }
-    }*/
 }

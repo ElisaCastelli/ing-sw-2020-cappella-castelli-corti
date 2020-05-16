@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.network.events.AskMoveEvent;
+import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
+import it.polimi.ingsw.network.objects.ObjMove;
+import it.polimi.ingsw.network.objects.ObjWokerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
@@ -12,18 +16,17 @@ public class CLIView extends View {
     private int indexPlayer = -1;
     private boolean isPlaying;
     private int nPlayer;
-    private ArrayList<ClientUser> usersArray;
+    private ArrayList<User> usersArray;
     private Board board;
-
 
     @Override
     public void setBoard(Board board) {
         this.board=board;
-        board.print();
+        printBoard(false);
     }
 
     @Override
-    public void setUsers(ArrayList<ClientUser> users) {
+    public void setUsers(ArrayList<User> users) {
         usersArray=users;
     }
 
@@ -96,7 +99,7 @@ public class CLIView extends View {
     @Override
     public int askCard(ArrayList<String> cards) {
         boolean choose=false;
-        int scelta=4;
+        int scelta=-1;
         for(int index=0;index<cards.size();index++){
             System.out.println("[ "+index+ "] "+cards.get(index));
         }
@@ -115,7 +118,7 @@ public class CLIView extends View {
     public ArrayList<Box> initializeWorker(){
         ArrayList<Box> boxes= new ArrayList<>();
         for(int indexWorker=0;indexWorker<2;indexWorker++){
-            board.print();
+            printBoard(false);
             System.out.println("Posiziona la pedina "+indexWorker);
             System.out.println("Riga: ");
             int row= input.nextInt();
@@ -134,5 +137,159 @@ public class CLIView extends View {
 
         }
         return boxes;
+    }
+
+    @Override
+    public void printBoard(boolean printReachable) {
+        if(!printReachable){
+            board.print();
+        }else{
+            board.printReachable();
+        }
+    }
+
+    @Override
+    public ObjWokerToMove askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+
+        int row1=askWorkerToMoveEvent.getRow1();
+        int row2=askWorkerToMoveEvent.getRow2();
+        int column1=askWorkerToMoveEvent.getColumn1();
+        int column2=askWorkerToMoveEvent.getColumn2();
+        int indexFirstWorker=askWorkerToMoveEvent.getIndexFirstWoker();
+        int indexSecondWorker=askWorkerToMoveEvent.getIndexSecondWoker();
+
+        System.out.println("You' re going to do your move-> What Worker You wanna move?");
+        System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row" + column1 + " <-column");
+        System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row" + column2 + " <-column");
+        System.out.println("Control the board and choose...");
+        printBoard(false);
+
+        int intInputValue;
+        while (true) {
+            System.out.println("Enter a whole number.");
+
+            String inputString= input.nextLine();
+            try {
+                intInputValue = Integer.parseInt(inputString);
+                if(intInputValue>=0 && intInputValue<2){
+                    System.out.println("Correct input, exit");
+                    break;
+                }
+            } catch (NumberFormatException ne) {
+                System.out.println("Input is not a number, continue");
+            }
+        }
+        ObjWokerToMove objWokerToMove;
+        if (intInputValue==0){
+            objWokerToMove=new ObjWokerToMove(indexFirstWorker, row1,column1,false);
+        }else{
+            objWokerToMove=new ObjWokerToMove(indexSecondWorker, row2,column2,false);
+        }
+        return objWokerToMove;
+    }
+
+    @Override
+    public ObjWokerToMove AreYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+        int row1=askWorkerToMoveEvent.getRow1();
+        int column1=askWorkerToMoveEvent.getRow2();
+        int indexWorker=askWorkerToMoveEvent.getIndexFirstWoker();
+
+        System.out.println("Are You sure you want move the "+indexWorker+" worker? ");
+        System.out.println("Position : "+ row1 + " <-row" + column1 + " <-column");
+
+        System.out.println("[ 0 ] -> "+ "YES");
+        System.out.println("[ 1 ] -> "+ "NO");
+        int intInputValue;
+        while (true) {
+            System.out.println("Enter a whole number.");
+
+            String inputString= input.nextLine();
+            try {
+                intInputValue = Integer.parseInt(inputString);
+                break;
+            } catch (NumberFormatException ne) {
+                System.out.println("Input is not a number, continue");
+            }
+        }
+        if(intInputValue==0){
+            return new ObjWokerToMove(indexWorker,row1,column1,true);
+        }else{
+            return askWorker(askWorkerToMoveEvent);
+        }
+    }
+
+    @Override
+    public ObjMove moveWorker(AskMoveEvent askMoveEvent) {
+        int row=askMoveEvent.getRow1();
+        int column= askMoveEvent.getColumn1();
+        int indexWorker=askMoveEvent.getIndexWoker();
+
+        ObjMove objMove= new ObjMove(indexWorker,0,0,true);
+        int intInputValue=0;
+
+        System.out.println("you have chosen the "+indexWorker+" worker ");
+        System.out.println("Position : "+ row + " <-row" + column + " <-column");
+        System.out.println("You' re going to do your move-> What Position You wanna reach?");
+
+        System.out.println("Select row:");
+
+        while (true) {
+            System.out.println("Enter a whole number.");
+            String inputString= input.nextLine();
+            try {
+                intInputValue = Integer.parseInt(inputString);
+                if(intInputValue>=0 && intInputValue<5){
+                    System.out.println("Correct input, exit");
+                    break;
+                }
+            } catch (NumberFormatException ne) {
+                System.out.println("Input is not a number, continue");
+            }
+        }
+        objMove.setRow(intInputValue);
+
+        System.out.println("Select Column:");
+        while (true) {
+            System.out.println("Enter a whole number.");
+            String inputString= input.nextLine();
+            try {
+                intInputValue = Integer.parseInt(inputString);
+                if(intInputValue>=0 && intInputValue<5){
+                    System.out.println("Correct input, exit");
+                    break;
+                }
+            } catch (NumberFormatException ne) {
+                System.out.println("Input is not a number, continue");
+            }
+        }
+        objMove.setColumn(intInputValue);
+        return objMove;
+    }
+
+    @Override
+    public ObjMove anotherMove(AskMoveEvent askMoveEvent) {
+        System.out.println("You Have the possibility to make another move");
+        System.out.println("Do You want to?: ");
+        System.out.println("[ 0 ] -> "+ "YES");
+        System.out.println("[ 1 ] -> "+ "NO");
+
+        int intInputValue=0;
+        while (true) {
+            System.out.println("Enter a whole number.");
+            String inputString= input.nextLine();
+            try {
+                intInputValue = Integer.parseInt(inputString);
+                break;
+            } catch (NumberFormatException ne) {
+                System.out.println("Input is not a number, continue");
+            }
+        }
+        if(intInputValue==0){
+            return new ObjMove(true);
+        }else{
+            ObjMove objMove =moveWorker(askMoveEvent);
+            objMove.setDone(false);
+            return objMove;
+        }
     }
 }

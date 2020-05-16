@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.gameComponents.Board;
@@ -88,7 +89,7 @@ public class ProxyGameModel implements GameModel, Subject{
 
 
 
-
+    //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
     @Override
     public boolean canMove(int indexPlayer) {
         return gameModel.canMove(indexPlayer);
@@ -97,6 +98,12 @@ public class ProxyGameModel implements GameModel, Subject{
     @Override
     public void setBoxReachable(int indexPlayer, int indexWorker) {
         gameModel.setBoxReachable(indexPlayer, indexWorker);
+    }
+
+    //TODO da implementare
+    @Override
+    public ArrayList<Box> getWorkersPos(int indexPlayer) {
+        return null;
     }
 
     @Override
@@ -152,8 +159,6 @@ public class ProxyGameModel implements GameModel, Subject{
 
 
 
-
-
     @Override
     public ObjNumPlayer notifySetNPlayers(){
         return observer.updateNPlayer();
@@ -174,15 +179,14 @@ public class ProxyGameModel implements GameModel, Subject{
 
 
     @Override
-    public void notifySetReachable(){
+    public UpdateBoardEvent notifySetReachable(){
         observer.updateReachable();
-        observer.updateBoard();
+        return observer.updateBoard();
     }
 
     @Override
     public void notifyMovedWorker(){
         observer.updateMove();
-        observer.updateBoard();
     }
 
     @Override
