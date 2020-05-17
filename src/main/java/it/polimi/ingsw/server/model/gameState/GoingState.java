@@ -69,12 +69,12 @@ public class GoingState extends GameState{
     }
 
     public boolean checkWinAfterBuild(){
-        boolean win=false;
+        boolean win = false;
         int player = 0;
-        while(player< players.size() && !win ){
+        while(player < players.size() && !win ){
             int worker = 0;
-            while( worker<2 && !win){
-                win= players.get(player).checkWin(players.get(player).getWorkerBox(worker), players.get(player).getWorkerBox(worker));
+            while( worker < 2 && !win){
+                win = players.get(player).checkWin(players.get(player).getWorkerBox(worker), players.get(player).getWorkerBox(worker));
                 worker++;
             }
             player++;

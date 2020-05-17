@@ -106,25 +106,23 @@ public class VisitorClient {
             clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
             clientHandler.sendMessage(new AckUpdateBoard());
         }else{
-            System.out.println("You recived an update of the Board: ");
+            System.out.println("You received an update of the Board: ");
             clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
         }
-
     }
+
     public void visit(ObjInitialize objInitialize){
         clientHandler.getView().setBoard(objInitialize.getBoard());
         //clientHandler.getView().setUsers(objInitialize.getUserArray());
     }
 
-
-
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         if (clientHandler.getView().isPlaying()) {
             if(askWorkerToMoveEvent.isFirstAsk()){
-                ObjWokerToMove objWokerToMove= clientHandler.getView().askWorker(askWorkerToMoveEvent);
+                ObjWokerToMove objWokerToMove = clientHandler.getView().askWorker(askWorkerToMoveEvent);
                 clientHandler.sendMessage(objWokerToMove);
             }else{
-                ObjWokerToMove objWokerToMove= clientHandler.getView().AreYouSure(askWorkerToMoveEvent);
+                ObjWokerToMove objWokerToMove = clientHandler.getView().AreYouSure(askWorkerToMoveEvent);
                 clientHandler.sendMessage(objWokerToMove);
             }
         }else{
@@ -138,13 +136,13 @@ public class VisitorClient {
         if(clientHandler.getView().isPlaying()){
             //Questa è la prima ask
             if(askMoveEvent.isFirstTime()){
-                ObjMove objMove= clientHandler.getView().moveWorker(askMoveEvent);
+                ObjMove objMove = clientHandler.getView().moveWorker(askMoveEvent);
                 clientHandler.sendMessage(objMove);
             ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
             }else {
                 ObjMove objMove= clientHandler.getView().anotherMove(askMoveEvent);
                 if(objMove.isDone()){
-                    clientHandler.sendMessage(new AckMove());
+                    clientHandler.sendMessage(new AckMove(askMoveEvent.getIndexWoker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1()));
                 }else{
                     clientHandler.sendMessage(objMove);
                 }
@@ -153,7 +151,25 @@ public class VisitorClient {
             System.out.println("Someone else is moving his Worker");
             clientHandler.sendMessage(new AckState());
         }
-
     }
 
+    public void visit(AskBuildEvent askBuildEvent){
+        if(clientHandler.getView().isPlaying()){
+            //Qui entra se è veramente la prima volta o se ha inserito una box non valida
+            if(askBuildEvent.isFirstTime()){
+                ObjBlock objBlock = clientHandler.getView().buildMove(askBuildEvent);
+                clientHandler.sendMessage(objBlock);
+            }else{ //Può fare una mossa speciale
+                ObjBlock objBlock = clientHandler.getView().anotherBuild(askBuildEvent);
+                if(objBlock.isDone()){
+                    clientHandler.sendMessage(new AckBlock());
+                }else{
+                    clientHandler.sendMessage(objBlock);
+                }
+            }
+        }else {
+            System.out.println("Someone else is building right now");
+            clientHandler.sendMessage(new AckState());
+        }
+    }
 }

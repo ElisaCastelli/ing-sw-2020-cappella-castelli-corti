@@ -24,7 +24,7 @@ public class GameStateManager {
         return currentState;
     }
     public void start(){
-        currentState=going;
+        currentState = going;
     }
 
     public void startTurn(int indexPlayer){

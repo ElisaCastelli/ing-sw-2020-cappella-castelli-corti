@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
 import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
+import it.polimi.ingsw.network.objects.ObjBlock;
 import it.polimi.ingsw.network.objects.ObjMove;
 import it.polimi.ingsw.network.objects.ObjWokerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
@@ -31,4 +33,6 @@ public abstract class View {
     public abstract ObjWokerToMove AreYouSure(AskWorkerToMoveEvent askMoveEvent);
     public abstract ObjMove moveWorker(AskMoveEvent askMoveEvent);
     public abstract ObjMove anotherMove(AskMoveEvent askMoveEvent);
+    public abstract ObjBlock buildMove(AskBuildEvent askBuildEvent);
+    public abstract ObjBlock anotherBuild(AskBuildEvent askBuildEvent);
 }

@@ -14,6 +14,6 @@ public interface Subject {
     ObjState notifyWhoIsPlaying();
     UpdateBoardEvent notifySetReachable();
     void notifyMovedWorker();
-    void notifySetBuilding();
+    UpdateBoardEvent notifySetBuilding();
     void notifyBuildBlock();
 }

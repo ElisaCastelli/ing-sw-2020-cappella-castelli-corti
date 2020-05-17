@@ -19,7 +19,7 @@ public interface Observer {
     boolean canMove(int indexPlayer);
     void updateMove();
     void updateSetBuilding();
-    boolean updateCanBuild(int indexPlayer, int indexWorker);
+    boolean canBuild(int indexPlayer, int indexWorker);
     void updateBuild();
 
 }

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.*;
+import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
+import it.polimi.ingsw.network.objects.ObjBlock;
 import it.polimi.ingsw.network.objects.ObjMove;
 import it.polimi.ingsw.network.objects.ObjWokerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
@@ -158,7 +160,7 @@ public class CLIView extends View {
         int indexFirstWorker=askWorkerToMoveEvent.getIndexFirstWoker();
         int indexSecondWorker=askWorkerToMoveEvent.getIndexSecondWoker();
 
-        System.out.println("You' re going to do your move-> What Worker You wanna move?");
+        System.out.println("You're going to do your move-> What Worker You wanna move?");
         System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row" + column1 + " <-column");
         System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row" + column2 + " <-column");
         System.out.println("Control the board and choose...");
@@ -229,7 +231,7 @@ public class CLIView extends View {
 
         System.out.println("you have chosen the "+indexWorker+" worker ");
         System.out.println("Position : "+ row + " <-row" + column + " <-column");
-        System.out.println("You' re going to do your move-> What Position You wanna reach?");
+        System.out.println("You're going to do your move-> What Position You wanna reach?");
 
         System.out.println("Select row:");
 
@@ -284,12 +286,104 @@ public class CLIView extends View {
                 System.out.println("Input is not a number, continue");
             }
         }
+        //todo Ila hai invertito: 0 è sì, voglio fare un'altra mossa (G)
         if(intInputValue==0){
             return new ObjMove(true);
         }else{
-            ObjMove objMove =moveWorker(askMoveEvent);
+            ObjMove objMove = moveWorker(askMoveEvent);
             objMove.setDone(false);
             return objMove;
         }
+    }
+
+    @Override
+    public ObjBlock buildMove(AskBuildEvent askBuildEvent) {
+        int indexWorker = askBuildEvent.getIndexWorker();
+        int rowWorker = askBuildEvent.getRowWorker();
+        int columnWorker = askBuildEvent.getColumnWorker();
+        ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker);
+        int intInputValue;
+
+        if(askBuildEvent.isWrongBox()){
+            System.out.println("You choose an unreachable box. Please, choose a reachable one");
+        }else {
+            System.out.println("You're going to build now -> Where do you wanna build?");
+        }
+        System.out.println("Control the board and choose a box");
+
+        intInputValue = rowSelected(rowWorker);
+        objBlock.setRowBlock(intInputValue);
+
+        intInputValue = columnSelected(columnWorker);
+        objBlock.setColumnBlock(intInputValue);
+
+        //todo (G) Se atlas chiedere se vuole mettere una cupola. Passare un boolean e inserirlo in tutti i metodi buildMove (solo Atlas andrà ad utilizzarlo)
+
+        //Verificare che la casella selezionata sia effettivamente valida e non abbia fatto lo stronzo (Facciamo lato server)
+        return objBlock;
+    }
+
+    @Override
+    public ObjBlock anotherBuild(AskBuildEvent askBuildEvent) {
+        System.out.println("Your god gives you the possibility to make another build.");
+        System.out.println("Do You want to?: ");
+        System.out.println("[ 0 ] -> "+ "YES");
+        System.out.println("[ 1 ] -> "+ "NO");
+
+        int inputValue = inputNumber();
+        if(inputValue == 0){
+            ObjBlock objBlock = buildMove(askBuildEvent);
+            objBlock.setDone(false);
+            return objBlock;
+        }else {
+            return new ObjBlock(true);
+        }
+    }
+
+
+
+    //Questo metodo va richiamato se si vuole un numero da tastiera
+    public int inputNumber(){
+        int intInputValue = 0;
+        while (true) {
+            System.out.println("Enter a whole number.");
+            String inputString = input.nextLine();
+            try {
+                intInputValue = Integer.parseInt(inputString);
+                System.out.println("Correct input, exit");
+                return intInputValue;
+            } catch (NumberFormatException ne) {
+                System.out.println("Input is not a number, continue");
+            }
+        }
+    }
+
+    //Questo metodo serve per selezionare una riga che sia raggiungibile
+    public int rowSelected(int rowWorker){
+        int intInputValue;
+        System.out.println("Select row:");
+        intInputValue = inputNumber();
+        while(!boxReachable(rowWorker, intInputValue)){
+            System.out.println("Select again the row. You cannot reach that row");
+            intInputValue = inputNumber();
+        }
+        return intInputValue;
+    }
+
+    //Questo metodo serve per selezionare una colonna che sia raggiungibile
+    public int columnSelected(int columnWorker){
+        int intInputValue;
+        System.out.println("Select column:");
+        intInputValue = inputNumber();
+        while(!boxReachable(columnWorker, intInputValue)){
+            System.out.println("Select again the column. You cannot reach that column");
+            intInputValue = inputNumber();
+        }
+        return intInputValue;
+    }
+
+    //Questo metodo controlla se il numero inserito può appartenere a una casella adiacente
+    public boolean boxReachable (int rowOrColumnWorker, int input){
+        return input >= 0 && input < 5 && input <= rowOrColumnWorker+1 && input >= rowOrColumnWorker-1;
     }
 }

@@ -11,8 +11,8 @@ public class UpdateBoardEvent extends ObjMessage {
 
 
     public UpdateBoardEvent(Board board, boolean showReachable){
-        this.board=board;
-        this.showReachable= showReachable;
+        this.board = board;
+        this.showReachable = showReachable;
     }
 
     public Board getBoard() {

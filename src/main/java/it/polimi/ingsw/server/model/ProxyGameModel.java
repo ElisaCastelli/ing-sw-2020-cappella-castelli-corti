@@ -190,15 +190,14 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifySetBuilding(){
+    public UpdateBoardEvent notifySetBuilding(){
         observer.updateSetBuilding();
-        observer.updateBoard();
+        return observer.updateBoard();
     }
 
     @Override
     public void notifyBuildBlock(){
         observer.updateBuild();
-        observer.updateBoard();
     }
 
 }

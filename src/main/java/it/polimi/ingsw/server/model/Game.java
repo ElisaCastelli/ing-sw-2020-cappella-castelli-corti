@@ -78,7 +78,7 @@ public class Game implements GameModel{
         tempCard= new ArrayList<>();
         godsArray = new ArrayList<>();
         cardUsed = new ArrayList<>();
-        stateManager=new GameStateManager(players, playersDead);
+        stateManager = new GameStateManager(players, playersDead);
     }
 
     public void goPlayingNext(){

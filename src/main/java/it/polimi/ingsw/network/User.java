@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network;
 
-public class ClientUser {
+public class User {
     private int indexArrayDiClient;
     private String name;
     private String nameCard;

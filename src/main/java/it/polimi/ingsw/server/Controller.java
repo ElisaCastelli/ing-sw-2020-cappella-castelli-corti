@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
@@ -64,6 +65,7 @@ public class Controller  {
         boolean moved=gameModel.movePlayer(indexPlayer, indexWorker, row, column);
         AskMoveEvent askMoveEvent;
         if(moved){
+            //todo non va bene il costruttore così perchè poi nella build ho bisogno di informazioni del worker e l'unica fonte è l'askMoveEvent
             askMoveEvent=new AskMoveEvent(true);
         }else{
             askMoveEvent=new AskMoveEvent(indexWorker,row,column,false,false);
@@ -79,19 +81,35 @@ public class Controller  {
 
 
 
+    public boolean canBuild(int indexPlayer, int indexWorker){
+        return gameModel.canBuild(indexPlayer, indexWorker);
+    }
 
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
+    public UpdateBoardEvent setBoxBuilding(int indexPlayer, int indexWorker) {
         gameModel.setBoxBuilding(indexPlayer, indexWorker);
-        gameModel.notifySetBuilding();
+        return gameModel.notifySetBuilding();
     }
-    public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column) {
-        boolean built=gameModel.buildBlock(indexPlayer, indexWorker, row, column);
+
+    public AskBuildEvent buildBlock(int indexPlayer, int indexWorker, int rowWorker, int columnWorker, int row, int column) {
+        boolean built = gameModel.buildBlock(indexPlayer, indexWorker, row, column);
+        AskBuildEvent askBuildEvent;
+        if(built){
+            askBuildEvent = new AskBuildEvent(true);
+        }
+        else{
+            askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, false, false);
+        }
+
         gameModel.notifyBuildBlock();
-        return built;
+        return askBuildEvent;
     }
+
     public boolean checkWinAfterBuild() {
         return gameModel.checkWinAfterBuild();
     }
+
+
+
     public void setWinningPlayer(int indexPlayer) {
         gameModel.setWinningPlayer(indexPlayer);
 

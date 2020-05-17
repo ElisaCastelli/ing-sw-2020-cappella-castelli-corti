@@ -1,9 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.network.events.AskCard;
-import it.polimi.ingsw.network.events.AskMoveEvent;
-import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
-import it.polimi.ingsw.network.events.UpdateBoardEvent;
+import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.ObjCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
@@ -119,8 +116,7 @@ public class VirtualView implements Observer {
     public UpdateBoardEvent updateBoard(){
         Board boardToSend= gameModel.getBoard();
         ///metto a falso lo show reachable ma lo metterà poi a vero se è richiamata da un setReachable
-        UpdateBoardEvent updateBoardEvent=new UpdateBoardEvent(boardToSend,false);
-        return updateBoardEvent;
+        return new UpdateBoardEvent(boardToSend,false);
     }
 
     public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
@@ -151,8 +147,7 @@ public class VirtualView implements Observer {
     ///richiamato
     public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove){
         ArrayList<Box> positions= gameModel.getWorkersPos(indexPlayer);
-        AskWorkerToMoveEvent askWorkerToMoveEvent= new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(),1,positions.get(1).getRow(), positions.get(1).getColumn(), 2,firstMove);
-        return askWorkerToMoveEvent;
+        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(),1,positions.get(1).getRow(), positions.get(1).getColumn(), 2,firstMove);
     }
 
     ///richiamato
@@ -170,25 +165,34 @@ public class VirtualView implements Observer {
     }
 
 
+    //Metodo per verificare se è possibile costruire attorno al proprio worker, se non è possibile il giocatore ha perso
+    public boolean canBuild(int indexPlayer, int indexWorker){
+        return controller.canBuild(indexPlayer, indexWorker);
+    }
 
-    @Override
-    public boolean updateCanBuild(int indexPlayer, int indexWorker){
-        return gameModel.canBuild(indexPlayer, indexWorker);
+    //Metodo per fare la setPossibleBuild
+    public UpdateBoardEvent setBoxBuilding(int indexPlayer, int indexWorker) {
+        return controller.setBoxBuilding(indexPlayer, indexWorker);
     }
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
-        controller.setBoxBuilding(indexPlayer, indexWorker);
-    }
+
+    //Probabilmente non serve
     @Override
     public void updateSetBuilding(){
         System.out.println("Aggiornate celle dove si può costruire");
     }
-    public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column) {
-        return controller.buildBlock(indexPlayer, indexWorker, row, column);
+
+    //Metodo per fare la costruzione del piano
+    public AskBuildEvent buildBlock(int indexPlayer, int indexWorker, int rowWorker, int columnWorker, int row, int column) {
+        return controller.buildBlock(indexPlayer, indexWorker, rowWorker, columnWorker, row, column);
     }
+
+    //Probabilmente non serve
     @Override
     public void updateBuild(){
         System.out.println("Costruito");
     }
+
+    //Verifica se crono ha vinto
     public boolean checkWinAfterBuild() {
         return controller.checkWinAfterBuild();
     }

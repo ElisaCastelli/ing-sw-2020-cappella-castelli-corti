@@ -60,7 +60,7 @@ public class VisitorServer {
         }
         else{
             System.out.println("Invio board");
-            ObjInitialize objInitialize= serverHandler.gameData();
+            ObjInitialize objInitialize = serverHandler.gameData();
             serverHandler.sendUpdateBroadcast(objInitialize);
         }
     }
@@ -89,14 +89,14 @@ public class VisitorServer {
         if(objWokerToMove.isReady()){
             serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWokerToMove.getIndexWokerToMove(),objWokerToMove.getRow(),objWokerToMove.getColumn(),true,false));
         }else{
-            int indexPlayer=serverHandler.getIndexPlayer();
-            UpdateBoardEvent updateBoardEvent= serverHandler.getVirtualView().setReachable(indexPlayer,objWokerToMove.getIndexWokerToMove());
+            int indexPlayer = serverHandler.getIndexPlayer();
+            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().setReachable(indexPlayer,objWokerToMove.getIndexWokerToMove());
             updateBoardEvent.setShowReachable(true);
             //mando la board a tutti così quello stronzo dopo mi dice se vuole cambiare pedina o fare una mossa
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
             ///TODO lo mando in broadcast o solo a lui? perchè devo ricordarmi di ricontrollare gli ack che mi arrivano
-            AskWorkerToMoveEvent askWorkerToMoveEvent= serverHandler.getVirtualView().getWorkersPos(indexPlayer,false);
+            AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(indexPlayer,false);
             serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
         }
 
@@ -109,9 +109,10 @@ public class VisitorServer {
 
     public void visit(ObjMove objMove){
         serverHandler.waitForPlayer();
-        int indexPlayer=serverHandler.getIndexPlayer();
-        AskMoveEvent askMoveEvent=serverHandler.getVirtualView().move(indexPlayer,objMove.getIndexWokerToMove(),objMove.getRow(),objMove.getColumn());
-        UpdateBoardEvent updateBoardEvent=serverHandler.getVirtualView().updateBoard();
+        int indexPlayer = serverHandler.getIndexPlayer();
+        AskMoveEvent askMoveEvent = serverHandler.getVirtualView().move(indexPlayer,objMove.getIndexWokerToMove(),objMove.getRow(),objMove.getColumn());
+        //todo secondo me qui vanno cancellate le reachable (G)
+        UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
         serverHandler.sendUpdateBroadcast(updateBoardEvent);
         serverHandler.waitForPlayer();
         ///check win/morto
@@ -120,23 +121,91 @@ public class VisitorServer {
             ///sendbroadcast senza io hai perso
         }else{
             if(askMoveEvent.isDone()){
-                serverHandler.sendUpdateBroadcast(new BuildEvent());
+                //Controllo che può costruire e passo alla costruzione dell'edificio, altrimenti il giocatore perde
+                if(serverHandler.getVirtualView().canBuild(indexPlayer,askMoveEvent.getIndexWoker())){
+                    updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+                    updateBoardEvent.setShowReachable(true);
+                    serverHandler.sendUpdateBroadcast(updateBoardEvent);
+                    serverHandler.waitForPlayer();
+                    serverHandler.sendUpdateBroadcast(new AskBuildEvent(askMoveEvent.getIndexWoker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1(), true, false));
+                }
+                else{
+                    //Giocatore morto X
+                }
             }else{
+                //todo fare setReachable + updateBoard (G)
                 serverHandler.sendUpdateBroadcast(askMoveEvent);
             }
         }
-
     }
 
-    ///Greta Rules
     public void visit(AckMove ackMove){
+        serverHandler.waitForPlayer();
 
+        int indexWorker = ackMove.getIndexWorker();
+        int rowWorker = ackMove.getRowWorker();
+        int columnWorker = ackMove.getColumnWorker();
+
+        UpdateBoardEvent updateBoardEvent;
+        updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+        updateBoardEvent.setShowReachable(true);
+        serverHandler.sendUpdateBroadcast(updateBoardEvent);
+        serverHandler.waitForPlayer();
+        serverHandler.sendUpdateBroadcast(new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false));
     }
 
+    public void visit(ObjBlock objBlock){
+        int indexWorker = objBlock.getIndexWorker();
+        int rowWorker = objBlock.getRowWorker();
+        int columnWorker = objBlock.getColumnWorker();
+        int rowBlock = objBlock.getRowBlock();
+        int columnBlock = objBlock.getColumnBlock();
+        UpdateBoardEvent updateBoardEvent;
 
+        serverHandler.waitForPlayer();
+        //Controllo se la casella data è una di quelle consigliate come raggiungibile, in caso negativo gli rimando askBuildEvent come se fosse la prima volta (Questo controllo serve più che altro per la CLI)
+        if(serverHandler.getVirtualView().isReachable(rowBlock, columnBlock)){
+            int indexPlayer = serverHandler.getIndexPlayer();
+            AskBuildEvent askBuildEvent = serverHandler.getVirtualView().buildBlock(indexPlayer, indexWorker, rowWorker, columnWorker, rowBlock, columnBlock);
+            //todo cancellare le reachable dalla board (G)
+            updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+            serverHandler.sendUpdateBroadcast(updateBoardEvent);
+            serverHandler.waitForPlayer();
+            if(serverHandler.getVirtualView().checkWinAfterBuild()){
+                //Il giocatore con Crono ha vinto
+            }else {
+                if(askBuildEvent.isDone()){
+                    //Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
+                    ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+                    serverHandler.sendUpdateBroadcast(objState);
+                }else {
+                    updateBoardEvent = serverHandler.getVirtualView().setBoxBuilding(indexPlayer, indexWorker);
+                    updateBoardEvent.setShowReachable(true);
+                    serverHandler.sendUpdateBroadcast(updateBoardEvent);
+                    serverHandler.waitForPlayer();
+                    serverHandler.sendUpdateBroadcast(askBuildEvent);
+                }
+            }
+        }else {
+            //Ho presupposto che le reachable non le ho cancellate, perciò rimando la board mandata precedentemente
+            updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+            updateBoardEvent.setShowReachable(true);
+            serverHandler.sendUpdateBroadcast(updateBoardEvent);
+            serverHandler.waitForPlayer();
+            AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false);
+            askBuildEvent.setWrongBox(true);
+            serverHandler.sendUpdateBroadcast(askBuildEvent);
+        }
+    }
+
+    public void visit(AckBlock ackBlock){
+        serverHandler.waitForPlayer();
+        //todo (G) Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
+        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+        serverHandler.sendUpdateBroadcast(objState);
+    }
 
     public void visit(CloseConnectionClientEvent closeConnectionClientEvent){
         serverHandler.close();
     }
-
 }

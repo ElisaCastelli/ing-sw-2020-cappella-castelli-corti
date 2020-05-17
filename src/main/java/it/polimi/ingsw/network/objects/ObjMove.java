@@ -13,7 +13,7 @@ public class ObjMove extends ObjMessage {
         this.indexWokerToMove = indexWokerToMove;
         this.row = row;
         this.column = column;
-        this.isDone=isDone;
+        this.isDone = isDone;
     }
 
     public ObjMove(boolean isDone) {

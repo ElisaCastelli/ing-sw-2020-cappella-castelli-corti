@@ -151,11 +151,10 @@ public class Player {
         return (firstWorker || secondWorker);
     }
 
+    //Controlla che si può costruire, ho tolto la clear delle box almeno posso fare un update diretta
     public boolean checkBuilding(int indexWorker){
         gamerManager.setPossibleBuild(myWorkers[indexWorker]);
-        boolean canBuild = myWorkers[indexWorker].getActualBox().checkPossible();
-        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
-        return canBuild;
+        return myWorkers[indexWorker].getActualBox().checkPossible();
     }
 
 
