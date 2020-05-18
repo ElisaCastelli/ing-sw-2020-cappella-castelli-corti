@@ -115,4 +115,12 @@ public class Board implements Serializable {
             System.out.println();
         }
     }
+
+    public void clearReachable(){
+        for(int i = 0; i < DIM; i++){
+            for(int j = 0; j < DIM; j++){
+                matrix[i][j].clearBoxesNextTo();
+            }
+        }
+    }
 }

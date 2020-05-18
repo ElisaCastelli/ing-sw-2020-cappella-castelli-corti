@@ -4,6 +4,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.User;
 import it.polimi.ingsw.network.events.AskNPlayerEvent;
 //import it.polimi.ingsw.network.objects.ObjHeartBeat;
+import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjInitialize;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorServer;
@@ -104,7 +105,8 @@ public class ServerHandler extends Thread{
         for(ServerHandler client : clientArray){
             userArray.add(client.getUser());
         }
-        return new ObjInitialize(userArray,getVirtualView().updateBoard());
+        UpdateBoardEvent updateBoardEvent = getVirtualView().updateBoard();
+        return new ObjInitialize(userArray, updateBoardEvent.getBoard());
     }
 
     public void waitForPlayer(){

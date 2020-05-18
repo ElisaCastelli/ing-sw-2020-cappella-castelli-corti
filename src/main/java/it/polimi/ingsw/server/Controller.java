@@ -65,8 +65,7 @@ public class Controller  {
         boolean moved=gameModel.movePlayer(indexPlayer, indexWorker, row, column);
         AskMoveEvent askMoveEvent;
         if(moved){
-            //todo non va bene il costruttore così perchè poi nella build ho bisogno di informazioni del worker e l'unica fonte è l'askMoveEvent
-            askMoveEvent=new AskMoveEvent(true);
+            askMoveEvent=new AskMoveEvent(indexWorker, row, column, false, true);
         }else{
             askMoveEvent=new AskMoveEvent(indexWorker,row,column,false,false);
         }

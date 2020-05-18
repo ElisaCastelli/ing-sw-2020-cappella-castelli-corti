@@ -30,7 +30,7 @@ public abstract class View {
     public abstract void printBoard(boolean printReachable);
     public abstract ArrayList<Box> initializeWorker();
     public abstract ObjWokerToMove askWorker(AskWorkerToMoveEvent askMoveEvent);
-    public abstract ObjWokerToMove AreYouSure(AskWorkerToMoveEvent askMoveEvent);
+    public abstract ObjWokerToMove areYouSure(AskWorkerToMoveEvent askMoveEvent);
     public abstract ObjMove moveWorker(AskMoveEvent askMoveEvent);
     public abstract ObjMove anotherMove(AskMoveEvent askMoveEvent);
     public abstract ObjBlock buildMove(AskBuildEvent askBuildEvent);

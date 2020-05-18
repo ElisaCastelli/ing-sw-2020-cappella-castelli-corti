@@ -10,11 +10,13 @@ public class GoingState extends GameState{
     private ArrayList<Player> players;
     private ArrayList<Player> playersDead ;
     private final GameStateManager manager;
+
     public GoingState(ArrayList<Player> players, ArrayList<Player> playersDead, GameStateManager manager){
         this.players=players;
         this.playersDead=playersDead;
         this.manager=manager;
     }
+
     public boolean initializeWorker(int indexPlayer, Box box1,Box box2){
         return players.get(indexPlayer).initializeWorker(box1, box2);
     }

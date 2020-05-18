@@ -207,7 +207,8 @@ public class Game implements GameModel{
     }
 
     public void setBoxReachable(int indexPlayer, int indexWorker){
-       stateManager.setBoxReachable(indexPlayer, indexWorker);
+        board.clearReachable();
+        stateManager.setBoxReachable(indexPlayer, indexWorker);
     }
 
     public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column){
@@ -219,6 +220,7 @@ public class Game implements GameModel{
     }
 
     public void setBoxBuilding(int indexPlayer, int indexWorker){
+        board.clearReachable();
         stateManager.setBoxBuilding(indexPlayer, indexWorker);
     }
 

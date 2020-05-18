@@ -153,12 +153,12 @@ public class CLIView extends View {
     @Override
     public ObjWokerToMove askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
 
-        int row1=askWorkerToMoveEvent.getRow1();
-        int row2=askWorkerToMoveEvent.getRow2();
-        int column1=askWorkerToMoveEvent.getColumn1();
-        int column2=askWorkerToMoveEvent.getColumn2();
-        int indexFirstWorker=askWorkerToMoveEvent.getIndexFirstWoker();
-        int indexSecondWorker=askWorkerToMoveEvent.getIndexSecondWoker();
+        int row1 = askWorkerToMoveEvent.getRow1();
+        int row2 = askWorkerToMoveEvent.getRow2();
+        int column1 = askWorkerToMoveEvent.getColumn1();
+        int column2 = askWorkerToMoveEvent.getColumn2();
+        int indexFirstWorker = askWorkerToMoveEvent.getIndexFirstWoker();
+        int indexSecondWorker = askWorkerToMoveEvent.getIndexSecondWoker();
 
         System.out.println("You're going to do your move-> What Worker You wanna move?");
         System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row" + column1 + " <-column");
@@ -166,55 +166,31 @@ public class CLIView extends View {
         System.out.println("Control the board and choose...");
         printBoard(false);
 
-        int intInputValue;
-        while (true) {
-            System.out.println("Enter a whole number.");
-
-            String inputString= input.nextLine();
-            try {
-                intInputValue = Integer.parseInt(inputString);
-                if(intInputValue>=0 && intInputValue<2){
-                    System.out.println("Correct input, exit");
-                    break;
-                }
-            } catch (NumberFormatException ne) {
-                System.out.println("Input is not a number, continue");
-            }
-        }
+        int intInputValue = twoNumbers();
         ObjWokerToMove objWokerToMove;
-        if (intInputValue==0){
-            objWokerToMove=new ObjWokerToMove(indexFirstWorker, row1,column1,false);
+        if (intInputValue == 0){
+            objWokerToMove = new ObjWokerToMove(indexFirstWorker, row1, column1,false);
         }else{
-            objWokerToMove=new ObjWokerToMove(indexSecondWorker, row2,column2,false);
+            objWokerToMove = new ObjWokerToMove(indexSecondWorker, row2, column2,false);
         }
         return objWokerToMove;
     }
 
     @Override
-    public ObjWokerToMove AreYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-        int row1=askWorkerToMoveEvent.getRow1();
-        int column1=askWorkerToMoveEvent.getRow2();
-        int indexWorker=askWorkerToMoveEvent.getIndexFirstWoker();
+    public ObjWokerToMove areYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+        int row1 = askWorkerToMoveEvent.getRow1();
+        int column1 = askWorkerToMoveEvent.getRow2();
+        int indexWorker = askWorkerToMoveEvent.getIndexFirstWoker();
 
         System.out.println("Are You sure you want move the "+indexWorker+" worker? ");
         System.out.println("Position : "+ row1 + " <-row" + column1 + " <-column");
 
         System.out.println("[ 0 ] -> "+ "YES");
         System.out.println("[ 1 ] -> "+ "NO");
-        int intInputValue;
-        while (true) {
-            System.out.println("Enter a whole number.");
 
-            String inputString= input.nextLine();
-            try {
-                intInputValue = Integer.parseInt(inputString);
-                break;
-            } catch (NumberFormatException ne) {
-                System.out.println("Input is not a number, continue");
-            }
-        }
-        if(intInputValue==0){
-            return new ObjWokerToMove(indexWorker,row1,column1,true);
+        int intInputValue = twoNumbers();
+        if(intInputValue == 0){
+            return new ObjWokerToMove(indexWorker, row1, column1,true);
         }else{
             return askWorker(askWorkerToMoveEvent);
         }
@@ -227,43 +203,15 @@ public class CLIView extends View {
         int indexWorker=askMoveEvent.getIndexWoker();
 
         ObjMove objMove= new ObjMove(indexWorker,0,0,true);
-        int intInputValue=0;
 
         System.out.println("you have chosen the "+indexWorker+" worker ");
         System.out.println("Position : "+ row + " <-row" + column + " <-column");
         System.out.println("You're going to do your move-> What Position You wanna reach?");
 
-        System.out.println("Select row:");
-
-        while (true) {
-            System.out.println("Enter a whole number.");
-            String inputString= input.nextLine();
-            try {
-                intInputValue = Integer.parseInt(inputString);
-                if(intInputValue>=0 && intInputValue<5){
-                    System.out.println("Correct input, exit");
-                    break;
-                }
-            } catch (NumberFormatException ne) {
-                System.out.println("Input is not a number, continue");
-            }
-        }
+        int intInputValue = rowSelected();
         objMove.setRow(intInputValue);
 
-        System.out.println("Select Column:");
-        while (true) {
-            System.out.println("Enter a whole number.");
-            String inputString= input.nextLine();
-            try {
-                intInputValue = Integer.parseInt(inputString);
-                if(intInputValue>=0 && intInputValue<5){
-                    System.out.println("Correct input, exit");
-                    break;
-                }
-            } catch (NumberFormatException ne) {
-                System.out.println("Input is not a number, continue");
-            }
-        }
+        intInputValue = columnSelected();
         objMove.setColumn(intInputValue);
         return objMove;
     }
@@ -275,19 +223,8 @@ public class CLIView extends View {
         System.out.println("[ 0 ] -> "+ "YES");
         System.out.println("[ 1 ] -> "+ "NO");
 
-        int intInputValue=0;
-        while (true) {
-            System.out.println("Enter a whole number.");
-            String inputString= input.nextLine();
-            try {
-                intInputValue = Integer.parseInt(inputString);
-                break;
-            } catch (NumberFormatException ne) {
-                System.out.println("Input is not a number, continue");
-            }
-        }
-        //todo Ila hai invertito: 0 è sì, voglio fare un'altra mossa (G)
-        if(intInputValue==0){
+        int intInputValue = twoNumbers();
+        if(intInputValue == 1){
             return new ObjMove(true);
         }else{
             ObjMove objMove = moveWorker(askMoveEvent);
@@ -311,10 +248,10 @@ public class CLIView extends View {
         }
         System.out.println("Control the board and choose a box");
 
-        intInputValue = rowSelected(rowWorker);
+        intInputValue = rowSelected();
         objBlock.setRowBlock(intInputValue);
 
-        intInputValue = columnSelected(columnWorker);
+        intInputValue = columnSelected();
         objBlock.setColumnBlock(intInputValue);
 
         //todo (G) Se atlas chiedere se vuole mettere una cupola. Passare un boolean e inserirlo in tutti i metodi buildMove (solo Atlas andrà ad utilizzarlo)
@@ -330,7 +267,7 @@ public class CLIView extends View {
         System.out.println("[ 0 ] -> "+ "YES");
         System.out.println("[ 1 ] -> "+ "NO");
 
-        int inputValue = inputNumber();
+        int inputValue = twoNumbers();
         if(inputValue == 0){
             ObjBlock objBlock = buildMove(askBuildEvent);
             objBlock.setDone(false);
@@ -358,12 +295,23 @@ public class CLIView extends View {
         }
     }
 
-    //Questo metodo serve per selezionare una riga che sia raggiungibile
-    public int rowSelected(int rowWorker){
+    public int twoNumbers(){
         int intInputValue;
         System.out.println("Select row:");
         intInputValue = inputNumber();
-        while(!boxReachable(rowWorker, intInputValue)){
+        while(intInputValue >= 2 || intInputValue < 0){
+            System.out.println("Select again the row. You cannot reach that row");
+            intInputValue = inputNumber();
+        }
+        return intInputValue;
+    }
+
+    //Questo metodo serve per selezionare una riga che sia raggiungibile
+    public int rowSelected(){
+        int intInputValue;
+        System.out.println("Select row:");
+        intInputValue = inputNumber();
+        while(!boxReachable(intInputValue)){
             System.out.println("Select again the row. You cannot reach that row");
             intInputValue = inputNumber();
         }
@@ -371,11 +319,11 @@ public class CLIView extends View {
     }
 
     //Questo metodo serve per selezionare una colonna che sia raggiungibile
-    public int columnSelected(int columnWorker){
+    public int columnSelected(){
         int intInputValue;
         System.out.println("Select column:");
         intInputValue = inputNumber();
-        while(!boxReachable(columnWorker, intInputValue)){
+        while(!boxReachable(intInputValue)){
             System.out.println("Select again the column. You cannot reach that column");
             intInputValue = inputNumber();
         }
@@ -383,7 +331,7 @@ public class CLIView extends View {
     }
 
     //Questo metodo controlla se il numero inserito può appartenere a una casella adiacente
-    public boolean boxReachable (int rowOrColumnWorker, int input){
-        return input >= 0 && input < 5 && input <= rowOrColumnWorker+1 && input >= rowOrColumnWorker-1;
+    public boolean boxReachable (int input){
+        return input >= 0 && input < 5;
     }
 }

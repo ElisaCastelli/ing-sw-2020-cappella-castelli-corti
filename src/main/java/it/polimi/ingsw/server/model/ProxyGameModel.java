@@ -100,10 +100,9 @@ public class ProxyGameModel implements GameModel, Subject{
         gameModel.setBoxReachable(indexPlayer, indexWorker);
     }
 
-    //TODO da implementare
     @Override
     public ArrayList<Box> getWorkersPos(int indexPlayer) {
-        return null;
+        return gameModel.getWorkersPos(indexPlayer);
     }
 
     @Override

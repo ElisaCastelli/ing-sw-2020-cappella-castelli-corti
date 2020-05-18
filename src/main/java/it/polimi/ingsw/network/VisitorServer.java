@@ -49,25 +49,26 @@ public class VisitorServer {
         System.out.println("Ricevo objCard");
         serverHandler.waitForPlayer();
         int indexPlayer=serverHandler.getIndexPlayer();
-        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
         AskCard askcard = serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
-        serverHandler.sendUpdateBroadcast(objState);
-        //ho aggiunto uesta riga e il corrispondente incremento degli ack sullo Ackstate
-        serverHandler.waitForPlayer();
         serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
         if(askcard.getCardTemp().size() != 0){
+            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+            serverHandler.sendUpdateBroadcast(objState);
+            serverHandler.waitForPlayer();
             serverHandler.sendUpdateBroadcast(askcard);
         }
         else{
             System.out.println("Invio board");
             ObjInitialize objInitialize = serverHandler.gameData();
             serverHandler.sendUpdateBroadcast(objInitialize);
+            serverHandler.waitForPlayer();
+            serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
         }
     }
 
     public void visit(AckState ackState) {
         serverHandler.getVirtualView().incCounterOpponent();
-        System.out.println("stoca**o di "+ serverHandler.getName());
+        System.out.println("AckState di thread numero: "+ serverHandler.getName());
     }
 
     public void visit(AckPlayer ackPlayer) throws Exception {
@@ -78,10 +79,24 @@ public class VisitorServer {
     }
 
     public void visit (ObjWorkers objWorkers){
-        //serverHandler.waitForPlayer();
-        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-        serverHandler.getVirtualView().initializeWorker(serverHandler.getIndexPlayer(), objWorkers.getBox1(), objWorkers.getBox2());
-        serverHandler.sendUpdateBroadcast(objState);
+        serverHandler.waitForPlayer();
+        if(serverHandler.getVirtualView().initializeWorker(serverHandler.getIndexPlayer(), objWorkers.getBox1(), objWorkers.getBox2())){
+            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+            serverHandler.sendUpdateBroadcast(updateBoardEvent);
+            serverHandler.waitForPlayer();
+            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+            serverHandler.sendUpdateBroadcast(objState);
+            serverHandler.waitForPlayer();
+            if(serverHandler.getIndexPlayer() == serverHandler.getClientArray().size()){
+                AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(serverHandler.getIndexPlayer(), true);
+                serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
+            }else{
+                serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
+            }
+        }
+        else{
+            serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
+        }
     }
 
     public void visit (ObjWokerToMove objWokerToMove){
@@ -116,7 +131,7 @@ public class VisitorServer {
         serverHandler.sendUpdateBroadcast(updateBoardEvent);
         serverHandler.waitForPlayer();
         ///check win/morto
-        if(/*ha vinto*/ ){
+        if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRow(), objMove.getColumn(), objMove.getIndexWokerToMove()) ){
             ///sendupdate.hai vinto
             ///sendbroadcast senza io hai perso
         }else{

@@ -95,25 +95,33 @@ public class VisitorClient {
     }
 
     public void visit(AskInitializeWorker askInitializeWorker){
-        ArrayList<Box> boxes=clientHandler.getView().initializeWorker();
-        ObjWorkers objWorkers= new ObjWorkers(boxes.get(0),boxes.get(1));
-        clientHandler.sendMessage(objWorkers);
+        if(clientHandler.getView().isPlaying()){
+            ArrayList<Box> boxes = clientHandler.getView().initializeWorker();
+            ObjWorkers objWorkers = new ObjWorkers(boxes.get(0),boxes.get(1));
+            clientHandler.sendMessage(objWorkers);
+        }else{
+            System.out.println("Someone is initializing his workers");
+            clientHandler.sendMessage(new AckState());
+        }
     }
 
     public void visit (UpdateBoardEvent updateBoardEvent){
+        clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
         if(!clientHandler.getView().isPlaying()){
             System.out.println("Someone is changing the Board: ");
-            clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
             clientHandler.sendMessage(new AckUpdateBoard());
         }else{
             System.out.println("You received an update of the Board: ");
-            clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
         }
     }
 
     public void visit(ObjInitialize objInitialize){
         clientHandler.getView().setBoard(objInitialize.getBoard());
-        //clientHandler.getView().setUsers(objInitialize.getUserArray());
+        clientHandler.getView().printBoard(false);
+        clientHandler.getView().setUsers(objInitialize.getUserArray());
+        if(!clientHandler.getView().isPlaying()){
+            clientHandler.sendMessage(new AckState());
+        }
     }
 
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
@@ -122,12 +130,11 @@ public class VisitorClient {
                 ObjWokerToMove objWokerToMove = clientHandler.getView().askWorker(askWorkerToMoveEvent);
                 clientHandler.sendMessage(objWokerToMove);
             }else{
-                ObjWokerToMove objWokerToMove = clientHandler.getView().AreYouSure(askWorkerToMoveEvent);
+                ObjWokerToMove objWokerToMove = clientHandler.getView().areYouSure(askWorkerToMoveEvent);
                 clientHandler.sendMessage(objWokerToMove);
             }
         }else{
             System.out.println("Someone else is choosing the worker to move");
-            //TODO si potrebbe cambiare con un nuovo ack che fa la stessa cosa
             clientHandler.sendMessage(new AckState());
         }
     }
