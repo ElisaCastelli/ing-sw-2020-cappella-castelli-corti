@@ -28,15 +28,16 @@ public interface GameModel {
     boolean initializeWorker(int indexPlayer,Box box1, Box box2);
     GameState getState();
     ArrayList<Box> getWorkersPos(int indexPlayer);
+    boolean isReachable(int row, int column);
     boolean canMove(int indexPlayer);
     void setBoxReachable(int indexPlayer, int indexWorker);
     boolean movePlayer(int indexPlayer, int indexWorker, int row, int column);
     boolean canBuild(int indexPlayer, int indexWorker);
     void setBoxBuilding(int indexPlayer, int indexWorker);
     boolean buildBlock(int indexPlayer, int indexWorker, int row, int column);
-    boolean checkWin(int indexPlayer, Box startBox, int indexWorker);
+    boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker);
     boolean checkWinAfterBuild();
-    void setWinningPlayer(int indexPlayer);
+    int getWinner();
     void setDeadPlayer(int indexPlayer);
     void setPause();
 }

@@ -105,6 +105,7 @@ public class VisitorClient {
         }
     }
 
+
     public void visit (UpdateBoardEvent updateBoardEvent){
         clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
         if(!clientHandler.getView().isPlaying()){

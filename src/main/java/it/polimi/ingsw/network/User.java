@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int indexArrayDiClient;
     private String name;
     private String nameCard;
@@ -54,5 +56,14 @@ public class User {
 
     public void setInitialized(boolean initialized) {
         this.initialized = initialized;
+    }
+
+    public int getIndexNext(){
+        if(indexPlayer<nPlayer-1){
+            return indexPlayer+1;
+        }
+        else {
+            return 0;
+        }
     }
 }

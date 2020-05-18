@@ -59,14 +59,15 @@ public class GameStateManager {
     public boolean checkWinAfterBuild(){
         return currentState.checkWinAfterBuild();
     }
-    public void setWinningPlayer(int indexPlayer){
-        currentState.setWinningPlayer(indexPlayer);
+    public int getWinner(){
+        return currentState.getWinner();
     }
     public void setDeadPlayer(int indexPlayer){
        currentState.setDeadPlayer(indexPlayer);
     }
-    public void goEnd(){
+    public void goEnd(int winner){
         currentState=end;
+        currentState.setWinner(winner);
     }
     public void goGoing(){
         currentState=going;

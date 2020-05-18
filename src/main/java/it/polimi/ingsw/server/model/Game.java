@@ -25,7 +25,7 @@ public class Game implements GameModel{
     /**
      * This attribute is the playing board
      */
-    private static Board board;
+    private Board board;
     /**
      * this is the array list of the players
      */
@@ -193,11 +193,13 @@ public class Game implements GameModel{
     public ArrayList<Box> getWorkersPos(int indexPlayer){
        return players.get(indexPlayer).getWorkersBox();
     }
-    //index worker 1 o 2, nelle altre classi arriva già a -1
-    public boolean initializeWorker(int indexPlayer, Box box1, Box box2){
-        return players.get(indexPlayer).initializeWorker(box1, box2);
-    }
 
+    public boolean initializeWorker(int indexPlayer, Box box1, Box box2){
+        return players.get(indexPlayer).initializeWorker(box1, box2,board);
+    }
+    public boolean isReachable(int row, int column){
+        return board.getBox(row,column).isReachable();
+    }
     public GameState getState(){
         return stateManager.getCurrentState();
     }
@@ -228,8 +230,8 @@ public class Game implements GameModel{
         return stateManager.buildBlock(indexPlayer,indexWorker,row,column,board);
     }
 
-    public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
-        return stateManager.checkWin(indexPlayer, startBox, indexWorker);
+    public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker){
+        return stateManager.checkWin(indexPlayer, board.getBox(rowStart, columnStart), indexWorker);
     }
 
     public boolean checkWinAfterBuild(){
@@ -237,8 +239,8 @@ public class Game implements GameModel{
     }
 
 
-    public void setWinningPlayer(int indexPlayer){
-        stateManager.setWinningPlayer(indexPlayer);
+    public int getWinner(){
+        return stateManager.getWinner();
     }
 
     public void setDeadPlayer(int indexPlayer){

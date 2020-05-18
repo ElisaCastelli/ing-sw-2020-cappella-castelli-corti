@@ -6,8 +6,10 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 public class Win extends PlayerState{
     private God myGod;
-    public Win(God myGod){
+    private final PlayerStateManager playerManager;
+    public Win(God myGod,PlayerStateManager playerManager){
         this.myGod=myGod;
+        this.playerManager=playerManager;
     }
 
     @Override

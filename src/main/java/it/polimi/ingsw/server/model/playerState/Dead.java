@@ -6,9 +6,11 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 public class Dead extends PlayerState{
     private God myGod;
-    public Dead(God myGod){
-        this.myGod=myGod;
-    }
+    private final PlayerStateManager playerManager;
+    public Dead(God myGod, PlayerStateManager playerManager){
+            this.myGod=myGod;
+            this.playerManager=playerManager;
+        }
 
     @Override
     public boolean moveWorker(Worker worker, Box pos){

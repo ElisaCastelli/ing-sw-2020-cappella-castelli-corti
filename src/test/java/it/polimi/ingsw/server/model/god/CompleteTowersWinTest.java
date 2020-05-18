@@ -112,7 +112,7 @@ class CompleteTowersWinTest {
         assertTrue(hestia.moveBlock(board.getBox(2,3)));
         assertTrue(prometheus.moveBlock(board.getBox(2,3)));
         Worker proWorker = new Worker(1, Game.COLOR.BLU);
-        proWorker.initializePos(board.getBox(4,0));
+        proWorker.initializePos(board.getBox(4,0),board);
         assertTrue(prometheus.moveWorker(proWorker, board.getBox(4,1)));
         assertTrue(prometheus.moveBlock(board.getBox(2,3)));
         assertTrue(prometheus.moveWorker(proWorker, board.getBox(4,2)));

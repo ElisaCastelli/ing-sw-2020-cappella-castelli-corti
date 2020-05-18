@@ -15,7 +15,7 @@ class BuildABlockUnderItselfTest {
         Worker myWorker = new Worker(1, Game.COLOR.BLU);
         Board board = new Board();
 
-        myWorker.initializePos(board.getBox(4,1));
+        myWorker.initializePos(board.getBox(4,1),board);
         god.setPossibleBuild(myWorker);
 
         assertTrue(board.getBox(3,0).isReachable());
@@ -74,19 +74,19 @@ class BuildABlockUnderItselfTest {
         Worker myWorker = new Worker(1,Game.COLOR.BLU);
         Board board = new Board();
 
-        myWorker.initializePos(board.getBox(0,0));
+        myWorker.initializePos(board.getBox(0,0),board);
 
         assertTrue(god.moveBlock(board.getBox(0,0)));
         assertEquals(1, myWorker.getHeight());
         assertEquals(1,board.getBox(0,0).getCounter());
 
-        myWorker.initializePos(board.getBox(0,0));
+        myWorker.initializePos(board.getBox(0,0),board);
 
         assertTrue(god.moveBlock(board.getBox(0,0)));
         assertEquals(2, myWorker.getHeight());
         assertEquals(2,board.getBox(0,0).getCounter());
 
-        myWorker.initializePos(board.getBox(0,0));
+        myWorker.initializePos(board.getBox(0,0),board);
 
         assertTrue(god.moveBlock(board.getBox(0,0)));
         assertEquals(3, myWorker.getHeight());

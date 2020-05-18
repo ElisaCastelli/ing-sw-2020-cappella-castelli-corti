@@ -6,8 +6,10 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 public class IsPlaying extends PlayerState{
     private God myGod;
-    public IsPlaying(God myGod){
+    private final PlayerStateManager playerManager;
+    public IsPlaying(God myGod, PlayerStateManager playerManager){
         this.myGod=myGod;
+        this.playerManager=playerManager;
     }
 
     @Override
@@ -24,7 +26,11 @@ public class IsPlaying extends PlayerState{
 
     @Override
     public boolean checkWin(Box starterBox, Box finalBox) {
-        return myGod.checkWin( starterBox , finalBox );
+        boolean win=myGod.checkWin( starterBox , finalBox );
+        if(win){
+            playerManager.goWin();
+        }
+        return win;
     }
 
 

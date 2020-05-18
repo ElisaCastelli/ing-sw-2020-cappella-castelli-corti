@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.events.*;
-import it.polimi.ingsw.network.objects.ObjCard;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.ProxyGameModel;
@@ -17,6 +16,8 @@ public class VirtualView implements Observer {
     private Controller controller;
     private boolean ready;
     private int ackCounter;
+    private int winnerPlayer;
+
 
     public VirtualView() throws Exception {
         gameModel= new ProxyGameModel();
@@ -24,6 +25,7 @@ public class VirtualView implements Observer {
         subscribe();
         ready=false;
         ackCounter=0;
+        winnerPlayer=-1;
     }
     public synchronized boolean isReady() {
         return ready;
@@ -128,7 +130,9 @@ public class VirtualView implements Observer {
         System.out.println("Ho inizializzato la pedina");
     }
 
-
+    public boolean isReachable(int row, int column){
+        return gameModel.isReachable(row,column);
+    }
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
     public boolean canMove(int indexPlayer){
@@ -159,9 +163,12 @@ public class VirtualView implements Observer {
     public void updateMove(){
         System.out.println("Pedina mossa");
     }
-    ///
-    public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
-        return controller.checkWin(indexPlayer, startBox, indexWorker);
+
+    public boolean checkWin(int indexPlayer, int startRow, int startColumn, int indexWorker){
+
+        return controller.checkWin(indexPlayer, startRow, startColumn, indexWorker);
+
+
     }
 
 
@@ -199,17 +206,6 @@ public class VirtualView implements Observer {
 
 
 
-
-
-
-
-    public void setWinningPlayer(int indexPlayer){
-        controller.setWinningPlayer(indexPlayer);
-    }
-
-    public void setDeadPlayer(int indexPlayer){
-        controller.setDeadPlayer(indexPlayer);
-    }
 
     public void setPause(){
         controller.setPause();

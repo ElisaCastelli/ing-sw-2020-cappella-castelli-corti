@@ -18,8 +18,8 @@ class MoveWorkerTwiceTest {
         Worker myWorker = new Worker(1, Game.COLOR.BLU);
         Worker worker2=new Worker(2,Game.COLOR.BLU);
 
-        myWorker.initializePos(board.getBox(0,1));
-        worker2.initializePos(board.getBox(1,1));
+        myWorker.initializePos(board.getBox(0,1),board);
+        worker2.initializePos(board.getBox(1,1),board);
 
         board.getBox(0,0).build();
         board.getBox(0,0).build();
@@ -63,7 +63,7 @@ class MoveWorkerTwiceTest {
         Board board = new Board();
         Worker myWorker = new Worker(1,Game.COLOR.BLU);
 
-        myWorker.initializePos(board.getBox(0,1));
+        myWorker.initializePos(board.getBox(0,1),board);
 
         //Prima mossa normale
         assertFalse(god.moveWorker(myWorker, board.getBox(1,0)));

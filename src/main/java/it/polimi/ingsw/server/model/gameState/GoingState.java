@@ -17,10 +17,6 @@ public class GoingState extends GameState{
         this.manager=manager;
     }
 
-    public boolean initializeWorker(int indexPlayer, Box box1,Box box2){
-        return players.get(indexPlayer).initializeWorker(box1, box2);
-    }
-
     public void startTurn(int indexPlayer){
         players.get(indexPlayer).goPlay();
     }
@@ -67,7 +63,11 @@ public class GoingState extends GameState{
     }
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
-        return players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker));
+        boolean win=players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker));
+        if(win){
+            manager.goEnd(indexPlayer);
+        }
+        return win;
     }
 
     public boolean checkWinAfterBuild(){
@@ -81,17 +81,16 @@ public class GoingState extends GameState{
             }
             player++;
         }
+
+        if(win){
+            manager.goEnd(player);
+        }
         return win;
     }
 
 
-    public void setWinningPlayer(int indexPlayer){
-        players.get(indexPlayer).goWin();
-        //TODO notify vittoria
-        manager.goEnd();
-    }
-
-    public void setDeadPlayer(int indexPlayer){
+//TODO TOGLIERE
+    /*public void setDeadPlayer(int indexPlayer){
         players.get(indexPlayer).goDead();
         playersDead.add(players.get(indexPlayer));
         players.remove(indexPlayer);
@@ -99,5 +98,5 @@ public class GoingState extends GameState{
         if(players.size()==2){
             manager.goEnd();
         }
-    }
+    }*/
 }

@@ -16,8 +16,8 @@ class BuildNotAlongThePerimeterTest {
         Worker opponentWorker = new Worker(2,Game.COLOR.BLU);
         Board board = new Board();
 
-        myWorker.initializePos(board.getBox(1,1));
-        opponentWorker.initializePos(board.getBox(1,2));
+        myWorker.initializePos(board.getBox(1,1),board);
+        opponentWorker.initializePos(board.getBox(1,2),board);
 
         board.getBox(2,1).build();
         board.getBox(2,1).build();
@@ -68,7 +68,7 @@ class BuildNotAlongThePerimeterTest {
 
         //Metto un altro worker in (4,4) e riapplico i due controlli e mosse
         Worker opponentWorker2 = new Worker(3,Game.COLOR.BLU);
-        opponentWorker2.initializePos(board.getBox(4,4));
+        opponentWorker2.initializePos(board.getBox(4,4),board);
 
         god.setPossibleBuild(opponentWorker2);
 

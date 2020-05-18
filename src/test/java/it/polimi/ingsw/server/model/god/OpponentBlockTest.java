@@ -20,9 +20,9 @@ class OpponentBlockTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(0,1));
-        worker2.initializePos(board.getBox(1,1));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(0,1),board);
+        worker2.initializePos(board.getBox(1,1),board);
+        worker3.initializePos(board.getBox(3,3),board);
         //costruisco un livello
         board.getBox(0,2).build();
         assertEquals(1,board.getBox(0,2).getCounter());

@@ -18,9 +18,9 @@ class BuildBeforeWorkerMoveTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(0,1));
-        worker2.initializePos(board.getBox(1,2));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(0,1),board);
+        worker2.initializePos(board.getBox(1,2),board);
+        worker3.initializePos(board.getBox(3,3),board);
 
         //build-move-build
         System.out.println("build-move-build");
@@ -60,9 +60,9 @@ class BuildBeforeWorkerMoveTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(0,1));
-        worker2.initializePos(board.getBox(1,2));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(0,1),board);
+        worker2.initializePos(board.getBox(1,2),board);
+        worker3.initializePos(board.getBox(3,3),board);
 
         System.out.println("build-move-build");
         System.out.println("build in 2,3");

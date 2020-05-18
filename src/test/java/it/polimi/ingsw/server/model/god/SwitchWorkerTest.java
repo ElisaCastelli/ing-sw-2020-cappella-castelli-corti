@@ -19,8 +19,8 @@ class SwitchWorkerTest {
         Worker worker2=new Worker(2,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(1,1));
-        worker2.initializePos(board.getBox(0,1));
+        worker.initializePos(board.getBox(1,1),board);
+        worker2.initializePos(board.getBox(0,1),board);
 
         god.setPossibleMove(worker);
         worker.getActualBox().clearBoxesNextTo();
@@ -37,8 +37,8 @@ class SwitchWorkerTest {
         Worker worker2=new Worker(2,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(1,1));
-        worker2.initializePos(board.getBox(0,1));
+        worker.initializePos(board.getBox(1,1),board);
+        worker2.initializePos(board.getBox(0,1),board);
 
         god.setPossibleBuild(worker);
         worker.getActualBox().clearBoxesNextTo();
@@ -54,9 +54,9 @@ class SwitchWorkerTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(1,1));
-        worker2.initializePos(board.getBox(0,1));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(1,1),board);
+        worker2.initializePos(board.getBox(0,1),board);
+        worker3.initializePos(board.getBox(3,3),board);
         //MOSSA NORMALE VERSO UN'ALTRA CASELLA
         god.moveWorker(worker3,board.getBox(2,3));
         assertEquals(3,board.getBox(2,3).getWorker().getWorkerId());

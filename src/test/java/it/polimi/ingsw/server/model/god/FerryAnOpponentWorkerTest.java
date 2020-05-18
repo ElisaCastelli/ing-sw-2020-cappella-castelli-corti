@@ -17,9 +17,9 @@ class FerryAnOpponentWorkerTest {
         Worker oppWorker = new Worker(2,Game.COLOR.BLU);
         Worker othWorker = new Worker(3,Game.COLOR.BLU);
 
-        myWorker.initializePos(board.getBox(1,3));
-        oppWorker.initializePos(board.getBox(0,4));
-        othWorker.initializePos(board.getBox(3,1));
+        myWorker.initializePos(board.getBox(1,3),board);
+        oppWorker.initializePos(board.getBox(0,4),board);
+        othWorker.initializePos(board.getBox(3,1),board);
 
         //Controllo su oppWorker
         god.setPossibleMove(oppWorker);
@@ -99,9 +99,9 @@ class FerryAnOpponentWorkerTest {
         Worker oppWorker = new Worker(2,Game.COLOR.BLU);
         Worker othWorker = new Worker(3,Game.COLOR.BLU);
 
-        myWorker.initializePos(board.getBox(1,3));
-        oppWorker.initializePos(board.getBox(0,4));
-        othWorker.initializePos(board.getBox(3,1));
+        myWorker.initializePos(board.getBox(1,3),board);
+        oppWorker.initializePos(board.getBox(0,4),board);
+        othWorker.initializePos(board.getBox(3,1),board);
 
         board.getBox(2,2).build();
         board.getBox(2,2).build();

@@ -86,7 +86,10 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.initializeWorker(indexPlayer, box1, box2);
     }
 
-
+    @Override
+    public boolean isReachable(int row, int column){
+        return gameModel.isReachable(row,column);
+    }
 
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
@@ -126,8 +129,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public boolean checkWin(int indexPlayer, Box startBox, int indexWorker) {
-        return gameModel.checkWin(indexPlayer, startBox, indexWorker);
+    public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker) {
+        return gameModel.checkWin(indexPlayer, rowStart,columnStart, indexWorker);
     }
 
     @Override
@@ -136,8 +139,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void setWinningPlayer(int indexPlayer) {
-        gameModel.setWinningPlayer(indexPlayer);
+    public int getWinner() {
+        return gameModel.getWinner();
     }
 
     @Override

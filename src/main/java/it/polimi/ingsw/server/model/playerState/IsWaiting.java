@@ -6,9 +6,10 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 public class IsWaiting extends PlayerState{
     private God myGod;
-
-    public IsWaiting(God myGod){
+    private final PlayerStateManager playerManager;
+    public IsWaiting(God myGod, PlayerStateManager playerManager){
         this.myGod=myGod;
+        this.playerManager=playerManager;
     }
 
     @Override

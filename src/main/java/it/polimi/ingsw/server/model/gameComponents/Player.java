@@ -89,8 +89,8 @@ public class Player {
      * @param box2 is the box where i want to set the worker
      * @return true if initialization is successful, else false
      */
-    public boolean initializeWorker( Box box1, Box box2){
-        return myWorkers[0].initializePos(box1) && myWorkers[1].initializePos(box2);
+    public boolean initializeWorker( Box box1, Box box2, Board board){
+        return (myWorkers[0].initializePos(box1, board) && myWorkers[1].initializePos(box2, board));
     }
 
     public void goPlay(){

@@ -74,8 +74,8 @@ public class Controller  {
         return askMoveEvent;
     }
     ///
-    public boolean checkWin(int indexPlayer, Box startBox, int indexWorker) {
-        return gameModel.checkWin(indexPlayer, startBox, indexWorker);
+    public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker) {
+        return gameModel.checkWin(indexPlayer, rowStart, columnStart, indexWorker);
     }
 
 
@@ -109,10 +109,6 @@ public class Controller  {
 
 
 
-    public void setWinningPlayer(int indexPlayer) {
-        gameModel.setWinningPlayer(indexPlayer);
-
-    }
     public void setDeadPlayer(int indexPlayer){
         gameModel.setDeadPlayer(indexPlayer);
     }

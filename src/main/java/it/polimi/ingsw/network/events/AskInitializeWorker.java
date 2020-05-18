@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
 public class AskInitializeWorker extends ObjMessage {
+
     @Override
     public void accept(VisitorServer visitorServer) throws Exception {
         throw new UnsupportedOperationException();

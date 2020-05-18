@@ -87,8 +87,8 @@ public class VisitorServer {
             ObjState objState = serverHandler.getVirtualView().goPlayingNext();
             serverHandler.sendUpdateBroadcast(objState);
             serverHandler.waitForPlayer();
-            if(serverHandler.getIndexPlayer() == serverHandler.getClientArray().size()){
-                AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(serverHandler.getIndexPlayer(), true);
+            if(serverHandler.getIndexPlayer()+1 == serverHandler.getClientArray().size()){
+                AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(serverHandler.getIndexNext(), true);
                 serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
             }else{
                 serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
@@ -192,6 +192,7 @@ public class VisitorServer {
                 if(askBuildEvent.isDone()){
                     //Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
                     ObjState objState = serverHandler.getVirtualView().goPlayingNext();
+                    //va richiamata la can move(player+1) sul nuovo whoIsPlaying
                     serverHandler.sendUpdateBroadcast(objState);
                 }else {
                     updateBoardEvent = serverHandler.getVirtualView().setBoxBuilding(indexPlayer, indexWorker);

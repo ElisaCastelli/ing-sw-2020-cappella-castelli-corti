@@ -34,8 +34,8 @@ public class CLIView extends View {
 
     @Override
     public int askNPlayer() {
-        System.out.println("Numero giocatori:");
-        return input.nextInt();
+        System.out.println(" Quanti giocatori siete? [2 o 3]");
+        return inputTwoOrThree();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CLIView extends View {
     @Override
     public int askAge() {
         System.out.println("Età giocatore:");
-        return input.nextInt();
+        return inputNumber();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class CLIView extends View {
             System.out.println("Colonna: ");
             int column= input.nextInt();
             if(board.getBox(row,column).notWorker()){
-                if(boxes.size()==1 && (boxes.get(0).getRow()!=row && boxes.get(1).getColumn()!=column)){
+                if(boxes.size()==1 && (boxes.get(0).getRow()!=row && boxes.get(0).getColumn()!=column)){
                     boxes.add(board.getBox(row,column));
                     //System.out.println("Casella gia' occupata");
                 }
@@ -161,8 +161,8 @@ public class CLIView extends View {
         int indexSecondWorker = askWorkerToMoveEvent.getIndexSecondWoker();
 
         System.out.println("You're going to do your move-> What Worker You wanna move?");
-        System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row" + column1 + " <-column");
-        System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row" + column2 + " <-column");
+        System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row   " + column1 + " <-column");
+        System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row   " + column2 + " <-column");
         System.out.println("Control the board and choose...");
         printBoard(false);
 
@@ -183,10 +183,10 @@ public class CLIView extends View {
         int indexWorker = askWorkerToMoveEvent.getIndexFirstWoker();
 
         System.out.println("Are You sure you want move the "+indexWorker+" worker? ");
-        System.out.println("Position : "+ row1 + " <-row" + column1 + " <-column");
+        System.out.println("Position : "+ row1 + " <-row   " + column1 + " <-column");
 
-        System.out.println("[ 0 ] -> "+ "YES");
-        System.out.println("[ 1 ] -> "+ "NO");
+        System.out.println("[ 0 ] -> "+ " YES");
+        System.out.println("[ 1 ] -> "+ " NO");
 
         int intInputValue = twoNumbers();
         if(intInputValue == 0){
@@ -297,7 +297,6 @@ public class CLIView extends View {
 
     public int twoNumbers(){
         int intInputValue;
-        System.out.println("Select row:");
         intInputValue = inputNumber();
         while(intInputValue >= 2 || intInputValue < 0){
             System.out.println("Select again the row. You cannot reach that row");
@@ -305,6 +304,17 @@ public class CLIView extends View {
         }
         return intInputValue;
     }
+
+    public int inputTwoOrThree(){
+        int intInputValue;
+        intInputValue = inputNumber();
+        while(intInputValue <2 ||  intInputValue >3){
+            System.out.println("Select again");
+            intInputValue = inputNumber();
+        }
+        return intInputValue;
+    }
+
 
     //Questo metodo serve per selezionare una riga che sia raggiungibile
     public int rowSelected(){

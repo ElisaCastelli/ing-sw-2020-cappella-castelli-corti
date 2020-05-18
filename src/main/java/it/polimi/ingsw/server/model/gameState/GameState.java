@@ -4,6 +4,8 @@ import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
 public class GameState {
+    public void setWinner(int winner){};
+    public int getWinner(){return -1;};
     public void startTurn(int indexPlayer){}
 
     public boolean canMove(int indexPlayer){return false;}

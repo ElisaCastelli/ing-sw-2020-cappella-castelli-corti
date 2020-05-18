@@ -19,9 +19,9 @@ class OtherPositionToBuildTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(0,1));
-        worker2.initializePos(board.getBox(1,1));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(0,1),board);
+        worker2.initializePos(board.getBox(1,1),board);
+        worker3.initializePos(board.getBox(3,3),board);
 
         god.setPossibleBuild(worker);
         worker.getActualBox().clearBoxesNextTo();
@@ -59,9 +59,9 @@ class OtherPositionToBuildTest {
         Worker worker2=new Worker(2,Game.COLOR.BLU);
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
-        worker.initializePos(board.getBox(0,1));
-        worker2.initializePos(board.getBox(1,1));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(0,1),board);
+        worker2.initializePos(board.getBox(1,1),board);
+        worker3.initializePos(board.getBox(3,3),board);
 
         //second move
         assertFalse(god.moveBlock(board.getBox(1,2)));

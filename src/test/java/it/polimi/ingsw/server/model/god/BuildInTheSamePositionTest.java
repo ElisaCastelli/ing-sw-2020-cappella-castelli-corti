@@ -15,7 +15,7 @@ class BuildInTheSamePositionTest {
         Board board = new Board();
         Worker myWorker = new Worker(1, Game.COLOR.BLU);
         //Controllo e costruisco livello 1 e 2
-        myWorker.initializePos(board.getBox(2, 4));
+        myWorker.initializePos(board.getBox(2, 4),board);
         god.setPossibleBuild(myWorker);
 
         assertTrue(myWorker.getActualBox().getBoxesNextTo().get(0).isReachable());
@@ -81,7 +81,7 @@ class BuildInTheSamePositionTest {
         Worker myWorker = new Worker(1,Game.COLOR.BLU);
 
         //Costruisco livello 1 e 2
-        myWorker.initializePos(board.getBox(3, 1));
+        myWorker.initializePos(board.getBox(3, 1),board);
 
         assertFalse(god.moveBlock(board.getBox(2,2)));
 

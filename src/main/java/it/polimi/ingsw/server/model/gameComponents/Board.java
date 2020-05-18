@@ -48,6 +48,7 @@ public class Board implements Serializable {
         }
     }
 
+
     /**
      * @return true if each box of the matrix is empty else return false
      */

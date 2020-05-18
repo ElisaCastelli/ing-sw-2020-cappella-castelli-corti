@@ -71,7 +71,9 @@ public class ServerHandler extends Thread{
     public int getIndexPlayer(){
         return user.getIndexPlayer();
     }
-
+    public int getIndexNext(){
+        return user.getIndexNext();
+    }
     public void setnPlayer(int nPlayer){
         user.setnPlayer(nPlayer);
     }

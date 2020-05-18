@@ -185,13 +185,13 @@ public class Box implements Serializable {
      */
     public void print(){
         if( worker!=null ) {
-            System.out.print("[ "+worker.toString()+" ]");
+            System.out.print("[ O ]");
         }
         else if ( building.getArrayOfBlocks().size() > 0 ){
             building.print();
             System.out.print("[ " + building.getArrayOfBlocks().size() + " ]");
         }else{
-            System.out.println("[ ]");
+            System.out.print("[   ]");
         }
 
     }
@@ -200,12 +200,12 @@ public class Box implements Serializable {
      */
     public void printReachable(){
         if(this.reachable) {
-            System.out.println("[ X ]");
+            System.out.print("[ X ]");
         }else{
             if( worker!=null ) {
                 System.out.print("[ O ]");
             }else
-                System.out.println("[ ]");
+                System.out.print("[  ]");
         }
     }
 }

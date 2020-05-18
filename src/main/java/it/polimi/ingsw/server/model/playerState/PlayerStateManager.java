@@ -14,10 +14,10 @@ public class PlayerStateManager {
 
 
     public PlayerStateManager(God myGod){
-        isPlaying = new IsPlaying(myGod);
-        isWaiting = new IsWaiting(myGod);
-        dead = new Dead(myGod);
-        win = new Win(myGod);
+        isPlaying = new IsPlaying(myGod,this);
+        isWaiting = new IsWaiting(myGod,this);
+        dead = new Dead(myGod,this);
+        win = new Win(myGod,this);
         currentState = isWaiting;
     }
 

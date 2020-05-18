@@ -97,9 +97,9 @@ public class Worker {
      * @param requestedBox is the box where the player wants to put the worker
      * @return a boolean that is true if the worker is set in the requested position
      */
-    public boolean initializePos( Box requestedBox ){
+    public boolean initializePos( Box requestedBox, Board board ){
         if( requestedBox.notWorker () ){
-            requestedBox.setWorker( this );
+            board.getBox(requestedBox.getRow(), requestedBox.getColumn()).setWorker( this );
             actualBox=requestedBox ;
             System.out.println( "the box is now occupied by this worker" );
             return true;

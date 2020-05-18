@@ -15,7 +15,7 @@ class MoveBeforeBuildTest {
         Worker myWorker = new Worker(1, Game.COLOR.BLU);
         Board board = new Board();
 
-        myWorker.initializePos(board.getBox(2,2));
+        myWorker.initializePos(board.getBox(2,2),board);
         //Prima mossa costruzione
         assertTrue(god.moveBlock(board.getBox(0,0)));
 

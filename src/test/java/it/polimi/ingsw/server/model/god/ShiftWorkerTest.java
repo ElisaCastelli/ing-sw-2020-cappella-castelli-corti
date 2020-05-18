@@ -18,9 +18,9 @@ class ShiftWorkerTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
-        worker.initializePos(board.getBox(1,1));
-        worker2.initializePos(board.getBox(0,0));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(1,1),board);
+        worker2.initializePos(board.getBox(0,0),board);
+        worker3.initializePos(board.getBox(3,3),board);
 
         //NON MI DEVE FAR SPOSTARE IN ALTO
         god.setPossibleMove(worker);
@@ -44,9 +44,9 @@ class ShiftWorkerTest {
         Worker worker3=new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
         board.setBoxesNext();
-        worker.initializePos(board.getBox(1,1));
-        worker2.initializePos(board.getBox(0,0));
-        worker3.initializePos(board.getBox(3,3));
+        worker.initializePos(board.getBox(1,1),board);
+        worker2.initializePos(board.getBox(0,0),board);
+        worker3.initializePos(board.getBox(3,3),board);
         //MOSSA BASE
         assertTrue(god.moveWorker(worker3,board.getBox(2,2)));
         assertEquals(3,board.getBox(2,2).getWorker().getWorkerId());

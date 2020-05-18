@@ -17,7 +17,7 @@ class MoveInfinityTimesAlongThePerimeterTest {
         Board board = new Board();
 
         //Mossa normale
-        workerToMove.initializePos(board.getBox(3,3));
+        workerToMove.initializePos(board.getBox(3,3),board);
         assertTrue(god.moveWorker(workerToMove,board.getBox(2,3)));
 
         //Mossa speciale
