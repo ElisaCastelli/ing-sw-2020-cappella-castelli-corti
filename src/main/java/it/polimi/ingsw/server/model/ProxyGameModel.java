@@ -171,7 +171,7 @@ public class ProxyGameModel implements GameModel, Subject{
     }
     @Override
     public void notifyAddWorker(){
-        observer.updateInizializaWorker();
+        observer.updateInitializeWorker();
         observer.updateBoard();
     }
     @Override

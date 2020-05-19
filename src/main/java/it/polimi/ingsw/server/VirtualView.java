@@ -126,7 +126,7 @@ public class VirtualView implements Observer {
     }
 
     @Override
-    public void updateInizializaWorker(){
+    public void updateInitializeWorker(){
         System.out.println("Ho inizializzato la pedina");
     }
 

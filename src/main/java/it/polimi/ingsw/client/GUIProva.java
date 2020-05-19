@@ -1,24 +1,23 @@
 package it.polimi.ingsw.client;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class GUIProva extends Application {
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("src/main/java/it/polimi/ingsw/client/GUI.fxml"));
+public class GUIProva{
+    public Label helloWorld;
 
-        Scene scene = new Scene(root, 300, 275);
 
-        stage.setTitle("FXML Welcome");
-        stage.setScene(scene);
-        stage.show();
+    public void sayHelloWorld(ActionEvent actionEvent) {
+        helloWorld.setText("Hello World!");
     }
+
 
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.User;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.server.model.gameComponents.Board;
+import it.polimi.ingsw.server.model.gameComponents.Box;
 
 import java.util.ArrayList;
 

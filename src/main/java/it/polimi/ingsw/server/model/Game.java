@@ -206,8 +206,26 @@ public class Game implements GameModel{
         return stateManager.getCurrentState();
     }
 
+    //mette in deadPlayers se canMove ritorna false
     public boolean canMove(int indexPlayer){
-        return stateManager.canMove(indexPlayer);
+        boolean canMove=stateManager.canMove(indexPlayer);
+        if(!canMove){
+            playersDead.add(players.get(indexPlayer));
+            players.remove(indexPlayer);
+            if(players.size()==1) {
+                int winner = 0;
+                /*int i=0;
+                boolean found=false;
+                while(i<nPlayers && !found){
+                    if(players.get(i)!=null){
+                        winner=i;
+                        found=true;
+                    }
+                }*/
+                stateManager.goEnd(winner);
+            }
+        }
+        return canMove;
     }
 
     public void setBoxReachable(int indexPlayer, int indexWorker){
@@ -220,7 +238,24 @@ public class Game implements GameModel{
     }
 
     public boolean canBuild(int indexPlayer, int indexWorker){
-        return stateManager.canBuild(indexPlayer, indexWorker);
+        boolean canBuild=stateManager.canBuild(indexPlayer, indexWorker);;
+        if(!canBuild){
+            playersDead.add(players.get(indexPlayer));
+            players.remove(indexPlayer);
+            if(players.size()==1){
+                int winner=0;
+                /*int i=0;
+                boolean found=false;
+                while(i<nPlayers && !found){
+                    if(players.get(i)!=null){
+                        winner=i;
+                        found=true;
+                    }
+                }*/
+                stateManager.goEnd(winner);
+            }
+        }
+        return canBuild;
     }
 
     public void setBoxBuilding(int indexPlayer, int indexWorker){

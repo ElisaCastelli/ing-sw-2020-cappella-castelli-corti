@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.server.model.gameComponents.Board;
+import it.polimi.ingsw.server.model.gameComponents.Box;
 
 public class UpdateBoardEvent extends ObjMessage {
 

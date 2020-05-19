@@ -69,5 +69,40 @@
         "BuildBeforeWorkerMove",
         "NotMoveUp"
       ]
+    },
+    {
+      "name": "Charon",
+      "effect":[
+        "NotMoveUp",
+        "MoveBeforeBuild"
+      ]
+    },
+    {
+      "name": "Chronus",
+      "effect":[
+        "NotMoveUp",
+        "MoveBeforeBuild"
+      ]
+    },
+    {
+      "name": "Hestia",
+      "effect":[
+        "NotMoveUp",
+        "MoveBeforeBuild"
+      ]
+    },
+    {
+      "name": "Triton",
+      "effect":[
+        "NotMoveUp",
+        "MoveBeforeBuild"
+      ]
+      },
+    {
+      "name": "Zeus",
+      "effect":[
+        "NotMoveUp",
+        "MoveBeforeBuild"
+      ]
     }
-  ]
+]

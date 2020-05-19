@@ -21,8 +21,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class GUIView implements Initializable {
-    //Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
+public class GUIView extends Application {
+
     Button[][] matrix; //names the grid of buttons
         private static int SIZE = 5;
         private static int length = SIZE;
@@ -30,17 +30,13 @@ public class GUIView implements Initializable {
         //pane base
         private AnchorPane basePane = new AnchorPane();
         //pane board
-        GridPane boardPane = new GridPane();
+        private GridPane boardPane = new GridPane();
         //pane card
-        StackPane cardPane=new StackPane();
+        private StackPane cardPane=new StackPane();
         //label pane
-        FlowPane usersPane = new FlowPane(Orientation.VERTICAL,
-                10.0, 10.0);
+        private FlowPane usersPane = new FlowPane(Orientation.VERTICAL, 10.0, 10.0);
 
         private Label lbl = new Label();
-
-    public GUIView() throws IOException {
-    }
 
 
     public void background(){
@@ -145,8 +141,4 @@ public class GUIView implements Initializable {
             stage.show();
         }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 }

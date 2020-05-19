@@ -12,7 +12,7 @@ public interface Observer {
     void subscribe();
     ObjNumPlayer updateNPlayer();
     AskCard updateTempCard();
-    void updateInizializaWorker();
+    void updateInitializeWorker();
     UpdateBoardEvent updateBoard();
     ObjState updateWhoIsPlaying();
     void updateReachable();
