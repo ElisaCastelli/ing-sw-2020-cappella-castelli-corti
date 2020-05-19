@@ -47,10 +47,10 @@ public class ClientHandler {
     }
 
     public void sendMessage(ObjMessage objMessage){
-        System.out.println("----> sto cercando di inviare un messaggio");
+        //System.out.println("----> sto cercando di inviare un messaggio");
         synchronized (LOCK){
             try {
-                System.out.println("----> ci sono riuscito");
+                //System.out.println("----> ci sono riuscito");
                 outputStream.writeObject(objMessage);
                 outputStream.flush();
             } catch (IOException e) {

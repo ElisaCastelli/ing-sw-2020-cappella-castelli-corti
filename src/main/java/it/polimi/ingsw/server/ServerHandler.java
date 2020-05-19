@@ -148,10 +148,10 @@ public class ServerHandler extends Thread{
     }
 
     public void sendUpdateBroadcast(ObjMessage objMessage) {
-        System.out.println("----> sto cercando di inviare un messaggio a tutti");
+       /// System.out.println("----> sto cercando di inviare un messaggio a tutti");
        synchronized (LOCK){
            try {
-               System.out.println("----> ci sono riusito");
+               ///System.out.println("----> ci sono riusito");
                for (ServerHandler serverHandler : clientArray) {
                    serverHandler.getOutputStream().writeObject(objMessage);
                    outputStream.flush();

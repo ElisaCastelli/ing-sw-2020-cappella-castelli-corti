@@ -3,15 +3,15 @@ package it.polimi.ingsw.network.objects;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
-public class ObjWokerToMove extends ObjMessage {
+public class ObjWorkerToMove extends ObjMessage {
 
-    int indexWokerToMove;
+    int indexWorkerToMove;
     int row;
     int column;
     boolean isReady;
 
-    public ObjWokerToMove(int indexWokerToMove, int row, int column, boolean isReady) {
-        this.indexWokerToMove = indexWokerToMove;
+    public ObjWorkerToMove(int indexWorkerToMove, int row, int column, boolean isReady) {
+        this.indexWorkerToMove = indexWorkerToMove;
         this.row = row;
         this.column = column;
         this.isReady=isReady;
@@ -25,8 +25,8 @@ public class ObjWokerToMove extends ObjMessage {
         return column;
     }
 
-    public int getIndexWokerToMove() {
-        return indexWokerToMove;
+    public int getIndexWorkerToMove() {
+        return indexWorkerToMove;
     }
 
     public boolean isReady() {

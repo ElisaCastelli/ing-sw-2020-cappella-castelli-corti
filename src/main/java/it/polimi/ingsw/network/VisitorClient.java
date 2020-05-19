@@ -31,7 +31,7 @@ public class VisitorClient {
     }
 
     public void visit(StartGameEvent start){
-        System.out.println("Inizia");
+        System.out.println("Start");
         clientHandler.getView().setNPlayer(start.getnPlayer());
         AckStartGame ack= new AckStartGame();
         clientHandler.sendMessage(ack);
@@ -41,28 +41,29 @@ public class VisitorClient {
         //se è la prima volta entra e ti setti il valore
         if(clientHandler.getView().getIndexPlayer() == -1){
             clientHandler.getView().setIndexPlayer(objState.getIndexPlayer());
-            System.out.println("sto settando l'indice del player quando inizia il gioco: "+clientHandler.getView().getIndexPlayer());
+            ///System.out.println("Setting the index of player when th game start : "+clientHandler.getView().getIndexPlayer());
+
             //qua arrivavano tutti e tre perchè si dovevano settare il valore iniziale
             //se sei anche il primo che deve giocare
             if(clientHandler.getView().getIndexPlayer()==objState.getCurrentPlayer()) {
                 clientHandler.getView().setPlaying(true);
-                System.out.println("Devo giocare");
+                System.out.println("I have to play");
                 //invia un ackplayer(ne dovrà arrivare solo uno)
                 clientHandler.sendMessage(new AckPlayer());
             }else{
                 clientHandler.getView().setPlaying(false);
-                System.out.println("Devo aspettare il mio turno");
+                System.out.println("I've to wait my turn");
                 //altrimenti mandi solo un ack(ne dovranno arrivare 2/3)
                 clientHandler.sendMessage(new AckState());
             }
         }else {//se non è la prima volta che ti arriva uno state
             if (clientHandler.getView().getIndexPlayer() == objState.getCurrentPlayer()) {
                 clientHandler.getView().setPlaying(true);
-                System.out.println("Sto giocando");
+                System.out.println("I'm playing");
                 clientHandler.sendMessage(new AckState());
             } else {
                 clientHandler.getView().setPlaying(false);
-                System.out.println("Aspetta il tuo turno oh");
+                System.out.println("Waiting... another player is playing");
                 clientHandler.sendMessage(new AckState());
             }
         }
@@ -71,12 +72,12 @@ public class VisitorClient {
     public void visit(Ask3CardsEvent ask3CardsEvent) {
         if(clientHandler.getView().isPlaying()) {
             ArrayList<Integer> cardTemp = clientHandler.getView().ask3Card(ask3CardsEvent.getCardArray());
-            System.out.println("Carte scelte");
+            System.out.println("Cards chosen");
             ObjTempCard objCard = new ObjTempCard(cardTemp);
             clientHandler.sendMessage(objCard);
         }
         else{
-            System.out.println("Stanno scegliendo le tre carte");
+            System.out.println("Someone choosing the "+ clientHandler.getView().getNPlayer()+" cards");
             //AGGIUNGO QUESTA RIGA COME RITORNO DI STATO CAMBIATO
             clientHandler.sendMessage(new AckState());
         }
@@ -85,10 +86,10 @@ public class VisitorClient {
         if (clientHandler.getView().isPlaying()) {
             int card = clientHandler.getView().askCard(askCard.getCardTemp());
             ObjCard objCard = new ObjCard(card);
-            System.out.println("invio carta scelta al server");
+            System.out.println("Sending the card chose to the server");
             clientHandler.sendMessage(objCard);
         } else {
-            System.out.println("Un avversario sta scegliendo una carta");
+            System.out.println("An opponent is choosing a card");
             //AGGIUNGO QUESTA RIGA COME RITORNO DI STATO CAMBIATO
             clientHandler.sendMessage(new AckState());
         }
@@ -107,7 +108,10 @@ public class VisitorClient {
 
 
     public void visit (UpdateBoardEvent updateBoardEvent){
+
+        clientHandler.getView().setBoard(updateBoardEvent.getBoard());
         clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
+
         if(!clientHandler.getView().isPlaying()){
             System.out.println("Someone is changing the Board: ");
             clientHandler.sendMessage(new AckUpdateBoard());
@@ -128,11 +132,11 @@ public class VisitorClient {
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         if (clientHandler.getView().isPlaying()) {
             if(askWorkerToMoveEvent.isFirstAsk()){
-                ObjWokerToMove objWokerToMove = clientHandler.getView().askWorker(askWorkerToMoveEvent);
-                clientHandler.sendMessage(objWokerToMove);
-            }else{
-                ObjWokerToMove objWokerToMove = clientHandler.getView().areYouSure(askWorkerToMoveEvent);
-                clientHandler.sendMessage(objWokerToMove);
+                ObjWorkerToMove objWorkerToMove = clientHandler.getView().askWorker(askWorkerToMoveEvent);
+                clientHandler.sendMessage(objWorkerToMove);
+            }else if(!askWorkerToMoveEvent.isFirstAsk()){
+                ObjWorkerToMove objWorkerToMove = clientHandler.getView().areYouSure(askWorkerToMoveEvent);
+                clientHandler.sendMessage(objWorkerToMove);
             }
         }else{
             System.out.println("Someone else is choosing the worker to move");

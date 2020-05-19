@@ -23,7 +23,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjPlayer objPlayer){
-        System.out.println("Ricevuto dati giocatore");
+        System.out.println("Receiving player data");
         serverHandler.setClientName(objPlayer.getName());
         serverHandler.getVirtualView().addPlayer(objPlayer.getName(), objPlayer.getAge());
     }
@@ -35,7 +35,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjTempCard objTempCard){
-        System.out.println("Imposto carte temporanee");
+        System.out.println("Receiving Temp Card ");
         serverHandler.waitForPlayer();
         AskCard tempCard = serverHandler.getVirtualView().setTempCard(objTempCard.getCardsTemp());
         ObjState objState = serverHandler.getVirtualView().goPlayingNext();
@@ -46,7 +46,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjCard objCard) throws Exception {
-        System.out.println("Ricevo objCard");
+        System.out.println("Receiving objCard");
         serverHandler.waitForPlayer();
         int indexPlayer=serverHandler.getIndexPlayer();
         AskCard askcard = serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
@@ -58,7 +58,7 @@ public class VisitorServer {
             serverHandler.sendUpdateBroadcast(askcard);
         }
         else{
-            System.out.println("Invio board");
+            System.out.println("Sending board");
             ObjInitialize objInitialize = serverHandler.gameData();
             serverHandler.sendUpdateBroadcast(objInitialize);
             serverHandler.waitForPlayer();
@@ -68,7 +68,7 @@ public class VisitorServer {
 
     public void visit(AckState ackState) {
         serverHandler.getVirtualView().incCounterOpponent();
-        System.out.println("AckState di thread numero: "+ serverHandler.getName());
+        System.out.println("AckState thread number: "+ serverHandler.getName());
     }
 
     public void visit(AckPlayer ackPlayer) throws Exception {
@@ -99,13 +99,13 @@ public class VisitorServer {
         }
     }
 
-    public void visit (ObjWokerToMove objWokerToMove){
+    public void visit (ObjWorkerToMove objWokerToMove){
         serverHandler.waitForPlayer();
         if(objWokerToMove.isReady()){
-            serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWokerToMove.getIndexWokerToMove(),objWokerToMove.getRow(),objWokerToMove.getColumn(),true,false));
+            serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWokerToMove.getIndexWorkerToMove(),objWokerToMove.getRow(),objWokerToMove.getColumn(),true,false));
         }else{
             int indexPlayer = serverHandler.getIndexPlayer();
-            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().setReachable(indexPlayer,objWokerToMove.getIndexWokerToMove());
+            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().setReachable(indexPlayer,objWokerToMove.getIndexWorkerToMove());
             updateBoardEvent.setShowReachable(true);
             //mando la board a tutti così quello stronzo dopo mi dice se vuole cambiare pedina o fare una mossa
             serverHandler.sendUpdateBroadcast(updateBoardEvent);

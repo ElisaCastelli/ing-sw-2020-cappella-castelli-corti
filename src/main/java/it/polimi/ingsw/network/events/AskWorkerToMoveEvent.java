@@ -7,19 +7,17 @@ public class AskWorkerToMoveEvent extends Event {
 
     int row1;
     int column1;
-    int indexFirstWoker;
     int row2;
     int column2;
-    int indexSecondWoker;
+    int indexWorker;
     boolean firstAsk;
 
-    public AskWorkerToMoveEvent(int row1, int column1, int indexFirstWoker, int row2, int column2, int indexSecondWoker, boolean firstAsk) {
+    public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, int indexWorker, boolean firstAsk) {
         this.row1 = row1;
         this.column1 = column1;
-        this.indexFirstWoker = indexFirstWoker;
         this.row2 = row2;
         this.column2 = column2;
-        this.indexSecondWoker = indexSecondWoker;
+        this.indexWorker = indexWorker ;
         this.firstAsk = firstAsk;
     }
 
@@ -43,12 +41,12 @@ public class AskWorkerToMoveEvent extends Event {
         return column2;
     }
 
-    public int getIndexFirstWoker() {
-        return indexFirstWoker;
+    public int getIndexWorker() {
+        return indexWorker;
     }
 
-    public int getIndexSecondWoker() {
-        return indexSecondWoker;
+    public void setIndexWorker(int indexWorker) {
+        this.indexWorker = indexWorker;
     }
 
     @Override

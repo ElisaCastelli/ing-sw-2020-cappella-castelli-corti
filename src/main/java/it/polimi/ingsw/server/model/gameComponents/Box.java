@@ -38,7 +38,7 @@ public class Box implements Serializable {
         building = new Building();
         this.row = row;
         this.column = column;
-        worker  =null;
+        worker = null;
         reachable=false;
     }
 
@@ -183,30 +183,28 @@ public class Box implements Serializable {
     /**
      * This method prints the content of the box
      */
-    public void print(){
+    public String print(){
         if( worker!=null ) {
-            System.out.print("[ O ]");
+            return "O";
         }
         else if ( building.getArrayOfBlocks().size() > 0 ){
-            building.print();
-            System.out.print("[ " + building.getArrayOfBlocks().size() + " ]");
-        }else{
-            System.out.print("[   ]");
+            //building.print();
+            return "B";
         }
-
+        return " ";
     }
     /**
      * This method prints an X inside the Box if it is reachable by the player
      */
-    public void printReachable(){
+    public String printReachable(){
         if(this.reachable) {
-            System.out.print("[ X ]");
+           return "X";
         }else{
             if( worker!=null ) {
-                System.out.print("[ O ]");
-            }else
-                System.out.print("[  ]");
+                return "O";
+            }
         }
+        return " ";
     }
 }
 

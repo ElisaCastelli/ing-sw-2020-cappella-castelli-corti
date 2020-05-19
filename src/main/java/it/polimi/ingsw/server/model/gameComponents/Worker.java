@@ -2,11 +2,13 @@ package it.polimi.ingsw.server.model.gameComponents;
 
 import it.polimi.ingsw.server.model.Game;
 
+import java.io.Serializable;
+
 /**
  * This class is the Worker associated to the player during a match
  */
 
-public class Worker {
+public class Worker implements Serializable {
     /**
      * this parameter is to identify the worker of the player
      */

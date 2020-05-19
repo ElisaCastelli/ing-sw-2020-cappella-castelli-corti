@@ -6,10 +6,11 @@ import it.polimi.ingsw.server.model.playerState.PlayerStateManager;
 import it.polimi.ingsw.server.model.god.BasicGod;
 import it.polimi.ingsw.server.model.god.God;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Player {
+public class Player implements Serializable {
     /**
      * This is the name of the player
      */

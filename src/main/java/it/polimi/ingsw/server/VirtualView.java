@@ -151,7 +151,7 @@ public class VirtualView implements Observer {
     ///richiamato
     public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove){
         ArrayList<Box> positions= gameModel.getWorkersPos(indexPlayer);
-        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(),1,positions.get(1).getRow(), positions.get(1).getColumn(), 2,firstMove);
+        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(),positions.get(1).getRow(), positions.get(1).getColumn(),1 ,firstMove);
     }
 
     ///richiamato

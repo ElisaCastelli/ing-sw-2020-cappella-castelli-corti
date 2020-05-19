@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
 import it.polimi.ingsw.network.objects.ObjBlock;
 import it.polimi.ingsw.network.objects.ObjMove;
-import it.polimi.ingsw.network.objects.ObjWokerToMove;
+import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 public class CLIView extends View {
     private Scanner input = new Scanner(System.in);
+    private static final int numCards = 9;
     private int indexPlayer = -1;
     private boolean isPlaying;
     private int nPlayer;
@@ -22,9 +23,8 @@ public class CLIView extends View {
     private Board board;
 
     @Override
-    public void setBoard(Board board) {
+    public synchronized void setBoard(Board board) {
         this.board=board;
-        printBoard(false);
     }
 
     @Override
@@ -34,25 +34,30 @@ public class CLIView extends View {
 
     @Override
     public int askNPlayer() {
-        System.out.println(" Quanti giocatori siete? [2 o 3]");
+        System.out.println("How many Player ? [ 2 o 3 ]");
         return inputTwoOrThree();
     }
 
     @Override
     public String askName() {
-        System.out.println("Nome giocatore:");
-        return input.next();
+        System.out.println("Player name :");
+        return input.nextLine();
     }
 
     @Override
     public int askAge() {
-        System.out.println("Età giocatore:");
+        System.out.println("Player age : ");
         return inputNumber();
     }
 
     @Override
     public void setNPlayer(int nPlayer){
         this.nPlayer=nPlayer;
+    }
+
+    @Override
+    public int getNPlayer() {
+        return nPlayer;
     }
 
     @Override
@@ -77,22 +82,24 @@ public class CLIView extends View {
 
     @Override
     public ArrayList<Integer> ask3Card(ArrayList<String> cards) {
-        ArrayList<Integer> cardTemp= new ArrayList<>();
-        boolean[] scelte= new boolean[cards.size()];
-        for(int i=0;i<cards.size();i++){
-            scelte[i]=false;
+        ArrayList<Integer> cardTemp = new ArrayList<>();
+        boolean[] scelte = new boolean[cards.size()];
+        for(int i = 0; i < cards.size(); i++){
+            scelte[i] = false;
         }
         System.out.println("Scegli gli indici di " + nPlayer + " carte");
-        for(int cardIndex=0; cardIndex < cards.size();cardIndex++){
+        for(int cardIndex = 0; cardIndex < cards.size(); cardIndex++){
             System.out.println("[ "+cardIndex+ "] "+cards.get(cardIndex));
         }
-        while(cardTemp.size()<nPlayer){
-            int cardDrawn= input.nextInt();
-            if(!scelte[cardDrawn] && cardDrawn<9){
-                System.out.println("Scelta carta numero "+ cardDrawn);
-                cardTemp.add(cardDrawn);
-                scelte[cardDrawn]=true;
+        while(cardTemp.size() < nPlayer){
+            int cardDrawn = inputNumber();
+            while(cardDrawn >= numCards || cardDrawn < 0 || scelte[cardDrawn]){
+                System.out.println("Select again the card.");
+                cardDrawn = inputNumber();
             }
+            System.out.println("Scelta carta numero "+ cardDrawn);
+            cardTemp.add(cardDrawn);
+            scelte[cardDrawn]=true;
         }
         return cardTemp;
     }
@@ -105,11 +112,11 @@ public class CLIView extends View {
         for(int index=0;index<cards.size();index++){
             System.out.println("[ "+index+ "] "+cards.get(index));
         }
-        System.out.println("Scegli la tua carta");
+        System.out.println("Choose your card");
         while(!choose){
-            scelta=input.nextInt();
-            if(scelta<cards.size()){
-                System.out.println("Scelta carta numero "+ scelta);
+            scelta=inputNumber();
+            if(scelta <= cards.size() && scelta >=0 ){
+                System.out.println("Got it! "+ scelta);
                 choose=true;
             }
         }
@@ -120,12 +127,12 @@ public class CLIView extends View {
     public ArrayList<Box> initializeWorker(){
         ArrayList<Box> boxes= new ArrayList<>();
         for(int indexWorker=0;indexWorker<2;indexWorker++){
-            printBoard(false);
-            System.out.println("Posiziona la pedina "+indexWorker);
-            System.out.println("Riga: ");
-            int row= input.nextInt();
-            System.out.println("Colonna: ");
-            int column= input.nextInt();
+
+            System.out.println("Place the Worker "+indexWorker);
+
+            int row= rowSelected();
+            int column= columnSelected();
+
             if(board.getBox(row,column).notWorker()){
                 if(boxes.size()==1 && (boxes.get(0).getRow()!=row && boxes.get(0).getColumn()!=column)){
                     boxes.add(board.getBox(row,column));
@@ -151,14 +158,12 @@ public class CLIView extends View {
     }
 
     @Override
-    public ObjWokerToMove askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+    public ObjWorkerToMove askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
 
         int row1 = askWorkerToMoveEvent.getRow1();
-        int row2 = askWorkerToMoveEvent.getRow2();
         int column1 = askWorkerToMoveEvent.getColumn1();
+        int row2 = askWorkerToMoveEvent.getRow2();
         int column2 = askWorkerToMoveEvent.getColumn2();
-        int indexFirstWorker = askWorkerToMoveEvent.getIndexFirstWoker();
-        int indexSecondWorker = askWorkerToMoveEvent.getIndexSecondWoker();
 
         System.out.println("You're going to do your move-> What Worker You wanna move?");
         System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row   " + column1 + " <-column");
@@ -167,30 +172,37 @@ public class CLIView extends View {
         printBoard(false);
 
         int intInputValue = twoNumbers();
-        ObjWokerToMove objWokerToMove;
+        ObjWorkerToMove objWorkerToMove;
         if (intInputValue == 0){
-            objWokerToMove = new ObjWokerToMove(indexFirstWorker, row1, column1,false);
+            objWorkerToMove = new ObjWorkerToMove(1, row1, column1,false);
         }else{
-            objWokerToMove = new ObjWokerToMove(indexSecondWorker, row2, column2,false);
+            objWorkerToMove = new ObjWorkerToMove(2, row2, column2,false);
         }
-        return objWokerToMove;
+        return objWorkerToMove;
     }
 
     @Override
-    public ObjWokerToMove areYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-        int row1 = askWorkerToMoveEvent.getRow1();
-        int column1 = askWorkerToMoveEvent.getRow2();
-        int indexWorker = askWorkerToMoveEvent.getIndexFirstWoker();
+    public ObjWorkerToMove areYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+        int row ;
+        int column;
+        int indexWorker=askWorkerToMoveEvent.getIndexWorker();
+        if(indexWorker==1){
+            row=askWorkerToMoveEvent.getRow1();
+            column=askWorkerToMoveEvent.getColumn1();
+        }else{
+            row=askWorkerToMoveEvent.getRow2();
+            column=askWorkerToMoveEvent.getColumn2();
+        }
 
         System.out.println("Are You sure you want move the "+indexWorker+" worker? ");
-        System.out.println("Position : "+ row1 + " <-row   " + column1 + " <-column");
+        System.out.println("Position : "+ row + " <-row   " + column + " <-column");
 
         System.out.println("[ 0 ] -> "+ " YES");
         System.out.println("[ 1 ] -> "+ " NO");
 
         int intInputValue = twoNumbers();
         if(intInputValue == 0){
-            return new ObjWokerToMove(indexWorker, row1, column1,true);
+            return new ObjWorkerToMove(indexWorker, row, column,true);
         }else{
             return askWorker(askWorkerToMoveEvent);
         }
@@ -205,8 +217,8 @@ public class CLIView extends View {
         ObjMove objMove= new ObjMove(indexWorker,0,0,true);
 
         System.out.println("you have chosen the "+indexWorker+" worker ");
-        System.out.println("Position : "+ row + " <-row" + column + " <-column");
-        System.out.println("You're going to do your move-> What Position You wanna reach?");
+        System.out.println("Position : "+ row + " <-row  " + column + " <-column");
+        System.out.println("You' re going to do your move -> What Position You wanna reach ? ");
 
         int intInputValue = rowSelected();
         objMove.setRow(intInputValue);
@@ -283,7 +295,7 @@ public class CLIView extends View {
     public int inputNumber(){
         int intInputValue = 0;
         while (true) {
-            System.out.println("Enter a whole number.");
+            ///System.out.println("Enter a whole number.");
             String inputString = input.nextLine();
             try {
                 intInputValue = Integer.parseInt(inputString);
