@@ -91,9 +91,11 @@ public class Game implements GameModel{
             players.get(indexPlay+1).goPlay();
         }
     }
+
     public Board getBoard(){
         return board;
     }
+
     /**
      * Method to sort gamers by age
      */

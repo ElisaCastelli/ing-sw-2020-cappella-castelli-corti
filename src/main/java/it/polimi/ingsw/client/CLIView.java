@@ -24,12 +24,12 @@ public class CLIView extends View {
 
     @Override
     public synchronized void setBoard(Board board) {
-        this.board=board;
+        this.board = board;
     }
 
     @Override
     public void setUsers(ArrayList<User> users) {
-        usersArray=users;
+        usersArray = users;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CLIView extends View {
 
     @Override
     public void setIndexPlayer(int indexPlayer){
-        this.indexPlayer=indexPlayer;
+        this.indexPlayer = indexPlayer;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class CLIView extends View {
 
     @Override
     public void setPlaying(boolean isPlaying){
-        this.isPlaying=isPlaying;
+        this.isPlaying = isPlaying;
     }
 
     @Override
@@ -107,15 +107,15 @@ public class CLIView extends View {
 
     @Override
     public int askCard(ArrayList<String> cards) {
-        boolean choose=false;
-        int scelta=-1;
-        for(int index=0;index<cards.size();index++){
+        boolean choose = false;
+        int scelta = -1;
+        for(int index = 0; index < cards.size(); index++){
             System.out.println("[ "+index+ "] "+cards.get(index));
         }
         System.out.println("Choose your card");
         while(!choose){
             scelta=inputNumber();
-            if(scelta <= cards.size() && scelta >=0 ){
+            if(scelta <= cards.size() && scelta >= 0 ){
                 System.out.println("Got it! "+ scelta);
                 choose=true;
             }
@@ -134,16 +134,17 @@ public class CLIView extends View {
             int column= columnSelected();
 
             if(board.getBox(row,column).notWorker()){
-                if(boxes.size()==1 && (boxes.get(0).getRow()!=row && boxes.get(0).getColumn()!=column)){
+                if(boxes.size() == 0 ){
                     boxes.add(board.getBox(row,column));
-                    //System.out.println("Casella gia' occupata");
+                    indexWorker++;
                 }
                 else{
-                    boxes.add(board.getBox(row,column));
-                    //System.out.println("Casella assegnata");
+                    if(boxes.get(0).getRow() != row && boxes.get(0).getColumn() != column){
+                        boxes.add(board.getBox(row,column));
+                        indexWorker++;
+                    }
                 }
             }
-
         }
         return boxes;
     }

@@ -7,6 +7,9 @@ import java.util.ArrayList;
  * This class represents the board where the game will be played
  */
 public class Board implements Serializable {
+
+    private static final long serialVersionUID = -1920343L;
+
     /**
      * Static attribute that indicates the number of rows and columns of  matrix that represents the board
      */

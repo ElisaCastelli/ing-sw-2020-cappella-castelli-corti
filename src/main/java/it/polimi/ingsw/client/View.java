@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.network.events.AskBuildEvent;
-import it.polimi.ingsw.network.events.AskMoveEvent;
-import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
+import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
 import it.polimi.ingsw.network.objects.ObjBlock;
 import it.polimi.ingsw.network.objects.ObjMove;

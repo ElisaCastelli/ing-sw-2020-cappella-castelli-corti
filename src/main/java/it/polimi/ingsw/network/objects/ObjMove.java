@@ -4,6 +4,9 @@ import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
 public class ObjMove extends ObjMessage {
+
+    private static final long serialVersionUID = -6284934856022193045L;
+
     int indexWokerToMove;
     int row;
     int column;

@@ -116,7 +116,7 @@ public class VirtualView implements Observer {
 
     @Override
     public UpdateBoardEvent updateBoard(){
-        Board boardToSend= gameModel.getBoard();
+        Board boardToSend = gameModel.getBoard();
         ///metto a falso lo show reachable ma lo metterà poi a vero se è richiamata da un setReachable
         return new UpdateBoardEvent(boardToSend,false);
     }

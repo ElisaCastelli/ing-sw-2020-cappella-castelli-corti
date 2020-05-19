@@ -5,6 +5,8 @@ import it.polimi.ingsw.network.VisitorServer;
 
 public class AskWorkerToMoveEvent extends Event {
 
+    private static final long serialVersionUID = 7283937558231029548L;
+
     int row1;
     int column1;
     int row2;

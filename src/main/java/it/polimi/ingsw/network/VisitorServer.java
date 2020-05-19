@@ -114,8 +114,6 @@ public class VisitorServer {
             AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(indexPlayer,false);
             serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
         }
-
-
     }
     ///mi serve per controllare che a tutti sia arrivata la board aggiornata
     public void visit(AckUpdateBoard ackUpdateBoard){

@@ -57,8 +57,6 @@ public class EchoServer {
         clientArray.get(indexArrayClient).sendUpdate(objMessage);
     }
 
-
-
     public static void initializeGame(){
         if(!notGameStarted){
             initializePlayer();

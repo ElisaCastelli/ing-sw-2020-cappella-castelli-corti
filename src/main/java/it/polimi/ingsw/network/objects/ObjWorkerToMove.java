@@ -5,6 +5,8 @@ import it.polimi.ingsw.network.VisitorServer;
 
 public class ObjWorkerToMove extends ObjMessage {
 
+    private static final long serialVersionUID = -5927482148957834053L;
+
     int indexWorkerToMove;
     int row;
     int column;

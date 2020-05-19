@@ -6,6 +6,8 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 
 public class AskMoveEvent extends ObjMessage {
 
+    private static final long serialVersionUID = 6294837110495348563L;
+
     int row1;
     int column1;
     int indexWoker;

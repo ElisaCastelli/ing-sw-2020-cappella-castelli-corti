@@ -9,6 +9,9 @@ import java.io.Serializable;
  */
 
 public class Worker implements Serializable {
+
+    private static final long serialVersionUID = -39403829432L;
+
     /**
      * this parameter is to identify the worker of the player
      */

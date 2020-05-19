@@ -6,6 +6,8 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 
 public class AckMove extends ObjMessage {
 
+    private static final long serialVersionUID = 20398492L;
+
     int indexWorker;
     int rowWorker;
     int columnWorker;

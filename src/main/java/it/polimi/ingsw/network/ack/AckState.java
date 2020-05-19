@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 
 public class AckState extends ObjMessage {
 
-    private static final long serialVersionUID = 2748349327493984720L;
+    private static final long serialVersionUID = 1L;
 
     @Override
     public void accept(VisitorServer visitorServer) throws Exception {

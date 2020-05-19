@@ -6,6 +6,8 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 
 public class AskInitializeWorker extends ObjMessage {
 
+    private static final long serialVersionUID = 8103853948576392375L;
+
     @Override
     public void accept(VisitorServer visitorServer) throws Exception {
         throw new UnsupportedOperationException();

@@ -5,6 +5,9 @@ import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
 public class ObjWorkers extends ObjMessage{
+
+    private static final long serialVersionUID = -4928461924327192103L;
+
     private Box box1;
     private Box box2;
 

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class ObjInitialize extends ObjMessage{
 
+    private static final long serialVersionUID = -7294721194857349563L;
+
     private ArrayList<User> userArray;
     private Board board;
 

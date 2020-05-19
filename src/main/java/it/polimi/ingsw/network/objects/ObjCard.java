@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.VisitorServer;
 
 public class ObjCard extends ObjMessage {
 
-    private static final long serialVersionUID = 8393284750293847561L;
+    private static final long serialVersionUID = -8393284750293847561L;
 
     private int cardChoose;
 

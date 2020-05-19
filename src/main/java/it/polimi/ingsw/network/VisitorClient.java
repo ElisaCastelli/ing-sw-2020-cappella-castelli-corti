@@ -98,7 +98,7 @@ public class VisitorClient {
     public void visit(AskInitializeWorker askInitializeWorker){
         if(clientHandler.getView().isPlaying()){
             ArrayList<Box> boxes = clientHandler.getView().initializeWorker();
-            ObjWorkers objWorkers = new ObjWorkers(boxes.get(0),boxes.get(1));
+            ObjWorkers objWorkers = new ObjWorkers(boxes.get(0), boxes.get(1));
             clientHandler.sendMessage(objWorkers);
         }else{
             System.out.println("Someone is initializing his workers");
@@ -108,10 +108,8 @@ public class VisitorClient {
 
 
     public void visit (UpdateBoardEvent updateBoardEvent){
-
         clientHandler.getView().setBoard(updateBoardEvent.getBoard());
         clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
-
         if(!clientHandler.getView().isPlaying()){
             System.out.println("Someone is changing the Board: ");
             clientHandler.sendMessage(new AckUpdateBoard());

@@ -9,6 +9,9 @@ import java.util.ArrayList;
  * This class represents the boxes that make up the board
  */
 public class Box implements Serializable {
+
+    private static final long serialVersionUID = -293850302L;
+
     /**
      * This attribute is a building that can be built in this box
      */

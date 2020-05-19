@@ -6,6 +6,8 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 
 public class AckBlock extends ObjMessage {
 
+    private static final long serialVersionUID = 30298492012L;
+
     @Override
     public void accept(VisitorServer visitorServer) throws Exception {
         visitorServer.visit(this);

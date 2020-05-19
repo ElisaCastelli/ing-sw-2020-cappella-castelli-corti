@@ -6,9 +6,11 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 
 public class UpdateBoardEvent extends ObjMessage {
+
+    private static final long serialVersionUID = 1038573990901284957L;
+
     Board board;
     boolean showReachable;
-
 
     public UpdateBoardEvent(Board board, boolean showReachable){
         this.board = board;
