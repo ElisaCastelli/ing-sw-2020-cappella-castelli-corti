@@ -12,10 +12,10 @@ class ShiftWorkerTest {
 
     @Test
     void setPossibleMove() {
-        God god=new ShiftWorker(new SwitchWorker(new BasicGod()));
-        Worker worker=new Worker(1, Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
-        Worker worker3=new Worker(3,Game.COLOR.BLU);
+        God god = new ShiftWorker(new SwitchWorker(new BasicGod()));
+        Worker worker = new Worker(1, Game.COLOR.BLU);
+        Worker worker2 = new Worker(2,Game.COLOR.ORANGE);
+        Worker worker3 = new Worker(3,Game.COLOR.BLU);
         Board board = new Board();
 
         worker.initializePos(board.getBox(1,1),board);

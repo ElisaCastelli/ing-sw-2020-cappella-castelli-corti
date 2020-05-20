@@ -62,12 +62,12 @@ public class Controller  {
     }
     ///richiamato
     public AskMoveEvent movePlayer(int indexPlayer, int indexWorker, int row, int column) {
-        boolean moved=gameModel.movePlayer(indexPlayer, indexWorker, row, column);
+        boolean moved = gameModel.movePlayer(indexPlayer, indexWorker, row, column);
         AskMoveEvent askMoveEvent;
         if(moved){
-            askMoveEvent=new AskMoveEvent(indexWorker, row, column, false, true);
+            askMoveEvent = new AskMoveEvent(indexWorker, row, column, false, true);
         }else{
-            askMoveEvent=new AskMoveEvent(indexWorker,row,column,false,false);
+            askMoveEvent = new AskMoveEvent(indexWorker,row,column,false,false);
         }
 
         gameModel.notifyMovedWorker();

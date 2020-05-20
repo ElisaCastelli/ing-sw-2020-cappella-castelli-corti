@@ -14,12 +14,12 @@ public class AskWorkerToMoveEvent extends Event {
     int indexWorker;
     boolean firstAsk;
 
-    public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, int indexWorker, boolean firstAsk) {
+    public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, boolean firstAsk) {
         this.row1 = row1;
         this.column1 = column1;
         this.row2 = row2;
         this.column2 = column2;
-        this.indexWorker = indexWorker ;
+        indexWorker = -1;
         this.firstAsk = firstAsk;
     }
 

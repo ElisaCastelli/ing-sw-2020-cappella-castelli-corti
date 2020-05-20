@@ -99,19 +99,21 @@ public class VisitorServer {
         }
     }
 
-    public void visit (ObjWorkerToMove objWokerToMove){
+    public void visit (ObjWorkerToMove objWorkerToMove){
         serverHandler.waitForPlayer();
-        if(objWokerToMove.isReady()){
-            serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWokerToMove.getIndexWorkerToMove(),objWokerToMove.getRow(),objWokerToMove.getColumn(),true,false));
+        if(objWorkerToMove.isReady()){
+            serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(), objWorkerToMove.getColumn(),true,false));
         }else{
             int indexPlayer = serverHandler.getIndexPlayer();
-            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().setReachable(indexPlayer,objWokerToMove.getIndexWorkerToMove());
+            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().setReachable(indexPlayer,objWorkerToMove.getIndexWorkerToMove());
             updateBoardEvent.setShowReachable(true);
             //mando la board a tutti così quello stronzo dopo mi dice se vuole cambiare pedina o fare una mossa
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
             ///TODO lo mando in broadcast o solo a lui? perchè devo ricordarmi di ricontrollare gli ack che mi arrivano
             AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(indexPlayer,false);
+            //Ho tolto l'indexWorker dal costruttore, poi ho fatto una set di quest'ultimo almeno ho sempre l'ultimo index che ho scelto
+            askWorkerToMoveEvent.setIndexWorker(objWorkerToMove.getIndexWorkerToMove());
             serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
         }
     }
@@ -123,32 +125,43 @@ public class VisitorServer {
     public void visit(ObjMove objMove){
         serverHandler.waitForPlayer();
         int indexPlayer = serverHandler.getIndexPlayer();
-        AskMoveEvent askMoveEvent = serverHandler.getVirtualView().move(indexPlayer,objMove.getIndexWokerToMove(),objMove.getRow(),objMove.getColumn());
-        //todo secondo me qui vanno cancellate le reachable (G)
-        UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
-        serverHandler.sendUpdateBroadcast(updateBoardEvent);
-        serverHandler.waitForPlayer();
-        ///check win/morto
-        if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRow(), objMove.getColumn(), objMove.getIndexWokerToMove()) ){
-            ///sendupdate.hai vinto
-            ///sendbroadcast senza io hai perso
-        }else{
-            if(askMoveEvent.isDone()){
-                //Controllo che può costruire e passo alla costruzione dell'edificio, altrimenti il giocatore perde
-                if(serverHandler.getVirtualView().canBuild(indexPlayer,askMoveEvent.getIndexWoker())){
-                    updateBoardEvent = serverHandler.getVirtualView().updateBoard();
-                    updateBoardEvent.setShowReachable(true);
-                    serverHandler.sendUpdateBroadcast(updateBoardEvent);
-                    serverHandler.waitForPlayer();
-                    serverHandler.sendUpdateBroadcast(new AskBuildEvent(askMoveEvent.getIndexWoker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1(), true, false));
-                }
-                else{
-                    //Giocatore morto X
-                }
+        if(serverHandler.getVirtualView().isReachable(objMove.getRow(), objMove.getColumn())) {
+            AskMoveEvent askMoveEvent = serverHandler.getVirtualView().move(indexPlayer, objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn());
+            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+            serverHandler.sendUpdateBroadcast(updateBoardEvent);
+            serverHandler.waitForPlayer();
+            ///check win/morto
+            if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRowStart(), objMove.getColumnStart(), objMove.getIndexWorkerToMove())){
+                ///sendupdate.hai vinto
+                ///sendbroadcast senza io hai perso
             }else{
-                //todo fare setReachable + updateBoard (G)
-                serverHandler.sendUpdateBroadcast(askMoveEvent);
+                if(askMoveEvent.isDone()){
+                    //Controllo che può costruire e passo alla costruzione dell'edificio, altrimenti il giocatore perde
+                    if(serverHandler.getVirtualView().canBuild(indexPlayer,askMoveEvent.getIndexWorker())){
+                        updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+                        updateBoardEvent.setShowReachable(true);
+                        serverHandler.sendUpdateBroadcast(updateBoardEvent);
+                        serverHandler.waitForPlayer();
+                        serverHandler.sendUpdateBroadcast(new AskBuildEvent(askMoveEvent.getIndexWorker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1(), true, false));
+                    }
+                    else{
+                        //Giocatore morto X
+                    }
+                }else{
+                    //todo fare setReachable + updateBoard (G)
+                    serverHandler.sendUpdateBroadcast(askMoveEvent);
+                }
             }
+        }else {
+            //todo Ricontrollare tutto
+            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
+            updateBoardEvent.setShowReachable(true);
+            serverHandler.sendUpdateBroadcast(updateBoardEvent);
+            serverHandler.waitForPlayer();
+            //todo riguardare first time: true se è davvero la prima volta o false se è la doppia mossa
+            AskMoveEvent askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRowStart(), objMove.getColumnStart(), false, false);
+            //askBuildEvent.setWrongBox(true);
+            serverHandler.sendUpdateBroadcast(askMoveEvent);
         }
     }
 

@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class CLIView extends View {
     private Scanner input = new Scanner(System.in);
-    private static final int numCards = 9;
+    private static final int numCards = 14;
     private int indexPlayer = -1;
     private boolean isPlaying;
     private int nPlayer;
@@ -126,26 +126,24 @@ public class CLIView extends View {
     @Override
     public ArrayList<Box> initializeWorker(){
         ArrayList<Box> boxes= new ArrayList<>();
-        int indexWorker=0;
-        while(indexWorker<2){
+        int indexWorker = 0;
+        while(indexWorker < 2){
 
             System.out.println("Place the Worker "+indexWorker);
 
-            int row= rowSelected();
-            int column= columnSelected();
-
-                if(boxes.size() == 0 ){
+            int row = rowSelected();
+            int column = columnSelected();
+            if(boxes.size() == 0 ){
+                boxes.add(board.getBox(row,column));
+                indexWorker++;
+            }
+            else{
+                if(boxes.get(0).getRow() != row || boxes.get(0).getColumn() != column){
                     boxes.add(board.getBox(row,column));
                     indexWorker++;
                 }
-                else{
-                    if(boxes.get(0).getRow() != row && boxes.get(0).getColumn() != column){
-                        boxes.add(board.getBox(row,column));
-                        indexWorker++;
-                    }
-                }
             }
-
+        }
         return boxes;
     }
 
@@ -186,13 +184,13 @@ public class CLIView extends View {
     public ObjWorkerToMove areYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         int row ;
         int column;
-        int indexWorker=askWorkerToMoveEvent.getIndexWorker();
-        if(indexWorker==1){
-            row=askWorkerToMoveEvent.getRow1();
-            column=askWorkerToMoveEvent.getColumn1();
+        int indexWorker = askWorkerToMoveEvent.getIndexWorker();
+        if(indexWorker == 1){
+            row = askWorkerToMoveEvent.getRow1();
+            column = askWorkerToMoveEvent.getColumn1();
         }else{
-            row=askWorkerToMoveEvent.getRow2();
-            column=askWorkerToMoveEvent.getColumn2();
+            row = askWorkerToMoveEvent.getRow2();
+            column = askWorkerToMoveEvent.getColumn2();
         }
 
         System.out.println("Are You sure you want move the "+indexWorker+" worker? ");
@@ -211,11 +209,11 @@ public class CLIView extends View {
 
     @Override
     public ObjMove moveWorker(AskMoveEvent askMoveEvent) {
-        int row=askMoveEvent.getRow1();
-        int column= askMoveEvent.getColumn1();
-        int indexWorker=askMoveEvent.getIndexWoker();
+        int row = askMoveEvent.getRow1();
+        int column = askMoveEvent.getColumn1();
+        int indexWorker = askMoveEvent.getIndexWorker();
 
-        ObjMove objMove= new ObjMove(indexWorker,0,0,true);
+        ObjMove objMove = new ObjMove(indexWorker, row, column, 0,0,true);
 
         System.out.println("you have chosen the "+indexWorker+" worker ");
         System.out.println("Position : "+ row + " <-row  " + column + " <-column");

@@ -30,12 +30,8 @@ public class GoingState extends GameState{
     }
 
     public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column, Board board){
-        boolean movedPlayer= false;
         Box starterBox = players.get(indexPlayer).getWorkerBox(indexWorker - 1);
-        players.get(indexPlayer).setPossibleMove(indexWorker);
-        if(board.getBox(row,column).isReachable()){
-            movedPlayer= players.get(indexPlayer).playWorker(indexWorker - 1, board.getBox( row, column));
-        }
+        boolean movedPlayer = players.get(indexPlayer).playWorker(indexWorker - 1, board.getBox(row, column));
         starterBox.clearBoxesNextTo();
         return movedPlayer;
     }

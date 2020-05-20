@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class Worker implements Serializable {
 
-    private static final long serialVersionUID = -39403829432L;
+    //private static final long serialVersionUID = -39403829432L;
 
     /**
      * this parameter is to identify the worker of the player
@@ -105,7 +105,7 @@ public class Worker implements Serializable {
     public boolean initializePos( Box requestedBox, Board board ){
         if( board.getBox(requestedBox.getRow(), requestedBox.getColumn()).notWorker () ){
             board.getBox(requestedBox.getRow(), requestedBox.getColumn()).setWorker( this );
-            actualBox=requestedBox ;
+            actualBox = board.getBox(requestedBox.getRow(), requestedBox.getColumn());
             System.out.println( "the box is now occupied by this worker" );
             return true;
         }else {

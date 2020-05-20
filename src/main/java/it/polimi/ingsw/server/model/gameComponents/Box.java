@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Box implements Serializable {
 
-    private static final long serialVersionUID = -293850302L;
+    //private static final long serialVersionUID = -293850302L;
 
     /**
      * This attribute is a building that can be built in this box
@@ -42,7 +42,7 @@ public class Box implements Serializable {
         this.row = row;
         this.column = column;
         worker = null;
-        reachable=false;
+        reachable = false;
     }
 
     /**
@@ -187,7 +187,7 @@ public class Box implements Serializable {
      * This method prints the content of the box
      */
     public String print(){
-        if( worker!=null ) {
+        if( worker != null ) {
             return "O";
         }
         else if ( building.getArrayOfBlocks().size() > 0 ){
@@ -200,7 +200,7 @@ public class Box implements Serializable {
      * This method prints an X inside the Box if it is reachable by the player
      */
     public String printReachable(){
-        if(this.reachable) {
+        if(reachable) {
            return "X";
         }else{
             if( worker!=null ) {

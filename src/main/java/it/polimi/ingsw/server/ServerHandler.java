@@ -154,8 +154,9 @@ public class ServerHandler extends Thread{
                ///System.out.println("----> ci sono riusito");
                for (ServerHandler serverHandler : clientArray) {
                    serverHandler.getOutputStream().writeObject(objMessage);
-                   outputStream.reset();
+                   serverHandler.outputStream.reset();
                }
+
            } catch (IOException e) {
                e.printStackTrace();
            }

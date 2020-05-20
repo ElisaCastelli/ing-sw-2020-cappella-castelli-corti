@@ -111,10 +111,10 @@ public class VisitorClient {
         clientHandler.getView().setBoard(updateBoardEvent.getBoard());
         clientHandler.getView().printBoard(updateBoardEvent.isShowReachable());
         if(!clientHandler.getView().isPlaying()){
-            System.out.println("Someone is changing the Board: ");
+            System.out.println("Someone changed the Board");
             clientHandler.sendMessage(new AckUpdateBoard());
         }else{
-            System.out.println("You received an update of the Board: ");
+            System.out.println("You received an update of the Board");
         }
     }
 
@@ -150,9 +150,9 @@ public class VisitorClient {
                 clientHandler.sendMessage(objMove);
             ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
             }else {
-                ObjMove objMove= clientHandler.getView().anotherMove(askMoveEvent);
+                ObjMove objMove = clientHandler.getView().anotherMove(askMoveEvent);
                 if(objMove.isDone()){
-                    clientHandler.sendMessage(new AckMove(askMoveEvent.getIndexWoker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1()));
+                    clientHandler.sendMessage(new AckMove(askMoveEvent.getIndexWorker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1()));
                 }else{
                     clientHandler.sendMessage(objMove);
                 }

@@ -91,12 +91,17 @@ public class Player implements Serializable {
      * @return true if initialization is successful, else false
      */
     public boolean initializeWorker( Box box1, Box box2, Board board){
-        boolean initilize= myWorkers[0].initializePos(box1, board) && myWorkers[1].initializePos(box2, board);
-        if(!initilize){
-            board.getBox(box1.getRow(),box1.getColumn()).clearWorker();
-            board.getBox(box2.getRow(),box2.getColumn()).clearWorker();
+        boolean initializeW1 = myWorkers[0].initializePos(box1, board);
+        boolean initializeW2 = myWorkers[1].initializePos(box2, board);
+
+        if(initializeW1 ^ initializeW2){
+            if(!initializeW1){
+                board.getBox(box2.getRow(),box2.getColumn()).clearWorker();
+            }else {
+                board.getBox(box1.getRow(),box1.getColumn()).clearWorker();
+            }
         }
-        return initilize;
+        return initializeW1 && initializeW2;
     }
 
     public void goPlay(){
@@ -124,13 +129,7 @@ public class Player implements Serializable {
     }
 
     public boolean playWorker(int indexWorker, Box pos){
-        boolean movedWorker=false;
-        setPossibleMove(indexWorker);
-        if(pos.isReachable()) {
-            movedWorker = gamerManager.moveWorker(myWorkers[indexWorker], pos);
-        }
-        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
-        return  movedWorker;
+        return gamerManager.moveWorker(myWorkers[indexWorker], pos);
     }
 
     public boolean playBlock( int indexWorker, Box pos){

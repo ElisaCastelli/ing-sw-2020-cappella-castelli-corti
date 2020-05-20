@@ -22,7 +22,7 @@ public class Board implements Serializable{
      */
     public Board(){
         matrix = new Box[DIM][DIM];
-        for(int i=0; i < DIM; i++){
+        for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
                 matrix[i][j] = new Box(i, j);
             }
@@ -32,7 +32,7 @@ public class Board implements Serializable{
 
 
     public void setBoxesNext(){
-        for(int i=0; i < DIM; i++){
+        for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
                 matrix[i][j].setBoxesNextTo(getBoxesNextTo(i,j));
             }

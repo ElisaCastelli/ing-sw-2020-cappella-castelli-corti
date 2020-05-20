@@ -14,8 +14,8 @@ class FerryAnOpponentWorkerTest {
         God god = new FerryAnOpponentWorker(new BasicGod());
         Board board = new Board();
         Worker myWorker = new Worker(1, Game.COLOR.BLU);
-        Worker oppWorker = new Worker(2,Game.COLOR.BLU);
-        Worker othWorker = new Worker(3,Game.COLOR.BLU);
+        Worker oppWorker = new Worker(2, Game.COLOR.ORANGE);
+        Worker othWorker = new Worker(3, Game.COLOR.BLU);
 
         myWorker.initializePos(board.getBox(1,3),board);
         oppWorker.initializePos(board.getBox(0,4),board);

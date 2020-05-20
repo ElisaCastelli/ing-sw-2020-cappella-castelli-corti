@@ -10,21 +10,17 @@ public class AskMoveEvent extends ObjMessage {
 
     int row1;
     int column1;
-    int indexWoker;
+    int indexWorker;
     boolean firstTime;
     boolean isDone;
 
-    public AskMoveEvent(int indexWoker, int row1, int column1,boolean firstTime, boolean isDone) {
+    public AskMoveEvent(int indexWorker, int row1, int column1, boolean firstTime, boolean isDone) {
         this.row1 = row1;
         this.column1 = column1;
-        this.indexWoker = indexWoker;
-        this.firstTime=firstTime;
-        this.isDone=isDone;
-
-    }
-
-    public AskMoveEvent(boolean isDone) {
+        this.indexWorker = indexWorker;
+        this.firstTime = firstTime;
         this.isDone = isDone;
+
     }
 
     public int getRow1() {
@@ -35,8 +31,8 @@ public class AskMoveEvent extends ObjMessage {
         return column1;
     }
 
-    public int getIndexWoker() {
-        return indexWoker;
+    public int getIndexWorker() {
+        return indexWorker;
     }
 
 
@@ -53,7 +49,7 @@ public class AskMoveEvent extends ObjMessage {
     }
 
     @Override
-    public void accept(VisitorServer visitorServer) throws Exception {
+    public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();
     }
 

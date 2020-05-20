@@ -7,13 +7,17 @@ public class ObjMove extends ObjMessage {
 
     private static final long serialVersionUID = -6284934856022193045L;
 
-    int indexWokerToMove;
-    int row;
-    int column;
+    int indexWorkerToMove;
+    int rowStart;
+    int columnStart;
+    int row; //row where I wanna move
+    int column; //column where I wanna move
     boolean isDone;
 
-    public ObjMove(int indexWokerToMove, int row, int column, boolean isDone) {
-        this.indexWokerToMove = indexWokerToMove;
+    public ObjMove(int indexWorkerToMove, int rowStart, int columnStart, int row, int column, boolean isDone) {
+        this.indexWorkerToMove = indexWorkerToMove;
+        this.rowStart = rowStart;
+        this.columnStart = columnStart;
         this.row = row;
         this.column = column;
         this.isDone = isDone;
@@ -23,8 +27,16 @@ public class ObjMove extends ObjMessage {
         this.isDone = isDone;
     }
 
-    public int getIndexWokerToMove() {
-        return indexWokerToMove;
+    public int getIndexWorkerToMove() {
+        return indexWorkerToMove;
+    }
+
+    public int getRowStart() {
+        return rowStart;
+    }
+
+    public int getColumnStart() {
+        return columnStart;
     }
 
     public int getRow() {
@@ -39,8 +51,8 @@ public class ObjMove extends ObjMessage {
         return isDone;
     }
 
-    public void setIndexWokerToMove(int indexWokerToMove) {
-        this.indexWokerToMove = indexWokerToMove;
+    public void setIndexWorkerToMove(int indexWorkerToMove) {
+        this.indexWorkerToMove = indexWorkerToMove;
     }
 
     public void setRow(int row) {

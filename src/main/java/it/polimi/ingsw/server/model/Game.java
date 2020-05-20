@@ -179,7 +179,7 @@ public class Game implements GameModel{
     public int whoIsPlaying(){
         int indexPlay=0;
         boolean found=false;
-        while(!found && indexPlay<players.size()){
+        while(!found && indexPlay < players.size()){
             if(players.get(indexPlay).isPlaying()){
                 found=true;
             }
@@ -197,18 +197,20 @@ public class Game implements GameModel{
     }
 
     public boolean initializeWorker(int indexPlayer, Box box1, Box box2){
-        return players.get(indexPlayer).initializeWorker(box1, box2,board);
+        return players.get(indexPlayer).initializeWorker(box1, box2, board);
     }
+    
     public boolean isReachable(int row, int column){
         return board.getBox(row,column).isReachable();
     }
+
     public GameState getState(){
         return stateManager.getCurrentState();
     }
 
     //mette in deadPlayers se canMove ritorna false
     public boolean canMove(int indexPlayer){
-        boolean canMove=stateManager.canMove(indexPlayer);
+        boolean canMove = stateManager.canMove(indexPlayer);
         if(!canMove){
             playersDead.add(players.get(indexPlayer));
             players.remove(indexPlayer);

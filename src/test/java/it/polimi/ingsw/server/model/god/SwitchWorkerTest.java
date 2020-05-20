@@ -16,7 +16,7 @@ class SwitchWorkerTest {
     void setPossibleMove() {
         God god=new SwitchWorker(new BasicGod());
         Worker worker=new Worker(1,Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
+        Worker worker2=new Worker(2,Game.COLOR.ORANGE);
         Board board = new Board();
 
         worker.initializePos(board.getBox(1,1),board);
@@ -34,7 +34,7 @@ class SwitchWorkerTest {
     void setPossibleBuild() {
         God god=new SwitchWorker(new BasicGod());
         Worker worker=new Worker(1,Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
+        Worker worker2=new Worker(2,Game.COLOR.ORANGE);
         Board board = new Board();
 
         worker.initializePos(board.getBox(1,1),board);
@@ -50,8 +50,8 @@ class SwitchWorkerTest {
     void moveWorker() {
         God god=new SwitchWorker(new BasicGod());
         Worker worker=new Worker(1,Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
-        Worker worker3=new Worker(3,Game.COLOR.BLU);
+        Worker worker2=new Worker(2,Game.COLOR.ORANGE);
+        Worker worker3=new Worker(3,Game.COLOR.RED);
         Board board = new Board();
 
         worker.initializePos(board.getBox(1,1),board);
