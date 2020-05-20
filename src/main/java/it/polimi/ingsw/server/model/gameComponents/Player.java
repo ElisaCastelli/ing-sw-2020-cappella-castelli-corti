@@ -91,7 +91,12 @@ public class Player implements Serializable {
      * @return true if initialization is successful, else false
      */
     public boolean initializeWorker( Box box1, Box box2, Board board){
-        return (myWorkers[0].initializePos(box1, board) && myWorkers[1].initializePos(box2, board));
+        boolean initilize= myWorkers[0].initializePos(box1, board) && myWorkers[1].initializePos(box2, board);
+        if(!initilize){
+            board.getBox(box1.getRow(),box1.getColumn()).clearWorker();
+            board.getBox(box2.getRow(),box2.getColumn()).clearWorker();
+        }
+        return initilize;
     }
 
     public void goPlay(){

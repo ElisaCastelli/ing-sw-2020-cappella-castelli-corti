@@ -23,7 +23,7 @@ public class CLIView extends View {
     private Board board;
 
     @Override
-    public synchronized void setBoard(Board board) {
+    public void setBoard(Board board) {
         this.board = board;
     }
 
@@ -83,9 +83,9 @@ public class CLIView extends View {
     @Override
     public ArrayList<Integer> ask3Card(ArrayList<String> cards) {
         ArrayList<Integer> cardTemp = new ArrayList<>();
-        boolean[] carsChoose = new boolean[cards.size()];
+        boolean[] scelte = new boolean[cards.size()];
         for(int i = 0; i < cards.size(); i++){
-            carsChoose[i] = false;
+            scelte[i] = false;
         }
         System.out.println("Scegli gli indici di " + nPlayer + " carte");
         for(int cardIndex = 0; cardIndex < cards.size(); cardIndex++){
@@ -93,13 +93,13 @@ public class CLIView extends View {
         }
         while(cardTemp.size() < nPlayer){
             int cardDrawn = inputNumber();
-            while(cardDrawn >= numCards || cardDrawn < 0 || carsChoose[cardDrawn]){
+            while(cardDrawn >= numCards || cardDrawn < 0 || scelte[cardDrawn]){
                 System.out.println("Select again the card.");
                 cardDrawn = inputNumber();
             }
             System.out.println("Scelta carta numero "+ cardDrawn);
             cardTemp.add(cardDrawn);
-            carsChoose[cardDrawn]=true;
+            scelte[cardDrawn]=true;
         }
         return cardTemp;
     }
@@ -126,24 +126,26 @@ public class CLIView extends View {
     @Override
     public ArrayList<Box> initializeWorker(){
         ArrayList<Box> boxes= new ArrayList<>();
-        for(int indexWorker=0;indexWorker<2;indexWorker++){
+        int indexWorker=0;
+        while(indexWorker<2){
 
             System.out.println("Place the Worker "+indexWorker);
 
             int row= rowSelected();
             int column= columnSelected();
-            if(boxes.size() == 0 ){
-                boxes.add(board.getBox(row,column));
-                indexWorker++;
-            }
-            else{
-                if(boxes.get(0).getRow() != row && boxes.get(0).getColumn() != column){
+
+                if(boxes.size() == 0 ){
                     boxes.add(board.getBox(row,column));
                     indexWorker++;
                 }
+                else{
+                    if(boxes.get(0).getRow() != row && boxes.get(0).getColumn() != column){
+                        boxes.add(board.getBox(row,column));
+                        indexWorker++;
+                    }
+                }
             }
 
-        }
         return boxes;
     }
 

@@ -103,7 +103,7 @@ public class Worker implements Serializable {
      * @return a boolean that is true if the worker is set in the requested position
      */
     public boolean initializePos( Box requestedBox, Board board ){
-        if( requestedBox.notWorker () ){
+        if( board.getBox(requestedBox.getRow(), requestedBox.getColumn()).notWorker () ){
             board.getBox(requestedBox.getRow(), requestedBox.getColumn()).setWorker( this );
             actualBox=requestedBox ;
             System.out.println( "the box is now occupied by this worker" );

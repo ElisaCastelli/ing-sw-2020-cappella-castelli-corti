@@ -52,7 +52,7 @@ public class ClientHandler {
             try {
                 //System.out.println("----> ci sono riuscito");
                 outputStream.writeObject(objMessage);
-                outputStream.flush();
+                outputStream.reset();
             } catch (IOException e) {
                 e.printStackTrace();
             }

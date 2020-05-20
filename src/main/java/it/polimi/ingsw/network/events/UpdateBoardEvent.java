@@ -19,8 +19,9 @@ public class UpdateBoardEvent extends ObjMessage {
     }
 
     public Board getBoard() {
-        return board;
+            return board;
     }
+
 
     public boolean isShowReachable() {
         return showReachable;

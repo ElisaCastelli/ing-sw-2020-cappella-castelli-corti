@@ -154,7 +154,7 @@ public class ServerHandler extends Thread{
                ///System.out.println("----> ci sono riusito");
                for (ServerHandler serverHandler : clientArray) {
                    serverHandler.getOutputStream().writeObject(objMessage);
-                   outputStream.flush();
+                   outputStream.reset();
                }
            } catch (IOException e) {
                e.printStackTrace();
@@ -165,7 +165,7 @@ public class ServerHandler extends Thread{
     public void sendUpdate(ObjMessage objMessage) {
         try {
             outputStream.writeObject(objMessage);
-            outputStream.flush();
+            outputStream.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
