@@ -131,7 +131,7 @@ public class VisitorServer {
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
             ///check win/morto
-            if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRowStart(), objMove.getColumnStart(), objMove.getIndexWorkerToMove())){
+            if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRowStart(), objMove.getColumnStart(), objMove.getIndexWorkerToMove()-1)){
                 ///sendupdate.hai vinto
                 ///sendbroadcast senza io hai perso
             }else{
@@ -153,14 +153,12 @@ public class VisitorServer {
                 }
             }
         }else {
-            //todo Ricontrollare tutto
             UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
             updateBoardEvent.setShowReachable(true);
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
-            //todo riguardare first time: true se è davvero la prima volta o false se è la doppia mossa
-            AskMoveEvent askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRowStart(), objMove.getColumnStart(), false, false);
-            //askBuildEvent.setWrongBox(true);
+            AskMoveEvent askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRowStart(), objMove.getColumnStart(), true, false);
+            askMoveEvent.setWrongBox(true);
             serverHandler.sendUpdateBroadcast(askMoveEvent);
         }
     }

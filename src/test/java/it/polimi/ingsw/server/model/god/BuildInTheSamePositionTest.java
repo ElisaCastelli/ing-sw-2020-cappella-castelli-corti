@@ -13,7 +13,7 @@ class BuildInTheSamePositionTest {
     void setPossibleBuild() {
         God god=new BuildInTheSamePosition(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1, Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
         //Controllo e costruisco livello 1 e 2
         myWorker.initializePos(board.getBox(2, 4),board);
         god.setPossibleBuild(myWorker);
@@ -78,7 +78,7 @@ class BuildInTheSamePositionTest {
     void moveBlock() {
         God god=new BuildInTheSamePosition(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
 
         //Costruisco livello 1 e 2
         myWorker.initializePos(board.getBox(3, 1),board);

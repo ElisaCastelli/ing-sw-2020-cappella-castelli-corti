@@ -14,9 +14,9 @@ class OtherPositionToBuildTest {
     void setPossibleBuild() {
         //DEMETRA
         God god=new OtherPositionToBuild(new BasicGod());
-        Worker worker=new Worker(1, Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
-        Worker worker3=new Worker(3,Game.COLOR.BLU);
+        Worker worker=new Worker(1);
+        Worker worker2=new Worker(2);
+        Worker worker3=new Worker(3);
         Board board = new Board();
 
         worker.initializePos(board.getBox(0,1),board);
@@ -55,9 +55,9 @@ class OtherPositionToBuildTest {
     @Test
     void moveBlock() {
         God god=new OtherPositionToBuild(new BasicGod());
-        Worker worker=new Worker(1,Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
-        Worker worker3=new Worker(3,Game.COLOR.BLU);
+        Worker worker=new Worker(1);
+        Worker worker2=new Worker(2);
+        Worker worker3=new Worker(3);
         Board board = new Board();
         worker.initializePos(board.getBox(0,1),board);
         worker2.initializePos(board.getBox(1,1),board);

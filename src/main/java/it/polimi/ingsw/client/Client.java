@@ -29,7 +29,7 @@ public class Client {
             ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
             ClientHandler clientHandler = new ClientHandler(inputStream, outputStream, clientSocket);
-            clientHandler.listening();
+            clientHandler. listening();
         } catch (IOException e) {
             e.printStackTrace();
         }

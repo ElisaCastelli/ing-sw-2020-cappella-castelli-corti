@@ -187,27 +187,14 @@ public class Box implements Serializable {
      * This method prints the content of the box
      */
     public String print(){
-        if( worker != null ) {
-            return "O";
-        }
-        else if ( building.getArrayOfBlocks().size() > 0 ){
-            //building.print();
-            return "B";
-        }
-        return " ";
+        return "█";
     }
-    /**
-     * This method prints an X inside the Box if it is reachable by the player
-     */
-    public String printReachable(){
-        if(reachable) {
-           return "X";
-        }else{
-            if( worker!=null ) {
-                return "O";
-            }
+
+    public int printsize(){
+        if(building.getArrayOfBlocks().size() > 0){
+            return building.getArrayOfBlocks().size();
         }
-        return " ";
+        return 0;
     }
 }
 

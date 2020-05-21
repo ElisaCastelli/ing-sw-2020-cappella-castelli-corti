@@ -27,18 +27,16 @@ public class Worker implements Serializable {
     /**
      * this parameter is to identify the color of the player
      */
-    private final Game.COLOR color;
+    private int indexPlayer;
 
     /**
      *
      * @param workerId this parameter is to identify the worker of the player
-     * @param color this parameter is to identify the color of the player
      */
-    public Worker(int workerId, Game.COLOR color) {
+    public Worker(int workerId) {
         this.workerId = workerId;
         height=0;
         actualBox=null;
-        this.color = color;
     }
 
     /**
@@ -91,10 +89,18 @@ public class Worker implements Serializable {
 
     /**
      *
-     * @return the color associated with the player
+     * @return this method return the index associated with the player
      */
-    public Game.COLOR getColor() {
-        return color;
+    public int getIndexPlayer() {
+        return indexPlayer;
+    }
+
+    /**
+     *
+     * @param indexPlayer index of the player
+     */
+    public void setIndexPlayer(int indexPlayer) {
+        this.indexPlayer = indexPlayer;
     }
 
     /**

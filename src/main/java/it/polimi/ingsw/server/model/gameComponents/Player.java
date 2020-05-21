@@ -28,7 +28,7 @@ public class Player implements Serializable {
     /**
      * This is a String in Hexadecimal to identify the color associated with the player and his workers
      */
-    private final Game.COLOR color;
+    private int indexPlayer;
 
     /**
      * This array of Workers contains two workers for each player
@@ -42,15 +42,14 @@ public class Player implements Serializable {
      * @param age the age of a player
      * @param name the name of a player
      */
-    public Player(String name, int age, Game.COLOR color){
+    public Player(String name, int age){
         this.name = name;
         myWorkers = new Worker[2];
-        myWorkers[0] = new Worker(1, color);
-        myWorkers[1] = new Worker(2,color);
+        myWorkers[0] = new Worker(1);
+        myWorkers[1] = new Worker(2);
         this.age = age;
         myGod = new BasicGod();
         gamerManager = new PlayerStateManager(myGod);
-        this.color = color;
     }
 
 
@@ -72,6 +71,15 @@ public class Player implements Serializable {
     public int getAge() {
         return age;
     }
+    public void setIndexPlayer(int indexPlayer){
+        this.indexPlayer=indexPlayer;
+        myWorkers[0].setIndexPlayer(indexPlayer);
+        myWorkers[1].setIndexPlayer(indexPlayer);
+    }
+    public int getIndexPlayer() {
+        return indexPlayer;
+    }
+
     public boolean isPlaying(){
         return gamerManager.isPlaying();
     }

@@ -14,7 +14,7 @@ class BasicGodTest {
     @Test
     void setPossibleMove() {
         God BGTest = new BasicGod();
-        Worker workerToMove = new Worker(1, Game.COLOR.BLU);
+        Worker workerToMove = new Worker(1);
         Board board = new Board();
 
         board.getBox(0,2 ).build();
@@ -23,7 +23,7 @@ class BasicGodTest {
         board.getBox(0,2).setWorker(workerToMove);
 
         board.getBox(0,3).build();
-        Worker opponentWorker = new Worker(2,Game.COLOR.BLU);
+        Worker opponentWorker = new Worker(2);
         opponentWorker.setActualBox(board.getBox(0,3));
         opponentWorker.setHeight(board.getBox(0,3).getCounter());
         board.getBox(0,3).setWorker(opponentWorker);
@@ -47,14 +47,14 @@ class BasicGodTest {
 
         board.getBox(2,2).build();
         board.getBox(2,2).build();
-        Worker worker = new Worker(2,Game.COLOR.BLU);
+        Worker worker = new Worker(2);
         worker.setActualBox(board.getBox(2,2));
         worker.setHeight(board.getBox(2,2).getCounter());
         board.getBox(2,2).setWorker(worker);
 
         board.getBox(2,3).build();
 
-        Worker opponentWorker2 = new Worker(2,Game.COLOR.BLU);
+        Worker opponentWorker2 = new Worker(2);
         opponentWorker2.setActualBox(board.getBox(3,1));
         opponentWorker2.setHeight(board.getBox(3,1).getCounter());
         board.getBox(3,1).setWorker(opponentWorker2);
@@ -65,7 +65,7 @@ class BasicGodTest {
     @Test
     void setPossibleBuild() {
         God BGTest = new BasicGod();
-        Worker myWorker = new Worker(1,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
         Board board = new Board();
 
         board.getBox(0,1).build();
@@ -86,7 +86,7 @@ class BasicGodTest {
         board.getBox(1,2).build();
         board.getBox(1,2).build();
 
-        Worker opponentWorker = new Worker(2,Game.COLOR.BLU);
+        Worker opponentWorker = new Worker(2);
         board.getBox(2,0).build();
         board.getBox(2,0).build();
         board.getBox(2,0).build();
@@ -95,14 +95,14 @@ class BasicGodTest {
         board.getBox(2,0).setWorker(opponentWorker);
 
         board.getBox(2,1).build();
-        Worker opponentWorker2 = new Worker(2,Game.COLOR.BLU);
+        Worker opponentWorker2 = new Worker(2);
         opponentWorker2.setActualBox(board.getBox(2,1));
         opponentWorker2.setHeight(board.getBox(2,1).getCounter());
         board.getBox(2,1).setWorker(opponentWorker2);
 
         board.getBox(2,2).build();
         board.getBox(2,2).build();
-        Worker opponentWorker3 = new Worker(2,Game.COLOR.BLU);
+        Worker opponentWorker3 = new Worker(2);
         opponentWorker3.setActualBox(board.getBox(2,2));
         opponentWorker3.setHeight(board.getBox(2,2).getCounter());
         board.getBox(2,2).setWorker(opponentWorker3);
@@ -123,7 +123,7 @@ class BasicGodTest {
     @Test
     void moveWorker() {
         God BGTest = new BasicGod();
-        Worker myWorker = new Worker(1,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
         Board board = new Board();
 
         board.getBox(1,2).build();

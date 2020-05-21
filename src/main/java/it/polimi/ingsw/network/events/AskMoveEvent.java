@@ -12,6 +12,7 @@ public class AskMoveEvent extends ObjMessage {
     int column1;
     int indexWorker;
     boolean firstTime;
+    boolean wrongBox=false;
     boolean isDone;
 
     public AskMoveEvent(int indexWorker, int row1, int column1, boolean firstTime, boolean isDone) {
@@ -42,6 +43,14 @@ public class AskMoveEvent extends ObjMessage {
 
     public void setFirstTime(boolean firstTime) {
         this.firstTime = firstTime;
+    }
+
+    public boolean isWrongBox() {
+        return wrongBox;
+    }
+
+    public void setWrongBox(boolean wrongBox) {
+        this.wrongBox = wrongBox;
     }
 
     public boolean isDone() {

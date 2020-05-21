@@ -13,7 +13,7 @@ class MoveInfinityTimesAlongThePerimeterTest {
     @Test
     void moveWorker() {
         God god = new MoveInfinityTimesAlongThePerimeter(new BasicGod());
-        Worker workerToMove = new Worker(1, Game.COLOR.BLU);
+        Worker workerToMove = new Worker(1);
         Board board = new Board();
 
         //Mossa normale

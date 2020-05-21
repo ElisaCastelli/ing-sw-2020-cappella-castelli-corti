@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Player pTest = new Player("a",10,Game.COLOR.BLU);
+    Player pTest = new Player("a",10);
     Board boardTest = new Board();
     @Test
     void setName() {

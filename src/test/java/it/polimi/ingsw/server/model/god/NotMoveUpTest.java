@@ -15,8 +15,8 @@ class NotMoveUpTest {
         God myGod = new NotMoveUp(new BasicGod());
         God opponentGod = new OpponentBlock(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1, Game.COLOR.BLU);
-        Worker opponentWorker = new Worker(2,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
+        Worker opponentWorker = new Worker(2);
 
         myWorker.initializePos(board.getBox(4,2), board);
 
@@ -65,7 +65,7 @@ class NotMoveUpTest {
 
         //Prova con gli effetti del Minotauro
         God myGod2 = new NotMoveUp(new ShiftWorker(new SwitchWorker(new BasicGod())));
-        Worker opponentWorker2 = new Worker (3,Game.COLOR.BLU);
+        Worker opponentWorker2 = new Worker (3);
         opponentWorker2.initializePos(board.getBox(4,3),board);
 
         //Set normale: Atena non si è ancora mossa

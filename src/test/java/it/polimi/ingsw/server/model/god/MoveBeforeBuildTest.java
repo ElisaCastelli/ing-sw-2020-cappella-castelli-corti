@@ -12,7 +12,7 @@ class MoveBeforeBuildTest {
     @Test
     void moveBlock() {
         God god = new MoveBeforeBuild(new BasicGod());
-        Worker myWorker = new Worker(1, Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
         Board board = new Board();
 
         myWorker.initializePos(board.getBox(2,2),board);

@@ -15,8 +15,8 @@ class MoveWorkerTwiceTest {
     void setPossibleMove() {
         God god = new MoveWorkerTwice(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1, Game.COLOR.BLU);
-        Worker worker2=new Worker(2,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
+        Worker worker2=new Worker(2);
 
         myWorker.initializePos(board.getBox(0,1),board);
         worker2.initializePos(board.getBox(1,1),board);
@@ -61,7 +61,7 @@ class MoveWorkerTwiceTest {
     void moveWorker() {
         God god = new MoveWorkerTwice(new BasicGod());
         Board board = new Board();
-        Worker myWorker = new Worker(1,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
 
         myWorker.initializePos(board.getBox(0,1),board);
 

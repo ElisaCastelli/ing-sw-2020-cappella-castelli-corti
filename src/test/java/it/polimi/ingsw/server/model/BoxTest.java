@@ -23,7 +23,7 @@ class BoxTest {
 
     @Test
     void getWorker() {
-        Worker w = new Worker(1, Game.COLOR.BLU);
+        Worker w = new Worker(1);
         box.setWorker(w);
         assertEquals(w,box.getWorker());
     }
@@ -60,7 +60,7 @@ class BoxTest {
 
     @Test
     void setWorker() {
-        Worker w= new Worker(1,Game.COLOR.BLU);
+        Worker w= new Worker(1);
         box.setWorker(w);
         assertEquals(w,box.getWorker());
     }

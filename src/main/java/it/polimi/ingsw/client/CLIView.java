@@ -147,14 +147,7 @@ public class CLIView extends View {
         return boxes;
     }
 
-    @Override
-    public void printBoard(boolean printReachable) {
-        if(!printReachable){
-            board.print();
-        }else{
-            board.printReachable();
-        }
-    }
+
 
     @Override
     public ObjWorkerToMove askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
@@ -215,7 +208,10 @@ public class CLIView extends View {
 
         ObjMove objMove = new ObjMove(indexWorker, row, column, 0,0,true);
 
-        System.out.println("you have chosen the "+indexWorker+" worker ");
+        if (askMoveEvent.isWrongBox()){
+            wrongMove();
+        }
+        System.out.println("you have chosen the worker "+ indexWorker);
         System.out.println("Position : "+ row + " <-row  " + column + " <-column");
         System.out.println("You' re going to do your move -> What Position You wanna reach ? ");
 
@@ -231,8 +227,8 @@ public class CLIView extends View {
     public ObjMove anotherMove(AskMoveEvent askMoveEvent) {
         System.out.println("You Have the possibility to make another move");
         System.out.println("Do You want to?: ");
-        System.out.println("[ 0 ] -> "+ "YES");
-        System.out.println("[ 1 ] -> "+ "NO");
+        System.out.println("[ 1 ] -> "+ "YES");
+        System.out.println("[ 0 ] -> "+ "NO");
 
         int intInputValue = twoNumbers();
         if(intInputValue == 1){
@@ -242,6 +238,11 @@ public class CLIView extends View {
             objMove.setDone(false);
             return objMove;
         }
+    }
+    @Override
+    public void wrongMove(){
+        System.out.println("You Made the wrong move: the Box was unreachable");
+        System.out.println("Repeat the move...and now don't make the same mistake ");
     }
 
     @Override
@@ -275,8 +276,8 @@ public class CLIView extends View {
     public ObjBlock anotherBuild(AskBuildEvent askBuildEvent) {
         System.out.println("Your god gives you the possibility to make another build.");
         System.out.println("Do You want to?: ");
-        System.out.println("[ 0 ] -> "+ "YES");
-        System.out.println("[ 1 ] -> "+ "NO");
+        System.out.println("[ 1 ] -> "+ "YES");
+        System.out.println("[ 0 ] -> "+ "NO");
 
         int inputValue = twoNumbers();
         if(inputValue == 0){
@@ -354,5 +355,86 @@ public class CLIView extends View {
     //Questo metodo controlla se il numero inserito può appartenere a una casella adiacente
     public boolean boxReachable (int input){
         return input >= 0 && input < 5;
+    }
+    @Override
+    public void printBoard(boolean printReachable) {
+        if(!printReachable){
+            print();
+        }else{
+            printReachable();
+        }
+    }
+
+    public String printByIndexPlayer(int row, int column){
+        if(board.getBox(row, column).isReachable()){
+            return "X";
+        }else {
+            if (board.getBox(row, column).getWorker() != null) {
+                if (board.getBox(row, column).getWorker().getIndexPlayer() == 0) {
+                    return Color.RED_BOLD + board.getBox(row, column).print() + Color.RESET;
+                } else if (board.getBox(row, column).getWorker().getIndexPlayer() == 1) {
+                    return Color.YELLOW_BOLD + board.getBox(row, column).print() + Color.RESET;
+                } else {
+                    return Color.CYAN_BOLD + board.getBox(row, column).print() + Color.RESET;
+                }
+            } else return " ";
+        }
+    }
+    public void print(){
+        System.out.println();
+        System.out.println();
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "0"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "1"+ " "+" "+ " "+ " "+ " "+ " "+ " "+ "2"+ " "+" "+ " "+ " "+ " "+ " "+ " "+ "3"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "4"+ " "+ " "+ " "+ " ");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(0,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "0"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(0,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(0,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "1"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(1,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(1,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(2,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "2"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(2,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(2,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(3,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "3"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(3,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(3,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(4,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "4"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(4,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(4,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(4,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(4,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(4,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#");
+        System.out.println();
+        System.out.println();
+    }
+
+    public void printReachable() {
+        System.out.println();
+        System.out.println();
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "0"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "1"+ " "+" "+ " "+ " "+ " "+ " "+ " "+ "2"+ " "+" "+ " "+ " "+ " "+ " "+ " "+ "3"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "4"+ " "+ " "+ " "+ " ");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "0"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(0,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(0,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "1"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(1,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(1,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "2"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(2,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(2,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "3"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(3,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(3,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ "4"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(4,0)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(4,1)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(4,2)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(4,3)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(4,4)+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
+        System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#");
+        System.out.println();
+        System.out.println();
     }
 }

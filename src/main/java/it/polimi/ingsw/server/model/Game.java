@@ -31,19 +31,6 @@ public class Game implements GameModel{
      */
     private ArrayList<Player> players;
 
-    /**
-     * This is a class enum made to choose the color associated with the player and his workers
-     */
-    public enum COLOR {
-
-        BLU("#005EA5"),
-        ORANGE("#FF7FF0"),
-        RED("#A71010");
-
-        COLOR(String c) {
-        }
-    }
-
 
     /**
      * this is the array list of the players
@@ -114,18 +101,12 @@ public class Game implements GameModel{
         return nPlayers;
     }
     public void addPlayer(String name, int age){
-        Game.COLOR color;
-        if(players.size()==0){
-            color=COLOR.BLU;
-        }
-        else  if(players.size()==1){
-            color=COLOR.ORANGE;
-        }
-        else{
-            color=COLOR.RED;
-        }
-        players.add(new Player(name,age,color));
+        players.add(new Player(name,age));
         sortGamers();
+        for(Player player :players){
+            int indexPlayer= searchByName(player.getName());
+            player.setIndexPlayer(indexPlayer);
+        }
     }
     public ArrayList<Player> getPlayerArray(){
         return players;

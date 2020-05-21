@@ -32,6 +32,7 @@ public abstract class View {
     public abstract ObjWorkerToMove areYouSure(AskWorkerToMoveEvent askMoveEvent);
     public abstract ObjMove moveWorker(AskMoveEvent askMoveEvent);
     public abstract ObjMove anotherMove(AskMoveEvent askMoveEvent);
+    public abstract void wrongMove();
     public abstract ObjBlock buildMove(AskBuildEvent askBuildEvent);
     public abstract ObjBlock anotherBuild(AskBuildEvent askBuildEvent);
 }

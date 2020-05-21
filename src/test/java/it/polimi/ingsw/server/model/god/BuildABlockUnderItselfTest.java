@@ -12,7 +12,7 @@ class BuildABlockUnderItselfTest {
     @Test
     void setPossibleBuild() {
         God god = new BuildABlockUnderItself(new BasicGod());
-        Worker myWorker = new Worker(1, Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
         Board board = new Board();
 
         myWorker.initializePos(board.getBox(4,1),board);
@@ -71,7 +71,7 @@ class BuildABlockUnderItselfTest {
     @Test
     void moveBlock() {
         God god = new BuildABlockUnderItself(new BasicGod());
-        Worker myWorker = new Worker(1,Game.COLOR.BLU);
+        Worker myWorker = new Worker(1);
         Board board = new Board();
 
         myWorker.initializePos(board.getBox(0,0),board);
