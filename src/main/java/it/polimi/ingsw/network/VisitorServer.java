@@ -148,7 +148,10 @@ public class VisitorServer {
                         //Giocatore morto X
                     }
                 }else{
-                    //todo fare setReachable + updateBoard (G)
+                    updateBoardEvent = serverHandler.getVirtualView().setBoxBuilding(indexPlayer, askMoveEvent.getIndexWorker());
+                    updateBoardEvent.setShowReachable(true);
+                    serverHandler.sendUpdateBroadcast(updateBoardEvent);
+                    serverHandler.waitForPlayer();
                     serverHandler.sendUpdateBroadcast(askMoveEvent);
                 }
             }
@@ -194,9 +197,9 @@ public class VisitorServer {
             updateBoardEvent = serverHandler.getVirtualView().updateBoard();
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
-            /*if(serverHandler.getVirtualView().checkWinAfterBuild()){
+            if(serverHandler.getVirtualView().checkWinAfterBuild()){
                 //Il giocatore con Crono ha vinto
-            }else {*/
+            }else
                 if(askBuildEvent.isDone()){
                     //Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
                     ObjState objState = serverHandler.getVirtualView().goPlayingNext();
@@ -217,7 +220,6 @@ public class VisitorServer {
                     serverHandler.waitForPlayer();
                     serverHandler.sendUpdateBroadcast(askBuildEvent);
                 }
-            //}
         }else {
             updateBoardEvent = serverHandler.getVirtualView().updateBoard();
             updateBoardEvent.setShowReachable(true);
@@ -231,7 +233,6 @@ public class VisitorServer {
 
     public void visit(AckBlock ackBlock){
         serverHandler.waitForPlayer();
-        //todo (G) Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
         ObjState objState = serverHandler.getVirtualView().goPlayingNext();
         int indexPlayer = serverHandler.getIndexPlayer();
         int nextPlayer = serverHandler.getIndexClient(indexPlayer + 1);

@@ -8,8 +8,12 @@ public class IsPlaying extends PlayerState{
     private God myGod;
     private final PlayerStateManager playerManager;
     public IsPlaying(God myGod, PlayerStateManager playerManager){
-        this.myGod=myGod;
-        this.playerManager=playerManager;
+        this.myGod = myGod;
+        this.playerManager = playerManager;
+    }
+
+    public void setMyGod(God myGod) {
+        this.myGod = myGod;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class PlayerStateManager {
 
 
     public void goPlaying(){
-        if(currentState==isWaiting){
+        if(currentState == isWaiting){
             setCurrentState(isPlaying);
         }
     }
@@ -58,20 +58,21 @@ public class PlayerStateManager {
     }
 
     public void goDead(){
-        if(currentState==isPlaying || currentState==isWaiting){
+        if(currentState == isPlaying || currentState == isWaiting){
             setCurrentState(dead);
         }
 
     }
 
     public void goWin(){
-        if(currentState==isPlaying){
+        if(currentState == isPlaying){
             setCurrentState(win);
         }
     }
     public boolean isPlaying(){
-        return currentState==isPlaying;
+        return currentState == isPlaying;
     }
+    public void setMyGod(God myGod) {currentState.setMyGod(myGod);}
     public boolean moveWorker (Worker worker, Box pos ){
         return currentState.moveWorker(worker,pos);
     }

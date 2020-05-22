@@ -88,8 +88,8 @@ public class Player implements Serializable {
     }
     public ArrayList<Box> getWorkersBox(){
         ArrayList<Box> boxes = new ArrayList<>();
-        boxes.add(0,myWorkers[0].getActualBox());
-        boxes.add(1,myWorkers[1].getActualBox());
+        boxes.add(0, myWorkers[0].getActualBox());
+        boxes.add(1, myWorkers[1].getActualBox());
         return boxes;
     }
     /**
@@ -129,7 +129,8 @@ public class Player implements Serializable {
     }
 
     public void setPossibleMove( int indexWorker ){
-         gamerManager.setPossibleMove(myWorkers[indexWorker]);
+        gamerManager.setMyGod(myGod);
+        gamerManager.setPossibleMove(myWorkers[indexWorker]);
     }
 
     public void setPossibleBuild( int indexWorker ){

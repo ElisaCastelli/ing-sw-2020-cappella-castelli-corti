@@ -44,7 +44,7 @@ public class SwitchWorker extends GodDecorator {
 
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (boxNextTo != null && (worker.getIndexPlayer() != boxNextTo.getWorker().getIndexPlayer()) && !boxNextTo.notWorker() && (boxNextTo.getCounter() - worker.getHeight() <= 1)){
+            if (boxNextTo != null && !boxNextTo.notWorker() && (worker.getIndexPlayer() != boxNextTo.getWorker().getIndexPlayer()) && (boxNextTo.getCounter() - worker.getHeight() <= 1)){
                 boxNextTo.setReachable(true);
             }
         }
