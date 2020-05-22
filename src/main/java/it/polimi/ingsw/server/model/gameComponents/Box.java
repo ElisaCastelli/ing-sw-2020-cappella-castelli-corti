@@ -158,12 +158,12 @@ public class Box implements Serializable {
     }
 
     public boolean checkPossible(){
-        boolean possible=false;
-        int index=0;
+        boolean possible = false;
+        int index = 0;
         while((index < boxesNextTo.size()) && !possible){
-            if(boxesNextTo.get(index)!=null){
+            if(boxesNextTo.get(index) != null){
                 if(boxesNextTo.get(index).isReachable()){
-                    possible=true;
+                    possible = true;
                 }
             }
             index++;

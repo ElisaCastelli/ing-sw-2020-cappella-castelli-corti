@@ -37,14 +37,14 @@ public class ServerHandler extends Thread{
     }
 
     public int getIndexClient(int indexPlayer){
-        boolean found=false;
-        int indexClient=0;
-        if(indexPlayer==clientArray.size()){
-            indexPlayer=0;
+        boolean found = false;
+        int indexClient = 0;
+        if(indexPlayer == clientArray.size()){
+            indexPlayer = 0;
         }
         while(!found && indexClient < clientArray.size()){
-            if(clientArray.get(indexClient).getIndexPlayer()==indexPlayer){
-                found=true;
+            if(clientArray.get(indexClient).getIndexPlayer() == indexPlayer){
+                found = true;
             }
             else {
                 indexClient++;

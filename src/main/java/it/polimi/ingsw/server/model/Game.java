@@ -194,19 +194,16 @@ public class Game implements GameModel{
         boolean canMove = stateManager.canMove(indexPlayer);
         if(!canMove){
             playersDead.add(players.get(indexPlayer));
-            players.remove(indexPlayer);
-            if(players.size()==1) {
-                int winner = 0;
-                /*int i=0;
-                boolean found=false;
-                while(i<nPlayers && !found){
-                    if(players.get(i)!=null){
-                        winner=i;
-                        found=true;
-                    }
-                }*/
-                stateManager.goEnd(winner);
+            int winner = 0;
+            int i = 0;
+            boolean found = false;
+            while(i < nPlayers && !found){
+                if(players.get(i) != null){
+                    winner = i;
+                    found = true;
+                }
             }
+            stateManager.goEnd(winner);
         }
         return canMove;
     }
@@ -221,22 +218,19 @@ public class Game implements GameModel{
     }
 
     public boolean canBuild(int indexPlayer, int indexWorker){
-        boolean canBuild=stateManager.canBuild(indexPlayer, indexWorker);;
+        boolean canBuild = stateManager.canBuild(indexPlayer, indexWorker);
         if(!canBuild){
             playersDead.add(players.get(indexPlayer));
-            players.remove(indexPlayer);
-            if(players.size()==1){
-                int winner=0;
-                /*int i=0;
-                boolean found=false;
-                while(i<nPlayers && !found){
-                    if(players.get(i)!=null){
-                        winner=i;
-                        found=true;
-                    }
-                }*/
-                stateManager.goEnd(winner);
+            int winner = 0;
+            int i = 0;
+            boolean found=false;
+            while(i < nPlayers && !found){
+                if(players.get(i) != null){
+                    winner = i;
+                    found = true;
+                }
             }
+            stateManager.goEnd(winner);
         }
         return canBuild;
     }
@@ -247,7 +241,7 @@ public class Game implements GameModel{
     }
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column){
-        return stateManager.buildBlock(indexPlayer,indexWorker,row,column,board);
+        return stateManager.buildBlock(indexPlayer, indexWorker, row, column, board);
     }
 
     public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker){
@@ -266,6 +260,7 @@ public class Game implements GameModel{
     public void setDeadPlayer(int indexPlayer){
         stateManager.setDeadPlayer(indexPlayer);
     }
+
     public void setPause(){
         stateManager.goPause();
     }

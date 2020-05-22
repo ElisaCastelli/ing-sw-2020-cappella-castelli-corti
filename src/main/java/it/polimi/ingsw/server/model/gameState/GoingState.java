@@ -45,12 +45,9 @@ public class GoingState extends GameState{
     }
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column, Board board){
-        boolean movedBlock = false;
-        players.get(indexPlayer).setPossibleBuild(indexWorker);
-        if(board.getBox(row,column).isReachable()){
-            movedBlock=players.get(indexPlayer).playBlock(indexWorker,board.getBox(row, column));
-        }
-        players.get(indexPlayer).getWorkerBox(indexWorker-1).clearBoxesNextTo();
+        Box starterBox = players.get(indexPlayer).getWorkerBox(indexWorker - 1);
+        boolean movedBlock = players.get(indexPlayer).playBlock(board.getBox(row, column));
+        starterBox.clearBoxesNextTo();
         return movedBlock;
     }
 
@@ -59,7 +56,7 @@ public class GoingState extends GameState{
     }
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
-        boolean win=players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker));
+        boolean win = players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker-1));
         if(win){
             manager.goEnd(indexPlayer);
         }

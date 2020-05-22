@@ -97,15 +97,6 @@ public class Board implements Serializable{
         return nextTo;
     }
 
-    /**
-     * This method prints the content of the entire board
-     */
-
-    /**
-     * This method prints the content of the entire board with the reachable
-     */
-
-
     public void clearReachable(){
         for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){

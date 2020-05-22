@@ -131,13 +131,13 @@ public class VisitorServer {
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
             ///check win/morto
-            if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRowStart(), objMove.getColumnStart(), objMove.getIndexWorkerToMove()-1)){
+            if(serverHandler.getVirtualView().checkWin(indexPlayer, objMove.getRowStart(), objMove.getColumnStart(), objMove.getIndexWorkerToMove())){
                 ///sendupdate.hai vinto
                 ///sendbroadcast senza io hai perso
             }else{
                 if(askMoveEvent.isDone()){
                     //Controllo che può costruire e passo alla costruzione dell'edificio, altrimenti il giocatore perde
-                    if(serverHandler.getVirtualView().canBuild(indexPlayer,askMoveEvent.getIndexWorker())){
+                    if(serverHandler.getVirtualView().canBuild(indexPlayer, askMoveEvent.getIndexWorker())){
                         updateBoardEvent = serverHandler.getVirtualView().updateBoard();
                         updateBoardEvent.setShowReachable(true);
                         serverHandler.sendUpdateBroadcast(updateBoardEvent);
@@ -191,18 +191,25 @@ public class VisitorServer {
         if(serverHandler.getVirtualView().isReachable(rowBlock, columnBlock)){
             int indexPlayer = serverHandler.getIndexPlayer();
             AskBuildEvent askBuildEvent = serverHandler.getVirtualView().buildBlock(indexPlayer, indexWorker, rowWorker, columnWorker, rowBlock, columnBlock);
-            //todo cancellare le reachable dalla board (G)
             updateBoardEvent = serverHandler.getVirtualView().updateBoard();
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
-            if(serverHandler.getVirtualView().checkWinAfterBuild()){
+            /*if(serverHandler.getVirtualView().checkWinAfterBuild()){
                 //Il giocatore con Crono ha vinto
-            }else {
+            }else {*/
                 if(askBuildEvent.isDone()){
                     //Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
                     ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-                    //va richiamata la can move(player+1) sul nuovo whoIsPlaying
-                    serverHandler.sendUpdateBroadcast(objState);
+                    //va richiamata la can move(player+1)
+                    int nextPlayer = serverHandler.getIndexClient(indexPlayer + 1);
+                    if(serverHandler.getVirtualView().canMove(nextPlayer)){
+                        serverHandler.sendUpdateBroadcast(objState);
+                        serverHandler.waitForPlayer();
+                        AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(serverHandler.getIndexNext(), true);
+                        serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
+                    }else {
+
+                    }
                 }else {
                     updateBoardEvent = serverHandler.getVirtualView().setBoxBuilding(indexPlayer, indexWorker);
                     updateBoardEvent.setShowReachable(true);
@@ -210,14 +217,13 @@ public class VisitorServer {
                     serverHandler.waitForPlayer();
                     serverHandler.sendUpdateBroadcast(askBuildEvent);
                 }
-            }
+            //}
         }else {
-            //Ho presupposto che le reachable non le ho cancellate, perciò rimando la board mandata precedentemente
             updateBoardEvent = serverHandler.getVirtualView().updateBoard();
             updateBoardEvent.setShowReachable(true);
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
             serverHandler.waitForPlayer();
-            AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false);
+            AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, objBlock.isFirstTime(), false);
             askBuildEvent.setWrongBox(true);
             serverHandler.sendUpdateBroadcast(askBuildEvent);
         }
@@ -227,7 +233,16 @@ public class VisitorServer {
         serverHandler.waitForPlayer();
         //todo (G) Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
         ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-        serverHandler.sendUpdateBroadcast(objState);
+        int indexPlayer = serverHandler.getIndexPlayer();
+        int nextPlayer = serverHandler.getIndexClient(indexPlayer + 1);
+        if(serverHandler.getVirtualView().canMove(nextPlayer)){
+            serverHandler.sendUpdateBroadcast(objState);
+            serverHandler.waitForPlayer();
+            AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(serverHandler.getIndexNext(), true);
+            serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
+        }else {
+
+        }
     }
 
     public void visit(CloseConnectionClientEvent closeConnectionClientEvent){

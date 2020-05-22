@@ -19,14 +19,14 @@ public class IsPlaying extends PlayerState{
     }
 
     @Override
-    public boolean moveBlock( Box pos){
+    public boolean moveBlock(Box pos){
         System.out.println("Costruisco"); //costruzione effettiva
         return myGod.moveBlock(pos);
     }
 
     @Override
     public boolean checkWin(Box starterBox, Box finalBox) {
-        boolean win=myGod.checkWin( starterBox , finalBox );
+        boolean win = myGod.checkWin( starterBox , finalBox );
         if(win){
             playerManager.goWin();
         }

@@ -189,11 +189,11 @@ public class CLIView extends View {
         System.out.println("Are You sure you want move the "+indexWorker+" worker? ");
         System.out.println("Position : "+ row + " <-row   " + column + " <-column");
 
-        System.out.println("[ 0 ] -> "+ " YES");
-        System.out.println("[ 1 ] -> "+ " NO");
+        System.out.println("[ 1 ] -> "+ " YES");
+        System.out.println("[ 0 ] -> "+ " NO");
 
         int intInputValue = twoNumbers();
-        if(intInputValue == 0){
+        if(intInputValue == 1){
             return new ObjWorkerToMove(indexWorker, row, column,true);
         }else{
             return askWorker(askWorkerToMoveEvent);
@@ -231,7 +231,7 @@ public class CLIView extends View {
         System.out.println("[ 0 ] -> "+ "NO");
 
         int intInputValue = twoNumbers();
-        if(intInputValue == 1){
+        if(intInputValue == 0){
             return new ObjMove(true);
         }else{
             ObjMove objMove = moveWorker(askMoveEvent);
@@ -250,11 +250,11 @@ public class CLIView extends View {
         int indexWorker = askBuildEvent.getIndexWorker();
         int rowWorker = askBuildEvent.getRowWorker();
         int columnWorker = askBuildEvent.getColumnWorker();
-        ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker);
+        ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker, askBuildEvent.isFirstTime());
         int intInputValue;
 
         if(askBuildEvent.isWrongBox()){
-            System.out.println("You choose an unreachable box. Please, choose a reachable one");
+            wrongMove();
         }else {
             System.out.println("You're going to build now -> Where do you wanna build?");
         }
@@ -268,7 +268,6 @@ public class CLIView extends View {
 
         //todo (G) Se atlas chiedere se vuole mettere una cupola. Passare un boolean e inserirlo in tutti i metodi buildMove (solo Atlas andrà ad utilizzarlo)
 
-        //Verificare che la casella selezionata sia effettivamente valida e non abbia fatto lo stronzo (Facciamo lato server)
         return objBlock;
     }
 
@@ -280,7 +279,7 @@ public class CLIView extends View {
         System.out.println("[ 0 ] -> "+ "NO");
 
         int inputValue = twoNumbers();
-        if(inputValue == 0){
+        if(inputValue == 1){
             ObjBlock objBlock = buildMove(askBuildEvent);
             objBlock.setDone(false);
             return objBlock;

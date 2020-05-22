@@ -7,7 +7,7 @@ public class EndState extends GameState{
     }
 
     public void setWinner(int winner){
-        this.winner=winner;
+        this.winner = winner;
     }
 
     public int getWinner(){

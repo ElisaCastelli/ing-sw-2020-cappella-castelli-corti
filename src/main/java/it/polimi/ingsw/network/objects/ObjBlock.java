@@ -10,12 +10,14 @@ public class ObjBlock extends ObjMessage {
     int columnWorker;
     int rowBlock;
     int columnBlock;
+    boolean firstTime;
     boolean done;
 
-    public ObjBlock(int indexWorker, int rowWorker, int columnWorker) {
+    public ObjBlock(int indexWorker, int rowWorker, int columnWorker, boolean firstTime) {
         this.indexWorker = indexWorker;
         this.rowWorker = rowWorker;
         this.columnWorker = columnWorker;
+        this.firstTime = firstTime;
     }
 
     public ObjBlock(boolean done) {
@@ -40,6 +42,10 @@ public class ObjBlock extends ObjMessage {
 
     public int getColumnBlock() {
         return columnBlock;
+    }
+
+    public boolean isFirstTime() {
+        return firstTime;
     }
 
     public boolean isDone() {
