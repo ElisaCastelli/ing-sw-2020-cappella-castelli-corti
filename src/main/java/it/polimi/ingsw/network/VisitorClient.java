@@ -38,6 +38,7 @@ public class VisitorClient {
     }
 
     public void visit(ObjState objState){
+        clientHandler.getView().setWhoIsPlaying(objState.getCurrentPlayer());
         //se è la prima volta entra e ti setti il valore
         if(clientHandler.getView().getIndexPlayer() == -1){
             clientHandler.getView().setIndexPlayer(objState.getIndexPlayer());
@@ -45,7 +46,7 @@ public class VisitorClient {
 
             //qua arrivavano tutti e tre perchè si dovevano settare il valore iniziale
             //se sei anche il primo che deve giocare
-            if(clientHandler.getView().getIndexPlayer()==objState.getCurrentPlayer()) {
+            if(clientHandler.getView().getIndexPlayer() == objState.getCurrentPlayer()) {
                 clientHandler.getView().setPlaying(true);
                 System.out.println("I have to play");
                 //invia un ackplayer(ne dovrà arrivare solo uno)
@@ -120,8 +121,8 @@ public class VisitorClient {
 
     public void visit(ObjInitialize objInitialize){
         clientHandler.getView().setBoard(objInitialize.getBoard());
-        clientHandler.getView().printBoard(false);
         clientHandler.getView().setUsers(objInitialize.getUserArray());
+        clientHandler.getView().printBoard(false);
         if(!clientHandler.getView().isPlaying()){
             clientHandler.sendMessage(new AckState());
         }

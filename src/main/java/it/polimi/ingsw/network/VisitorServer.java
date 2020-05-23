@@ -203,7 +203,6 @@ public class VisitorServer {
                 if(askBuildEvent.isDone()){
                     //Ricontrollare se è giusto il passaggio al nuovo giocatore + stato per inizio turno
                     ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-                    //va richiamata la can move(player+1)
                     int nextPlayer = serverHandler.getIndexClient(indexPlayer + 1);
                     if(serverHandler.getVirtualView().canMove(nextPlayer)){
                         serverHandler.sendUpdateBroadcast(objState);

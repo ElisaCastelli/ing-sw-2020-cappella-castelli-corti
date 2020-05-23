@@ -15,6 +15,7 @@ public abstract class View {
 
     public abstract void setBoard(Board board);
     public abstract void setUsers(ArrayList<User> users);
+    public abstract void setWhoIsPlaying(int whoIsPlaying);
     public abstract int askNPlayer();
     public abstract void setNPlayer(int nPlayer);
     public abstract int getNPlayer();
