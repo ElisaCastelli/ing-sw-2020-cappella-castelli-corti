@@ -88,7 +88,7 @@ public class EchoServer {
         }
         virtualView.setReady(false);
     }
-    //non lo cacate è per dopo se vogliamo fare la lobby, non è mai richiamato
+    //non lo considerate è per dopo se vogliamo fare la lobby, non è mai richiamato
     public void clientWaiting(ServerSocket serverSocket) throws IOException {
         while(!virtualView.isReady()){
 

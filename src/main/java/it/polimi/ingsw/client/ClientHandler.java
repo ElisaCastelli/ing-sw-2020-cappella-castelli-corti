@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.network.SendMessageToServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorClient;
 
@@ -34,12 +35,12 @@ public class ClientHandler {
     }
 
     public void listening() {
-        view = new CLIView();
+        view = new CLIView(new SendMessageToServer(this));
         while(true){
             ObjMessage objMessage = null;
             try {
                 objMessage = (ObjMessage)inputStream.readObject();
-                objMessage.accept(new VisitorClient(this));
+                objMessage.accept(new VisitorClient(view));
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
