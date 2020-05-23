@@ -73,6 +73,7 @@
     {
       "name": "Charon",
       "effect":[
+        "FerryAnOpponentWorker",
         "NotMoveUp",
         "MoveBeforeBuild"
       ]
@@ -80,6 +81,7 @@
     {
       "name": "Chronus",
       "effect":[
+        "CompleteTowersWin",
         "NotMoveUp",
         "MoveBeforeBuild"
       ]
@@ -87,6 +89,7 @@
     {
       "name": "Hestia",
       "effect":[
+        "BuildNotAlongThePerimeter",
         "NotMoveUp",
         "MoveBeforeBuild"
       ]
@@ -94,6 +97,7 @@
     {
       "name": "Triton",
       "effect":[
+        "MoveInfinityTimesAlongThePerimeter",
         "NotMoveUp",
         "MoveBeforeBuild"
       ]
@@ -101,6 +105,7 @@
     {
       "name": "Zeus",
       "effect":[
+        "BuildABlockUnderItself",
         "NotMoveUp",
         "MoveBeforeBuild"
       ]
