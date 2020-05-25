@@ -16,8 +16,10 @@ public interface GameModel {
     int getNPlayers();
     void setNPlayers(int nPlayers);
     void startGame();
-    void addPlayer(String name, int age);
+    boolean addPlayer(String name, int age);
+    boolean askState();
     int searchByName(String name);
+    int searchByClientIndex(int indexClient);
     ArrayList<String> getCards()throws Exception;
     ArrayList<String> getTempCard();
     ArrayList<String> getCardUsed();

@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 
 public class main {
 
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) throws Exception {
 
         EchoServer echoServer=new EchoServer(1234);
         Client client= new Client(1234);

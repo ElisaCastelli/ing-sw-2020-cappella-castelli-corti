@@ -1,11 +1,8 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.network.ack.AckPlayer;
-import it.polimi.ingsw.network.events.AskBuildEvent;
-import it.polimi.ingsw.network.events.AskMoveEvent;
-import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
-import it.polimi.ingsw.network.events.UpdateBoardEvent;
+import it.polimi.ingsw.network.ack.AckMove;
+import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
@@ -27,6 +24,15 @@ public class CLIView extends View {
     public CLIView(SendMessageToServer sendMessageToServer) {
         this.sendMessageToServer = sendMessageToServer;
     }
+
+    @Override
+    public void askWantToPlay(AskWantToPlay askWantToPlay){
+        new Thread(() -> {
+            System.out.println("sto cencando di entare nella partita");
+            sendMessageToServer.sendAskWantToPlay(askWantToPlay);
+        }).start();
+    }
+
 
     @Override
     public void updateBoard(UpdateBoardEvent updateBoardEvent) {
@@ -110,7 +116,7 @@ public class CLIView extends View {
             sendMessageToServer.sendAckPlayer();
         }else{
             isPlaying=false;
-
+            whoIsPlaying=objState.getCurrentPlayer();
             System.out.println("I've to wait my turn");
             sendMessageToServer.sendAckState();
         }
@@ -128,6 +134,7 @@ public class CLIView extends View {
             System.out.println("I'm playing");
         } else {
             isPlaying = false;
+            whoIsPlaying=objState.getCurrentPlayer();
             System.out.println("Waiting... another player is playing");
         }
         sendMessageToServer.sendAckState();
@@ -185,8 +192,8 @@ public class CLIView extends View {
                 for (int index = 0; index < cards.size(); index++) {
                     System.out.println("[ " + index + "] " + cards.get(index));
                 }
-                System.out.println("Choose your card");
                 while (!choose) {
+                    System.out.println("Choose your card");
                     scelta = inputNumber(input);
                     if (scelta <= cards.size() && scelta >= 0) {
                         System.out.println("Got it! " + scelta);
@@ -310,7 +317,7 @@ public class CLIView extends View {
                 int column = askMoveEvent.getColumn1();
                 int indexWorker = askMoveEvent.getIndexWorker();
 
-                ObjMove objMove = new ObjMove(indexWorker, row, column, 0, 0, true);
+                ObjMove objMove = new ObjMove(indexWorker, row, column, 0, 0, false);
 
                 if (askMoveEvent.isWrongBox()) {
                     wrongMove();
@@ -326,6 +333,8 @@ public class CLIView extends View {
                 objMove.setColumn(intInputValue);
 
                 if (!askMoveEvent.isFirstTime()) {
+                    //così facciamo fare solo due mosse
+                    //todo da spostare lato server guardando la askmove
                     objMove.setDone(true);
                 }
                 sendMessageToServer.sendMoveWorker(objMove);
@@ -334,8 +343,6 @@ public class CLIView extends View {
             System.out.println("Someone else is moving his Worker");
             sendMessageToServer.sendAckState();
         }
-
-
 
     }
 
@@ -351,8 +358,8 @@ public class CLIView extends View {
 
                 int intInputValue = twoNumbers(input);
                 if (intInputValue == 0) {
-                    ObjMove objMove = new ObjMove(true);
-                    sendMessageToServer.sendMoveWorker(objMove);
+                    AckMove ackMove = new AckMove(askMoveEvent.getIndexWorker(),askMoveEvent.getRow1(),askMoveEvent.getColumn1());
+                    sendMessageToServer.sendAckMove(ackMove);
                 } else {
                     moveWorker(askMoveEvent);
                 }
@@ -588,5 +595,12 @@ public class CLIView extends View {
             System.out.println();
             System.out.println();
         }
+    }
+    @Override
+    public void printHeartBeat(ObjHeartBeat objHeartBeat){
+        new Thread(() -> {
+            System.out.println(objHeartBeat.getMessageHeartbeat());
+            sendMessageToServer.sendPong();
+        }).start();
     }
 }

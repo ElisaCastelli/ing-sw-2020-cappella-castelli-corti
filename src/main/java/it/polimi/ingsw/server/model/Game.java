@@ -30,7 +30,7 @@ public class Game implements GameModel{
      * this is the array list of the players
      */
     private ArrayList<Player> players;
-
+    private int ackCounter;
 
     /**
      * this is the array list of the players
@@ -62,6 +62,7 @@ public class Game implements GameModel{
         players = new ArrayList<>();
         playersDead = new ArrayList<>();
         nPlayers = 0;
+        ackCounter=0;
         tempCard= new ArrayList<>();
         godsArray = new ArrayList<>();
         cardUsed = new ArrayList<>();
@@ -100,20 +101,47 @@ public class Game implements GameModel{
     public int getNPlayers(){
         return nPlayers;
     }
-    public void addPlayer(String name, int age){
-        players.add(new Player(name,age));
+
+    public boolean addPlayer(String name, int age){
+
+        int playerIndex=searchByClientIndex(ackCounter);
+        players.get(playerIndex).setName(name);
+        players.get(playerIndex).setAge(age);
+        ackCounter++;
+
         sortGamers();
-        for(Player player :players){
+        for(Player player : players ){
             int indexPlayer= searchByName(player.getName());
             player.setIndexPlayer(indexPlayer);
         }
+        if(ackCounter == nPlayers){
+            ackCounter=0;
+            return true;
+        }
+        return false;
     }
+
+    @Override
+    public synchronized boolean askState() {
+        ackCounter++;
+        if(ackCounter == nPlayers){
+            ackCounter=0;
+            return true;
+        }
+        return false;
+    }
+
     public ArrayList<Player> getPlayerArray(){
         return players;
     }
     public int searchByName(String name){
         return players.stream().map(Player::getName).collect(Collectors.toList()).indexOf(name);
     }
+    public int searchByClientIndex(int clientIndex){
+        return players.stream().map(Player::getIndexClient).collect(Collectors.toList()).indexOf(clientIndex);
+    }
+
+
     public void chooseTempCard(ArrayList<Integer> threeCard){
        for(int i=0;i<nPlayers;i++){
            if(threeCard.get(i)<godsArray.size()){

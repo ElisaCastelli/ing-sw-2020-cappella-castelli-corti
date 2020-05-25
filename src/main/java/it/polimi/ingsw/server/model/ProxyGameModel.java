@@ -41,14 +41,25 @@ public class ProxyGameModel implements GameModel, Subject{
         gameModel.setNPlayers(nPlayers);
     }
     @Override
-    public void addPlayer(String name, int age) {
-        gameModel.addPlayer(name, age);
+    public boolean addPlayer(String name, int age) {
+        return gameModel.addPlayer(name, age);
     }
+
+    @Override
+    public boolean askState() {
+        return gameModel.askState();
+    }
+
     @Override
     public int searchByName(String name){
         return gameModel.searchByName(name);
-
     }
+
+    @Override
+    public int searchByClientIndex(int indexClient) {
+        return gameModel.searchByClientIndex(indexClient);
+    }
+
     @Override
     public ArrayList<String> getCards() throws Exception {
         return gameModel.getCards();
@@ -165,7 +176,17 @@ public class ProxyGameModel implements GameModel, Subject{
     public ObjNumPlayer notifySetNPlayers(){
         return observer.updateNPlayer();
     }
-   @Override
+    @Override
+    public void notifyAddPlayer(){
+        observer.updatePlayer();
+    }
+
+    @Override
+    public void notifyAskState(int indexClient,int indexPlayer) {
+        observer.updateAskState(indexClient,indexPlayer);
+    }
+
+    @Override
     public AskCard notifyTempCard(){
         return observer.updateTempCard();
     }

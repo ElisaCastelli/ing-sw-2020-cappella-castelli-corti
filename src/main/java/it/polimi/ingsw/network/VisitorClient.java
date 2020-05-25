@@ -13,18 +13,28 @@ public class VisitorClient {
         this.view=view;
     }
 
+
+    public void visit(AskWantToPlay askWantToPlay){
+        view.askWantToPlay(askWantToPlay);
+    }
+
     public void visit(AskNPlayerEvent askNPlayerEvent){
-        //todo da fare il controllo che arrivi solo ad uno solo dei client e non a tutti e tre
         view.askNPlayer();
     }
 
+    public void visit (ObjWait objWait){
+        System.out.println("devo aspettare");
+    }
+
+    public void visit (ObjYouCanPlay ObjYouCanPlay){
+        System.out.println("puoi giocare");
+    }
+
     public void visit(AskPlayerEvent askPlayerEvent){
-        //lo devono fare tutti
         view.askPlayer();
     }
 
     public void visit(StartGameEvent start){
-        //lo devono fare tutti
         view.setNPlayer(start.getnPlayer());
     }
 
@@ -33,6 +43,7 @@ public class VisitorClient {
 
         if(view.getIndexPlayer() == -1){
             view.setIndexPlayer(objState);
+            System.out.println("ho settato lo stato");
         }else {
             view.setPlaying(objState);
         }
@@ -105,5 +116,9 @@ public class VisitorClient {
 
             //clientHandler.sendMessage(new AckState());
 
+    }
+
+    public void visit(ObjHeartBeat objHeartBeat){
+        view.printHeartBeat(objHeartBeat);
     }
 }

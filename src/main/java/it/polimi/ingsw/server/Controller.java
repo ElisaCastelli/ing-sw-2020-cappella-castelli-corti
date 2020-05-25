@@ -22,7 +22,19 @@ public class Controller  {
         return gameModel.notifySetNPlayers();
     }
     public void addPlayer(String name, int age){
-        gameModel.addPlayer(name, age);
+        boolean addCompleted= gameModel.addPlayer(name, age);
+        if(addCompleted){
+            gameModel.notifyAddPlayer();
+        }
+    }
+    public void askState(){
+        boolean startCompleted= gameModel.askState();
+        if(startCompleted){
+            for(int indexClient = 0; indexClient < gameModel.getNPlayers(); indexClient++ ){
+                int indexPlayer = gameModel.searchByClientIndex(indexClient);
+                gameModel.notifyAskState(indexClient,indexPlayer);
+            }
+        }
     }
 
     public AskCard setTempCard(ArrayList<Integer> threeCard) {

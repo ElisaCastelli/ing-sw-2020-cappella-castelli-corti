@@ -13,6 +13,8 @@ public interface Observer {
     ObjNumPlayer updateNPlayer();
     AskCard updateTempCard();
     void updateInitializeWorker();
+    void updatePlayer();
+    void updateAskState(int indexClient, int indexPlayer);
     UpdateBoardEvent updateBoard();
     ObjState updateWhoIsPlaying();
     void updateReachable();

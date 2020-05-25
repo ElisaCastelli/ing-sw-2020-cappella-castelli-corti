@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.SendMessageToClient;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
@@ -15,40 +16,23 @@ public class VirtualView implements Observer {
     private ProxyGameModel gameModel;
     private Controller controller;
     private boolean ready;
-    private int ackCounter;
     private int winnerPlayer;
+    SendMessageToClient sendMessageToClient;
 
 
-    public VirtualView() throws Exception {
+    public VirtualView(SendMessageToClient sendMessageToClient) throws Exception {
         gameModel= new ProxyGameModel();
         controller= new Controller(gameModel);
         subscribe();
         ready=false;
-        ackCounter=0;
         winnerPlayer=-1;
+        this.sendMessageToClient=sendMessageToClient;
     }
     public synchronized boolean isReady() {
         return ready;
     }
     public synchronized void setReady(boolean ready) {
         this.ready = ready;
-    }
-    public synchronized int getAckCounter() {
-        return ackCounter;
-    }
-    public synchronized void incCounterOpponent() {
-        ackCounter++;
-        if(ackCounter == (gameModel.getNPlayers()-1)){
-            ready=true;
-            ackCounter=0;
-        }
-    }
-    public synchronized void incCounter() {
-        ackCounter++;
-        if(ackCounter == gameModel.getNPlayers()){
-            ready=true;
-            ackCounter=0;
-        }
     }
 
     @Override
@@ -60,9 +44,48 @@ public class VirtualView implements Observer {
         return gameModel.getPlayerArray();
     }
 
-    public ObjNumPlayer setNPlayers(int nPlayers){
-        return controller.setNPlayers(nPlayers);
+    public void askWantToPlay(int indexClient){
+        if(gameModel.getNPlayers()==0 && getPlayerArray().size()==0){
+
+            getPlayerArray().add(new Player(indexClient));
+            sendMessageToClient.sendAskNPlayer();
+
+        }else if (getPlayerArray().size() !=0 && gameModel.getNPlayers() == 0){
+            //non hanno settato ancora ma hai la possibilità di giocare
+            getPlayerArray().add(new Player(indexClient));
+            sendMessageToClient.sendYouHaveToWait(indexClient);
+
+        }else if (getPlayerArray().size() !=0 && gameModel.getNPlayers() != 0){
+            getPlayerArray().add(new Player(indexClient));
+            if(getPlayerArray().size() == gameModel.getNPlayers()){
+                ///se sei arrivato per terzo poi giocare e sei quello che manda il broardcast di AskPlayer
+                sendMessageToClient.YouCanPlay(gameModel.getNPlayers());
+
+            }else if (getPlayerArray().size() < gameModel.getNPlayers() ){
+                //sei arrivato per secondo e poi giocare ma devi aspettare il terzo
+                sendMessageToClient.sendYouHaveToWait(indexClient);
+            }else{
+                //non giochi mai
+                sendMessageToClient.sendYouHaveToWait(indexClient);
+            }
+
+        }
     }
+    public void setNPlayers(int npLayer){
+        controller.setNPlayers(npLayer);
+
+        boolean sendBroadcast = true;
+        if(getPlayerArray().size() == 1 ){
+            sendBroadcast= false;
+            sendMessageToClient.sendAskPlayer(npLayer, sendBroadcast);
+        }else if (getPlayerArray().size() >= npLayer){
+            sendMessageToClient.sendAskPlayer(npLayer, sendBroadcast);
+        }else{
+            sendMessageToClient.sendYouHaveToWait(0);
+        }
+
+    }
+
 
     @Override
     public ObjNumPlayer updateNPlayer() {
@@ -70,12 +93,16 @@ public class VirtualView implements Observer {
     }
 
     public synchronized void addPlayer(String name, int age){
-        controller.addPlayer(name, age);
-        ackCounter++;
-        if(  ackCounter == gameModel.getNPlayers() ){
-            ready=true;
-            ackCounter=0;
+        if(getPlayerArray().size() > gameModel.getNPlayers()){
+            for(int i = gameModel.getNPlayers(); i < getPlayerArray().size(); i++ ){
+                getPlayerArray().remove(i);
+            }
         }
+        controller.addPlayer(name, age);
+    }
+
+    public void askState(){
+        controller.askState();
     }
 
     public int searchByName(String name){
@@ -92,6 +119,20 @@ public class VirtualView implements Observer {
 
     public synchronized AskCard setCard(int playerIndex, int godCard) throws Exception {
         return controller.setCard(playerIndex, godCard);
+    }
+
+    @Override
+    public void updatePlayer() {
+        startGame();
+        sendMessageToClient.sendStartGameEvent(gameModel.getNPlayers());
+    }
+
+    @Override
+    public void updateAskState(int indexClient, int indexPlayer) {
+        for(int i = 0; i< gameModel.getNPlayers(); i++ ){
+            ObjState objState= new ObjState(indexPlayer, gameModel.whoIsPlaying());
+            sendMessageToClient.sendObjState(indexClient, objState);
+        }
     }
 
     @Override

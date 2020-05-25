@@ -26,32 +26,30 @@ public class Player implements Serializable {
      */
     private God myGod;
     /**
-     * This is a String in Hexadecimal to identify the color associated with the player and his workers
+     * This is an integer associated with the player
      */
     private int indexPlayer;
-
     /**
      * This array of Workers contains two workers for each player
      */
     private final Worker[] myWorkers;
+    /**
+     * This is an integer associated with the client
+     */
+    private final int indexClient;
+
 
     final PlayerStateManager gamerManager;
 
-    /**
-     * Constructor with name and board as parameters
-     * @param age the age of a player
-     * @param name the name of a player
-     */
-    public Player(String name, int age){
-        this.name = name;
+
+    public Player(int indexClient) {
         myWorkers = new Worker[2];
         myWorkers[0] = new Worker(1);
         myWorkers[1] = new Worker(2);
-        this.age = age;
         myGod = new BasicGod();
         gamerManager = new PlayerStateManager(myGod);
+        this.indexClient = indexClient;
     }
-
 
     public void setGod(God god){
         myGod = god;
@@ -92,6 +90,11 @@ public class Player implements Serializable {
         boxes.add(1, myWorkers[1].getActualBox());
         return boxes;
     }
+
+    public int getIndexClient() {
+        return indexClient;
+    }
+
     /**
      * This method sets the first position of a worker
      * @param box1 is the number of the worker i want to set

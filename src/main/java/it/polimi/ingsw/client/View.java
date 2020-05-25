@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public abstract class View {
 
+    public abstract void askWantToPlay(AskWantToPlay askWantToPlay);
+
+
     public abstract void initialize(ObjInitialize objInitialize);
     public abstract void setBoard(Board board);
     public abstract void updateBoard(UpdateBoardEvent updateBoardEvent);
@@ -35,4 +38,6 @@ public abstract class View {
     public abstract void wrongMove();
     public abstract void buildMove(AskBuildEvent askBuildEvent);
     public abstract void anotherBuild(AskBuildEvent askBuildEvent);
+
+    public abstract void printHeartBeat(ObjHeartBeat objHeartBeat);
 }

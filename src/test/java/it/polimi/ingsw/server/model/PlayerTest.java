@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Player pTest = new Player("a",10);
+    /*Player pTest = new Player("a",10);
     Board boardTest = new Board();
     @Test
     void setName() {
@@ -21,7 +21,7 @@ class PlayerTest {
     void setAge() {
         pTest.setAge(21);
         assertEquals(21,pTest.getAge());
-    }
+    }*/
 
     /*@Test
     void getWorkerBox() {

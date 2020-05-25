@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.SendMessageToServer;
+import it.polimi.ingsw.network.events.AskWantToPlay;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorClient;
 
@@ -22,20 +23,13 @@ public class ClientHandler {
         this.socket = socket;
     }
 
-    public ObjectInputStream getInputStream() {
-        return inputStream;
-    }
-
-    public ObjectOutputStream getOutputStream() {
-        return outputStream;
-    }
-
     public View getView() {
         return view;
     }
 
     public void listening() {
         view = new CLIView(new SendMessageToServer(this));
+
         while(true){
             ObjMessage objMessage = null;
             try {
