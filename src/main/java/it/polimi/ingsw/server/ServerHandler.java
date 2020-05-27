@@ -15,9 +15,6 @@ public class ServerHandler extends Thread{
 
     ///al posto del client array
     int indexClientArray;
-
-
-
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
@@ -56,6 +53,7 @@ public class ServerHandler extends Thread{
 
     public void sendUpdate(ObjMessage objMessage) {
         try {
+            objMessage.setClientIndex(indexClientArray);
             outputStream.writeObject(objMessage);
             outputStream.reset();
         } catch (IOException e) {

@@ -30,7 +30,7 @@ public class EchoServer {
             serverHandler.sendUpdate(objMessage);
         }
     }
-    public void send(ObjMessage objMessage,int indexArrayClient){
+    public void send(ObjMessage objMessage, int indexArrayClient){
         clientArray.get(indexArrayClient).sendUpdate(objMessage);
     }
     public void sendWaiting(ObjMessage objMessage,int indexArrayClient){
@@ -42,8 +42,13 @@ public class EchoServer {
     }
 
     //non lo considerate è per dopo se vogliamo fare la lobby, non è mai richiamato
-    public void acceptClientWaiting(ServerSocket serverSocket) throws Exception {
-        VirtualView virtualView= new VirtualView(new SendMessageToClient(this));
+    public void acceptClientWaiting(ServerSocket serverSocket) {
+        VirtualView virtualView = null;
+        try {
+            virtualView = new VirtualView(new SendMessageToClient(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         while(true){
 
@@ -62,20 +67,28 @@ public class EchoServer {
                 serverHandler.start();
 
             }catch(Exception e){
-                clientSocket.close();
-                System.out.println("Errore");
+                try {
+                    clientSocket.close();
+                    System.out.println("Error");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         //inizializzazione fatta senza main
         portNumber = 1234;
-        ServerSocket serverSocket = new ServerSocket(portNumber);
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(portNumber);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         EchoServer echoServer = new EchoServer(portNumber);
         echoServer.acceptClientWaiting(serverSocket);
-
     }
 }

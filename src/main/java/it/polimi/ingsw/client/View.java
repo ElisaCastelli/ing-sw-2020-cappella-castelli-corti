@@ -13,23 +13,17 @@ public abstract class View {
 
     public abstract void askWantToPlay(AskWantToPlay askWantToPlay);
 
-
-    public abstract void initialize(ObjInitialize objInitialize);
     public abstract void setBoard(Board board);
     public abstract void updateBoard(UpdateBoardEvent updateBoardEvent);
-    public abstract void setUsers(ArrayList<User> users);
-    public abstract void setWhoIsPlaying(int whoIsPlaying);
     public abstract void askNPlayer();
     public abstract void setNPlayer(int nPlayer);
-    public abstract void askPlayer();
+    public abstract void askPlayer(int clientIndex);
 
     public abstract void setIndexPlayer(ObjState objState);
     public abstract int getIndexPlayer();
-    public abstract void setPlaying(ObjState objState);
-    public abstract boolean isPlaying();
     public abstract void ask3Card(ArrayList<String> cards);
     public abstract void askCard(ArrayList<String> cards);
-    public abstract void printBoard(boolean printReachable);
+    public abstract void printBoard(boolean printReachable, int myClient, int currentState);
     public abstract void initializeWorker();
     public abstract void askWorker(AskWorkerToMoveEvent askMoveEvent);
     public abstract void areYouSure(AskWorkerToMoveEvent askMoveEvent);

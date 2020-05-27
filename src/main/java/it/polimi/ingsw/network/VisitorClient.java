@@ -31,7 +31,7 @@ public class VisitorClient {
     }
 
     public void visit(AskPlayerEvent askPlayerEvent){
-        view.askPlayer();
+        view.askPlayer(askPlayerEvent.getClientIndex());
     }
 
     public void visit(StartGameEvent start){
@@ -39,36 +39,30 @@ public class VisitorClient {
     }
 
     public void visit(ObjState objState){
-        view.setWhoIsPlaying(objState.getCurrentPlayer());
-
-        if(view.getIndexPlayer() == -1){
-            view.setIndexPlayer(objState);
-            System.out.println("ho settato lo stato");
-        }else {
-            view.setPlaying(objState);
-        }
+        view.setIndexPlayer(objState);
+        System.out.println("ho settato lo stato");
     }
 
     public void visit(Ask3CardsEvent ask3CardsEvent) {
-
+        if(ask3CardsEvent.getClientIndex() == ask3CardsEvent.getCurrentPlayer())
             view.ask3Card(ask3CardsEvent.getCardArray());
 
-            //clientHandler.sendMessage(new AckState());
+        //clientHandler.sendMessage(new AckState());
 
     }
     public void visit(AskCard askCard) {
-
+        if(askCard.getClientIndex() == askCard.getCurrentPlayer())
             view.askCard(askCard.getCardTemp());
 
-            //clientHandler.sendMessage(new AckState());
+        //clientHandler.sendMessage(new AckState());
 
     }
 
     public void visit(AskInitializeWorker askInitializeWorker){
-
+        if(askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentPlayer())
             view.initializeWorker();
 
-            //clientHandler.sendMessage(new AckState());
+        //clientHandler.sendMessage(new AckState());
 
     }
 
@@ -77,45 +71,41 @@ public class VisitorClient {
         view.updateBoard(updateBoardEvent);
     }
 
-    public void visit(ObjInitialize objInitialize){
-        view.initialize(objInitialize);
-    }
-
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-
-            if(askWorkerToMoveEvent.isFirstAsk()){
+        if(askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentPlayer()) {
+            if (askWorkerToMoveEvent.isFirstAsk()) {
                 view.askWorker(askWorkerToMoveEvent);
-            }else if(!askWorkerToMoveEvent.isFirstAsk()){
+            } else if (!askWorkerToMoveEvent.isFirstAsk()) {
                 view.areYouSure(askWorkerToMoveEvent);
             }
             //clientHandler.sendMessage(new AckState());
-
+        }
     }
 
     public void visit(AskMoveEvent askMoveEvent){
-
+        if(askMoveEvent.getClientIndex() == askMoveEvent.getCurrentPlayer()) {
             //Questa è la prima ask
-            if(askMoveEvent.isFirstTime()){
+            if (askMoveEvent.isFirstTime()) {
                 view.moveWorker(askMoveEvent);
-            ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
-            }else {
+                ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
+            } else {
                 view.anotherMove(askMoveEvent);
             }
-
-            //clientHandler.sendMessage(new AckState());
+        }
+        //clientHandler.sendMessage(new AckState());
     }
 
     public void visit(AskBuildEvent askBuildEvent){
-
+        if(askBuildEvent.getClientIndex() == askBuildEvent.getCurrentPlayer()) {
             //Qui entra se è veramente la prima volta o se ha inserito una box non valida
-            if(askBuildEvent.isFirstTime()){
+            if (askBuildEvent.isFirstTime()) {
                 view.buildMove(askBuildEvent);
-            }else{ //Può fare una mossa speciale
+            } else { //Può fare una mossa speciale
                 view.anotherBuild(askBuildEvent);
             }
 
             //clientHandler.sendMessage(new AckState());
-
+        }
     }
 
     public void visit(ObjHeartBeat objHeartBeat){

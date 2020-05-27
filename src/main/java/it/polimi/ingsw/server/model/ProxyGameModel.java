@@ -41,8 +41,8 @@ public class ProxyGameModel implements GameModel, Subject{
         gameModel.setNPlayers(nPlayers);
     }
     @Override
-    public boolean addPlayer(String name, int age) {
-        return gameModel.addPlayer(name, age);
+    public boolean addPlayer(String name, int age, int indexClient) {
+        return gameModel.addPlayer(name, age, indexClient);
     }
 
     @Override
@@ -61,20 +61,31 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
+    public int searchByPlayerIndex(int playerIndex) {
+        return gameModel.searchByPlayerIndex(playerIndex);
+    }
+
+    @Override
     public ArrayList<String> getCards() throws Exception {
         return gameModel.getCards();
     }
+
+    @Override
+    public UpdateBoardEvent gameData() {
+        return gameModel.gameData();
+    }
+
     @Override
     public ArrayList<String> getTempCard(){
         return gameModel.getTempCard();
     }
     @Override
-    public void chooseTempCard(ArrayList<Integer> tempCard){
-        gameModel.chooseTempCard(tempCard);
+    public int chooseTempCard(ArrayList<Integer> tempCard){
+        return gameModel.chooseTempCard(tempCard);
     }
     @Override
-    public void chooseCard(int playerIndex, int godCard) throws Exception {
-        gameModel.chooseCard(playerIndex, godCard);
+    public int chooseCard(int playerIndex, int godCard) throws Exception {
+        return gameModel.chooseCard(playerIndex, godCard);
     }
     @Override
     public void goPlayingNext(){
@@ -176,6 +187,7 @@ public class ProxyGameModel implements GameModel, Subject{
     public ObjNumPlayer notifySetNPlayers(){
         return observer.updateNPlayer();
     }
+
     @Override
     public void notifyAddPlayer(){
         observer.updatePlayer();
@@ -187,24 +199,25 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public AskCard notifyTempCard(){
-        return observer.updateTempCard();
+    public void notifyTempCard(int clientIndex){
+        observer.updateTempCard(clientIndex);
     }
+
     @Override
     public void notifyAddWorker(){
         observer.updateInitializeWorker();
         observer.updateBoard();
     }
     @Override
-    public ObjState notifyWhoIsPlaying(){
-        return observer.updateWhoIsPlaying();
+    public void notifyWhoIsPlaying(){
+        observer.updateWhoIsPlaying();
     }
 
 
     @Override
-    public UpdateBoardEvent notifySetReachable(){
+    public void notifySetReachable(){
         observer.updateReachable();
-        return observer.updateBoard();
+        observer.updateBoard();
     }
 
     @Override
@@ -213,9 +226,9 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public UpdateBoardEvent notifySetBuilding(){
+    public void notifySetBuilding(){
         observer.updateSetBuilding();
-        return observer.updateBoard();
+        observer.updateBoard();
     }
 
     @Override

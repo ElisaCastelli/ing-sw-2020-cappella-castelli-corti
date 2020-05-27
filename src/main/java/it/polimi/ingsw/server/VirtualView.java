@@ -45,17 +45,17 @@ public class VirtualView implements Observer {
     }
 
     public void askWantToPlay(int indexClient){
-        if(gameModel.getNPlayers()==0 && getPlayerArray().size()==0){
+        if(gameModel.getNPlayers() == 0 && getPlayerArray().size() == 0){
 
             getPlayerArray().add(new Player(indexClient));
             sendMessageToClient.sendAskNPlayer();
 
-        }else if (getPlayerArray().size() !=0 && gameModel.getNPlayers() == 0){
+        }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() == 0){
             //non hanno settato ancora ma hai la possibilità di giocare
             getPlayerArray().add(new Player(indexClient));
             sendMessageToClient.sendYouHaveToWait(indexClient);
 
-        }else if (getPlayerArray().size() !=0 && gameModel.getNPlayers() != 0){
+        }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() != 0){
             getPlayerArray().add(new Player(indexClient));
             if(getPlayerArray().size() == gameModel.getNPlayers()){
                 ///se sei arrivato per terzo poi giocare e sei quello che manda il broardcast di AskPlayer
@@ -68,9 +68,9 @@ public class VirtualView implements Observer {
                 //non giochi mai
                 sendMessageToClient.sendYouHaveToWait(indexClient);
             }
-
         }
     }
+
     public void setNPlayers(int npLayer){
         controller.setNPlayers(npLayer);
 
@@ -83,22 +83,20 @@ public class VirtualView implements Observer {
         }else{
             sendMessageToClient.sendYouHaveToWait(0);
         }
-
     }
-
 
     @Override
     public ObjNumPlayer updateNPlayer() {
         return new ObjNumPlayer(gameModel.getNPlayers());
     }
 
-    public synchronized void addPlayer(String name, int age){
+    public synchronized void addPlayer(String name, int age, int indexClient){
         if(getPlayerArray().size() > gameModel.getNPlayers()){
-            for(int i = gameModel.getNPlayers(); i < getPlayerArray().size(); i++ ){
+            for(int i = getPlayerArray().size() - 1; i >= gameModel.getNPlayers(); i--) {
                 getPlayerArray().remove(i);
             }
         }
-        controller.addPlayer(name, age);
+        controller.addPlayer(name, age, indexClient);
     }
 
     public void askState(){
@@ -109,16 +107,23 @@ public class VirtualView implements Observer {
         return gameModel.searchByName(name);
     }
 
-    public ArrayList<String> getCards() throws Exception {
-        return gameModel.getCards();
+    public void getCards() {
+        try {
+            Ask3CardsEvent ask3CardsEvent = new Ask3CardsEvent(gameModel.getCards());
+            int clientIndex = gameModel.searchByPlayerIndex(0);
+            ask3CardsEvent.setCurrentPlayer(clientIndex);
+            sendMessageToClient.sendCards(ask3CardsEvent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public synchronized AskCard setTempCard(ArrayList<Integer> tempCard){
-        return controller.setTempCard(tempCard);
+    public void setTempCard(ArrayList<Integer> tempCard){
+        controller.setTempCard(tempCard);
     }
 
-    public synchronized AskCard setCard(int playerIndex, int godCard) throws Exception {
-        return controller.setCard(playerIndex, godCard);
+    public void setCard(int playerIndex, int godCard) throws Exception {
+        controller.setCard(playerIndex, godCard);
     }
 
     @Override
@@ -127,39 +132,46 @@ public class VirtualView implements Observer {
         sendMessageToClient.sendStartGameEvent(gameModel.getNPlayers());
     }
 
-    @Override
-    public void updateAskState(int indexClient, int indexPlayer) {
-        for(int i = 0; i< gameModel.getNPlayers(); i++ ){
-            ObjState objState= new ObjState(indexPlayer, gameModel.whoIsPlaying());
-            sendMessageToClient.sendObjState(indexClient, objState);
-        }
-    }
-
-    @Override
-    public AskCard updateTempCard(){
-        return new AskCard(gameModel.getTempCard());
-    }
-
-    public synchronized ObjState goPlayingNext(){
-        return controller.goPlayingNext();
-    }
-
-    @Override
-    public ObjState updateWhoIsPlaying() {
-        ObjState objState = new ObjState();
-        objState.setCurrentPlayer(gameModel.whoIsPlaying());
-        return objState;
-    }
-
     public void startGame(){
         controller.startGame();
     }
 
     @Override
-    public UpdateBoardEvent updateBoard(){
-        Board boardToSend = gameModel.getBoard();
-        ///metto a falso lo show reachable ma lo metterà poi a vero se è richiamata da un setReachable
-        return new UpdateBoardEvent(boardToSend,false);
+    public void updateAskState(int indexClient, int indexPlayer) {
+        ObjState objState = new ObjState(indexPlayer);
+        sendMessageToClient.sendObjState(indexClient, objState);
+    }
+
+    @Override
+    public void updateTempCard(int clientIndex){
+        AskCard askCard = new AskCard(gameModel.getTempCard());
+        askCard.setCurrentPlayer(clientIndex);
+
+        if(askCard.getCardTemp().size() != 0){
+            sendMessageToClient.sendAskCard(askCard);
+        }
+        else{
+            System.out.println("Sending board");
+            updateBoard();
+            AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
+            askInitializeWorker.setCurrentPlayer(clientIndex);
+            sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
+        }
+    }
+
+    public synchronized void goPlayingNext(){
+        controller.goPlayingNext();
+    }
+
+    @Override
+    public void updateWhoIsPlaying() {
+        /*ObjState objState = new ObjState();
+        objState.setCurrentPlayer(gameModel.whoIsPlaying());*/
+    }
+
+    @Override
+    public void updateBoard(){
+        sendMessageToClient.sendUpdateBoard(gameModel.gameData());
     }
 
     public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
@@ -181,8 +193,8 @@ public class VirtualView implements Observer {
     }
 
     /// richiamato
-    public UpdateBoardEvent setReachable(int indexPlayer, int indexWorker){
-        return controller.setBoxReachable(indexPlayer, indexWorker);
+    public void setReachable(int indexPlayer, int indexWorker){
+        controller.setBoxReachable(indexPlayer, indexWorker);
     }
     ///richiamato
     @Override
@@ -216,8 +228,8 @@ public class VirtualView implements Observer {
     }
 
     //Metodo per fare la setPossibleBuild
-    public UpdateBoardEvent setBoxBuilding(int indexPlayer, int indexWorker) {
-        return controller.setBoxBuilding(indexPlayer, indexWorker);
+    public void setBoxBuilding(int indexPlayer, int indexWorker) {
+        controller.setBoxBuilding(indexPlayer, indexWorker);
     }
 
     //Probabilmente non serve

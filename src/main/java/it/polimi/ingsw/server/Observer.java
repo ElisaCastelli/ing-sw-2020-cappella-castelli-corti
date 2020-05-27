@@ -11,12 +11,12 @@ import it.polimi.ingsw.server.model.gameComponents.Board;
 public interface Observer {
     void subscribe();
     ObjNumPlayer updateNPlayer();
-    AskCard updateTempCard();
+    void updateTempCard(int clientIndex);
     void updateInitializeWorker();
     void updatePlayer();
     void updateAskState(int indexClient, int indexPlayer);
-    UpdateBoardEvent updateBoard();
-    ObjState updateWhoIsPlaying();
+    void updateBoard();
+    void updateWhoIsPlaying();
     void updateReachable();
     boolean canMove(int indexPlayer);
     void updateMove();

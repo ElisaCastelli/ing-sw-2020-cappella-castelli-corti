@@ -1,8 +1,6 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.network.events.AskNPlayerEvent;
-import it.polimi.ingsw.network.events.AskPlayerEvent;
-import it.polimi.ingsw.network.events.StartGameEvent;
+import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.network.objects.ObjWait;
 import it.polimi.ingsw.server.EchoServer;
@@ -20,7 +18,7 @@ public class SendMessageToClient {
     }
 
     public void sendYouHaveToWait(int indexClient) {
-        echoServer.sendWaiting(new ObjWait(),indexClient);
+        echoServer.sendWaiting(new ObjWait(), indexClient);
 
     }
 
@@ -42,12 +40,27 @@ public class SendMessageToClient {
         }
     }
 
-
     public void sendStartGameEvent(int nPlayers) {
         echoServer.sendBroadCast(new StartGameEvent(nPlayers));
     }
 
     public void sendObjState(int indexClient, ObjState objState) {
         echoServer.send(objState, indexClient);
+    }
+
+    public void sendCards(Ask3CardsEvent ask3CardsEvent) {
+        echoServer.sendBroadCast(ask3CardsEvent);
+    }
+
+    public void sendAskCard(AskCard askCard) {
+        echoServer.sendBroadCast(askCard);
+    }
+
+    public void sendUpdateBoard(UpdateBoardEvent gameData) {
+        echoServer.sendBroadCast(gameData);
+    }
+
+    public void sendAskInitializeWorker(AskInitializeWorker askInitializeWorker) {
+        echoServer.sendBroadCast(askInitializeWorker);
     }
 }

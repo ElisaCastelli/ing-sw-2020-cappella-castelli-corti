@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+import it.polimi.ingsw.network.User;
+import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
@@ -62,7 +64,7 @@ public class Game implements GameModel{
         players = new ArrayList<>();
         playersDead = new ArrayList<>();
         nPlayers = 0;
-        ackCounter=0;
+        ackCounter = 0;
         tempCard= new ArrayList<>();
         godsArray = new ArrayList<>();
         cardUsed = new ArrayList<>();
@@ -72,7 +74,7 @@ public class Game implements GameModel{
     public void goPlayingNext(){
         int indexPlay = whoIsPlaying();
         players.get(indexPlay).goWaiting();
-        if(indexPlay==nPlayers-1){
+        if(indexPlay == nPlayers-1){
             players.get(0).goPlay();
         }
         else{
@@ -96,36 +98,40 @@ public class Game implements GameModel{
         });
     }
     public void setNPlayers(int nPlayers){
-        this.nPlayers=nPlayers;
+        this.nPlayers = nPlayers;
     }
     public int getNPlayers(){
         return nPlayers;
     }
 
-    public boolean addPlayer(String name, int age){
-
-        int playerIndex=searchByClientIndex(ackCounter);
+    public boolean addPlayer(String name, int age, int indexClient){
+        int playerIndex = searchByClientIndex(indexClient);
         players.get(playerIndex).setName(name);
         players.get(playerIndex).setAge(age);
         ackCounter++;
 
         sortGamers();
         for(Player player : players ){
-            int indexPlayer= searchByName(player.getName());
+            int indexPlayer = searchByName(player.getName());
             player.setIndexPlayer(indexPlayer);
         }
         if(ackCounter == nPlayers){
-            ackCounter=0;
+            ackCounter = 0;
             return true;
         }
         return false;
+    }
+
+    public void startGame(){
+        players.get(0).goPlay();
+        stateManager.start();
     }
 
     @Override
     public synchronized boolean askState() {
         ackCounter++;
         if(ackCounter == nPlayers){
-            ackCounter=0;
+            ackCounter = 0;
             return true;
         }
         return false;
@@ -140,24 +146,51 @@ public class Game implements GameModel{
     public int searchByClientIndex(int clientIndex){
         return players.stream().map(Player::getIndexClient).collect(Collectors.toList()).indexOf(clientIndex);
     }
+    public int searchByPlayerIndex(int playerIndex){
+        for(Player player : players){
+            if(player.getIndexPlayer() == playerIndex)
+                return player.getIndexClient();
+        }
+        return 0;
+    }
 
+    public UpdateBoardEvent gameData(){
+        ArrayList<User> users = new ArrayList<>();
+        for (Player player : players){
+            User user = new User(player.getName(), player.getGod().getName());
+            users.add(user);
+        }
+        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(users, board, false);
+        int playerIndex = whoIsPlaying();
+        updateBoardEvent.setCurrentPlayer(searchByPlayerIndex(playerIndex));
+        return updateBoardEvent;
+    }
 
-    public void chooseTempCard(ArrayList<Integer> threeCard){
-       for(int i=0;i<nPlayers;i++){
-           if(threeCard.get(i)<godsArray.size()){
+    public int chooseTempCard(ArrayList<Integer> threeCard){
+       for(int i = 0; i < nPlayers; i++){
+           if(threeCard.get(i) < godsArray.size()){
                tempCard.add(godsArray.get(threeCard.get(i)));
            }
        }
+       goPlayingNext();
+       int playerIndex = whoIsPlaying();
+       return searchByPlayerIndex(playerIndex);
     }
-    public void chooseCard(int playerIndex, int indexCard) {
+
+    public int chooseCard(int playerIndex, int indexCard) {
         players.get(playerIndex).setGod(tempCard.get(indexCard));
         cardUsed.add(tempCard.get(indexCard));
         tempCard.remove(tempCard.get(indexCard));
+        if(tempCard.size() != 0){
+            goPlayingNext();
+            playerIndex = whoIsPlaying();
+        }
+        return searchByPlayerIndex(playerIndex);
     }
     public void loadCards() {
         godsArray= parser.parseCard();
     }
-    public synchronized ArrayList<String> getCards() throws Exception {
+    public synchronized ArrayList<String> getCards() {
         if(godsArray.size()==0){
             loadCards();
         }
@@ -181,10 +214,7 @@ public class Game implements GameModel{
         }
         return drawnCard;
     }
-    public void startGame(){
-        players.get(0).goPlay();
-        stateManager.start();
-    }
+
     public int whoIsPlaying(){
         int indexPlay=0;
         boolean found=false;

@@ -17,7 +17,7 @@ public class SendMessageToServer {
     }
 
     public void sendNPlayer(int response) {
-        ObjNumPlayer numPlayer= new ObjNumPlayer(response);
+        ObjNumPlayer numPlayer = new ObjNumPlayer(response);
         clientHandler.sendMessage(numPlayer);
     }
     public void sendAckStartGame() {
@@ -28,18 +28,19 @@ public class SendMessageToServer {
         clientHandler.sendMessage(new AckPlayer());
     }
 
-    public void sendPlayer(String name, int age) {
-        ObjPlayer objPlayer= new ObjPlayer(name,age);
+    public void sendPlayer(String name, int age, int indexClient) {
+        ObjPlayer objPlayer = new ObjPlayer(name,age);
+        objPlayer.setClientIndex(indexClient);
         clientHandler.sendMessage(objPlayer);
     }
 
     public void send3card(ArrayList<Integer> cardTemp) {
-        ObjTempCard objCard = new ObjTempCard(cardTemp);
-        clientHandler.sendMessage(objCard);
+        ObjTempCard objTempCard = new ObjTempCard(cardTemp);
+        clientHandler.sendMessage(objTempCard);
     }
 
-    public void sendCard(int scelta) {
-        ObjCard objCard = new ObjCard(scelta);
+    public void sendCard(int scelta, int indexPlayer) {
+        ObjCard objCard = new ObjCard(scelta, indexPlayer);
         System.out.println("Sending the card chose to the server");
         clientHandler.sendMessage(objCard);
     }

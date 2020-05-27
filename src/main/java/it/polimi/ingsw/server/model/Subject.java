@@ -11,11 +11,11 @@ public interface Subject {
     ObjNumPlayer notifySetNPlayers();
     void notifyAddPlayer();
     void notifyAskState(int indexClient,int indexPlayer);
-    AskCard notifyTempCard();
+    void notifyTempCard(int clientIndex);
     void notifyAddWorker();
-    ObjState notifyWhoIsPlaying();
-    UpdateBoardEvent notifySetReachable();
+    void notifyWhoIsPlaying();
+    void notifySetReachable();
     void notifyMovedWorker();
-    UpdateBoardEvent notifySetBuilding();
+    void notifySetBuilding();
     void notifyBuildBlock();
 }

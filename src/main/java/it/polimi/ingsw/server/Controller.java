@@ -17,43 +17,48 @@ public class Controller  {
     public Controller(ProxyGameModel gameModel){
         this.gameModel=gameModel;
     }
+
     public ObjNumPlayer setNPlayers(int nPlayers){
         gameModel.setNPlayers(nPlayers);
         return gameModel.notifySetNPlayers();
     }
-    public void addPlayer(String name, int age){
-        boolean addCompleted= gameModel.addPlayer(name, age);
+
+    public void addPlayer(String name, int age, int indexClient){
+        boolean addCompleted = gameModel.addPlayer(name, age, indexClient);
         if(addCompleted){
             gameModel.notifyAddPlayer();
         }
-    }
-    public void askState(){
-        boolean startCompleted= gameModel.askState();
-        if(startCompleted){
-            for(int indexClient = 0; indexClient < gameModel.getNPlayers(); indexClient++ ){
-                int indexPlayer = gameModel.searchByClientIndex(indexClient);
-                gameModel.notifyAskState(indexClient,indexPlayer);
-            }
-        }
-    }
-
-    public AskCard setTempCard(ArrayList<Integer> threeCard) {
-        gameModel.chooseTempCard(threeCard);
-        return gameModel.notifyTempCard();
     }
 
     public void startGame(){
         gameModel.startGame();
     }
 
-    public AskCard setCard(int playerIndex, int godCard) throws Exception {
-        gameModel.chooseCard(playerIndex, godCard);
-        return gameModel.notifyTempCard();
+    public void askState(){
+        boolean startCompleted = gameModel.askState();
+        if(startCompleted){
+            for(int indexClient = 0; indexClient < gameModel.getNPlayers(); indexClient++ ){
+                int indexPlayer = gameModel.searchByClientIndex(indexClient);
+                gameModel.notifyAskState(indexClient, indexPlayer);
+            }
+        }
     }
 
-    public ObjState goPlayingNext(){
+    public void setTempCard(ArrayList<Integer> threeCard) {
+        int clientIndex = gameModel.chooseTempCard(threeCard);
+        gameModel.notifyTempCard(clientIndex);
+    }
+
+
+
+    public void setCard(int playerIndex, int godCard) throws Exception {
+        int clientIndex = gameModel.chooseCard(playerIndex, godCard);
+        gameModel.notifyTempCard(clientIndex);
+    }
+
+    public void goPlayingNext(){
         gameModel.goPlayingNext();
-        return gameModel.notifyWhoIsPlaying();
+        gameModel.notifyWhoIsPlaying();
     }
 
     public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
@@ -68,9 +73,9 @@ public class Controller  {
     }
 
     /// richiamato
-    public UpdateBoardEvent setBoxReachable(int indexPlayer, int indexWorker) {
+    public void setBoxReachable(int indexPlayer, int indexWorker) {
         gameModel.setBoxReachable(indexPlayer, indexWorker);
-        return gameModel.notifySetReachable();
+        gameModel.notifySetReachable();
     }
     ///richiamato
     public AskMoveEvent movePlayer(int indexPlayer, int indexWorker, int row, int column) {
@@ -96,9 +101,9 @@ public class Controller  {
         return gameModel.canBuild(indexPlayer, indexWorker);
     }
 
-    public UpdateBoardEvent setBoxBuilding(int indexPlayer, int indexWorker) {
+    public void setBoxBuilding(int indexPlayer, int indexWorker) {
         gameModel.setBoxBuilding(indexPlayer, indexWorker);
-        return gameModel.notifySetBuilding();
+        gameModel.notifySetBuilding();
     }
 
     public AskBuildEvent buildBlock(int indexPlayer, int indexWorker, int rowWorker, int columnWorker, int row, int column) {

@@ -13,7 +13,7 @@ public class VisitorServer {
     private VirtualView virtualView;
 
     public VisitorServer(VirtualView virtualView) {
-        this.virtualView=virtualView;
+        this.virtualView = virtualView;
     }
 
     public void visit(ObjNumPlayer objNumPlayer){
@@ -23,7 +23,7 @@ public class VisitorServer {
     public void visit(ObjPlayer objPlayer){
         System.out.println("Receiving player data");
         ///serverHandler.setClientName(objPlayer.getName());
-        virtualView.addPlayer(objPlayer.getName(), objPlayer.getAge());
+        virtualView.addPlayer(objPlayer.getName(), objPlayer.getAge(), objPlayer.getClientIndex());
     }
 
 
@@ -34,47 +34,29 @@ public class VisitorServer {
     }
 
     public void visit(ObjTempCard objTempCard){
-        /*System.out.println("Receiving Temp Card ");
-        serverHandler.waitForPlayer();
-        AskCard tempCard = serverHandler.getVirtualView().setTempCard(objTempCard.getCardsTemp());
-        ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-        serverHandler.sendUpdateBroadcast(objState);
-        //ho aggiunto uesta riga e il corrispondente incremento degli ack sullo Ackstate
-        serverHandler.waitForPlayer();
-        serverHandler.sendUpdateBroadcast(tempCard);*/
+        virtualView.setTempCard(objTempCard.getCardsTemp());
     }
 
-    public void visit(ObjCard objCard) throws Exception {
-        /*System.out.println("Receiving objCard");
-        serverHandler.waitForPlayer();
-        int indexPlayer=serverHandler.getIndexPlayer();
-        AskCard askcard = serverHandler.getVirtualView().setCard(indexPlayer, objCard.getCardChose());
-        serverHandler.setNameCard(serverHandler.getVirtualView().getPlayerArray().get(indexPlayer).getGod().getName());
-        if(askcard.getCardTemp().size() != 0){
-            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-            serverHandler.sendUpdateBroadcast(objState);
-            serverHandler.waitForPlayer();
-            serverHandler.sendUpdateBroadcast(askcard);
+    public void visit(ObjCard objCard) {
+        try {
+            virtualView.setCard(objCard.getClientIndex(), objCard.getCardChose());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else{
-            System.out.println("Sending board");
-            ObjInitialize objInitialize = serverHandler.gameData();
-            serverHandler.sendUpdateBroadcast(objInitialize);
-            serverHandler.waitForPlayer();
-            serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
-        }*/
     }
 
     public void visit(AckState ackState) {
+        //todo probabilmente da togliere
         //serverHandler.getVirtualView().incCounterOpponent();
         //System.out.println("AckState thread number: "+ serverHandler.getName());
     }
 
-    public void visit(AckPlayer ackPlayer) throws Exception {
-        /*serverHandler.waitForPlayer();
-        ArrayList<String> cards= serverHandler.getVirtualView().getCards();
-        Ask3CardsEvent ask3Cards = new Ask3CardsEvent(cards);
-        serverHandler.sendUpdateBroadcast(ask3Cards);*/
+    public void visit(AckPlayer ackPlayer) {
+        try {
+            virtualView.getCards();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void visit (ObjWorkers objWorkers){
@@ -255,6 +237,4 @@ public class VisitorServer {
     public void visit(CloseConnectionClientEvent closeConnectionClientEvent){
         ///serverHandler.close();
     }
-
-
 }

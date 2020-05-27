@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
@@ -16,15 +17,17 @@ public interface GameModel {
     int getNPlayers();
     void setNPlayers(int nPlayers);
     void startGame();
-    boolean addPlayer(String name, int age);
+    boolean addPlayer(String name, int age, int indexClient);
     boolean askState();
     int searchByName(String name);
     int searchByClientIndex(int indexClient);
+    public int searchByPlayerIndex(int playerIndex);
     ArrayList<String> getCards()throws Exception;
+    UpdateBoardEvent gameData();
     ArrayList<String> getTempCard();
     ArrayList<String> getCardUsed();
-    void chooseTempCard(ArrayList<Integer> tempCard);
-    void chooseCard(int playerIndex, int godCard)throws Exception ;
+    int chooseTempCard(ArrayList<Integer> tempCard);
+    int chooseCard(int playerIndex, int godCard)throws Exception ;
     int whoIsPlaying();
     void goPlayingNext();
     boolean initializeWorker(int indexPlayer,Box box1, Box box2);

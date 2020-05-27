@@ -24,9 +24,6 @@ public class ObjPlayer extends ObjMessage {
         this.age = age;
     }
 
-    public ObjPlayer(){
-        super();
-    }
     public ObjPlayer(String name, int age) {
         this.name = name;
         this.age = age;

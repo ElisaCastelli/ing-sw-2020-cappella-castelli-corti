@@ -8,15 +8,9 @@ public class ObjState extends ObjMessage{
     private static final long serialVersionUID = -10489342L;
 
     int indexPlayer;
-    int currentPlayer;
 
-    public  ObjState(){
-        indexPlayer=-1;
-        currentPlayer=-1;
-    }
-    public ObjState(int indexPlayer, int currentPlayer){
+    public ObjState(int indexPlayer){
         this.indexPlayer=indexPlayer;
-        this.currentPlayer=currentPlayer;
     }
     public int getIndexPlayer() {
         return indexPlayer;
@@ -24,14 +18,6 @@ public class ObjState extends ObjMessage{
 
     public void setIndexPlayer(int indexPlayer) {
         this.indexPlayer = indexPlayer;
-    }
-
-    public int getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
     }
 
     @Override
