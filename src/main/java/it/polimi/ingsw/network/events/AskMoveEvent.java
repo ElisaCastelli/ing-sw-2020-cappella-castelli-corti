@@ -8,28 +8,43 @@ public class AskMoveEvent extends ObjMessage {
 
     private static final long serialVersionUID = 6294837110495348563L;
 
-    int row1;
-    int column1;
+    int rowStart=-1;
+    int columnStart=-1;
+    int row;
+    int column;
     int indexWorker;
     boolean firstTime;
     boolean wrongBox=false;
     boolean isDone;
 
-    public AskMoveEvent(int indexWorker, int row1, int column1, boolean firstTime, boolean isDone) {
-        this.row1 = row1;
-        this.column1 = column1;
+    public AskMoveEvent(int indexWorker, int row, int column, boolean firstTime, boolean isDone) {
+        this.row = row;
+        this.column = column;
         this.indexWorker = indexWorker;
         this.firstTime = firstTime;
         this.isDone = isDone;
-
+    }
+    public int getRowStart() {
+        return rowStart;
     }
 
-    public int getRow1() {
-        return row1;
+    public void setRowStart(int rowStart) {
+        this.rowStart = rowStart;
     }
 
-    public int getColumn1() {
-        return column1;
+    public int getColumnStart() {
+        return columnStart;
+    }
+
+    public void setColumnStart(int columnStart) {
+        this.columnStart = columnStart;
+    }
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
     public int getIndexWorker() {

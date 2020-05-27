@@ -29,8 +29,8 @@ public class IsPlaying extends PlayerState{
     }
 
     @Override
-    public boolean checkWin(Box starterBox, Box finalBox) {
-        boolean win = myGod.checkWin( starterBox , finalBox );
+    public boolean checkWin(Box boxReach, Box boxStart) {
+        boolean win = myGod.checkWin(boxStart, boxReach);
         if(win){
             playerManager.goWin();
         }

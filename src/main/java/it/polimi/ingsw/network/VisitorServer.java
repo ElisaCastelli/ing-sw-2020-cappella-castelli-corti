@@ -6,9 +6,6 @@ import it.polimi.ingsw.network.objects.*;
 
 import it.polimi.ingsw.server.VirtualView;
 
-
-import java.util.ArrayList;
-
 public class VisitorServer {
     private VirtualView virtualView;
 
@@ -16,9 +13,15 @@ public class VisitorServer {
         this.virtualView = virtualView;
     }
 
+    public void visit(AskWantToPlay askWantToPlay){
+        virtualView.askWantToPlay(askWantToPlay.getIndexClient());
+    }
+
     public void visit(ObjNumPlayer objNumPlayer){
         virtualView.setNPlayers(objNumPlayer.getnPlayer());
     }
+
+
 
     public void visit(ObjPlayer objPlayer){
         System.out.println("Receiving player data");
@@ -39,7 +42,7 @@ public class VisitorServer {
 
     public void visit(ObjCard objCard) {
         try {
-            virtualView.setCard(objCard.getClientIndex(), objCard.getCardChose());
+            virtualView.setCard(objCard.getIndexPlayer(), objCard.getCardChose());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,43 +63,14 @@ public class VisitorServer {
     }
 
     public void visit (ObjWorkers objWorkers){
-        /*serverHandler.waitForPlayer();
-        if(serverHandler.getVirtualView().initializeWorker(serverHandler.getIndexPlayer(), objWorkers.getBox1(), objWorkers.getBox2())){
-            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
-            serverHandler.sendUpdateBroadcast(updateBoardEvent);
-            serverHandler.waitForPlayer();
-            ObjState objState = serverHandler.getVirtualView().goPlayingNext();
-            serverHandler.sendUpdateBroadcast(objState);
-            serverHandler.waitForPlayer();
-            if(serverHandler.getIndexPlayer()+1 == serverHandler.getClientArray().size()){
-                AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(serverHandler.getIndexNext(), true);
-                serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
-            }else{
-                serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
-            }
-        }
-        else{
-            serverHandler.sendUpdateBroadcast(new AskInitializeWorker());
-        }*/
+        virtualView.initializeWorker(objWorkers);
+
     }
 
     public void visit (ObjWorkerToMove objWorkerToMove){
-        /*serverHandler.waitForPlayer();
-        if(objWorkerToMove.isReady()){
-            serverHandler.sendUpdateBroadcast(new AskMoveEvent(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(), objWorkerToMove.getColumn(),true,false));
-        }else{
-            int indexPlayer = serverHandler.getIndexPlayer();
-            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().setReachable(indexPlayer,objWorkerToMove.getIndexWorkerToMove());
-            updateBoardEvent.setShowReachable(true);
-            //mando la board a tutti così quello stronzo dopo mi dice se vuole cambiare pedina o fare una mossa
-            serverHandler.sendUpdateBroadcast(updateBoardEvent);
-            serverHandler.waitForPlayer();
-            ///TODO lo mando in broadcast o solo a lui? perchè devo ricordarmi di ricontrollare gli ack che mi arrivano
-            AskWorkerToMoveEvent askWorkerToMoveEvent = serverHandler.getVirtualView().getWorkersPos(indexPlayer,false);
-            //Ho tolto l'indexWorker dal costruttore, poi ho fatto una set di quest'ultimo almeno ho sempre l'ultimo index che ho scelto
-            askWorkerToMoveEvent.setIndexWorker(objWorkerToMove.getIndexWorkerToMove());
-            serverHandler.sendUpdateBroadcast(askWorkerToMoveEvent);
-        }*/
+
+        virtualView.setBoxReachable(objWorkerToMove);
+
     }
     ///mi serve per controllare che a tutti sia arrivata la board aggiornata
     public void visit(AckUpdateBoard ackUpdateBoard){
@@ -104,9 +78,12 @@ public class VisitorServer {
     }
 
     public void visit(ObjMove objMove){
+        virtualView.move(objMove);
+
         /*serverHandler.waitForPlayer();
         int indexPlayer = serverHandler.getIndexPlayer();
         if(serverHandler.getVirtualView().isReachable(objMove.getRow(), objMove.getColumn())) {
+
             AskMoveEvent askMoveEvent = serverHandler.getVirtualView().move(indexPlayer, objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn());
             UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
             serverHandler.sendUpdateBroadcast(updateBoardEvent);
@@ -123,7 +100,7 @@ public class VisitorServer {
                         updateBoardEvent.setShowReachable(true);
                         serverHandler.sendUpdateBroadcast(updateBoardEvent);
                         serverHandler.waitForPlayer();
-                        serverHandler.sendUpdateBroadcast(new AskBuildEvent(askMoveEvent.getIndexWorker(), askMoveEvent.getRow1(), askMoveEvent.getColumn1(), true, false));
+                        serverHandler.sendUpdateBroadcast(new AskBuildEvent(askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn(), true, false));
                     }
                     else{
                         //Giocatore morto X
@@ -136,14 +113,6 @@ public class VisitorServer {
                     serverHandler.sendUpdateBroadcast(askMoveEvent);
                 }
             }
-        }else {
-            UpdateBoardEvent updateBoardEvent = serverHandler.getVirtualView().updateBoard();
-            updateBoardEvent.setShowReachable(true);
-            serverHandler.sendUpdateBroadcast(updateBoardEvent);
-            serverHandler.waitForPlayer();
-            AskMoveEvent askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRowStart(), objMove.getColumnStart(), true, false);
-            askMoveEvent.setWrongBox(true);
-            serverHandler.sendUpdateBroadcast(askMoveEvent);
         }*/
     }
 
@@ -230,9 +199,7 @@ public class VisitorServer {
         ///virtualView.printHeartBeat();
     }
 
-    public void visit(AskWantToPlay askWantToPlay){
-        virtualView.askWantToPlay(askWantToPlay.getIndexClient());
-    }
+
 
     public void visit(CloseConnectionClientEvent closeConnectionClientEvent){
         ///serverHandler.close();

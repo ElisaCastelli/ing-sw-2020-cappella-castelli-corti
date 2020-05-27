@@ -7,18 +7,18 @@ import java.io.Serializable;
 
 public abstract class ObjMessage implements Serializable {
     private int clientIndex;
-    private int currentPlayer;
+    private int currentClientPlaying;
 
     public int getClientIndex() {
         return clientIndex;
     }
 
-    public int getCurrentPlayer() {
-        return currentPlayer;
+    public int getCurrentClientPlaying() {
+        return currentClientPlaying;
     }
 
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    public void setCurrentClientPlaying(int currentClientPlaying) {
+        this.currentClientPlaying = currentClientPlaying;
     }
 
     public void setClientIndex(int clientIndex) {

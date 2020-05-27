@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.events.AskCard;
+import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
@@ -71,8 +72,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public UpdateBoardEvent gameData() {
-        return gameModel.gameData();
+    public UpdateBoardEvent gameData(boolean reach) {
+        return gameModel.gameData(reach);
     }
 
     @Override
@@ -104,8 +105,8 @@ public class ProxyGameModel implements GameModel, Subject{
         gameModel.startGame();
     }
     @Override
-    public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
-        return gameModel.initializeWorker(indexPlayer, box1, box2);
+    public boolean initializeWorker(Box box1, Box box2) {
+        return gameModel.initializeWorker(box1, box2);
     }
 
     @Override
@@ -121,8 +122,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void setBoxReachable(int indexPlayer, int indexWorker) {
-        gameModel.setBoxReachable(indexPlayer, indexWorker);
+    public void setBoxReachable(int indexWorker) {
+        gameModel.setBoxReachable(indexWorker);
     }
 
     @Override
@@ -131,13 +132,19 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column) {
-        return gameModel.movePlayer(indexPlayer, indexWorker, row, column);
+    public boolean movePlayer(int indexWorker, int row, int column) {
+        return gameModel.movePlayer(indexWorker, row, column);
     }
 
     @Override
-    public boolean canBuild(int indexPlayer, int indexWorker) {
-        return gameModel.canBuild(indexPlayer, indexWorker);
+    public boolean canBuild(int indexWorker) {
+        return gameModel.canBuild(indexWorker);
+    }
+
+
+    @Override
+    public void notifyCanBuild(AskMoveEvent askMoveEvent) {
+        observer.updateCanBuild(askMoveEvent);
     }
 
     @Override
@@ -151,8 +158,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker) {
-        return gameModel.checkWin(indexPlayer, rowStart,columnStart, indexWorker);
+    public boolean checkWin(int rowStart, int columnStart, int indexWorker) {
+        return gameModel.checkWin(rowStart,columnStart, indexWorker);
     }
 
     @Override
@@ -199,15 +206,23 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifyTempCard(int clientIndex){
-        observer.updateTempCard(clientIndex);
+    public void notifyTempCard(int indexClient){
+        observer.updateTempCard(indexClient);
     }
 
     @Override
     public void notifyAddWorker(){
-        observer.updateInitializeWorker();
-        observer.updateBoard();
+        int indexClient= searchByPlayerIndex(gameModel.whoIsPlaying());
+        observer.updateInitializeWorker(indexClient, gameModel.whoIsPlaying());
     }
+    @Override
+    public void notifyWorkersNotInitialized(){
+        int indexClient= searchByPlayerIndex(gameModel.whoIsPlaying());
+        observer.updateNotInitializeWorker(indexClient);
+    }
+
+
+
     @Override
     public void notifyWhoIsPlaying(){
         observer.updateWhoIsPlaying();
@@ -215,20 +230,39 @@ public class ProxyGameModel implements GameModel, Subject{
 
 
     @Override
-    public void notifySetReachable(){
-        observer.updateReachable();
-        observer.updateBoard();
+    public void notifySetReachable(int indexWorker, boolean secondMove){
+        int indexClient= searchByPlayerIndex(gameModel.whoIsPlaying());
+        observer.updateReachable(indexClient,gameModel.whoIsPlaying(), indexWorker, secondMove);
     }
 
     @Override
-    public void notifyMovedWorker(){
-        observer.updateMove();
+    public void notifyMovedWorker(AskMoveEvent askMoveEvent, int clientIndex){
+        observer.updateMove(askMoveEvent, clientIndex);
+    }
+
+    @Override
+    public void notifyWin() {
+        int indexClient=gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
+        observer.updateWin(indexClient);
+    }
+
+    @Override
+    public void notifyLoser() {
+        ///todo il whoisplaying è sbagliato perchè manca il metodo whoisdead e la can build restituisce una cosa sbagliata da riguardare
+        int indexClient=gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
+        observer.updateLoser(indexClient);
+    }
+
+
+    @Override
+    public void notifyContinueMove(AskMoveEvent askMoveEvent) {
+        observer.updateContinueMove(askMoveEvent);
     }
 
     @Override
     public void notifySetBuilding(){
         observer.updateSetBuilding();
-        observer.updateBoard();
+        observer.updateBoard(false);
     }
 
     @Override

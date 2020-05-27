@@ -2,10 +2,8 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.SendMessageToClient;
 import it.polimi.ingsw.network.events.*;
-import it.polimi.ingsw.network.objects.ObjNumPlayer;
-import it.polimi.ingsw.network.objects.ObjState;
+import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.ProxyGameModel;
-import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
 
@@ -18,6 +16,7 @@ public class VirtualView implements Observer {
     private boolean ready;
     private int winnerPlayer;
     SendMessageToClient sendMessageToClient;
+    private final Object LOCK = new Object();
 
 
     public VirtualView(SendMessageToClient sendMessageToClient) throws Exception {
@@ -90,13 +89,15 @@ public class VirtualView implements Observer {
         return new ObjNumPlayer(gameModel.getNPlayers());
     }
 
-    public synchronized void addPlayer(String name, int age, int indexClient){
-        if(getPlayerArray().size() > gameModel.getNPlayers()){
-            for(int i = getPlayerArray().size() - 1; i >= gameModel.getNPlayers(); i--) {
-                getPlayerArray().remove(i);
+    public void addPlayer(String name, int age, int indexClient){
+        synchronized (LOCK) {
+            if (getPlayerArray().size() > gameModel.getNPlayers()) {
+                if (getPlayerArray().size() > gameModel.getNPlayers()) {
+                    getPlayerArray().subList(gameModel.getNPlayers(), getPlayerArray().size()).clear();
+                }
             }
+            controller.addPlayer(name, age, indexClient);
         }
-        controller.addPlayer(name, age, indexClient);
     }
 
     public void askState(){
@@ -111,7 +112,7 @@ public class VirtualView implements Observer {
         try {
             Ask3CardsEvent ask3CardsEvent = new Ask3CardsEvent(gameModel.getCards());
             int clientIndex = gameModel.searchByPlayerIndex(0);
-            ask3CardsEvent.setCurrentPlayer(clientIndex);
+            ask3CardsEvent.setCurrentClientPlaying(clientIndex);
             sendMessageToClient.sendCards(ask3CardsEvent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,16 +146,16 @@ public class VirtualView implements Observer {
     @Override
     public void updateTempCard(int clientIndex){
         AskCard askCard = new AskCard(gameModel.getTempCard());
-        askCard.setCurrentPlayer(clientIndex);
+        askCard.setCurrentClientPlaying(clientIndex);
 
         if(askCard.getCardTemp().size() != 0){
             sendMessageToClient.sendAskCard(askCard);
         }
         else{
             System.out.println("Sending board");
-            updateBoard();
+            updateBoard(false);
             AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
-            askInitializeWorker.setCurrentPlayer(clientIndex);
+            askInitializeWorker.setCurrentClientPlaying(clientIndex);
             sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
         }
     }
@@ -170,18 +171,37 @@ public class VirtualView implements Observer {
     }
 
     @Override
-    public void updateBoard(){
-        sendMessageToClient.sendUpdateBoard(gameModel.gameData());
+    public void updateBoard(boolean reach){
+        sendMessageToClient.sendUpdateBoard(gameModel.gameData(reach));
     }
 
-    public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
-        return controller.initializeWorker(indexPlayer, box1, box2);
+
+    public void initializeWorker(ObjWorkers objWorkers) {
+        controller.initializeWorker(objWorkers.getBox1(),objWorkers.getBox2());
     }
 
     @Override
-    public void updateInitializeWorker(){
+    public void updateInitializeWorker(int indexClient,int indexPlayer){
         System.out.println("Ho inizializzato la pedina");
+        updateBoard(false);
+        if(indexPlayer == 0){
+            AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true);
+            askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
+            sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
+        }else{
+            AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
+            askInitializeWorker.setCurrentClientPlaying(indexClient);
+            sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
+        }
     }
+
+    @Override
+    public void updateNotInitializeWorker(int indexClient){
+        AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
+        askInitializeWorker.setCurrentClientPlaying(indexClient);
+        sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
+    }
+
 
     public boolean isReachable(int row, int column){
         return gameModel.isReachable(row,column);
@@ -193,13 +213,26 @@ public class VirtualView implements Observer {
     }
 
     /// richiamato
-    public void setReachable(int indexPlayer, int indexWorker){
-        controller.setBoxReachable(indexPlayer, indexWorker);
+    public void setBoxReachable(ObjWorkerToMove objWorkerToMove){
+        if(objWorkerToMove.isReady()){
+            AskMoveEvent askMoveEvent= new AskMoveEvent(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(), objWorkerToMove.getColumn(),true,false);
+            askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+            sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+        }else {
+            controller.setBoxReachable(objWorkerToMove.getIndexWorkerToMove(), false);
+        }
     }
     ///richiamato
     @Override
-    public void updateReachable(){
-        System.out.println("Aggiornato celle raggiungibili");
+    public void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove){
+        updateBoard(true);
+        if(!secondMove) {
+            AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, false);
+            askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
+            askWorkerToMoveEvent.setIndexWorker(indexWorker);
+            sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
+            System.out.println("Aggiornato celle raggiungibili");
+        }
     }
     ///richiamato
     public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove){
@@ -208,27 +241,65 @@ public class VirtualView implements Observer {
     }
 
     ///richiamato
-    public AskMoveEvent move(int indexPlayer, int indexWorker, int row, int column){
-        return controller.movePlayer(indexPlayer, indexWorker, row, column);
+    public void move(ObjMove objMove){
+        if(isReachable(objMove.getRow(),objMove.getColumn())){
+            controller.movePlayer(objMove);
+        }else{
+            updateBoard(true);
+            AskMoveEvent askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRowStart(), objMove.getColumnStart(), true, false);
+            askMoveEvent.setWrongBox(true);
+            askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+            sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+        }
     }
     ///richiamato
     @Override
-    public void updateMove(){
+    public void updateMove(AskMoveEvent askMoveEvent,int clientIndex){
         System.out.println("Pedina mossa");
+        updateBoard(false);
+        checkWin(askMoveEvent,clientIndex);
     }
 
-    public boolean checkWin(int indexPlayer, int startRow, int startColumn, int indexWorker){
-        return controller.checkWin(indexPlayer, startRow, startColumn, indexWorker);
+    public void checkWin(AskMoveEvent askMoveEvent, int clientIndex){
+        controller.checkWin(askMoveEvent);
     }
 
+    @Override
+    public void updateWin(int indexClient) {
+        sendMessageToClient.sendWin(indexClient);
+    }
 
+    @Override
+    public void updateLoser(int indexClient) {
+        sendMessageToClient.sendLoser(indexClient);
+    }
+
+    @Override
+    public void updateContinueMove(AskMoveEvent askMoveEvent) {
+        if(askMoveEvent.isDone()){
+            canBuild(askMoveEvent);
+        }else{
+            controller.setBoxReachable(askMoveEvent.getIndexWorker(), true);
+            askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+            sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+        }
+    }
+    @Override
     //Metodo per verificare se è possibile costruire attorno al proprio worker, se non è possibile il giocatore ha perso
-    public boolean canBuild(int indexPlayer, int indexWorker){
-        return controller.canBuild(indexPlayer, indexWorker);
+    public void canBuild(AskMoveEvent askMoveEvent){
+        controller.canBuild(askMoveEvent);
+    }
+
+    @Override
+    public void updateCanBuild(AskMoveEvent askMoveEvent) {
+        updateBoard(true);
+        AskBuildEvent askBuildEvent = new AskBuildEvent(askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn(), true, false);
+        askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+        sendMessageToClient.sendAskBuildEvent(askBuildEvent);
     }
 
     //Metodo per fare la setPossibleBuild
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
+        public void setBoxBuilding(int indexPlayer, int indexWorker) {
         controller.setBoxBuilding(indexPlayer, indexWorker);
     }
 
@@ -253,9 +324,6 @@ public class VirtualView implements Observer {
     public boolean checkWinAfterBuild() {
         return controller.checkWinAfterBuild();
     }
-
-
-
 
     public void setPause(){
         controller.setPause();

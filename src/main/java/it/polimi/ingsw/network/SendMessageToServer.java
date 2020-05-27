@@ -39,13 +39,13 @@ public class SendMessageToServer {
         clientHandler.sendMessage(objTempCard);
     }
 
-    public void sendCard(int scelta, int indexPlayer) {
-        ObjCard objCard = new ObjCard(scelta, indexPlayer);
+    public void sendCard(int choseCardIndex, int indexPlayer) {
+        ObjCard objCard = new ObjCard(choseCardIndex, indexPlayer);
         System.out.println("Sending the card chose to the server");
         clientHandler.sendMessage(objCard);
     }
 
-    public void sendWorker(ArrayList<Box> boxes) {
+    public void sendWorker(ArrayList<Box> boxes, int indexPlayer) {
         ObjWorkers objWorkers = new ObjWorkers(boxes.get(0), boxes.get(1));
         clientHandler.sendMessage(objWorkers);
     }

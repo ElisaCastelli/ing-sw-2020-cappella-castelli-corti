@@ -44,26 +44,21 @@ public class VisitorClient {
     }
 
     public void visit(Ask3CardsEvent ask3CardsEvent) {
-        if(ask3CardsEvent.getClientIndex() == ask3CardsEvent.getCurrentPlayer())
+        if(ask3CardsEvent.getClientIndex() == ask3CardsEvent.getCurrentClientPlaying())
             view.ask3Card(ask3CardsEvent.getCardArray());
-
-        //clientHandler.sendMessage(new AckState());
-
     }
+
     public void visit(AskCard askCard) {
-        if(askCard.getClientIndex() == askCard.getCurrentPlayer())
+        if(askCard.getClientIndex() == askCard.getCurrentClientPlaying())
             view.askCard(askCard.getCardTemp());
-
-        //clientHandler.sendMessage(new AckState());
-
     }
 
     public void visit(AskInitializeWorker askInitializeWorker){
-        if(askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentPlayer())
+        if(askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentClientPlaying()) {
             view.initializeWorker();
-
-        //clientHandler.sendMessage(new AckState());
-
+        }else{
+            System.out.println("non sto inizializzando il worker");
+        }
     }
 
 
@@ -72,18 +67,19 @@ public class VisitorClient {
     }
 
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-        if(askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentPlayer()) {
+        if(askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
             if (askWorkerToMoveEvent.isFirstAsk()) {
                 view.askWorker(askWorkerToMoveEvent);
             } else if (!askWorkerToMoveEvent.isFirstAsk()) {
                 view.areYouSure(askWorkerToMoveEvent);
             }
-            //clientHandler.sendMessage(new AckState());
+        }else{
+            System.out.println("non sto setreachablando un worker");
         }
     }
 
     public void visit(AskMoveEvent askMoveEvent){
-        if(askMoveEvent.getClientIndex() == askMoveEvent.getCurrentPlayer()) {
+        if(askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
             //Questa è la prima ask
             if (askMoveEvent.isFirstTime()) {
                 view.moveWorker(askMoveEvent);
@@ -91,12 +87,13 @@ public class VisitorClient {
             } else {
                 view.anotherMove(askMoveEvent);
             }
+        }else{
+            System.out.println("non sto muovendo un worker");
         }
-        //clientHandler.sendMessage(new AckState());
     }
 
     public void visit(AskBuildEvent askBuildEvent){
-        if(askBuildEvent.getClientIndex() == askBuildEvent.getCurrentPlayer()) {
+        if(askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
             //Qui entra se è veramente la prima volta o se ha inserito una box non valida
             if (askBuildEvent.isFirstTime()) {
                 view.buildMove(askBuildEvent);

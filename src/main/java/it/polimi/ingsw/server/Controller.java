@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
+import it.polimi.ingsw.network.objects.ObjMove;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.server.model.ProxyGameModel;
@@ -49,8 +50,6 @@ public class Controller  {
         gameModel.notifyTempCard(clientIndex);
     }
 
-
-
     public void setCard(int playerIndex, int godCard) throws Exception {
         int clientIndex = gameModel.chooseCard(playerIndex, godCard);
         gameModel.notifyTempCard(clientIndex);
@@ -61,10 +60,15 @@ public class Controller  {
         gameModel.notifyWhoIsPlaying();
     }
 
-    public boolean initializeWorker(int indexPlayer, Box box1, Box box2) {
-        boolean init= gameModel.initializeWorker(indexPlayer, box1, box2);
-        gameModel.notifyAddWorker();
-        return init;
+    public void initializeWorker(Box box1, Box box2) {
+        boolean init= gameModel.initializeWorker(box1, box2);
+        if(init){
+            gameModel.goPlayingNext();
+            gameModel.notifyAddWorker();
+        }else{
+            gameModel.notifyWorkersNotInitialized();
+        }
+
     }
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
@@ -73,32 +77,47 @@ public class Controller  {
     }
 
     /// richiamato
-    public void setBoxReachable(int indexPlayer, int indexWorker) {
-        gameModel.setBoxReachable(indexPlayer, indexWorker);
-        gameModel.notifySetReachable();
+    public void setBoxReachable(int indexWorker, boolean secondMove) {
+        gameModel.setBoxReachable(indexWorker);
+        gameModel.notifySetReachable(indexWorker , secondMove);
     }
     ///richiamato
-    public AskMoveEvent movePlayer(int indexPlayer, int indexWorker, int row, int column) {
-        boolean moved = gameModel.movePlayer(indexPlayer, indexWorker, row, column);
+    public void movePlayer(ObjMove objMove) {
+
+        boolean moved = gameModel.movePlayer(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn());
         AskMoveEvent askMoveEvent;
         if(moved){
-            askMoveEvent = new AskMoveEvent(indexWorker, row, column, false, true);
+            askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn(), false, true);
         }else{
-            askMoveEvent = new AskMoveEvent(indexWorker,row,column,false,false);
+            askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn(),false,false);
         }
 
-        gameModel.notifyMovedWorker();
-        return askMoveEvent;
+        askMoveEvent.setRowStart(objMove.getRowStart());
+        askMoveEvent.setColumnStart(objMove.getColumnStart());
+        int clientIndex= gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
+        gameModel.notifyMovedWorker(askMoveEvent, clientIndex);
     }
+
     ///
-    public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker) {
-        return gameModel.checkWin(indexPlayer, rowStart, columnStart, indexWorker);
+    public void checkWin(AskMoveEvent askMoveEvent) {
+        boolean winCondition= gameModel.checkWin(askMoveEvent.getRowStart(), askMoveEvent.getColumnStart(), askMoveEvent.getIndexWorker());
+        if(winCondition){
+            gameModel.notifyWin();
+        }else{
+            gameModel.notifyContinueMove(askMoveEvent);
+        }
     }
 
 
 
-    public boolean canBuild(int indexPlayer, int indexWorker){
-        return gameModel.canBuild(indexPlayer, indexWorker);
+    public void canBuild(AskMoveEvent askMoveEvent){
+        /// todo canbuild da rifare
+        boolean loseCondition= gameModel.canBuild(askMoveEvent.getIndexWorker());
+        if(!loseCondition){
+            gameModel.notifyLoser();
+        }else{
+            gameModel.notifyCanBuild(askMoveEvent);
+        }
     }
 
     public void setBoxBuilding(int indexPlayer, int indexWorker) {

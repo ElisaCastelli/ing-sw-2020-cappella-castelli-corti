@@ -15,7 +15,6 @@ import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.model.gameState.GameStateManager;
 import it.polimi.ingsw.server.model.god.*;
 import it.polimi.ingsw.server.model.parse.CardCreator;
-import it.polimi.ingsw.server.model.playerState.PlayerState;
 
 
 /**
@@ -154,15 +153,15 @@ public class Game implements GameModel{
         return 0;
     }
 
-    public UpdateBoardEvent gameData(){
+    public UpdateBoardEvent gameData(boolean reach){
         ArrayList<User> users = new ArrayList<>();
         for (Player player : players){
             User user = new User(player.getName(), player.getGod().getName());
             users.add(user);
         }
-        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(users, board, false);
+        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(users, board, reach);
         int playerIndex = whoIsPlaying();
-        updateBoardEvent.setCurrentPlayer(searchByPlayerIndex(playerIndex));
+        updateBoardEvent.setCurrentClientPlaying(searchByPlayerIndex(playerIndex));
         return updateBoardEvent;
     }
 
@@ -190,7 +189,7 @@ public class Game implements GameModel{
     public void loadCards() {
         godsArray= parser.parseCard();
     }
-    public synchronized ArrayList<String> getCards() {
+    public ArrayList<String> getCards() {
         if(godsArray.size()==0){
             loadCards();
         }
@@ -231,11 +230,13 @@ public class Game implements GameModel{
         else
             return -1;
     }
+
     public ArrayList<Box> getWorkersPos(int indexPlayer){
        return players.get(indexPlayer).getWorkersBox();
     }
 
-    public boolean initializeWorker(int indexPlayer, Box box1, Box box2){
+    public boolean initializeWorker(Box box1, Box box2){
+        int indexPlayer=whoIsPlaying();
         return players.get(indexPlayer).initializeWorker(box1, box2, board);
     }
     
@@ -266,16 +267,19 @@ public class Game implements GameModel{
         return canMove;
     }
 
-    public void setBoxReachable(int indexPlayer, int indexWorker){
+    public void setBoxReachable(int indexWorker){
         board.clearReachable();
+        int indexPlayer= whoIsPlaying();
         stateManager.setBoxReachable(indexPlayer, indexWorker);
     }
 
-    public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column){
+    public boolean movePlayer(int indexWorker, int row, int column){
+        int indexPlayer= whoIsPlaying();
         return stateManager.movePlayer(indexPlayer,indexWorker,row,column,board);
     }
 
-    public boolean canBuild(int indexPlayer, int indexWorker){
+    public boolean canBuild(int indexWorker){
+        int indexPlayer= whoIsPlaying();
         boolean canBuild = stateManager.canBuild(indexPlayer, indexWorker);
         if(!canBuild){
             playersDead.add(players.get(indexPlayer));
@@ -302,8 +306,8 @@ public class Game implements GameModel{
         return stateManager.buildBlock(indexPlayer, indexWorker, row, column, board);
     }
 
-    public boolean checkWin(int indexPlayer, int rowStart, int columnStart, int indexWorker){
-        return stateManager.checkWin(indexPlayer, board.getBox(rowStart, columnStart), indexWorker);
+    public boolean checkWin(int rowStart, int columnStart, int indexWorker){
+        return stateManager.checkWin(whoIsPlaying(), board.getBox(rowStart, columnStart), indexWorker);
     }
 
     public boolean checkWinAfterBuild(){

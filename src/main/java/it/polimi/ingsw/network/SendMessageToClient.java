@@ -3,6 +3,7 @@ package it.polimi.ingsw.network;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.network.objects.ObjWait;
+import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.EchoServer;
 
 public class SendMessageToClient {
@@ -62,5 +63,22 @@ public class SendMessageToClient {
 
     public void sendAskInitializeWorker(AskInitializeWorker askInitializeWorker) {
         echoServer.sendBroadCast(askInitializeWorker);
+    }
+    public void sendAskWorkerToMoveEvent(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+        echoServer.sendBroadCast(askWorkerToMoveEvent);
+    }
+
+    public void sendAskMoveEvent(AskMoveEvent askMoveEvent) {
+        echoServer.sendBroadCast(askMoveEvent);
+    }
+
+    public void sendWin(int indexClient) {
+    }
+
+    public void sendLoser(int indexClient) {
+    }
+
+    public void sendAskBuildEvent(AskBuildEvent askBuildEvent) {
+        echoServer.sendBroadCast(askBuildEvent);
     }
 }
