@@ -100,7 +100,6 @@ public class VisitorClient {
             } else { //Può fare una mossa speciale
                 view.anotherBuild(askBuildEvent);
             }
-
             //clientHandler.sendMessage(new AckState());
         }
     }

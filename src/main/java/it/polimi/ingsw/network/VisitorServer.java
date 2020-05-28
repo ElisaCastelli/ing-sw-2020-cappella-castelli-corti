@@ -64,13 +64,10 @@ public class VisitorServer {
 
     public void visit (ObjWorkers objWorkers){
         virtualView.initializeWorker(objWorkers);
-
     }
 
     public void visit (ObjWorkerToMove objWorkerToMove){
-
         virtualView.setBoxReachable(objWorkerToMove);
-
     }
     ///mi serve per controllare che a tutti sia arrivata la board aggiornata
     public void visit(AckUpdateBoard ackUpdateBoard){
@@ -117,6 +114,7 @@ public class VisitorServer {
     }
 
     public void visit(AckMove ackMove){
+        virtualView.canBuild(ackMove.getIndexWorker(), ackMove.getRowWorker(), ackMove.getColumnWorker());
        /* serverHandler.waitForPlayer();
 
         int indexWorker = ackMove.getIndexWorker();
@@ -132,6 +130,8 @@ public class VisitorServer {
     }
 
     public void visit(ObjBlock objBlock){
+        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock());
+
         /*int indexWorker = objBlock.getIndexWorker();
         int rowWorker = objBlock.getRowWorker();
         int columnWorker = objBlock.getColumnWorker();

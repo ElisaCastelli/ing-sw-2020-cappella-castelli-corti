@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 
+import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
@@ -20,14 +21,15 @@ public interface Observer {
     void updateBoard(boolean reach);
     void updateWhoIsPlaying();
     void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove);
-    boolean canMove(int indexPlayer);
+    void canMove();
     void updateMove(AskMoveEvent askMoveEvent,int clientIndex);
     void updateWin(int indexClient);
     void updateContinueMove(AskMoveEvent askMoveEvent);
     void updateLoser(int indexClient);
-    void updateCanBuild(AskMoveEvent askMoveEvent);
+    void updateCanBuild(int indexWorker, int rowWorker, int columnWorker);
     void updateSetBuilding();
-    void canBuild(AskMoveEvent askMoveEvent);
-    void updateBuild();
-
+    void canBuild(int indexWorker, int rowWorker, int columnWorker);
+    void updateBuild(AskBuildEvent askBuildEvent, int clientIndex);
+    void updateContinueBuild(AskBuildEvent askBuildEvent);
+    void updateStartTurn();
 }

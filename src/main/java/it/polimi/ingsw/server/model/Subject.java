@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
@@ -18,10 +19,12 @@ public interface Subject {
     void notifyWhoIsPlaying();
     void notifySetReachable(int indexWorker, boolean secondMove);
     void notifyMovedWorker(AskMoveEvent askMoveEvent, int clientIndex);
-    void notifyWin();
+    void notifyWin(int indexClient);
     void notifyContinueMove(AskMoveEvent askMoveEvent);
     void notifyLoser();
-    void notifyCanBuild(AskMoveEvent askMoveEvent);
+    void notifyCanBuild(int indexWorker, int rowWorker, int columnWorker);
     void notifySetBuilding();
-    void notifyBuildBlock();
+    void notifyBuildBlock(AskBuildEvent askBuildEvent, int clientIndex);
+    void notifyContinueBuild(AskBuildEvent askBuildEvent);
+    void notifyStartTurn();
 }

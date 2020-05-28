@@ -8,7 +8,7 @@ public class Win extends PlayerState{
     private God myGod;
     private final PlayerStateManager playerManager;
     public Win(God myGod,PlayerStateManager playerManager){
-        this.myGod=myGod;
+        this.myGod = myGod;
         this.playerManager=playerManager;
     }
 

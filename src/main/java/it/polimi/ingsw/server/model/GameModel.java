@@ -34,12 +34,12 @@ public interface GameModel {
     GameState getState();
     ArrayList<Box> getWorkersPos(int indexPlayer);
     boolean isReachable(int row, int column);
-    boolean canMove(int indexPlayer);
+    boolean canMove();
     void setBoxReachable(int indexWorker);
     boolean movePlayer(int indexWorker, int row, int column);
     boolean canBuild(int indexWorker);
-    void setBoxBuilding(int indexPlayer, int indexWorker);
-    boolean buildBlock(int indexPlayer, int indexWorker, int row, int column);
+    void setBoxBuilding(int indexWorker);
+    boolean buildBlock(int indexWorker, int row, int column);
     boolean checkWin(int rowStart, int columnStart, int indexWorker);
     boolean checkWinAfterBuild();
     int getWinner();

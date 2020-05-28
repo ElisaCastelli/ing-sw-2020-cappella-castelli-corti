@@ -61,7 +61,7 @@ public class Controller  {
     }
 
     public void initializeWorker(Box box1, Box box2) {
-        boolean init= gameModel.initializeWorker(box1, box2);
+        boolean init = gameModel.initializeWorker(box1, box2);
         if(init){
             gameModel.goPlayingNext();
             gameModel.notifyAddWorker();
@@ -72,8 +72,14 @@ public class Controller  {
     }
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
-    public boolean canMove(int indexPlayer){
-        return gameModel.canMove(indexPlayer);
+    public void canMove(){
+        //todo da rifare
+        boolean goAhead = gameModel.canMove();
+        if(goAhead){
+            gameModel.notifyStartTurn();
+        }else{
+            gameModel.notifyLoser();
+        }
     }
 
     /// richiamato
@@ -94,15 +100,15 @@ public class Controller  {
 
         askMoveEvent.setRowStart(objMove.getRowStart());
         askMoveEvent.setColumnStart(objMove.getColumnStart());
-        int clientIndex= gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
+        int clientIndex = gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
         gameModel.notifyMovedWorker(askMoveEvent, clientIndex);
     }
 
     ///
-    public void checkWin(AskMoveEvent askMoveEvent) {
-        boolean winCondition= gameModel.checkWin(askMoveEvent.getRowStart(), askMoveEvent.getColumnStart(), askMoveEvent.getIndexWorker());
+    public void checkWin(AskMoveEvent askMoveEvent, int indexClient) {
+        boolean winCondition = gameModel.checkWin(askMoveEvent.getRowStart(), askMoveEvent.getColumnStart(), askMoveEvent.getIndexWorker());
         if(winCondition){
-            gameModel.notifyWin();
+            gameModel.notifyWin(indexClient);
         }else{
             gameModel.notifyContinueMove(askMoveEvent);
         }
@@ -110,23 +116,23 @@ public class Controller  {
 
 
 
-    public void canBuild(AskMoveEvent askMoveEvent){
+    public void canBuild(int indexWorker, int rowWorker, int columnWorker){
         /// todo canbuild da rifare
-        boolean loseCondition= gameModel.canBuild(askMoveEvent.getIndexWorker());
+        boolean loseCondition = gameModel.canBuild(indexWorker);
         if(!loseCondition){
             gameModel.notifyLoser();
         }else{
-            gameModel.notifyCanBuild(askMoveEvent);
+            gameModel.notifyCanBuild(indexWorker, rowWorker, columnWorker);
         }
     }
 
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
-        gameModel.setBoxBuilding(indexPlayer, indexWorker);
+    public void setBoxBuilding(int indexWorker) {
+        gameModel.setBoxBuilding(indexWorker);
         gameModel.notifySetBuilding();
     }
 
-    public AskBuildEvent buildBlock(int indexPlayer, int indexWorker, int rowWorker, int columnWorker, int row, int column) {
-        boolean built = gameModel.buildBlock(indexPlayer, indexWorker, row, column);
+    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column) {
+        boolean built = gameModel.buildBlock(indexWorker, row, column);
         AskBuildEvent askBuildEvent;
         if(built){
             askBuildEvent = new AskBuildEvent(true);
@@ -135,12 +141,16 @@ public class Controller  {
             askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, false, false);
         }
 
-        gameModel.notifyBuildBlock();
-        return askBuildEvent;
+        gameModel.notifyBuildBlock(askBuildEvent, indexClient);
     }
 
-    public boolean checkWinAfterBuild() {
-        return gameModel.checkWinAfterBuild();
+    public void checkWinAfterBuild(AskBuildEvent askBuildEvent) {
+        boolean winCondition = gameModel.checkWinAfterBuild();
+        if(winCondition){
+            //gameModel.notifyWin(indexClient); //todo indexClient di chi ha vinto, fare la ricerca
+        }else{
+            gameModel.notifyContinueBuild(askBuildEvent);
+        }
     }
 
 

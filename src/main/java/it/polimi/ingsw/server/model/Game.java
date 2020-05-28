@@ -249,10 +249,13 @@ public class Game implements GameModel{
     }
 
     //mette in deadPlayers se canMove ritorna false
-    public boolean canMove(int indexPlayer){
-        boolean canMove = stateManager.canMove(indexPlayer);
+    public boolean canMove(){
+        goPlayingNext();
+        int playerIndex = whoIsPlaying();
+        boolean canMove = stateManager.canMove(playerIndex);
+
         if(!canMove){
-            playersDead.add(players.get(indexPlayer));
+            playersDead.add(players.get(playerIndex));
             int winner = 0;
             int i = 0;
             boolean found = false;
@@ -269,7 +272,7 @@ public class Game implements GameModel{
 
     public void setBoxReachable(int indexWorker){
         board.clearReachable();
-        int indexPlayer= whoIsPlaying();
+        int indexPlayer = whoIsPlaying();
         stateManager.setBoxReachable(indexPlayer, indexWorker);
     }
 
@@ -279,7 +282,7 @@ public class Game implements GameModel{
     }
 
     public boolean canBuild(int indexWorker){
-        int indexPlayer= whoIsPlaying();
+        int indexPlayer = whoIsPlaying();
         boolean canBuild = stateManager.canBuild(indexPlayer, indexWorker);
         if(!canBuild){
             playersDead.add(players.get(indexPlayer));
@@ -297,12 +300,14 @@ public class Game implements GameModel{
         return canBuild;
     }
 
-    public void setBoxBuilding(int indexPlayer, int indexWorker){
+    public void setBoxBuilding(int indexWorker){
         board.clearReachable();
+        int indexPlayer = whoIsPlaying();
         stateManager.setBoxBuilding(indexPlayer, indexWorker);
     }
 
-    public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column){
+    public boolean buildBlock(int indexWorker, int row, int column){
+        int indexPlayer = whoIsPlaying();
         return stateManager.buildBlock(indexPlayer, indexWorker, row, column, board);
     }
 

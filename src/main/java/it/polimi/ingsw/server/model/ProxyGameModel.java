@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
@@ -117,8 +118,8 @@ public class ProxyGameModel implements GameModel, Subject{
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
     @Override
-    public boolean canMove(int indexPlayer) {
-        return gameModel.canMove(indexPlayer);
+    public boolean canMove() {
+        return gameModel.canMove();
     }
 
     @Override
@@ -143,18 +144,18 @@ public class ProxyGameModel implements GameModel, Subject{
 
 
     @Override
-    public void notifyCanBuild(AskMoveEvent askMoveEvent) {
-        observer.updateCanBuild(askMoveEvent);
+    public void notifyCanBuild(int indexWorker, int rowWorker, int columnWorker) {
+        observer.updateCanBuild(indexWorker, rowWorker, columnWorker);
     }
 
     @Override
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
-        gameModel.setBoxBuilding(indexPlayer, indexWorker);
+    public void setBoxBuilding(int indexWorker) {
+        gameModel.setBoxBuilding(indexWorker);
     }
 
     @Override
-    public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column) {
-        return gameModel.buildBlock(indexPlayer, indexWorker, row, column);
+    public boolean buildBlock(int indexWorker, int row, int column) {
+        return gameModel.buildBlock(indexWorker, row, column);
     }
 
     @Override
@@ -217,7 +218,7 @@ public class ProxyGameModel implements GameModel, Subject{
     }
     @Override
     public void notifyWorkersNotInitialized(){
-        int indexClient= searchByPlayerIndex(gameModel.whoIsPlaying());
+        int indexClient = searchByPlayerIndex(gameModel.whoIsPlaying());
         observer.updateNotInitializeWorker(indexClient);
     }
 
@@ -231,7 +232,7 @@ public class ProxyGameModel implements GameModel, Subject{
 
     @Override
     public void notifySetReachable(int indexWorker, boolean secondMove){
-        int indexClient= searchByPlayerIndex(gameModel.whoIsPlaying());
+        int indexClient = searchByPlayerIndex(gameModel.whoIsPlaying());
         observer.updateReachable(indexClient,gameModel.whoIsPlaying(), indexWorker, secondMove);
     }
 
@@ -241,8 +242,7 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifyWin() {
-        int indexClient=gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
+    public void notifyWin(int indexClient) {
         observer.updateWin(indexClient);
     }
 
@@ -266,8 +266,17 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifyBuildBlock(){
-        observer.updateBuild();
+    public void notifyBuildBlock(AskBuildEvent askBuildEvent, int clientIndex){
+        observer.updateBuild(askBuildEvent, clientIndex);
     }
 
+    @Override
+    public void notifyContinueBuild(AskBuildEvent askBuildEvent) {
+        observer.updateContinueBuild(askBuildEvent);
+    }
+
+    @Override
+    public void notifyStartTurn() {
+        observer.updateStartTurn();
+    }
 }

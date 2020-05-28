@@ -282,7 +282,7 @@ public class CLIView extends View {
 
             int intInputValue = twoNumbers(input);
             if (intInputValue == 0) {
-                AckMove ackMove = new AckMove(askMoveEvent.getIndexWorker(),askMoveEvent.getRow(),askMoveEvent.getColumn());
+                AckMove ackMove = new AckMove(askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
                 sendMessageToServer.sendAckMove(ackMove);
             } else {
                 moveWorker(askMoveEvent);

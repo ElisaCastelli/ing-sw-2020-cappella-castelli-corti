@@ -81,6 +81,11 @@ public class GoingState extends GameState{
         return win;
     }
 
+    /*public int getWinner(){
+        for(Player player : players)
+        return
+    }*/
+
 
 //TODO TOGLIERE
     /*public void setDeadPlayer(int indexPlayer){
