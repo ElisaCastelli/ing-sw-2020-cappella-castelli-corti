@@ -37,6 +37,10 @@ public class IsPlaying extends PlayerState{
         return win;
     }
 
+    @Override
+    public boolean canBuildBeforeWorkerMove() {
+        return myGod.canBuildBeforeWorkerMove();
+    }
 
     @Override
     public void setPossibleMove( Worker worker){

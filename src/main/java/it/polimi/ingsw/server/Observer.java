@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
+import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 
 
@@ -21,6 +22,9 @@ public interface Observer {
     void updateBoard(boolean reach);
     void updateWhoIsPlaying();
     void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove);
+    void updateSpecialTurn(ObjWorkerToMove objWorkerToMove);
+    void updateBasicTurn(int indexWorker, int rowWorker, int columnWorker);
+    void updateAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
     void canMove();
     void updateMove(AskMoveEvent askMoveEvent,int clientIndex);
     void updateWin(int indexClient);

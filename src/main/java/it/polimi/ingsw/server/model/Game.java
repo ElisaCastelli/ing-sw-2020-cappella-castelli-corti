@@ -268,24 +268,35 @@ public class Game implements GameModel{
         return stateManager.getCurrentState();
     }
 
+    @Override
+    public boolean canBuildBeforeWorkerMove() {
+        int indexPlayer=whoIsPlaying();
+        return stateManager.canBuildBeforeWorkerMove(indexPlayer);
+    }
+
     //mette in deadPlayers se canMove ritorna false
+
     public boolean canMove(){
         goPlayingNext();
         int playerIndex = whoIsPlaying();
         boolean canMove = stateManager.canMove(playerIndex);
-
         if(!canMove){
-            playersDead.add(players.get(playerIndex));
-            int winner = 0;
-            int i = 0;
-            boolean found = false;
-            while(i < nPlayers && !found){
-                if(players.get(i) != null){
-                    winner = i;
-                    found = true;
-                }
+            setDeadPlayer(playerIndex);
+            if(nPlayers == 2 || playersDead.size() == 2){
+                thereIsAWinner();
             }
-            stateManager.goEnd(winner);
+        }
+        return canMove;
+    }
+
+    public boolean canMoveSpecialTurn(int indexWorker) {
+        int playerIndex = whoIsPlaying();
+        boolean canMove = stateManager.canMoveSpecialTurn(playerIndex, indexWorker);
+        if(!canMove){
+            setDeadPlayer(playerIndex);
+            if(nPlayers == 2 || playersDead.size() == 2){
+                thereIsAWinner();
+            }
         }
         return canMove;
     }

@@ -54,6 +54,10 @@ public class SendMessageToServer {
         clientHandler.sendMessage(objWorkerToMove);
     }
 
+    public void sendBlockBeforeMove(ObjBlockBeforeMove objBlockBeforeMove) {
+        clientHandler.sendMessage(objBlockBeforeMove);
+    }
+
     public void sendMoveWorker(ObjMove objMove) {
             clientHandler.sendMessage(objMove);
     }
@@ -82,4 +86,6 @@ public class SendMessageToServer {
     public void sendAskWantToPlay(AskWantToPlay askWantToPlay) {
         clientHandler.sendMessage(askWantToPlay);
     }
+
+
 }

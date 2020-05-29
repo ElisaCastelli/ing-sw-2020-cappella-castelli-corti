@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
+import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.Observer;
 
 public interface Subject {
@@ -18,6 +19,10 @@ public interface Subject {
     void notifyWorkersNotInitialized();
     void notifyWhoIsPlaying();
     void notifySetReachable(int indexWorker, boolean secondMove);
+    void notifySpecialTurn(ObjWorkerToMove objWorkerToMove);
+    void notifyBasicTurn(int indexWorker, int rowWorker, int columnWorker);
+    void notifyAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
+    void notifyUpdateBoard(boolean reach);
     void notifyMovedWorker(AskMoveEvent askMoveEvent, int clientIndex);
     void notifyWin(int indexClient);
     void notifyContinueMove(AskMoveEvent askMoveEvent);

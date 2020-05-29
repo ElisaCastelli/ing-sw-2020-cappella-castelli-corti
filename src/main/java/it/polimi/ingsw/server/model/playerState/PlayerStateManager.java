@@ -81,6 +81,7 @@ public class PlayerStateManager {
     public boolean checkWin(Box boxReach, Box boxStart){
         return currentState.checkWin(boxReach, boxStart);
     }
+    public boolean canBuildBeforeWorkerMove(){ return currentState.canBuildBeforeWorkerMove();};
     public void setPossibleMove( Worker worker ){
         currentState.setPossibleMove(worker);
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.god;
 
+import it.polimi.ingsw.server.model.building.Dome;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
@@ -49,8 +50,13 @@ public class BuildDome extends GodDecorator {
      */
     @Override
     public void setPossibleBuild(Worker worker) {
-        super.setPossibleBuild(worker);
-        //todo Bottone dome
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
+            Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
+            if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
+                boxNextTo.setReachable(true);
+                boxNextTo.getPossibleBlock().add(new Dome());
+            }
+        }
     }
 
     /**
@@ -76,14 +82,13 @@ public class BuildDome extends GodDecorator {
             if (pos.getCounter() == 3)
                 completeTowers++;
             pos.build(4);
-            return true;
         }
         else{
             super.moveBlock(pos);
             if (pos.getCounter() == 4)
                 completeTowers++;
-            return true;
         }
+        return true;
     }
 
     /**

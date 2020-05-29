@@ -179,10 +179,21 @@ public class Player implements Serializable {
         return (firstWorker || secondWorker);
     }
 
+    public boolean checkWorker(int indexWorker){
+        gamerManager.setPossibleMove(myWorkers[indexWorker]);
+        boolean worker = myWorkers[indexWorker].getActualBox().checkPossible();
+        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
+        return worker;
+    }
+
     //Controlla che si può costruire, ho tolto la clear delle box almeno posso fare un update diretta
     public boolean checkBuilding(int indexWorker){
         gamerManager.setPossibleBuild(myWorkers[indexWorker]);
         return myWorkers[indexWorker].getActualBox().checkPossible();
+    }
+
+    public boolean canBuildBeforeWorkerMove(){
+        return gamerManager.canBuildBeforeWorkerMove();
     }
 
 

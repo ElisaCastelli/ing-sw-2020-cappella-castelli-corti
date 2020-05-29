@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
+import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
@@ -115,11 +116,25 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.isReachable(row,column);
     }
 
+    @Override
+    public boolean canBuildBeforeWorkerMove() {
+        return gameModel.canBuildBeforeWorkerMove();
+    }
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
     @Override
     public boolean canMove() {
         return gameModel.canMove();
+    }
+
+    @Override
+    public boolean canMoveSpecialTurn(int indexWorker) {
+        return gameModel.canMoveSpecialTurn(indexWorker);
+    }
+
+    @Override
+    public void notifyUpdateBoard(boolean reach) {
+        observer.updateBoard(reach);
     }
 
     @Override
@@ -234,6 +249,21 @@ public class ProxyGameModel implements GameModel, Subject{
     public void notifySetReachable(int indexWorker, boolean secondMove){
         int indexClient = searchByPlayerIndex(gameModel.whoIsPlaying());
         observer.updateReachable(indexClient,gameModel.whoIsPlaying(), indexWorker, secondMove);
+    }
+
+    @Override
+    public void notifySpecialTurn(ObjWorkerToMove objWorkerToMove) {
+        observer.updateSpecialTurn(objWorkerToMove);
+    }
+
+    @Override
+    public void notifyBasicTurn(int indexWorker, int rowWorker, int columnWorker) {
+        observer.updateBasicTurn( indexWorker, rowWorker, columnWorker);
+    }
+
+    @Override
+    public void notifyAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
+        observer.updateAskBuildBeforeMove(indexWorker, rowWorker, columnWorker);
     }
 
     @Override

@@ -92,4 +92,8 @@ public class NotMoveUp extends GodDecorator {
     public boolean checkWin(Box initialPos, Box finalBox) {
         return super.checkWin(initialPos, finalBox);
     }
+
+    public boolean canMoveUp (Worker worker, Box finalBox) {
+        return moveUp || (finalBox.getCounter() - worker.getHeight() != 1);
+    }
 }

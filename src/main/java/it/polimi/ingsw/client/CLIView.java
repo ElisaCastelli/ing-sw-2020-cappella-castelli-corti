@@ -239,6 +239,28 @@ public class CLIView extends View {
     }
 
     @Override
+    public void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
+        new Thread(() -> {
+            Scanner input = new Scanner(System.in);
+            System.out.println("You Have the possibility to Build a Block before moving the Worker");
+            System.out.println("If you decide to do so, You'll not be able to move up a building with your Worker");
+            System.out.println("Do You want to?: ");
+            System.out.println("[ 1 ] -> " + "YES");
+            System.out.println("[ 0 ] -> " + "NO");
+
+            int intInputValue = twoNumbers(input);
+            ObjBlockBeforeMove objBlockBeforeMove =  new ObjBlockBeforeMove(indexWorker, rowWorker, columnWorker, false);
+            if(intInputValue == 1){
+                objBlockBeforeMove.setWantToBuild(true);
+            }
+
+            sendMessageToServer.sendBlockBeforeMove(objBlockBeforeMove);
+
+
+        }).start();
+    }
+
+    @Override
     public void moveWorker(AskMoveEvent askMoveEvent) {
         new Thread(() -> {
             Scanner input = new Scanner(System.in);
@@ -303,7 +325,7 @@ public class CLIView extends View {
             int indexWorker = askBuildEvent.getIndexWorker();
             int rowWorker = askBuildEvent.getRowWorker();
             int columnWorker = askBuildEvent.getColumnWorker();
-            ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker, askBuildEvent.isFirstTime());
+            ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker, askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn());
             int intInputValue;
 
             if (askBuildEvent.isWrongBox()) {
@@ -413,6 +435,15 @@ public class CLIView extends View {
 
     public String printByIndexPlayer(int row, int column, boolean reach){
         if(board.getBox(row, column).isReachable() && reach){
+            if (board.getBox(row, column).getWorker() != null) {
+                if (board.getBox(row, column).getWorker().getIndexPlayer() == 0) {
+                    return Color.RED_BOLD + board.getBox(row, column).print() + Color.RESET+ " X";
+                } else if (board.getBox(row, column).getWorker().getIndexPlayer() == 1) {
+                    return Color.YELLOW_BOLD + board.getBox(row, column).print() + Color.RESET+ " X";
+                } else {
+                    return Color.CYAN_BOLD + board.getBox(row, column).print() + Color.RESET+ " X";
+                }
+            } else
             return "X";
         }else {
             if (board.getBox(row, column).getWorker() != null) {

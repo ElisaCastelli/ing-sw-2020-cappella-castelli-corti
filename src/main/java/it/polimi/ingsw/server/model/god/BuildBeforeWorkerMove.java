@@ -116,4 +116,9 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     public boolean checkWin(Box initialPos, Box finalBox) {
         return super.checkWin(initialPos, finalBox);
     }
+
+    @Override
+    public boolean canBuildBeforeWorkerMove() {
+        return true;
+    }
 }

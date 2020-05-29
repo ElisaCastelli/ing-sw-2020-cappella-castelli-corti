@@ -74,6 +74,10 @@ public class VisitorServer {
         ///serverHandler.getVirtualView().incCounterOpponent();
     }
 
+    public void visit ( ObjBlockBeforeMove objBlockBeforeMove ){
+        virtualView.buildBeforeMove(objBlockBeforeMove.getIndexWorker(), objBlockBeforeMove.getRowWorker(), objBlockBeforeMove.getColumnWorker(), objBlockBeforeMove.wantToBuild());
+    }
+
     public void visit(ObjMove objMove){
         virtualView.move(objMove);
 
@@ -130,7 +134,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjBlock objBlock){
-        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock());
+        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock(), objBlock.isSpecialTurn());
 
         /*int indexWorker = objBlock.getIndexWorker();
         int rowWorker = objBlock.getRowWorker();

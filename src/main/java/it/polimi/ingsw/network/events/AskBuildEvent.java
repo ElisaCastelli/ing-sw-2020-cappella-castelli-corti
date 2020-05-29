@@ -14,14 +14,16 @@ public class AskBuildEvent extends ObjMessage {
     boolean firstTime;
     boolean wrongBox;
     boolean Done;
+    boolean specialTurn;
 
-    public AskBuildEvent(int indexWorker, int rowWorker, int columnWorker, boolean firstTime, boolean Done) {
+    public AskBuildEvent(int indexWorker, int rowWorker, int columnWorker, boolean firstTime, boolean Done, boolean specialTurn) {
         this.indexWorker = indexWorker;
         this.rowWorker = rowWorker;
         this.columnWorker = columnWorker;
         this.firstTime = firstTime;
         wrongBox = false;
         this.Done = Done;
+        this.specialTurn = specialTurn;
     }
 
     public AskBuildEvent(boolean Done) {
@@ -58,6 +60,14 @@ public class AskBuildEvent extends ObjMessage {
 
     public boolean isDone() {
         return Done;
+    }
+
+    public boolean isSpecialTurn() {
+        return specialTurn;
+    }
+
+    public void setSpecialTurn(boolean specialTurn) {
+        this.specialTurn = specialTurn;
     }
 
     @Override

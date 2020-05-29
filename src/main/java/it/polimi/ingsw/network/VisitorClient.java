@@ -77,6 +77,10 @@ public class VisitorClient {
             System.out.println("non sto setreachablando un worker");
         }
     }
+    public void visit(AskBuildBeforeMove askBuildBeforeMove){
+        if(askBuildBeforeMove.getClientIndex() == askBuildBeforeMove.getCurrentClientPlaying())
+            view.askBuildBeforeMove(askBuildBeforeMove.getIndexWorker(), askBuildBeforeMove.getRowWorker(), askBuildBeforeMove.getColumnWorker());
+    }
 
     public void visit(AskMoveEvent askMoveEvent){
         if(askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {

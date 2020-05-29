@@ -30,6 +30,7 @@ public class Box implements Serializable {
     private int column;
     private boolean reachable;
     private ArrayList<Box> boxesNextTo;
+    private ArrayList<Block> possibleBlock;
 
     /**
      *
@@ -39,6 +40,7 @@ public class Box implements Serializable {
      */
     public Box(int row, int column){ //controllare r e c da 0 a 5
         building = new Building();
+        possibleBlock= new ArrayList<>();
         this.row = row;
         this.column = column;
         worker = null;
@@ -83,6 +85,18 @@ public class Box implements Serializable {
 
     public void setBoxesNextTo(ArrayList<Box> boxesNextTo){
         this.boxesNextTo = boxesNextTo;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public ArrayList<Block> getPossibleBlock() {
+        return possibleBlock;
+    }
+
+    public void setPossibleBlock(ArrayList<Block> possibleBlock) {
+        this.possibleBlock = possibleBlock;
     }
 
     public boolean isReachable() {

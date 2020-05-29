@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.events.UpdateBoardEvent;
 import it.polimi.ingsw.network.objects.ObjMove;
 import it.polimi.ingsw.network.objects.ObjNumPlayer;
 import it.polimi.ingsw.network.objects.ObjState;
+import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
@@ -71,6 +72,16 @@ public class Controller  {
 
     }
 
+    public void canBuildBeforeWorkerMove ( ObjWorkerToMove objWorkerToMove ){
+        boolean canBuildBeforeWorkerMove = gameModel.canBuildBeforeWorkerMove();
+        if(canBuildBeforeWorkerMove){
+            gameModel.notifySpecialTurn(objWorkerToMove);
+        }else{
+            gameModel.notifyBasicTurn(objWorkerToMove.getIndexWorkerToMove(),objWorkerToMove.getRow(),objWorkerToMove.getColumn());
+        }
+
+    }
+
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
     public void canMove(){
         //todo da rifare
@@ -81,6 +92,26 @@ public class Controller  {
             //gameModel.notifyLoser();
         }
     }
+    public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker){
+        boolean goAhead = gameModel.canMoveSpecialTurn(indexWorker);
+        if(goAhead){
+            gameModel.setBoxReachable(indexWorker);
+            gameModel.notifyUpdateBoard(true);
+            gameModel.notifyBasicTurn(indexWorker, rowWorker, columnWorker);
+        }else{
+            int loserClient = gameModel.whoIsPlaying();
+            gameModel.notifyLoser(loserClient);
+            int winnerClient = gameModel.getWinner();
+            if(winnerClient != -1){
+                gameModel.notifyWin(winnerClient);
+            }else{
+                gameModel.notifyWhoHasLost(loserClient);
+            }
+        }
+    }
+
+
+
 
     /// richiamato
     public void setBoxReachable(int indexWorker, boolean secondMove) {
@@ -131,19 +162,31 @@ public class Controller  {
         }
     }
 
+    public void canBuildSpecialTurn(int indexWorker, int rowWorker, int columnWorker){
+        //controllo che può costruire prima di chiederglielo
+        boolean specialCondition= gameModel.canBuildBeforeWorkerMove();
+        if(specialCondition){
+            //gli vado a chiedere se vuole fare la mossa prima
+            gameModel.notifyAskBuildBeforeMove( indexWorker, rowWorker, columnWorker);
+        }else{
+            gameModel.notifyBasicTurn( indexWorker, rowWorker, columnWorker);
+        }
+
+    }
+
     public void setBoxBuilding(int indexWorker) {
         gameModel.setBoxBuilding(indexWorker);
         gameModel.notifySetBuilding();
     }
 
-    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column) {
+    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn) {
         boolean built = gameModel.buildBlock(indexWorker, row, column);
         AskBuildEvent askBuildEvent;
         if(built){
-            askBuildEvent = new AskBuildEvent(true);
+            askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, false, true, isSpecialTurn);
         }
         else{
-            askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, false, false);
+            askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, false, false, isSpecialTurn);
         }
 
         gameModel.notifyBuildBlock(askBuildEvent, indexClient);

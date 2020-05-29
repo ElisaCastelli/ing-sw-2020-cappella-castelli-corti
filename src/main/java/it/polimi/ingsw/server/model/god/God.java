@@ -58,4 +58,6 @@ public interface God {
      * @return False if the player doesn't win; true if the player wins
      */
     boolean checkWin ( Box initialPos, Box finalBox );
+
+    boolean canBuildBeforeWorkerMove();
 }

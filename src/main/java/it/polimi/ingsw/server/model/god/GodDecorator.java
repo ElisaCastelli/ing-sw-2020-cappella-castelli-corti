@@ -77,4 +77,9 @@ public abstract class GodDecorator implements God {
     public boolean checkWin(Box initialPos, Box finalBox) {
         return this.newGod.checkWin( initialPos, finalBox );
     }
+
+    @Override
+    public boolean canBuildBeforeWorkerMove() {
+        return this.newGod.canBuildBeforeWorkerMove();
+    }
 }

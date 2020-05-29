@@ -80,6 +80,9 @@ public class CardCreator {
                 if("MoveBeforeBuild".equals(godJson.getEffects().get(indexEffects))){
                     g = new MoveBeforeBuild(g);
                 }
+                else if("BuildBeforeWorkerMove".equals((godJson.getEffects().get(indexEffects)))){
+                    g = new BuildBeforeWorkerMove(g);
+                }
                 else if("NotMoveUp".equals(godJson.getEffects().get(indexEffects))){
                     g = new NotMoveUp(g);
                 }

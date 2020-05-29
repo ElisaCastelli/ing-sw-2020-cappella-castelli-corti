@@ -12,12 +12,14 @@ public class ObjBlock extends ObjMessage {
     int columnBlock;
     boolean firstTime;
     boolean done;
+    boolean isSpecialTurn;
 
-    public ObjBlock(int indexWorker, int rowWorker, int columnWorker, boolean firstTime) {
+    public ObjBlock(int indexWorker, int rowWorker, int columnWorker, boolean firstTime, boolean isSpecialTurn) {
         this.indexWorker = indexWorker;
         this.rowWorker = rowWorker;
         this.columnWorker = columnWorker;
         this.firstTime = firstTime;
+        this.isSpecialTurn= isSpecialTurn;
     }
 
     public ObjBlock(boolean done) {
@@ -52,6 +54,10 @@ public class ObjBlock extends ObjMessage {
         return done;
     }
 
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
     public void setRowBlock(int rowBlock) {
         this.rowBlock = rowBlock;
     }
@@ -60,8 +66,12 @@ public class ObjBlock extends ObjMessage {
         this.columnBlock = columnBlock;
     }
 
-    public void setDone(boolean done) {
-        this.done = done;
+    public boolean isSpecialTurn() {
+        return isSpecialTurn;
+    }
+
+    public void setSpecialTurn(boolean specialTurn) {
+        isSpecialTurn = specialTurn;
     }
 
     @Override

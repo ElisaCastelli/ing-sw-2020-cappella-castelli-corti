@@ -197,13 +197,12 @@ public class VirtualView implements Observer {
     public void canMove(){
         controller.canMove();
     }
+    public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker ){ controller.canMoveSpecialTurn(indexWorker, rowWorker, columnWorker);}
 
     /// richiamato
     public void setBoxReachable(ObjWorkerToMove objWorkerToMove){
         if(objWorkerToMove.isReady()){
-            AskMoveEvent askMoveEvent = new AskMoveEvent(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(), objWorkerToMove.getColumn(),true,false);
-            askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
-            sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+            controller.canBuildBeforeWorkerMove(objWorkerToMove);
         }else {
             controller.setBoxReachable(objWorkerToMove.getIndexWorkerToMove(), false);
         }
@@ -238,6 +237,39 @@ public class VirtualView implements Observer {
             sendMessageToClient.sendAskMoveEvent(askMoveEvent);
         }
     }
+
+    @Override
+    public void updateSpecialTurn(ObjWorkerToMove objWorkerToMove) {
+         canBuildSpecialTurn(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(), objWorkerToMove.getColumn());
+    }
+
+    @Override
+    public void updateBasicTurn(int indexWorker, int rowWorker, int columnWorker) {
+        AskMoveEvent askMoveEvent = new AskMoveEvent( indexWorker, rowWorker, columnWorker,true,false);
+        askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+        sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+    }
+
+    @Override
+    public void updateAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
+        AskBuildBeforeMove askBuildBeforeMove = new AskBuildBeforeMove(indexWorker, rowWorker, columnWorker);
+        askBuildBeforeMove.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+        sendMessageToClient.sendAskBuildBeforeMove(askBuildBeforeMove);
+    }
+
+    public void buildBeforeMove(int indexWorker, int rowWorker, int columnWorker, boolean wantToBuild){
+        if(wantToBuild){
+            ///gli chiedo dove vuole costruire
+            setBoxBuilding(indexWorker);
+            AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false, true);
+            askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+            sendMessageToClient.sendAskBuildEvent(askBuildEvent);
+
+        }else{
+            updateBasicTurn(indexWorker, rowWorker, columnWorker);
+        }
+    }
+
     ///richiamato
     @Override
     public void updateMove(AskMoveEvent askMoveEvent, int clientIndex){
@@ -270,16 +302,22 @@ public class VirtualView implements Observer {
             sendMessageToClient.sendAskMoveEvent(askMoveEvent);
         }
     }
+
     @Override
     //Metodo per verificare se è possibile costruire attorno al proprio worker, se non è possibile il giocatore ha perso
     public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker){
         controller.canBuild(indexClient, indexWorker, rowWorker, columnWorker);
     }
+    public void canBuildSpecialTurn(int indexWorker, int rowWorker, int columnWorker){
+        controller.canBuildSpecialTurn(indexWorker, rowWorker, columnWorker);
+    }
+
+
 
     @Override
     public void updateCanBuild(int indexWorker, int rowWorker, int columnWorker) {
         updateBoard(true);
-        AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false);
+        AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false, false);
         askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
         sendMessageToClient.sendAskBuildEvent(askBuildEvent);
     }
@@ -297,13 +335,13 @@ public class VirtualView implements Observer {
     }
 
     //Metodo per fare la costruzione del piano
-    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column) {
+    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn) {
         if(isReachable(row, column)){
-            controller.buildBlock(indexClient, indexWorker, rowWorker, columnWorker, row, column);
+            controller.buildBlock(indexClient, indexWorker, rowWorker, columnWorker, row, column, isSpecialTurn);
         }else{
             updateBoard(true);
             //todo Controllo se è la prima o la seconda mossa
-            AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false);
+            AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false, isSpecialTurn);
             askBuildEvent.setWrongBox(true);
             askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
             sendMessageToClient.sendAskBuildEvent(askBuildEvent);
@@ -320,12 +358,16 @@ public class VirtualView implements Observer {
 
     @Override
     public void updateContinueBuild(AskBuildEvent askBuildEvent) {
-        if(askBuildEvent.isDone()){
-            canMove();
-        }else{
-            controller.setBoxBuilding(askBuildEvent.getIndexWorker());
-            askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
-            sendMessageToClient.sendAskBuildEvent(askBuildEvent);
+        if(askBuildEvent.isSpecialTurn()){
+            canMoveSpecialTurn(askBuildEvent.getIndexWorker(), askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker());
+        }else {
+            if (askBuildEvent.isDone()) {
+                canMove();
+            } else {
+                setBoxBuilding(askBuildEvent.getIndexWorker());
+                askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+                sendMessageToClient.sendAskBuildEvent(askBuildEvent);
+            }
         }
     }
 

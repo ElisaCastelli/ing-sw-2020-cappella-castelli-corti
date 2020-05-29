@@ -21,8 +21,18 @@ public class GoingState extends GameState{
         players.get(indexPlayer).goPlay();
     }
 
+
+    public boolean canBuildBeforeWorkerMove(int indexPlayer) {
+        return players.get(indexPlayer).canBuildBeforeWorkerMove();
+    }
+
     public boolean canMove(int indexPlayer){
         return players.get(indexPlayer).checkWorkers();
+    }
+
+    @Override
+    public boolean canMoveSpecialTurn(int indexPlayer, int indexWorker) {
+        return players.get(indexPlayer).checkWorker(indexWorker - 1);
     }
 
     public void setBoxReachable(int indexPlayer, int indexWorker){

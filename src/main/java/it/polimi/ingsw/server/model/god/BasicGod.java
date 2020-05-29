@@ -1,7 +1,11 @@
 package it.polimi.ingsw.server.model.god;
 
+import it.polimi.ingsw.server.model.building.Base;
+import it.polimi.ingsw.server.model.building.Middle;
+import it.polimi.ingsw.server.model.building.Top;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 import it.polimi.ingsw.server.model.gameComponents.Box;
+import sun.jvm.hotspot.opto.Block;
 
 import java.util.ArrayList;
 
@@ -54,6 +58,10 @@ public class BasicGod implements God {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
             if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
                 boxNextTo.setReachable(true);
+                ///todo continua non so che blocco posso costruire
+                Block block = whatCanIBuild(boxNextTo);
+                if(block != null)
+                    boxNextTo.getPossibleBlock().add(block);
             }
             if(boxNextTo!=null){
                 System.out.println("Posso costruire?:"+boxNextTo.isReachable());
@@ -62,6 +70,26 @@ public class BasicGod implements God {
             }
         }
     }
+    public Block whatCanIBuild(Box box){
+        int sizeArrayBlocks= box.getBuilding().getArrayOfBlocks().size();
+
+        Block block;
+        if(sizeArrayBlocks == 0){
+            block = new Base();
+        } else if(sizeArrayBlocks == 1){
+            block = new Middle();
+        }else if(sizeArrayBlocks == 2) {
+            block = new Top();
+        }else{
+            block = null;
+        }
+        return block;
+
+
+    }
+
+
+
 
     /**
      * This method implements the worker move from its start position to its final position
@@ -99,5 +127,11 @@ public class BasicGod implements God {
     @Override
     public boolean checkWin(Box initialPos, Box finalBox) {
         return finalBox.getCounter() - initialPos.getCounter() == 1 && finalBox.getCounter() == 3;
+    }
+
+
+    @Override
+    public boolean canBuildBeforeWorkerMove() {
+        return false;
     }
 }

@@ -35,6 +35,8 @@ public interface GameModel {
     ArrayList<Box> getWorkersPos(int indexPlayer);
     boolean isReachable(int row, int column);
     boolean canMove();
+    boolean canMoveSpecialTurn(int indexWorker);
+    boolean canBuildBeforeWorkerMove();
     void setBoxReachable(int indexWorker);
     boolean movePlayer(int indexWorker, int row, int column);
     boolean canBuild(int indexWorker);

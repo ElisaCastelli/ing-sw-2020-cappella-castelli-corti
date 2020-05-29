@@ -31,8 +31,16 @@ public class GameStateManager {
         currentState.startTurn(indexPlayer);
     }
 
+    public boolean canBuildBeforeWorkerMove(int indexPlayer){
+        return currentState.canBuildBeforeWorkerMove(indexPlayer);
+    }
+
     public boolean canMove(int indexPlayer){
         return currentState.canMove(indexPlayer);
+    }
+
+    public boolean canMoveSpecialTurn(int indexPlayer, int indexWorker){
+        return currentState.canMoveSpecialTurn(indexPlayer, indexWorker);
     }
 
     public void setBoxReachable(int indexPlayer, int indexWorker){

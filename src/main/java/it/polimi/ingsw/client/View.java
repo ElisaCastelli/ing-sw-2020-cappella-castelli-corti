@@ -26,6 +26,7 @@ public abstract class View {
     public abstract void initializeWorker();
     public abstract void askWorker(AskWorkerToMoveEvent askMoveEvent);
     public abstract void areYouSure(AskWorkerToMoveEvent askMoveEvent);
+    public abstract void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
     public abstract void moveWorker(AskMoveEvent askMoveEvent);
     public abstract void anotherMove(AskMoveEvent askMoveEvent);
     public abstract void wrongMove();

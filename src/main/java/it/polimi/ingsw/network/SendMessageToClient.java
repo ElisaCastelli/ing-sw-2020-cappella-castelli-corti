@@ -82,4 +82,8 @@ public class SendMessageToClient {
     public void sendAskBuildEvent(AskBuildEvent askBuildEvent) {
         echoServer.sendBroadCast(askBuildEvent);
     }
+
+    public void sendAskBuildBeforeMove(AskBuildBeforeMove askBuildBeforeMove) {
+        echoServer.sendBroadCast(askBuildBeforeMove);
+    }
 }

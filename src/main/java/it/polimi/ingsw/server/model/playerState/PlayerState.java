@@ -8,11 +8,13 @@ public class PlayerState {
     //public void goNext(GamerStateManager next){};
     public void setMyGod(God myGod){}
 
-    public boolean moveWorker (Worker worker, Box pos){return false;}
+    public boolean moveWorker (Worker worker, Box pos){ return false;}
 
     public boolean moveBlock(Box pos){ return false;}
 
     public boolean checkWin(Box boxReach, Box boxStart){return false;}
+
+    public boolean canBuildBeforeWorkerMove(){ return false; }
 
     public void setPossibleMove( Worker worker ){ }
 

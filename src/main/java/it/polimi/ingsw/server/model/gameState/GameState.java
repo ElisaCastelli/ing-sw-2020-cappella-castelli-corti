@@ -8,7 +8,11 @@ public class GameState {
     public int getWinner(){return -1;};
     public void startTurn(int indexPlayer){}
 
+    public boolean canBuildBeforeWorkerMove(int indexPlayer){ return false; };
+
     public boolean canMove(int indexPlayer){return false;}
+
+    public boolean canMoveSpecialTurn(int indexPlayer, int indexWorker){return false;}
 
     public void setBoxReachable(int indexPlayer, int indexWorker){}
 
