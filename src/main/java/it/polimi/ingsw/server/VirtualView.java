@@ -13,8 +13,6 @@ public class VirtualView implements Observer {
 
     private ProxyGameModel gameModel;
     private Controller controller;
-    private boolean ready;
-    private int winnerPlayer;
     SendMessageToClient sendMessageToClient;
     private final Object LOCK = new Object();
 
@@ -23,15 +21,7 @@ public class VirtualView implements Observer {
         gameModel= new ProxyGameModel();
         controller= new Controller(gameModel);
         subscribe();
-        ready=false;
-        winnerPlayer=-1;
         this.sendMessageToClient=sendMessageToClient;
-    }
-    public synchronized boolean isReady() {
-        return ready;
-    }
-    public synchronized void setReady(boolean ready) {
-        this.ready = ready;
     }
 
     @Override
@@ -273,7 +263,7 @@ public class VirtualView implements Observer {
     @Override
     public void updateContinueMove(AskMoveEvent askMoveEvent) {
         if(askMoveEvent.isDone()){
-            canBuild(askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
+            canBuild(askMoveEvent.getClientIndex(), askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
         }else{
             controller.setBoxReachable(askMoveEvent.getIndexWorker(), true);
             askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
@@ -282,8 +272,8 @@ public class VirtualView implements Observer {
     }
     @Override
     //Metodo per verificare se è possibile costruire attorno al proprio worker, se non è possibile il giocatore ha perso
-    public void canBuild(int indexWorker, int rowWorker, int columnWorker){
-        controller.canBuild(indexWorker, rowWorker, columnWorker);
+    public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker){
+        controller.canBuild(indexClient, indexWorker, rowWorker, columnWorker);
     }
 
     @Override
@@ -351,6 +341,11 @@ public class VirtualView implements Observer {
         AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true);
         askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
         sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
+    }
+
+    @Override
+    public void updateWhoHasLost(int indexClient) {
+        //indexClient è quello di chi ha perso. Questo messaggio lo vedono chi è ancora in gioco
     }
 
     public void setPause(){

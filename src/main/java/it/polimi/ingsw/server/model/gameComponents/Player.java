@@ -127,8 +127,20 @@ public class Player implements Serializable {
         gamerManager.goWin();
     }
 
+    public boolean amITheWinner(){return gamerManager.amITheWinner();}
+
+    public boolean amIDead(){
+        return gamerManager.amIDead();
+    }
+
     public void goDead(){
         gamerManager.goDead();
+    }
+
+    public void clearWorkers(){
+        for(Worker worker : myWorkers){
+            worker.getActualBox().clearWorker();
+        }
     }
 
     public void setPossibleMove( int indexWorker ){
@@ -170,11 +182,7 @@ public class Player implements Serializable {
     //Controlla che si può costruire, ho tolto la clear delle box almeno posso fare un update diretta
     public boolean checkBuilding(int indexWorker){
         gamerManager.setPossibleBuild(myWorkers[indexWorker]);
-        boolean canBuild = myWorkers[indexWorker].getActualBox().checkPossible();
-        if(!canBuild){
-            gamerManager.goDead();
-        }
-        return canBuild;
+        return myWorkers[indexWorker].getActualBox().checkPossible();
     }
 
 

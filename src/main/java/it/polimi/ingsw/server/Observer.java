@@ -28,8 +28,9 @@ public interface Observer {
     void updateLoser(int indexClient);
     void updateCanBuild(int indexWorker, int rowWorker, int columnWorker);
     void updateSetBuilding();
-    void canBuild(int indexWorker, int rowWorker, int columnWorker);
+    void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker);
     void updateBuild(AskBuildEvent askBuildEvent, int clientIndex);
     void updateContinueBuild(AskBuildEvent askBuildEvent);
     void updateStartTurn();
+    void updateWhoHasLost(int indexClient);
 }

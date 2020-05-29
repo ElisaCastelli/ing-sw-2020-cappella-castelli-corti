@@ -37,7 +37,7 @@ public class GoingState extends GameState{
     }
 
     public boolean canBuild(int indexPlayer, int indexWorker){
-        return players.get(indexPlayer).checkBuilding(indexWorker-1);
+        return players.get(indexPlayer).checkBuilding(indexWorker - 1);
     }
 
     public void setBoxBuilding(int indexPlayer, int indexWorker){
@@ -81,20 +81,17 @@ public class GoingState extends GameState{
         return win;
     }
 
-    /*public int getWinner(){
-        for(Player player : players)
-        return
-    }*/
-
-
-//TODO TOGLIERE
-    /*public void setDeadPlayer(int indexPlayer){
-        players.get(indexPlayer).goDead();
-        playersDead.add(players.get(indexPlayer));
-        players.remove(indexPlayer);
-        //TODO notify gioco finito
-        if(players.size()==2){
-            manager.goEnd();
+    public int getWinner(){
+        for(Player player : players){
+            if(player.amITheWinner()){
+                return player.getIndexClient();
+            }
         }
-    }*/
+        return -1;
+    }
+
+    public void setDeadPlayer(int indexPlayer){
+        players.get(indexPlayer).goDead();
+        players.get(indexPlayer).clearWorkers();
+    }
 }

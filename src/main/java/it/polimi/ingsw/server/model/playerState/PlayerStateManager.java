@@ -61,7 +61,6 @@ public class PlayerStateManager {
         if(currentState == isPlaying || currentState == isWaiting){
             setCurrentState(dead);
         }
-
     }
 
     public void goWin(){
@@ -87,5 +86,9 @@ public class PlayerStateManager {
     }
     public void setPossibleBuild( Worker worker){
         currentState.setPossibleBuild(worker);
+    }
+    public boolean amITheWinner(){return currentState.amITheWinner();}
+    public boolean amIDead() {
+        return currentState.amIDead();
     }
 }

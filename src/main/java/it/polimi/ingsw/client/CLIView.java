@@ -36,7 +36,7 @@ public class CLIView extends View {
     public void updateBoard(UpdateBoardEvent updateBoardEvent) {
         this.usersArray = updateBoardEvent.getUserArray();
         this.board = updateBoardEvent.getBoard();
-        printBoard(updateBoardEvent.isShowReachable(), updateBoardEvent.getClientIndex(), updateBoardEvent.getCurrentClientPlaying());
+        printBoard(updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class CLIView extends View {
             while (!choose) {
                 System.out.println("Choose your card");
                 scelta = inputNumber(input);
-                if (scelta <= cards.size() && scelta >= 0) {
+                if (scelta < cards.size() && scelta >= 0) {
                     System.out.println("Got it! " + scelta);
                     choose = true;
                 }
@@ -191,7 +191,7 @@ public class CLIView extends View {
             System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row   " + column1 + " <-column");
             System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row   " + column2 + " <-column");
             System.out.println("Control the board and choose...");
-            printBoard(false, askWorkerToMoveEvent.getClientIndex(), askWorkerToMoveEvent.getCurrentClientPlaying());
+            printBoard(false, askWorkerToMoveEvent.getCurrentClientPlaying());
 
             int intInputValue = twoNumbers(input);
             ObjWorkerToMove objWorkerToMove;
@@ -332,8 +332,7 @@ public class CLIView extends View {
     @Override
     public void anotherBuild(AskBuildEvent askBuildEvent) {
         new Thread(() -> {
-            Scanner input
-                    = new Scanner(System.in);
+            Scanner input = new Scanner(System.in);
             System.out.println("Your god gives you the possibility to make another build.");
             System.out.println("Do You want to?: ");
             System.out.println("[ 1 ] -> "+ "YES");
@@ -343,7 +342,7 @@ public class CLIView extends View {
             if(inputValue == 1){
                 buildMove(askBuildEvent);
             }else {
-                ObjBlock objBlock=new ObjBlock(true);
+                ObjBlock objBlock = new ObjBlock(true);
                 sendMessageToServer.sendBuildMove(objBlock);
             }
         }).start();
@@ -378,7 +377,7 @@ public class CLIView extends View {
     public int inputTwoOrThree(Scanner input){
         int intInputValue;
         intInputValue = inputNumber(input);
-        while(intInputValue <2 ||  intInputValue >3){
+        while(intInputValue <2 ||  intInputValue > 3){
             System.out.println("Select again");
             intInputValue = inputNumber(input);
         }
@@ -436,21 +435,14 @@ public class CLIView extends View {
         return usersArray.get(indexPlayer).getNameCard();
     }
 
-    public String printStatePlayer(int currentPlayer){
-        return "Is playing";
-        /*for(User user : usersArray){
-            //todo ho aggiungo un numero casuale
-            if(user.getIndexPlayer() == indexPlayer && user.getIndexPlayer() == 1){
-                return "Is Playing";
-            }else{
-                return "Is Waiting";
-            }
-        }
-        return "Error";*/
+    public String printStatePlayer(int indexPlayer, int currentPlayer){
+        if (usersArray.get(indexPlayer).getClient() == currentPlayer)
+            return "Is playing";
+        else
+            return "Is waiting";
     }
 
-    @Override
-    public void printBoard(boolean reach, int myClient, int currentPlayer){
+    public void printBoard(boolean reach, int currentPlayer){
         if (nPlayer == 2){
             System.out.println();
             System.out.println();
@@ -459,12 +451,12 @@ public class CLIView extends View {
             System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(0,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ "0"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(0,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(0,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(0));
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(0));
-            System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(0));
+            System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(0, currentPlayer));
             System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ "1"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(1,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(1,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(1));
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(1));
-            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(2,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(1));
+            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(2,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(1, currentPlayer));
             System.out.println(" "+ " "+ "2"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(2,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(2,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||");
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#");
@@ -486,17 +478,17 @@ public class CLIView extends View {
             System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(0,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ "0"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(0,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(0,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(0));
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(0));
-            System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(0));
+            System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(0, currentPlayer));
             System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ "1"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(1,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(1,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(1));
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(1));
-            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(2,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(2));
+            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(2,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(2,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(1, currentPlayer));
             System.out.println(" "+ " "+ "2"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(2,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(2,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(2,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(2));
             System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(3,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(3,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(2));
-            System.out.println(" "+ " "+ "3"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(3,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(3,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(3));
+            System.out.println(" "+ " "+ "3"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(3,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(3,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(3,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(2, currentPlayer));
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#");
             System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(4,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(4,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||");

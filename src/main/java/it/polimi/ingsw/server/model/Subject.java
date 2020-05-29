@@ -21,10 +21,11 @@ public interface Subject {
     void notifyMovedWorker(AskMoveEvent askMoveEvent, int clientIndex);
     void notifyWin(int indexClient);
     void notifyContinueMove(AskMoveEvent askMoveEvent);
-    void notifyLoser();
+    void notifyLoser(int indexClient);
     void notifyCanBuild(int indexWorker, int rowWorker, int columnWorker);
     void notifySetBuilding();
     void notifyBuildBlock(AskBuildEvent askBuildEvent, int clientIndex);
     void notifyContinueBuild(AskBuildEvent askBuildEvent);
     void notifyStartTurn();
+    void notifyWhoHasLost(int indexClient);
 }

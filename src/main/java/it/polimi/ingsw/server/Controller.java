@@ -78,7 +78,7 @@ public class Controller  {
         if(goAhead){
             gameModel.notifyStartTurn();
         }else{
-            gameModel.notifyLoser();
+            //gameModel.notifyLoser();
         }
     }
 
@@ -116,11 +116,16 @@ public class Controller  {
 
 
 
-    public void canBuild(int indexWorker, int rowWorker, int columnWorker){
-        /// todo canbuild da rifare
-        boolean loseCondition = gameModel.canBuild(indexWorker);
-        if(!loseCondition){
-            gameModel.notifyLoser();
+    public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker){
+        boolean goAhead = gameModel.canBuild(indexWorker);
+        if(!goAhead){
+            gameModel.notifyLoser(indexClient);
+            int winnerClient = gameModel.getWinner();
+            if(winnerClient != -1){
+                gameModel.notifyWin(winnerClient);
+            }else{
+                gameModel.notifyWhoHasLost(indexClient);
+            }
         }else{
             gameModel.notifyCanBuild(indexWorker, rowWorker, columnWorker);
         }

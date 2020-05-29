@@ -23,7 +23,6 @@ public abstract class View {
     public abstract int getIndexPlayer();
     public abstract void ask3Card(ArrayList<String> cards);
     public abstract void askCard(ArrayList<String> cards);
-    public abstract void printBoard(boolean printReachable, int myClient, int currentState);
     public abstract void initializeWorker();
     public abstract void askWorker(AskWorkerToMoveEvent askMoveEvent);
     public abstract void areYouSure(AskWorkerToMoveEvent askMoveEvent);

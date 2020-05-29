@@ -114,7 +114,7 @@ public class VisitorServer {
     }
 
     public void visit(AckMove ackMove){
-        virtualView.canBuild(ackMove.getIndexWorker(), ackMove.getRowWorker(), ackMove.getColumnWorker());
+        virtualView.canBuild(ackMove.getClientIndex(), ackMove.getIndexWorker(), ackMove.getRowWorker(), ackMove.getColumnWorker());
        /* serverHandler.waitForPlayer();
 
         int indexWorker = ackMove.getIndexWorker();

@@ -13,6 +13,11 @@ public class Win extends PlayerState{
     }
 
     @Override
+    public boolean amITheWinner() {
+        return true;
+    }
+
+    @Override
     public boolean moveWorker(Worker worker, Box pos){
         System.out.println("Vittoria");
         return false;

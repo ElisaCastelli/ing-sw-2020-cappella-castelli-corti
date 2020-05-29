@@ -76,6 +76,7 @@ public class SendMessageToClient {
     }
 
     public void sendLoser(int indexClient) {
+        //Mando solo a chi ha perso
     }
 
     public void sendAskBuildEvent(AskBuildEvent askBuildEvent) {

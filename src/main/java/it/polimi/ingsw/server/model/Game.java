@@ -72,12 +72,30 @@ public class Game implements GameModel{
 
     public void goPlayingNext(){
         int indexPlay = whoIsPlaying();
-        players.get(indexPlay).goWaiting();
-        if(indexPlay == nPlayers-1){
-            players.get(0).goPlay();
+        if(!players.get(indexPlay).amIDead()){
+            players.get(indexPlay).goWaiting();
+        }
+
+        if(indexPlay == nPlayers - 1){
+            if(players.get(0).amIDead()){
+                players.get(1).goPlay();
+            }else{
+                players.get(0).goPlay();
+            }
         }
         else{
-            players.get(indexPlay+1).goPlay();
+            int nextPlayer = indexPlay + 1;
+            if(players.get(nextPlayer).amIDead()){
+                if (nextPlayer == nPlayers - 1){
+                    players.get(0).goPlay();
+                }
+                else{
+                    players.get(nextPlayer + 1).goPlay();
+                }
+            }
+            else {
+                players.get(indexPlay + 1).goPlay();
+            }
         }
     }
 
@@ -156,7 +174,9 @@ public class Game implements GameModel{
     public UpdateBoardEvent gameData(boolean reach){
         ArrayList<User> users = new ArrayList<>();
         for (Player player : players){
-            User user = new User(player.getName(), player.getGod().getName());
+            User user = new User(player.getName(), player.getGod().getName(), player.getIndexClient());
+            if (player.amIDead())
+                user.setDead(true);
             users.add(user);
         }
         UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(users, board, reach);
@@ -194,32 +214,32 @@ public class Game implements GameModel{
             loadCards();
         }
         ArrayList<String> cards= new ArrayList<>();
-        for(int i=0; i<godsArray.size();i++){
+        for(int i=0; i < godsArray.size();i++){
             cards.add(godsArray.get(i).getName());
         }
         return cards;
     }
     public ArrayList<String> getTempCard(){
-        ArrayList<String> temporanee= new ArrayList<>();
-        for(int i=0; i<tempCard.size();i++){
+        ArrayList<String> temporanee = new ArrayList<>();
+        for(int i=0; i < tempCard.size(); i++){
             temporanee.add(tempCard.get(i).getName());
         }
         return temporanee;
     }
     public ArrayList<String> getCardUsed(){
-        ArrayList<String> drawnCard= new ArrayList<>();
-        for(int i=0; i<cardUsed.size();i++){
+        ArrayList<String> drawnCard = new ArrayList<>();
+        for(int i = 0; i < cardUsed.size(); i++){
             drawnCard.add(cardUsed.get(i).getName());
         }
         return drawnCard;
     }
 
     public int whoIsPlaying(){
-        int indexPlay=0;
-        boolean found=false;
+        int indexPlay = 0;
+        boolean found = false;
         while(!found && indexPlay < players.size()){
             if(players.get(indexPlay).isPlaying()){
-                found=true;
+                found = true;
             }
             else{
                 indexPlay++;
@@ -277,7 +297,7 @@ public class Game implements GameModel{
     }
 
     public boolean movePlayer(int indexWorker, int row, int column){
-        int indexPlayer= whoIsPlaying();
+        int indexPlayer = whoIsPlaying();
         return stateManager.movePlayer(indexPlayer,indexWorker,row,column,board);
     }
 
@@ -285,19 +305,31 @@ public class Game implements GameModel{
         int indexPlayer = whoIsPlaying();
         boolean canBuild = stateManager.canBuild(indexPlayer, indexWorker);
         if(!canBuild){
+            setDeadPlayer(indexPlayer);
             playersDead.add(players.get(indexPlayer));
-            int winner = 0;
-            int i = 0;
-            boolean found=false;
-            while(i < nPlayers && !found){
-                if(players.get(i) != null){
-                    winner = i;
-                    found = true;
-                }
+
+            if(nPlayers == 2 || playersDead.size() == 2){
+                thereIsAWinner();
             }
-            stateManager.goEnd(winner);
         }
         return canBuild;
+    }
+
+    //Richiamato per settare il vincitore se sono morti gli avversari
+    public void thereIsAWinner(){
+        for (Player player : players){
+            int mayBeTheWinner = 0;
+            int i = 0;
+            while(i < (playersDead.size() - 1)){
+                if(playersDead.get(i).getIndexClient() != player.getIndexClient()){
+                    mayBeTheWinner = mayBeTheWinner + 1;
+                    i = i + 1;
+                }
+                if(mayBeTheWinner == playersDead.size()){
+                    player.goWin();
+                }
+            }
+        }
     }
 
     public void setBoxBuilding(int indexWorker){

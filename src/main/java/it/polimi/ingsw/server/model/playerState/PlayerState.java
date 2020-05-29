@@ -17,4 +17,10 @@ public class PlayerState {
     public void setPossibleMove( Worker worker ){ }
 
     public void setPossibleBuild( Worker worker){ }
+
+    public boolean amITheWinner(){return false;}
+
+    public boolean amIDead() {
+        return false;
+    }
 }

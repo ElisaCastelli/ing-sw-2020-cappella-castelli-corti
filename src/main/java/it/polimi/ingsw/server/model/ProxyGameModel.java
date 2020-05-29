@@ -247,12 +247,14 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifyLoser() {
-        ///todo il whoisplaying è sbagliato perchè manca il metodo whoisdead e la can build restituisce una cosa sbagliata da riguardare
-        int indexClient=gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
+    public void notifyLoser(int indexClient) {
         observer.updateLoser(indexClient);
     }
 
+    @Override
+    public void notifyWhoHasLost(int indexClient) {
+        observer.updateWhoHasLost(indexClient);
+    }
 
     @Override
     public void notifyContinueMove(AskMoveEvent askMoveEvent) {
@@ -262,7 +264,7 @@ public class ProxyGameModel implements GameModel, Subject{
     @Override
     public void notifySetBuilding(){
         observer.updateSetBuilding();
-        observer.updateBoard(false);
+        observer.updateBoard(true);
     }
 
     @Override
