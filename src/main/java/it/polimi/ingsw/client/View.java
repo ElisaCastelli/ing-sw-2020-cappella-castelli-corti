@@ -29,6 +29,7 @@ public abstract class View {
     public abstract void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
     public abstract void moveWorker(AskMoveEvent askMoveEvent);
     public abstract void anotherMove(AskMoveEvent askMoveEvent);
+    public abstract void printPossibleBlocks(int row, int column);
     public abstract void wrongMove();
     public abstract void buildMove(AskBuildEvent askBuildEvent);
     public abstract void anotherBuild(AskBuildEvent askBuildEvent);

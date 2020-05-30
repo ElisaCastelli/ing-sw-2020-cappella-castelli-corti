@@ -23,7 +23,7 @@ public class OpponentBlock extends GodDecorator {
 
     @Override
     public void setEffect(ArrayList<String> effects) {
-
+        super.setEffect(effects);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class OpponentBlock extends GodDecorator {
 
     @Override
     public ArrayList<String> getEffects() {
-        return null;
+        return super.getEffects();
     }
 
     @Override

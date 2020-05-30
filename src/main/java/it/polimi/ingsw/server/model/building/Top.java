@@ -26,8 +26,6 @@ public class Top implements Block {
      */
     @Override
     public String toString() {
-        return "Top{" +
-                "blockName='" + blockName + '\'' +
-                '}';
+        return "Top";
     }
 }

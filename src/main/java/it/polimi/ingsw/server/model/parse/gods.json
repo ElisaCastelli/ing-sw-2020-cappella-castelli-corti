@@ -79,7 +79,7 @@
       ]
     },
     {
-      "name": "Chronus",
+      "name": "Cronus",
       "effect":[
         "CompleteTowersWin",
         "NotMoveUp",

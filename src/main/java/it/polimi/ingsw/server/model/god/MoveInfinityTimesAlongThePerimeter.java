@@ -20,7 +20,9 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
     }
 
     @Override
-    public void setEffect(ArrayList<String> effects) {}
+    public void setEffect(ArrayList<String> effects) {
+        super.setEffect(effects);
+    }
 
     @Override
     public String getName() {
@@ -29,7 +31,7 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
 
     @Override
     public ArrayList<String> getEffects() {
-        return null;
+        return super.getEffects();
     }
 
     /**

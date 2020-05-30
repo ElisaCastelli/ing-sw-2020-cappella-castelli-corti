@@ -26,8 +26,6 @@ public class Dome implements Block {
      */
     @Override
     public String toString() {
-        return "Dome{" +
-                "blockName='" + blockName + '\'' +
-                '}';
+        return "Dome";
     }
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.*;
 import it.polimi.ingsw.network.ack.AckMove;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
+import it.polimi.ingsw.server.model.building.Block;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
@@ -333,7 +334,8 @@ public class CLIView extends View {
             } else {
                 System.out.println("You're going to build now -> Where do you wanna build?");
             }
-            System.out.println("Control the board and choose a box");
+            System.out.println("^^ Control the board and choose a box ^^");
+            printPossibleBlocks(rowWorker, columnWorker);
 
             intInputValue = rowSelected(input);
             objBlock.setRowBlock(intInputValue);
@@ -341,7 +343,11 @@ public class CLIView extends View {
             intInputValue = columnSelected(input);
             objBlock.setColumnBlock(intInputValue);
 
-            //todo (G) Se atlas chiedere se vuole mettere una cupola. Passare un boolean e inserirlo in tutti i metodi buildMove (solo Atlas andrà ad utilizzarlo)
+            System.out.println("You selected the Box: "+ "( "+ objBlock.getRowBlock()+" , "+ objBlock.getColumnBlock()+" )");
+            System.out.println("Let me Know what Block you want to build, select the correct index");
+            int inputPossibleBlock= twoNumbers(input);
+
+            objBlock.setPossibleBlock(inputPossibleBlock);
 
             if (!askBuildEvent.isFirstTime()) {
                 objBlock.setDone(true);
@@ -371,6 +377,19 @@ public class CLIView extends View {
 
     }
 
+    public void printPossibleBlocks(int row, int column){
+        Box posWorker = board.getBox(row, column);
+        System.out.println("Here you can see what kind of block you can build");
+        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
+            Box boxNextTo = posWorker.getBoxesNextTo().get(indexBoxNextTo);
+            System.out.print("Box : " + "( "+ boxNextTo.getRow()+" , "+ boxNextTo.getColumn() +" )"+ " you can build --> ");
+            for(int size = 0; size < boxNextTo.getPossibleBlock().size() ; size++ ){
+                Block block = boxNextTo.getPossibleBlock().get(size);
+                System.out.print("["+ size +"]"+block.toString()+"  ");
+            }
+            System.out.println();
+        }
+    }
 
     //Questo metodo va richiamato se si vuole un numero da tastiera
     public int inputNumber(Scanner input){

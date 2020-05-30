@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.model.god;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+import java.util.ArrayList;
+
 /**
  * This abstract class handles the different concrete decorators
  */
@@ -28,6 +30,12 @@ public abstract class GodDecorator implements God {
     public void setName(String name){
         newGod.setName(name);
     }
+    public ArrayList<String> getEffects() {
+        return newGod.getEffects();
+    }
+    public void setEffect(ArrayList<String> effects) {
+        newGod.setEffect(effects);
+    }
     /**
      * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
@@ -43,7 +51,7 @@ public abstract class GodDecorator implements God {
      */
     @Override
     public void setPossibleBuild(Worker worker) {
-        this.newGod.setPossibleBuild(worker);
+        this.newGod.setPossibleBuild( worker );
     }
 
     /**

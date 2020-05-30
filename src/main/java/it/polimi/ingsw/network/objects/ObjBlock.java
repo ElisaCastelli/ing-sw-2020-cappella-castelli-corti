@@ -10,9 +10,11 @@ public class ObjBlock extends ObjMessage {
     int columnWorker;
     int rowBlock;
     int columnBlock;
+    int inputPossibleBlock;
     boolean firstTime;
     boolean done;
     boolean isSpecialTurn;
+
 
     public ObjBlock(int indexWorker, int rowWorker, int columnWorker, boolean firstTime, boolean isSpecialTurn) {
         this.indexWorker = indexWorker;
@@ -44,6 +46,14 @@ public class ObjBlock extends ObjMessage {
 
     public int getColumnBlock() {
         return columnBlock;
+    }
+
+    public int getPossibleBlock() {
+        return inputPossibleBlock;
+    }
+
+    public void setPossibleBlock(int inputPossibleBlock) {
+        this.inputPossibleBlock = inputPossibleBlock;
     }
 
     public boolean isFirstTime() {

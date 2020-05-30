@@ -21,7 +21,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     @Override
     public void setEffect(ArrayList<String> effects) {
-
+        super.setEffect(effects);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     @Override
     public ArrayList<String> getEffects() {
-        return null;
+        return super.getEffects();
     }
 
     /**

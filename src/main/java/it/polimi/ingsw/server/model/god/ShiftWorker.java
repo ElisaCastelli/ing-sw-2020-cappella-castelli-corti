@@ -22,7 +22,7 @@ public class ShiftWorker extends GodDecorator {
 
     @Override
     public void setEffect(ArrayList<String> effects) {
-
+        super.setEffect(effects);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ShiftWorker extends GodDecorator {
 
     @Override
     public ArrayList<String> getEffects() {
-        return null;
+        return super.getEffects();
     }
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move

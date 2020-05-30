@@ -24,12 +24,12 @@ public class MoveBeforeBuild extends GodDecorator {
 
     @Override
     public void setEffect(ArrayList<String> effects) {
-
+        super.setEffect(effects);
     }
 
     @Override
     public ArrayList<String> getEffects() {
-        return null;
+        return super.getEffects();
     }
 
     /**

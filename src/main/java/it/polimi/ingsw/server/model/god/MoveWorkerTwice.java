@@ -22,7 +22,7 @@ public class MoveWorkerTwice extends MoveTwice {
 
     @Override
     public void setEffect(ArrayList<String> effects) {
-
+        super.setEffect(effects);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MoveWorkerTwice extends MoveTwice {
 
     @Override
     public ArrayList<String> getEffects() {
-        return null;
+        return super.getEffects();
     }
 
     /**

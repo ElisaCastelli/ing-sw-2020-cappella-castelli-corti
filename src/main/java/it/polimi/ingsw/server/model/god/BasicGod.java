@@ -1,11 +1,8 @@
 package it.polimi.ingsw.server.model.god;
 
-import it.polimi.ingsw.server.model.building.Base;
-import it.polimi.ingsw.server.model.building.Middle;
-import it.polimi.ingsw.server.model.building.Top;
+import it.polimi.ingsw.server.model.building.*;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 import it.polimi.ingsw.server.model.gameComponents.Box;
-import sun.jvm.hotspot.opto.Block;
 
 import java.util.ArrayList;
 
@@ -58,7 +55,6 @@ public class BasicGod implements God {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
             if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
                 boxNextTo.setReachable(true);
-                ///todo continua non so che blocco posso costruire
                 Block block = whatCanIBuild(boxNextTo);
                 if(block != null)
                     boxNextTo.getPossibleBlock().add(block);
@@ -80,12 +76,11 @@ public class BasicGod implements God {
             block = new Middle();
         }else if(sizeArrayBlocks == 2) {
             block = new Top();
-        }else{
-            block = null;
-        }
+        }else if (sizeArrayBlocks == 3){
+            block = new Dome();
+        }else block = null;
+
         return block;
-
-
     }
 
 

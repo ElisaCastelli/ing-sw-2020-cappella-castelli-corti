@@ -26,8 +26,6 @@ public class Middle implements Block {
      */
     @Override
     public String toString() {
-        return "Middle{" +
-                "blockName='" + blockName + '\'' +
-                '}';
+        return "Middle";
     }
 }

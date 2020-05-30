@@ -166,6 +166,7 @@ public class Box implements Serializable {
     public void clearBoxesNextTo(){
         for (Box nextTo : boxesNextTo) {
             if(nextTo!=null){
+                nextTo.getPossibleBlock().clear();
                 nextTo.setReachable(false);
             }
         }

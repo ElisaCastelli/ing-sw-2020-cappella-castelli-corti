@@ -26,8 +26,6 @@ public class Base implements Block {
      */
     @Override
     public String toString() {
-        return "Base{" +
-                "blockName='" + blockName + '\'' +
-                '}';
+        return "Base";
     }
 }

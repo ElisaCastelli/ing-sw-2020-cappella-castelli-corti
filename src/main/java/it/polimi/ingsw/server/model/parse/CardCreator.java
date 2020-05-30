@@ -27,13 +27,12 @@ public class CardCreator {
     }
 
     public ArrayList<God> parseCard() {
-        setGodsByString();
-        //setGodsByHashMap();
+        //setGodsByString();
+        setGodsByHashMap();
         return cardsGod;
     }
 
     public void readCard() throws Exception{
-        ObjectMapper objectMapper = new ObjectMapper();
 
         ObjectMapper mapper = new ObjectMapper();
         JsonParser parser = mapper.getFactory().createParser(new File("src/main/java/it/polimi/ingsw/server/model/parse/gods.json"));
@@ -64,6 +63,9 @@ public class CardCreator {
         map.put("BuildABlockUnderItself",new BuildABlockUnderItself(god));
         map.put("BuildNotAlongThePerimeter",new BuildNotAlongThePerimeter(god));
         map.put("MoveInfinityTimesAlongThePerimeter",new MoveInfinityTimesAlongThePerimeter(god));
+        map.put("CompleteTowersWin", new CompleteTowersWin(god));
+        map.put("FerryAnOpponentWorker",new FerryAnOpponentWorker(god));
+        map.put("DownTwoOrMoreLevelsWin", new DownTwoOrMoreLevelsWin(god));
     }
 
     public void setGodsByString(){
@@ -129,13 +131,13 @@ public class CardCreator {
                 temp=map.get(effect);
             }
             temp.setName(godsByJson.get(index).getName());
+            temp.setEffect(godsByJson.get(index).getEffects());
             cardsGod.add(temp);
         }
     }
 
     public static void main(String[] args) throws Exception{
         CardCreator c = new CardCreator();
-        c.readCard();
         c.setGodsByHashMap();
     }
 }
