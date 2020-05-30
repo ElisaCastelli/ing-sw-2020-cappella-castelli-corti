@@ -311,4 +311,16 @@ public class ProxyGameModel implements GameModel, Subject{
     public void notifyStartTurn() {
         observer.updateStartTurn();
     }
+
+    @Override
+    public boolean controlHeartBeat(int indexClient, long timeStamp) {
+        boolean connected = gameModel.controlHeartBeat(indexClient, timeStamp);
+        if(!connected)
+            observer.updateUnreachableClient(indexClient);
+        return true;
+    }
+    @Override
+    public void setIndexPossibleBlock(int indexPossibleBlock) {
+        gameModel.setIndexPossibleBlock(indexPossibleBlock);
+    }
 }

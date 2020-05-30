@@ -111,4 +111,9 @@ public class VisitorClient {
     public void visit(ObjHeartBeat objHeartBeat){
         view.printHeartBeat(objHeartBeat);
     }
+
+    public void visit(CloseConnectionFromServerEvent connectionEvent){
+        view.ClosingConnectionEvent(connectionEvent.getClientIndex());
+    }
+
 }

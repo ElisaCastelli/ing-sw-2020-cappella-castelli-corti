@@ -354,6 +354,12 @@ public class Game implements GameModel{
         return stateManager.buildBlock(indexPlayer, indexWorker, row, column, board);
     }
 
+    @Override
+    public void setIndexPossibleBlock(int indexPossibleBlock) {
+        int indexPlayer = whoIsPlaying();
+        stateManager.setIndexPossibleBlock(indexPlayer ,indexPossibleBlock);
+    }
+
     public boolean checkWin(int rowStart, int columnStart, int indexWorker){
         return stateManager.checkWin(whoIsPlaying(), board.getBox(rowStart, columnStart), indexWorker);
     }
@@ -373,6 +379,11 @@ public class Game implements GameModel{
 
     public void setPause(){
         stateManager.goPause();
+    }
+
+    public boolean controlHeartBeat(int indexClient, long timeStamp) {
+        int indexPlayer= searchByClientIndex(indexClient);
+        return players.get(indexPlayer).controlHeartBeat(timeStamp);
     }
 
 }

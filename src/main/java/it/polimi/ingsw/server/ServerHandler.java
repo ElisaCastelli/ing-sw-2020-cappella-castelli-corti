@@ -6,11 +6,15 @@ import it.polimi.ingsw.network.events.AskNPlayerEvent;
 //import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.events.AskWantToPlay;
 
+import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorServer;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ServerHandler extends Thread{
 
     ///al posto del client array
@@ -32,9 +36,21 @@ public class ServerHandler extends Thread{
         this.indexClientArray=indexClientArray;
     }
 
+    public void sendHeartBeat(){
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("sending HeartBeat");
+                sendUpdate(new ObjHeartBeat(indexClientArray, System.currentTimeMillis()));
+            }
+        }, 10000, 50000);
+    }
+
     @Override
     public void run(){
         sendUpdate(new AskWantToPlay(indexClientArray));
+        sendHeartBeat();
         listening();
     }
 

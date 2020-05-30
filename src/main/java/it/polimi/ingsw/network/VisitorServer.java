@@ -134,7 +134,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjBlock objBlock){
-        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock(), objBlock.isSpecialTurn());
+        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock(), objBlock.isSpecialTurn(), objBlock.getPossibleBlock());
 
         /*int indexWorker = objBlock.getIndexWorker();
         int rowWorker = objBlock.getRowWorker();
@@ -200,12 +200,12 @@ public class VisitorServer {
     }
 
     public void visit(ObjHeartBeat objHeartBeat){
-        ///virtualView.printHeartBeat();
+        virtualView.printHeartBeat(objHeartBeat.getMessageHeartbeat(), objHeartBeat.getClientIndex(), objHeartBeat.getTimeStamp());
     }
 
 
 
-    public void visit(CloseConnectionClientEvent closeConnectionClientEvent){
-        ///serverHandler.close();
+    public void visit(CloseConnectionFromClientEvent closeConnectionClientEvent){
+        virtualView.close(closeConnectionClientEvent.getIndexClient());
     }
 }

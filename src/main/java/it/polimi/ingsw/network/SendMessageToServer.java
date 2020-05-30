@@ -3,6 +3,7 @@ package it.polimi.ingsw.network;
 import it.polimi.ingsw.client.ClientHandler;
 import it.polimi.ingsw.network.ack.*;
 import it.polimi.ingsw.network.events.AskWantToPlay;
+import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
@@ -78,8 +79,8 @@ public class SendMessageToServer {
         clientHandler.sendMessage(new AckState());
     }
 
-    public void sendPong(){
-        ObjHeartBeat objHeartBeat =new ObjHeartBeat();
+    public void sendPong(int indexClient, long timeStamp){
+        ObjHeartBeat objHeartBeat =new ObjHeartBeat(indexClient, timeStamp);
         clientHandler.sendMessage(objHeartBeat);
     }
 
@@ -88,4 +89,7 @@ public class SendMessageToServer {
     }
 
 
+    public void sendAckClosingConnection(int clientIndex) {
+        clientHandler.sendMessage(new CloseConnectionFromClientEvent(clientIndex));
+    }
 }

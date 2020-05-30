@@ -58,6 +58,10 @@ public class GameStateManager {
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column, Board board){
         return currentState.buildBlock(indexPlayer, indexWorker, row, column, board);
     }
+    public void setIndexPossibleBlock(int indexPlayer, int indexPossibleBlock){
+        currentState.setIndexPossibleBlock(indexPlayer, indexPossibleBlock);
+    }
+
     public void finishTurn(int indexPlayer){
         currentState.finishTurn(indexPlayer);
     }

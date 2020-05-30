@@ -4,12 +4,15 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.SendMessageToClient;
 import it.polimi.ingsw.network.events.AskPlayerEvent;
 import it.polimi.ingsw.network.events.StartGameEvent;
+import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EchoServer {
     private static ArrayList<ServerHandler> clientArray = new ArrayList<>();
@@ -25,6 +28,14 @@ public class EchoServer {
         clientArray.add(clientWaiting.get(indexClientWaiting));
     }
 
+    public ArrayList<ServerHandler> getClientArray() {
+        return clientArray;
+    }
+
+    public ArrayList<ServerHandler> getClientWaiting() {
+        return clientWaiting;
+    }
+
     public void sendBroadCast(ObjMessage objMessage){
         for(ServerHandler serverHandler : clientArray){
             serverHandler.sendUpdate(objMessage);
@@ -33,12 +44,9 @@ public class EchoServer {
     public void send(ObjMessage objMessage, int indexArrayClient){
         clientArray.get(indexArrayClient).sendUpdate(objMessage);
     }
+
     public void sendWaiting(ObjMessage objMessage,int indexArrayClient){
         clientWaiting.get(indexArrayClient).sendUpdate(objMessage);
-    }
-
-    public ArrayList<ServerHandler> getClientArray() {
-        return clientArray;
     }
 
     //non lo considerate è per dopo se vogliamo fare la lobby, non è mai richiamato
@@ -77,7 +85,6 @@ public class EchoServer {
         }
     }
 
-
     public static void main(String[] args) {
         //inizializzazione fatta senza main
         portNumber = 1234;
@@ -91,4 +98,5 @@ public class EchoServer {
         EchoServer echoServer = new EchoServer(portNumber);
         echoServer.acceptClientWaiting(serverSocket);
     }
+
 }

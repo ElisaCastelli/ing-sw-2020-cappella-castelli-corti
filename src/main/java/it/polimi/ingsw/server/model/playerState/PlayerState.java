@@ -20,6 +20,8 @@ public class PlayerState {
 
     public void setPossibleBuild( Worker worker){ }
 
+    public void setIndexPossibleBlock( int indexPossibleBlock){}
+
     public boolean amITheWinner(){return false;}
 
     public boolean amIDead() {

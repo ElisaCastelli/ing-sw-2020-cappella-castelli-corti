@@ -86,4 +86,14 @@ public class SendMessageToClient {
     public void sendAskBuildBeforeMove(AskBuildBeforeMove askBuildBeforeMove) {
         echoServer.sendBroadCast(askBuildBeforeMove);
     }
+
+    public void sendCloseConnection(int indexClient) {
+        echoServer.send(new CloseConnectionFromServerEvent(), indexClient);
+    }
+
+    public void close(int indexClient) {
+        echoServer.getClientArray().remove(indexClient);
+        echoServer.getClientWaiting().remove(indexClient);
+        echoServer.getClientArray().get(indexClient).close();
+    }
 }

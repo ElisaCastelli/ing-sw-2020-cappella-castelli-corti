@@ -179,7 +179,8 @@ public class Controller  {
         gameModel.notifySetBuilding();
     }
 
-    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn) {
+    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn, int indexPossibleBlock) {
+        gameModel.setIndexPossibleBlock(indexPossibleBlock);
         boolean built = gameModel.buildBlock(indexWorker, row, column);
         AskBuildEvent askBuildEvent;
         if(built){
@@ -201,12 +202,15 @@ public class Controller  {
         }
     }
 
-
-
     public void setDeadPlayer(int indexPlayer){
         gameModel.setDeadPlayer(indexPlayer);
     }
     public void setPause() {
         gameModel.setPause();
+    }
+
+    public void heartBeat(int indexClient,long timeStamp) {
+        gameModel.controlHeartBeat(indexClient, timeStamp);
+
     }
 }

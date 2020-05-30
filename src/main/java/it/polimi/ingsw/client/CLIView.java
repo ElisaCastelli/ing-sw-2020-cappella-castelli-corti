@@ -380,7 +380,7 @@ public class CLIView extends View {
     public void printPossibleBlocks(int row, int column){
         Box posWorker = board.getBox(row, column);
         System.out.println("Here you can see what kind of block you can build");
-        for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
+        for (int indexBoxNextTo = 0; indexBoxNextTo < posWorker.getBoxesNextTo().size(); indexBoxNextTo++) {
             Box boxNextTo = posWorker.getBoxesNextTo().get(indexBoxNextTo);
             System.out.print("Box : " + "( "+ boxNextTo.getRow()+" , "+ boxNextTo.getColumn() +" )"+ " you can build --> ");
             for(int size = 0; size < boxNextTo.getPossibleBlock().size() ; size++ ){
@@ -553,7 +553,16 @@ public class CLIView extends View {
     public void printHeartBeat(ObjHeartBeat objHeartBeat){
         new Thread(() -> {
             System.out.println(objHeartBeat.getMessageHeartbeat());
-            sendMessageToServer.sendPong();
+            sendMessageToServer.sendPong(objHeartBeat.getClientIndex(), objHeartBeat.getTimeStamp());
+        }).start();
+    }
+
+    @Override
+    public void ClosingConnectionEvent(int indexClient) {
+        new Thread(() -> {
+            System.out.println("the client is not responding, the connection will be closed");
+            sendMessageToServer.sendAckClosingConnection(indexClient);
         }).start();
     }
 }
+

@@ -37,4 +37,5 @@ public interface Observer {
     void updateContinueBuild(AskBuildEvent askBuildEvent);
     void updateStartTurn();
     void updateWhoHasLost(int indexClient);
+    void updateUnreachableClient(int indexClient);
 }

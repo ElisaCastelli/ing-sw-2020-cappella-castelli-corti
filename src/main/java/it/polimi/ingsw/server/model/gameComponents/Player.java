@@ -38,6 +38,9 @@ public class Player implements Serializable {
      */
     private final int indexClient;
 
+    private final int MAX_HEARTBEATS_MISSED=3;
+    private int missed_heartbeat = 0;
+
 
     final PlayerStateManager gamerManager;
 
@@ -196,5 +199,22 @@ public class Player implements Serializable {
         return gamerManager.canBuildBeforeWorkerMove();
     }
 
+    public boolean controlHeartBeat(long timeStamp){
+        long actual= System.currentTimeMillis();
+        if((actual - timeStamp) > 50000 ){
+            missed_heartbeat++;
+        }else{
+            missed_heartbeat = 0;
+        }
 
+        if(missed_heartbeat == 3){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void setIndexPossibleBlock( int indexPossibleBlock){
+        gamerManager.setIndexPossibleBlock(indexPossibleBlock);
+    }
 }

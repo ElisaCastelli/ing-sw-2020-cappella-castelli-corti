@@ -88,6 +88,7 @@ public class PlayerStateManager {
     public void setPossibleBuild( Worker worker){
         currentState.setPossibleBuild(worker);
     }
+    public void setIndexPossibleBlock(int indexPossibleBlock) {currentState.setIndexPossibleBlock(indexPossibleBlock);}
     public boolean amITheWinner(){return currentState.amITheWinner();}
     public boolean amIDead() {
         return currentState.amIDead();

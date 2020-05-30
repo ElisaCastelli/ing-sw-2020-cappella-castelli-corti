@@ -42,9 +42,11 @@ public interface GameModel {
     boolean canBuild(int indexWorker);
     void setBoxBuilding(int indexWorker);
     boolean buildBlock(int indexWorker, int row, int column);
+    void setIndexPossibleBlock(int indexPossibleBlock);
     boolean checkWin(int rowStart, int columnStart, int indexWorker);
     boolean checkWinAfterBuild();
     int getWinner();
     void setDeadPlayer(int indexPlayer);
     void setPause();
+    boolean controlHeartBeat(int indexClient, long timeStamp);
 }

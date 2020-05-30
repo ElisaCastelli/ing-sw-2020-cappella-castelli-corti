@@ -335,9 +335,9 @@ public class VirtualView implements Observer {
     }
 
     //Metodo per fare la costruzione del piano
-    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn) {
+    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn, int indexPossibleBlock) {
         if(isReachable(row, column)){
-            controller.buildBlock(indexClient, indexWorker, rowWorker, columnWorker, row, column, isSpecialTurn);
+            controller.buildBlock(indexClient, indexWorker, rowWorker, columnWorker, row, column, isSpecialTurn, indexPossibleBlock);
         }else{
             updateBoard(true);
             //todo Controllo se è la prima o la seconda mossa
@@ -394,4 +394,17 @@ public class VirtualView implements Observer {
         controller.setPause();
     }
 
+    public void printHeartBeat(String messageHeartbeat, int indexClient, long timeStamp) {
+        controller.heartBeat(indexClient, timeStamp);
+        System.out.println(messageHeartbeat);
+    }
+
+    @Override
+    public void updateUnreachableClient(int indexClient) {
+        sendMessageToClient.sendCloseConnection(indexClient);
+    }
+
+    public void close(int indexClient) {
+        sendMessageToClient.close(indexClient);
+    }
 }

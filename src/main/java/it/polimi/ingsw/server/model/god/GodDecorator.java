@@ -14,6 +14,7 @@ public abstract class GodDecorator implements God {
     protected final God newGod;
     protected static boolean moveUp;
     protected static int completeTowers;
+    protected static int indexPossibleBlock;
 
     public GodDecorator ( God newGod ) {
         this.newGod = newGod;
@@ -73,6 +74,11 @@ public abstract class GodDecorator implements God {
     @Override
     public boolean moveBlock(Box pos) {
         return this.newGod.moveBlock( pos );
+    }
+
+    @Override
+    public void setIndexPossibleBlock(int possibleBlock) {
+        indexPossibleBlock= possibleBlock;
     }
 
     /**

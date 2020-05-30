@@ -61,6 +61,11 @@ public class GoingState extends GameState{
         return movedBlock;
     }
 
+
+    public void setIndexPossibleBlock(int indexPlayer, int indexPossibleBlock) {
+        players.get(indexPlayer).setIndexPossibleBlock(indexPossibleBlock);
+    }
+
     public void finishTurn(int indexPlayer){
         players.get(indexPlayer).goWaiting();
     }

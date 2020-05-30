@@ -51,6 +51,8 @@ public interface God {
      */
     boolean moveBlock ( Box pos );
 
+    void setIndexPossibleBlock(int indexPossibleBlock);
+
     /**
      * This methods checks if the player win
      * @param initialPos Position on the board where the worker starts to move
@@ -60,4 +62,5 @@ public interface God {
     boolean checkWin ( Box initialPos, Box finalBox );
 
     boolean canBuildBeforeWorkerMove();
+
 }

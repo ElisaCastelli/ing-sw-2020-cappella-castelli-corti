@@ -24,6 +24,8 @@ public class GameState {
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column, Board board){return false;}
 
+    public void setIndexPossibleBlock(int indexPlayer, int indexPossibleBlock) {}
+
     public void finishTurn(int indexPlayer){}
 
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){return false;}
@@ -33,4 +35,6 @@ public class GameState {
     public void setWinningPlayer(int indexPlayer){}
 
     public void setDeadPlayer(int indexPlayer){ }
+
+
 }

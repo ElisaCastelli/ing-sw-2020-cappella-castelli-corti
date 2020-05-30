@@ -51,4 +51,9 @@ public class IsPlaying extends PlayerState{
     public void setPossibleBuild( Worker worker){
         myGod.setPossibleBuild(worker);
     }
+
+    @Override
+    public void setIndexPossibleBlock(int indexPossibleBlock) {
+        myGod.setIndexPossibleBlock(indexPossibleBlock);
+    }
 }

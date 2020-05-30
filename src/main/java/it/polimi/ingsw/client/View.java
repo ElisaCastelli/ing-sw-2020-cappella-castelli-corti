@@ -35,4 +35,5 @@ public abstract class View {
     public abstract void anotherBuild(AskBuildEvent askBuildEvent);
 
     public abstract void printHeartBeat(ObjHeartBeat objHeartBeat);
+    public abstract void ClosingConnectionEvent(int clientIndex);
 }

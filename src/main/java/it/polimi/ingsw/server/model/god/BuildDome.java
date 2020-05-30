@@ -82,13 +82,11 @@ public class BuildDome extends GodDecorator {
      */
     @Override
     public boolean moveBlock(Box pos) {
-        //todo controllo che vuole costruire una dome non al 4 livello + test
-        if (pos.getCounter() != 4) {
-            if (pos.getCounter() == 3)
-                completeTowers++;
+        //todo test
+        if(indexPossibleBlock == 1){
             pos.build(4);
-        }
-        else{
+            completeTowers++;
+        }else{
             super.moveBlock(pos);
             if (pos.getCounter() == 4)
                 completeTowers++;
