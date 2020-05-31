@@ -33,6 +33,10 @@ public abstract class View {
     public abstract void wrongMove();
     public abstract void buildMove(AskBuildEvent askBuildEvent);
     public abstract void anotherBuild(AskBuildEvent askBuildEvent);
+    public abstract void loserEvent();
+    public abstract void winnerEvent();
+    public abstract void someoneWon();
+    public abstract void whoHasLost();
 
     public abstract void printHeartBeat(ObjHeartBeat objHeartBeat);
     public abstract void ClosingConnectionEvent(int clientIndex);

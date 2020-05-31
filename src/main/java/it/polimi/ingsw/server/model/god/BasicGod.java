@@ -66,8 +66,9 @@ public class BasicGod implements God {
             }
         }
     }
+
     public Block whatCanIBuild(Box box){
-        int sizeArrayBlocks= box.getBuilding().getArrayOfBlocks().size();
+        int sizeArrayBlocks = box.getBuilding().getArrayOfBlocks().size();
 
         Block block;
         if(sizeArrayBlocks == 0){

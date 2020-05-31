@@ -27,6 +27,7 @@ public class CLIView extends View {
     @Override
     public void askWantToPlay(AskWantToPlay askWantToPlay){
         new Thread(() -> {
+            //santoriniName();
             System.out.println("sto cencando di entare nella partita");
             sendMessageToServer.sendAskWantToPlay(askWantToPlay);
         }).start();
@@ -42,7 +43,7 @@ public class CLIView extends View {
 
     @Override
     public void setBoard(Board board) {
-        this.board=board;
+        this.board = board;
     }
 
     @Override
@@ -345,7 +346,7 @@ public class CLIView extends View {
 
             System.out.println("You selected the Box: "+ "( "+ objBlock.getRowBlock()+" , "+ objBlock.getColumnBlock()+" )");
             System.out.println("Let me Know what Block you want to build, select the correct index");
-            int inputPossibleBlock= twoNumbers(input);
+            int inputPossibleBlock = twoNumbers(input);
 
             objBlock.setPossibleBlock(inputPossibleBlock);
 
@@ -382,12 +383,14 @@ public class CLIView extends View {
         System.out.println("Here you can see what kind of block you can build");
         for (int indexBoxNextTo = 0; indexBoxNextTo < posWorker.getBoxesNextTo().size(); indexBoxNextTo++) {
             Box boxNextTo = posWorker.getBoxesNextTo().get(indexBoxNextTo);
-            System.out.print("Box : " + "( "+ boxNextTo.getRow()+" , "+ boxNextTo.getColumn() +" )"+ " you can build --> ");
-            for(int size = 0; size < boxNextTo.getPossibleBlock().size() ; size++ ){
-                Block block = boxNextTo.getPossibleBlock().get(size);
-                System.out.print("["+ size +"]"+block.toString()+"  ");
+            if(boxNextTo != null){
+                System.out.print("Box : " + "( "+ boxNextTo.getRow()+" , "+ boxNextTo.getColumn() +" )"+ " you can build --> ");
+                for(int size = 0; size < boxNextTo.getPossibleBlock().size() ; size++ ){
+                    Block block = boxNextTo.getPossibleBlock().get(size);
+                    System.out.print("["+ size +"]"+block.toString()+"  ");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 
@@ -486,10 +489,13 @@ public class CLIView extends View {
     }
 
     public String printStatePlayer(int indexPlayer, int currentPlayer){
-        if (usersArray.get(indexPlayer).getClient() == currentPlayer)
+        if(usersArray.get(indexPlayer).isDead()){
+            return "Is dead";
+        }else if (usersArray.get(indexPlayer).getClient() == currentPlayer){
             return "Is playing";
-        else
+        }else{
             return "Is waiting";
+        }
     }
 
     public void printBoard(boolean reach, int currentPlayer){
@@ -502,7 +508,7 @@ public class CLIView extends View {
             System.out.println(" "+ " "+ "0"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(0,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(0,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(0));
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(0));
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(0, currentPlayer));
-            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
+            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ "1"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(1,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(1,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(1));
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(1));
@@ -529,7 +535,7 @@ public class CLIView extends View {
             System.out.println(" "+ " "+ "0"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(0,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(0,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(0,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(0));
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(0));
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printStatePlayer(0, currentPlayer));
-            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(0,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
+            System.out.println(" "+ " "+ " "+ " "+ "||"+board.getBox(1,0).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,1).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,2).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,3).printsize()+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+board.getBox(1,4).printsize()+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.RED_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ "1"+ " "+ "||"+ " "+ " "+ " "+printByIndexPlayer(1,0,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,1,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,2,reach)+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+printByIndexPlayer(1,3,reach)+ " "+ " "+ " "+ "|"+" "+ " "+" "+printByIndexPlayer(1,4,reach)+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD + "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ "*"+ Color.RESET);
             System.out.println(" "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "|"+" "+ " "+" "+ " "+ " "+ " "+ " "+ "||"+ " "+ " "+ " "+ " "+ " "+ " "+ printName(1));
             System.out.println(" "+ " "+ " "+ " "+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+ "#"+"#"+ "#"+ "#"+ " "+ " "+ " "+ " "+ " "+ " "+ printGod(1));
@@ -549,6 +555,39 @@ public class CLIView extends View {
             System.out.println();
         }
     }
+
+    public void santoriniName(){
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " ");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ " "+ " "+ " ");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "A");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S");
+        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " ");
+    }
+
+    @Override
+    public void loserEvent() {
+        System.out.println("Game Over"); //todo da sistemare
+    }
+
+    @Override
+    public void winnerEvent() {
+        System.out.println("You Won"); //todo da sistemare
+    }
+
+    @Override
+    public void someoneWon() {
+        System.out.println("An opponent won. Game Over"); //todo da sistemare
+    }
+
+    @Override
+    public void whoHasLost() {
+        System.out.println("An opponent lost"); //todo da sistemare
+    }
+
     @Override
     public void printHeartBeat(ObjHeartBeat objHeartBeat){
         new Thread(() -> {
@@ -560,7 +599,7 @@ public class CLIView extends View {
     @Override
     public void ClosingConnectionEvent(int indexClient) {
         new Thread(() -> {
-            System.out.println("the client is not responding, the connection will be closed");
+            System.out.println("A client is not responding, the connection will be closed");
             sendMessageToServer.sendAckClosingConnection(indexClient);
         }).start();
     }

@@ -14,6 +14,8 @@ import it.polimi.ingsw.server.model.gameState.GameState;
 import it.polimi.ingsw.server.Observer;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ProxyGameModel implements GameModel, Subject{
     private GameModel gameModel;
@@ -272,8 +274,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifyWin(int indexClient) {
-        observer.updateWin(indexClient);
+    public void notifyWin(int winnerClient) {
+        observer.updateWin(winnerClient);
     }
 
     @Override
@@ -282,8 +284,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifyWhoHasLost(int indexClient) {
-        observer.updateWhoHasLost(indexClient);
+    public void notifyWhoHasLost(int loserClient) {
+        observer.updateWhoHasLost(loserClient);
     }
 
     @Override
@@ -313,12 +315,26 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public boolean controlHeartBeat(int indexClient, long timeStamp) {
-        boolean connected = gameModel.controlHeartBeat(indexClient, timeStamp);
-        if(!connected)
-            observer.updateUnreachableClient(indexClient);
-        return true;
+    public void controlHeartBeat(int indexClient, long timeStamp) {
+        gameModel.controlHeartBeat(indexClient, timeStamp);
     }
+
+    //da richiamare quando si aggiunge il player sull'array di giocatori
+    @Override
+    public boolean incrementHeartBeat(int indexPlayer){
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                boolean connected = gameModel.incrementHeartBeat(indexPlayer);
+                if(!connected){
+                    observer.updateUnreachableClient(indexPlayer);
+                }
+            }
+        }, 10000, 40000);
+        return  true;
+    }
+
     @Override
     public void setIndexPossibleBlock(int indexPossibleBlock) {
         gameModel.setIndexPossibleBlock(indexPossibleBlock);

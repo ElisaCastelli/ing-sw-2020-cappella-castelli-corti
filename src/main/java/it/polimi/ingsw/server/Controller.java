@@ -77,29 +77,35 @@ public class Controller  {
         if(canBuildBeforeWorkerMove){
             gameModel.notifySpecialTurn(objWorkerToMove);
         }else{
-            gameModel.notifyBasicTurn(objWorkerToMove.getIndexWorkerToMove(),objWorkerToMove.getRow(),objWorkerToMove.getColumn());
+            gameModel.notifyBasicTurn(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(),objWorkerToMove.getColumn());
         }
-
     }
 
     //da richiamare senza fare la notify visto che il metodo can move ritorna già un booleano
     public void canMove(){
-        //todo da rifare
+        int loserClient = gameModel.whoIsPlaying();
         boolean goAhead = gameModel.canMove();
         if(goAhead){
             gameModel.notifyStartTurn();
         }else{
-            //gameModel.notifyLoser();
+            gameModel.notifyLoser(loserClient);
+            int winnerClient = gameModel.getWinner();
+            if(winnerClient != -1){
+                gameModel.notifyWin(winnerClient);
+            }else{
+                gameModel.notifyWhoHasLost(loserClient);
+            }
         }
     }
+
     public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker){
+        int loserClient = gameModel.whoIsPlaying();
         boolean goAhead = gameModel.canMoveSpecialTurn(indexWorker);
         if(goAhead){
             gameModel.setBoxReachable(indexWorker);
             gameModel.notifyUpdateBoard(true);
             gameModel.notifyBasicTurn(indexWorker, rowWorker, columnWorker);
         }else{
-            int loserClient = gameModel.whoIsPlaying();
             gameModel.notifyLoser(loserClient);
             int winnerClient = gameModel.getWinner();
             if(winnerClient != -1){
@@ -120,7 +126,6 @@ public class Controller  {
     }
     ///richiamato
     public void movePlayer(ObjMove objMove) {
-
         boolean moved = gameModel.movePlayer(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn());
         AskMoveEvent askMoveEvent;
         if(moved){
@@ -135,7 +140,6 @@ public class Controller  {
         gameModel.notifyMovedWorker(askMoveEvent, clientIndex);
     }
 
-    ///
     public void checkWin(AskMoveEvent askMoveEvent, int indexClient) {
         boolean winCondition = gameModel.checkWin(askMoveEvent.getRowStart(), askMoveEvent.getColumnStart(), askMoveEvent.getIndexWorker());
         if(winCondition){
@@ -144,8 +148,6 @@ public class Controller  {
             gameModel.notifyContinueMove(askMoveEvent);
         }
     }
-
-
 
     public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker){
         boolean goAhead = gameModel.canBuild(indexWorker);
@@ -156,6 +158,7 @@ public class Controller  {
                 gameModel.notifyWin(winnerClient);
             }else{
                 gameModel.notifyWhoHasLost(indexClient);
+
             }
         }else{
             gameModel.notifyCanBuild(indexWorker, rowWorker, columnWorker);
@@ -164,14 +167,13 @@ public class Controller  {
 
     public void canBuildSpecialTurn(int indexWorker, int rowWorker, int columnWorker){
         //controllo che può costruire prima di chiederglielo
-        boolean specialCondition= gameModel.canBuildBeforeWorkerMove();
+        boolean specialCondition = gameModel.canBuildBeforeWorkerMove();
         if(specialCondition){
             //gli vado a chiedere se vuole fare la mossa prima
             gameModel.notifyAskBuildBeforeMove( indexWorker, rowWorker, columnWorker);
         }else{
             gameModel.notifyBasicTurn( indexWorker, rowWorker, columnWorker);
         }
-
     }
 
     public void setBoxBuilding(int indexWorker) {
@@ -196,7 +198,8 @@ public class Controller  {
     public void checkWinAfterBuild(AskBuildEvent askBuildEvent) {
         boolean winCondition = gameModel.checkWinAfterBuild();
         if(winCondition){
-            //gameModel.notifyWin(indexClient); //todo indexClient di chi ha vinto, fare la ricerca
+            int winnerClient = gameModel.getWinner();
+            gameModel.notifyWin(winnerClient);
         }else{
             gameModel.notifyContinueBuild(askBuildEvent);
         }
@@ -209,8 +212,7 @@ public class Controller  {
         gameModel.setPause();
     }
 
-    public void heartBeat(int indexClient,long timeStamp) {
+    public void heartBeat(int indexClient, long timeStamp) {
         gameModel.controlHeartBeat(indexClient, timeStamp);
-
     }
 }

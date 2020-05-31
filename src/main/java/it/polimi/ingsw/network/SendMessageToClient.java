@@ -72,23 +72,32 @@ public class SendMessageToClient {
         echoServer.sendBroadCast(askMoveEvent);
     }
 
+    public void sendAskBuildEvent(AskBuildEvent askBuildEvent) {
+        echoServer.sendBroadCast(askBuildEvent);
+    }
+
     public void sendWin(int indexClient) {
+        WinnerEvent winnerEvent = new WinnerEvent();
+        winnerEvent.setCurrentClientPlaying(indexClient);
+        echoServer.sendBroadCast(winnerEvent);
     }
 
     public void sendLoser(int indexClient) {
-        //Mando solo a chi ha perso
+        echoServer.send(new LoserEvent(), indexClient);
     }
 
-    public void sendAskBuildEvent(AskBuildEvent askBuildEvent) {
-        echoServer.sendBroadCast(askBuildEvent);
+    public void sendWhoHasLost(int loserClient) {
+        WhoHasLostEvent whoHasLostEvent = new WhoHasLostEvent();
+        whoHasLostEvent.setCurrentClientPlaying(loserClient);
+        echoServer.sendBroadCast(whoHasLostEvent);
     }
 
     public void sendAskBuildBeforeMove(AskBuildBeforeMove askBuildBeforeMove) {
         echoServer.sendBroadCast(askBuildBeforeMove);
     }
 
-    public void sendCloseConnection(int indexClient) {
-        echoServer.send(new CloseConnectionFromServerEvent(), indexClient);
+    public void sendCloseConnection() {
+        echoServer.sendBroadCast(new CloseConnectionFromServerEvent());
     }
 
     public void close(int indexClient) {

@@ -10,6 +10,7 @@ public class EndState extends GameState{
         this.winner = winner;
     }
 
+    //Ritorna indice del client
     public int getWinner(){
         return winner;
     }

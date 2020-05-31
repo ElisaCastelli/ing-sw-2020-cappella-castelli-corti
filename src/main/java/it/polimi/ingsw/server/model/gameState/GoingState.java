@@ -51,7 +51,7 @@ public class GoingState extends GameState{
     }
 
     public void setBoxBuilding(int indexPlayer, int indexWorker){
-        players.get(indexPlayer).setPossibleBuild(indexWorker-1);
+        players.get(indexPlayer).setPossibleBuild(indexWorker - 1);
     }
 
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column, Board board){
@@ -73,40 +73,27 @@ public class GoingState extends GameState{
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){
         boolean win = players.get(indexPlayer).checkWin(startBox, players.get(indexPlayer).getWorkerBox(indexWorker-1));
         if(win){
-            manager.goEnd(indexPlayer);
+            int indexClient = players.get(indexPlayer).getIndexClient();
+            manager.goEnd(indexClient);
         }
         return win;
     }
 
     public boolean checkWinAfterBuild(){
         boolean win = false;
-        int player = 0;
-        while(player < players.size() && !win ){
-            int worker = 0;
-            while( worker < 2 && !win){
-                win = players.get(player).checkWin(players.get(player).getWorkerBox(worker), players.get(player).getWorkerBox(worker));
-                worker++;
+        for(Player player : players){
+            win = player.checkWin(player.getWorkerBox(0), player.getWorkerBox(0));
+            if(win){
+                player.goWin();
+                manager.goEnd(player.getIndexClient());
             }
-            player++;
-        }
-
-        if(win){
-            manager.goEnd(player);
         }
         return win;
-    }
-
-    public int getWinner(){
-        for(Player player : players){
-            if(player.amITheWinner()){
-                return player.getIndexClient();
-            }
-        }
-        return -1;
     }
 
     public void setDeadPlayer(int indexPlayer){
         players.get(indexPlayer).goDead();
         players.get(indexPlayer).clearWorkers();
+        playersDead.add(players.get(indexPlayer));
     }
 }

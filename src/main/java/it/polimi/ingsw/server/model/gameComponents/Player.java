@@ -163,9 +163,12 @@ public class Player implements Serializable {
         return gamerManager.moveBlock( pos );
     }
 
-    public boolean checkWin(Box startedBox, Box finalBox) { //index già giusto
-        // posizione di partenza e posizione di arrivo
-        return gamerManager.checkWin(startedBox, finalBox);
+    public boolean checkWin(Box startedBox, Box finalBox) {
+        boolean win = gamerManager.checkWin(finalBox, startedBox);
+        if(win){
+            goWin();
+        }
+        return win;
     }
 
     //controlla che entrambe le pedine possono muoversi
@@ -176,9 +179,6 @@ public class Player implements Serializable {
         gamerManager.setPossibleMove(myWorkers[1]);
         boolean secondWorker = myWorkers[1].getActualBox().checkPossible();
         myWorkers[1].getActualBox().clearBoxesNextTo();
-        if(!firstWorker && !secondWorker){
-            gamerManager.goDead();
-        }
         return (firstWorker || secondWorker);
     }
 
@@ -199,15 +199,18 @@ public class Player implements Serializable {
         return gamerManager.canBuildBeforeWorkerMove();
     }
 
-    public boolean controlHeartBeat(long timeStamp){
+    public void controlHeartBeat(long timeStamp){
         long actual= System.currentTimeMillis();
-        if((actual - timeStamp) > 50000 ){
+        missed_heartbeat = 0;
+        //il timestamp non serve
+        if((actual - timeStamp) > 100000 ){
             missed_heartbeat++;
-        }else{
-            missed_heartbeat = 0;
         }
+    }
 
-        if(missed_heartbeat == 3){
+    public boolean incrementMissedHeartBeat(){
+        missed_heartbeat++;
+        if(missed_heartbeat == MAX_HEARTBEATS_MISSED){
             return false;
         }else{
             return true;

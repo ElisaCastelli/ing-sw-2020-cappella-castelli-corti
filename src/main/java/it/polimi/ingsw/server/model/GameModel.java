@@ -48,5 +48,6 @@ public interface GameModel {
     int getWinner();
     void setDeadPlayer(int indexPlayer);
     void setPause();
-    boolean controlHeartBeat(int indexClient, long timeStamp);
+    void controlHeartBeat(int indexClient, long timeStamp);
+    boolean incrementHeartBeat(int indexClient );
 }

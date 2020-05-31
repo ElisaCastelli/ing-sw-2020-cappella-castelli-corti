@@ -99,6 +99,14 @@ public class Game implements GameModel{
         }
     }
 
+    public void fakePlaying(int indexLoser){
+        if(indexLoser == 0){
+            players.get(nPlayers - 1).goPlay();
+        }else{
+            players.get(indexLoser - 1).goPlay();
+        }
+    }
+
     public Board getBoard(){
         return board;
     }
@@ -214,22 +222,22 @@ public class Game implements GameModel{
             loadCards();
         }
         ArrayList<String> cards= new ArrayList<>();
-        for(int i=0; i < godsArray.size();i++){
-            cards.add(godsArray.get(i).getName());
+        for (God god : godsArray) {
+            cards.add(god.getName());
         }
         return cards;
     }
     public ArrayList<String> getTempCard(){
         ArrayList<String> temporanee = new ArrayList<>();
-        for(int i=0; i < tempCard.size(); i++){
-            temporanee.add(tempCard.get(i).getName());
+        for (God god : tempCard) {
+            temporanee.add(god.getName());
         }
         return temporanee;
     }
     public ArrayList<String> getCardUsed(){
         ArrayList<String> drawnCard = new ArrayList<>();
-        for(int i = 0; i < cardUsed.size(); i++){
-            drawnCard.add(cardUsed.get(i).getName());
+        for (God god : cardUsed) {
+            drawnCard.add(god.getName());
         }
         return drawnCard;
     }
@@ -256,7 +264,7 @@ public class Game implements GameModel{
     }
 
     public boolean initializeWorker(Box box1, Box box2){
-        int indexPlayer=whoIsPlaying();
+        int indexPlayer = whoIsPlaying();
         return players.get(indexPlayer).initializeWorker(box1, box2, board);
     }
     
@@ -270,7 +278,7 @@ public class Game implements GameModel{
 
     @Override
     public boolean canBuildBeforeWorkerMove() {
-        int indexPlayer=whoIsPlaying();
+        int indexPlayer = whoIsPlaying();
         return stateManager.canBuildBeforeWorkerMove(indexPlayer);
     }
 
@@ -284,6 +292,8 @@ public class Game implements GameModel{
             setDeadPlayer(playerIndex);
             if(nPlayers == 2 || playersDead.size() == 2){
                 thereIsAWinner();
+            }else{
+                fakePlaying(playerIndex);
             }
         }
         return canMove;
@@ -317,10 +327,10 @@ public class Game implements GameModel{
         boolean canBuild = stateManager.canBuild(indexPlayer, indexWorker);
         if(!canBuild){
             setDeadPlayer(indexPlayer);
-            playersDead.add(players.get(indexPlayer));
-
             if(nPlayers == 2 || playersDead.size() == 2){
                 thereIsAWinner();
+            }else{
+                fakePlaying(indexPlayer);
             }
         }
         return canBuild;
@@ -338,6 +348,7 @@ public class Game implements GameModel{
                 }
                 if(mayBeTheWinner == playersDead.size()){
                     player.goWin();
+                    stateManager.goEnd(player.getIndexClient());
                 }
             }
         }
@@ -368,7 +379,6 @@ public class Game implements GameModel{
         return stateManager.checkWinAfterBuild();
     }
 
-
     public int getWinner(){
         return stateManager.getWinner();
     }
@@ -381,9 +391,13 @@ public class Game implements GameModel{
         stateManager.goPause();
     }
 
-    public boolean controlHeartBeat(int indexClient, long timeStamp) {
+    public void controlHeartBeat(int indexClient, long timeStamp) {
         int indexPlayer= searchByClientIndex(indexClient);
-        return players.get(indexPlayer).controlHeartBeat(timeStamp);
+        players.get(indexPlayer).controlHeartBeat(timeStamp);
+    }
+
+    public boolean incrementHeartBeat(int indexPlayer){
+        return players.get(indexPlayer).incrementMissedHeartBeat();
     }
 
 }

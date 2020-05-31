@@ -79,7 +79,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        workerMoved=true;
+        workerMoved = true;
         return super.moveWorker(worker,pos);
     }
 

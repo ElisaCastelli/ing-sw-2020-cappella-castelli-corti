@@ -108,6 +108,22 @@ public class VisitorClient {
         }
     }
 
+    public void visit(WinnerEvent winnerEvent){
+        if(winnerEvent.getClientIndex() == winnerEvent.getCurrentClientPlaying())
+            view.winnerEvent();
+        else
+            view.someoneWon();
+    }
+
+    public void visit(LoserEvent loserEvent){
+        view.loserEvent();
+    }
+
+    public void visit(WhoHasLostEvent whoHasLostEvent){
+        if(whoHasLostEvent.getClientIndex() != whoHasLostEvent.getCurrentClientPlaying())
+            view.whoHasLost();
+    }
+
     public void visit(ObjHeartBeat objHeartBeat){
         view.printHeartBeat(objHeartBeat);
     }

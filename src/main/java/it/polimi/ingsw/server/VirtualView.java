@@ -37,15 +37,18 @@ public class VirtualView implements Observer {
         if(gameModel.getNPlayers() == 0 && getPlayerArray().size() == 0){
 
             getPlayerArray().add(new Player(indexClient));
+            gameModel.incrementHeartBeat(getPlayerArray().size()-1);
             sendMessageToClient.sendAskNPlayer();
 
         }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() == 0){
             //non hanno settato ancora ma hai la possibilità di giocare
             getPlayerArray().add(new Player(indexClient));
+            gameModel.incrementHeartBeat(getPlayerArray().size()-1);
             sendMessageToClient.sendYouHaveToWait(indexClient);
 
         }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() != 0){
             getPlayerArray().add(new Player(indexClient));
+            gameModel.incrementHeartBeat(getPlayerArray().size()-1);
             if(getPlayerArray().size() == gameModel.getNPlayers()){
                 ///se sei arrivato per terzo poi giocare e sei quello che manda il broardcast di AskPlayer
                 sendMessageToClient.YouCanPlay(gameModel.getNPlayers());
@@ -386,8 +389,9 @@ public class VirtualView implements Observer {
     }
 
     @Override
-    public void updateWhoHasLost(int indexClient) {
-        //indexClient è quello di chi ha perso. Questo messaggio lo vedono chi è ancora in gioco
+    public void updateWhoHasLost(int loserClient) {
+        sendMessageToClient.sendWhoHasLost(loserClient);
+        canMove();
     }
 
     public void setPause(){
@@ -401,7 +405,8 @@ public class VirtualView implements Observer {
 
     @Override
     public void updateUnreachableClient(int indexClient) {
-        sendMessageToClient.sendCloseConnection(indexClient);
+        close(indexClient);
+        sendMessageToClient.sendCloseConnection();
     }
 
     public void close(int indexClient) {
