@@ -39,5 +39,5 @@ public abstract class View {
     public abstract void whoHasLost();
 
     public abstract void printHeartBeat(ObjHeartBeat objHeartBeat);
-    public abstract void ClosingConnectionEvent(int clientIndex);
+    public abstract void closingConnectionEvent(int indexClient, boolean GameNotAvailable);
 }

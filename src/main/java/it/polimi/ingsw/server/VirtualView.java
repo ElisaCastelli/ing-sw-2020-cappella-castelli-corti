@@ -36,19 +36,19 @@ public class VirtualView implements Observer {
     public void askWantToPlay(int indexClient){
         if(gameModel.getNPlayers() == 0 && getPlayerArray().size() == 0){
 
-            getPlayerArray().add(new Player(indexClient));
-            gameModel.incrementHeartBeat(getPlayerArray().size()-1);
+            controller.addPlayer(indexClient);
             sendMessageToClient.sendAskNPlayer();
 
         }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() == 0){
             //non hanno settato ancora ma hai la possibilità di giocare
-            getPlayerArray().add(new Player(indexClient));
-            gameModel.incrementHeartBeat(getPlayerArray().size()-1);
+
+            controller.addPlayer(indexClient);
             sendMessageToClient.sendYouHaveToWait(indexClient);
 
         }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() != 0){
-            getPlayerArray().add(new Player(indexClient));
-            gameModel.incrementHeartBeat(getPlayerArray().size()-1);
+
+            controller.addPlayer(indexClient);
+
             if(getPlayerArray().size() == gameModel.getNPlayers()){
                 ///se sei arrivato per terzo poi giocare e sei quello che manda il broardcast di AskPlayer
                 sendMessageToClient.YouCanPlay(gameModel.getNPlayers());
@@ -58,7 +58,7 @@ public class VirtualView implements Observer {
                 sendMessageToClient.sendYouHaveToWait(indexClient);
             }else{
                 //non giochi mai
-                sendMessageToClient.sendYouHaveToWait(indexClient);
+                sendMessageToClient.sendCloseConnection(indexClient, true);
             }
         }
     }
@@ -85,9 +85,7 @@ public class VirtualView implements Observer {
     public void addPlayer(String name, int age, int indexClient){
         synchronized (LOCK) {
             if (getPlayerArray().size() > gameModel.getNPlayers()) {
-                if (getPlayerArray().size() > gameModel.getNPlayers()) {
-                    getPlayerArray().subList(gameModel.getNPlayers(), getPlayerArray().size()).clear();
-                }
+                controller.removeExtraPlayer();
             }
             controller.addPlayer(name, age, indexClient);
         }
@@ -119,6 +117,7 @@ public class VirtualView implements Observer {
     @Override
     public void updatePlayer() {
         startGame();
+        sendMessageToClient.getEchoServer().resetWaiting();
         sendMessageToClient.sendStartGameEvent(gameModel.getNPlayers());
     }
 
@@ -405,11 +404,10 @@ public class VirtualView implements Observer {
 
     @Override
     public void updateUnreachableClient(int indexClient) {
-        close(indexClient);
-        sendMessageToClient.sendCloseConnection();
+        sendMessageToClient.sendCloseConnection(indexClient, false);
     }
 
     public void close(int indexClient) {
-        sendMessageToClient.close(indexClient);
+        System.out.println("client: "+ indexClient +" will be closed");
     }
 }

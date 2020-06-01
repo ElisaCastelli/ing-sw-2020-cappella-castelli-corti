@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.events.AskNPlayerEvent;
 //import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.events.AskWantToPlay;
 
+import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
 import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorServer;
@@ -23,6 +24,7 @@ public class ServerHandler extends Thread{
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
     private Socket socket;
+    private boolean closed= false;
 
 
 
@@ -38,13 +40,19 @@ public class ServerHandler extends Thread{
 
     public void sendHeartBeat(){
         Timer t = new Timer();
-        t.scheduleAtFixedRate(new TimerTask() {
+        TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("sending HeartBeat");
-                sendUpdate(new ObjHeartBeat(indexClientArray, System.currentTimeMillis()));
+                if (!closed) {
+                    System.out.println("sending HeartBeat");
+                    sendUpdate(new ObjHeartBeat(System.currentTimeMillis()));
+                }else{
+                    t.cancel();
+                }
+
             }
-        }, 10000, 50000);
+        };
+        t.scheduleAtFixedRate(tt, 50000, 60000);
     }
 
     @Override
@@ -55,15 +63,18 @@ public class ServerHandler extends Thread{
     }
 
     public void listening(){
-        while (true){
+        while (!closed){
             ObjMessage message = null;
             try{
                 message = (ObjMessage) inputStream.readObject();
+                if(message instanceof CloseConnectionFromClientEvent)
+                    closed=true;
                 message.accept(new VisitorServer(virtualView));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        close();
     }
 
 
@@ -79,16 +90,6 @@ public class ServerHandler extends Thread{
 
 
     public void close(){
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         try {
             socket.close();
         } catch (IOException e) {

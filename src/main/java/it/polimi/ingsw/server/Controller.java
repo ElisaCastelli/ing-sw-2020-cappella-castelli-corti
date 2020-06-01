@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Controller  {
     private ProxyGameModel gameModel;
@@ -25,11 +26,19 @@ public class Controller  {
         return gameModel.notifySetNPlayers();
     }
 
+    public void addPlayer(int indexPlayer){
+        Timer timer = new Timer();
+        gameModel.addPlayer(indexPlayer, timer);
+    }
     public void addPlayer(String name, int age, int indexClient){
         boolean addCompleted = gameModel.addPlayer(name, age, indexClient);
         if(addCompleted){
             gameModel.notifyAddPlayer();
         }
+    }
+
+    public void removeExtraPlayer(){
+        gameModel.removeExtraPlayer();
     }
 
     public void startGame(){

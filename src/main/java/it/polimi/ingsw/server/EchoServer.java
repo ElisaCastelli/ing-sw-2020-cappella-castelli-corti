@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.SendMessageToClient;
 import it.polimi.ingsw.network.events.AskPlayerEvent;
+import it.polimi.ingsw.network.events.CloseConnectionFromServerEvent;
 import it.polimi.ingsw.network.events.StartGameEvent;
 import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,6 +51,29 @@ public class EchoServer {
         clientWaiting.get(indexArrayClient).sendUpdate(objMessage);
     }
 
+    public void closeServerHandler(){
+        if(clientWaiting.size() > 0){
+            for(ServerHandler serverHandler: clientWaiting){
+                serverHandler.close();
+            }
+        }else{
+            for (ServerHandler serverHandler : clientArray){
+                serverHandler.close();
+            }
+        }
+    }
+
+    public void resetWaiting(){
+        int sizeWaiting = clientWaiting.size();
+        int sizeInGame = clientArray.size();
+        if (sizeWaiting > sizeInGame) {
+            for(int i = sizeInGame; i < sizeWaiting; i++){
+                clientWaiting.get(i).sendUpdate(new CloseConnectionFromServerEvent(true));
+            }
+        }
+        clientWaiting.clear();
+    }
+
     //non lo considerate è per dopo se vogliamo fare la lobby, non è mai richiamato
     public void acceptClientWaiting(ServerSocket serverSocket) {
         VirtualView virtualView = null;
@@ -57,11 +82,9 @@ public class EchoServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        while(true){
-
-            Socket clientSocket = new Socket();
-            try{
+        try{
+            while(true) {
+                Socket clientSocket = new Socket();
 
                 clientSocket = serverSocket.accept();
                 System.out.println("Un client si è connesso" + clientSocket);
@@ -69,18 +92,21 @@ public class EchoServer {
                 ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                 ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
 
-                ServerHandler serverHandler = new ServerHandler(clientSocket, oos, ois, virtualView , clientWaiting.size());
+                ServerHandler serverHandler = new ServerHandler(clientSocket, oos, ois, virtualView, clientWaiting.size());
                 clientWaiting.add(serverHandler);
 
                 serverHandler.start();
-
-            }catch(Exception e){
-                try {
-                    clientSocket.close();
-                    System.out.println("Error");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (serverSocket != null) {
+                    closeServerHandler();
+                    serverSocket.close();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

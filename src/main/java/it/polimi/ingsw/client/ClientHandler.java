@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.SendMessageToServer;
-import it.polimi.ingsw.network.events.AskWantToPlay;
+import it.polimi.ingsw.network.events.CloseConnectionFromServerEvent;
 import it.polimi.ingsw.network.objects.ObjMessage;
 import it.polimi.ingsw.network.VisitorClient;
 
@@ -16,6 +16,7 @@ public class ClientHandler {
     private final Socket socket;
     private View view;
     private final Object LOCK=new Object();
+    private boolean closed= false;
 
     public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket) {
         this.inputStream = inputStream;
@@ -27,44 +28,43 @@ public class ClientHandler {
         return view;
     }
 
-    public void listening() {
+    public void listening () {
         view = new CLIView(new SendMessageToServer(this));
 
-        while(true){
-            ObjMessage objMessage = null;
-            try {
-                objMessage = (ObjMessage)inputStream.readObject();
-                objMessage.accept(new VisitorClient(view));
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        try {
+            while (!closed) {
+                ObjMessage objMessage = null;
+
+                try {
+                    objMessage = (ObjMessage) inputStream.readObject();
+                } catch (IOException | ClassNotFoundException e) {
+                    closed = true;
+                }
+                if (objMessage instanceof CloseConnectionFromServerEvent)
+                    closed = true;
+                if (objMessage != null)
+                    objMessage.accept(new VisitorClient(view));
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        close();
     }
 
     public void sendMessage(ObjMessage objMessage){
-        //System.out.println("----> sto cercando di inviare un messaggio");
-        synchronized (LOCK){
-            try {
-                //System.out.println("----> ci sono riuscito");
-                outputStream.writeObject(objMessage);
-                outputStream.reset();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if(!closed) {
+            synchronized (LOCK) {
+                try {
+                    outputStream.writeObject(objMessage);
+                    outputStream.reset();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public void close(){
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void close() {
         try {
             socket.close();
         } catch (IOException e) {

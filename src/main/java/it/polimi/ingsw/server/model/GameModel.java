@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.god.God;
 import it.polimi.ingsw.server.model.playerState.PlayerState;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public interface GameModel {
     Board getBoard();
@@ -17,7 +18,9 @@ public interface GameModel {
     int getNPlayers();
     void setNPlayers(int nPlayers);
     void startGame();
+    void addPlayer(int indexClient, Timer timer);
     boolean addPlayer(String name, int age, int indexClient);
+    void removeExtraPlayer();
     boolean askState();
     int searchByName(String name);
     int searchByClientIndex(int indexClient);
@@ -49,5 +52,5 @@ public interface GameModel {
     void setDeadPlayer(int indexPlayer);
     void setPause();
     void controlHeartBeat(int indexClient, long timeStamp);
-    boolean incrementHeartBeat(int indexClient );
+    boolean incrementHeartBeat(int indexClient, Timer timer );
 }

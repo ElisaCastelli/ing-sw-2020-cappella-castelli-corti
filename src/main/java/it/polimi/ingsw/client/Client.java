@@ -16,22 +16,38 @@ public class Client {
     }
 
     public static void  main(String[] args) {
+
+        //inizializzazione fatta senza main
         try {
-            //inizializzazione fatta senza main
             ip = InetAddress.getByName("localhost");
-            portNumber = 1234;
-
-            // establish the connection with server port portnumber
-            Socket clientSocket = new Socket(ip, portNumber);
-            // obtaining input and out streams
-
-            ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-            ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
-
-            ClientHandler clientHandler = new ClientHandler(inputStream, outputStream, clientSocket);
-            clientHandler. listening();
-        } catch (IOException e) {
+        } catch (UnknownHostException e) {
             e.printStackTrace();
+        }
+        portNumber = 1234;
+
+        // establish the connection with server port portnumber
+        Socket clientSocket = null;
+        try {
+            clientSocket = new Socket(ip, portNumber);
+        } catch (IOException e) {
+            System.out.println("connection refused");
+        }
+        if(clientSocket != null) {
+            // obtaining input and out streams
+            ObjectOutputStream outputStream = null;
+            try {
+                outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ObjectInputStream inputStream = null;
+            try {
+                inputStream = new ObjectInputStream(clientSocket.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ClientHandler clientHandler = new ClientHandler(inputStream, outputStream, clientSocket);
+            clientHandler.listening();
         }
     }
 }

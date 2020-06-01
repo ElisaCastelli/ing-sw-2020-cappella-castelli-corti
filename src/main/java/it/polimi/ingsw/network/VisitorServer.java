@@ -97,6 +97,6 @@ public class VisitorServer {
     }
 
     public void visit(CloseConnectionFromClientEvent closeConnectionClientEvent){
-        virtualView.close(closeConnectionClientEvent.getIndexClient());
+        virtualView.close(closeConnectionClientEvent.getClientIndex());
     }
 }

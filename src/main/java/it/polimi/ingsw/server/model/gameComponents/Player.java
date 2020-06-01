@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.god.God;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Timer;
 
 
 public class Player implements Serializable {
@@ -38,20 +39,23 @@ public class Player implements Serializable {
      */
     private final int indexClient;
 
-    private final int MAX_HEARTBEATS_MISSED=3;
+    private final int MAX_HEARTBEATS_MISSED=5;
     private int missed_heartbeat = 0;
+    private final Timer timer;
+    private final Object LOCK = new Object();
 
 
     final PlayerStateManager gamerManager;
 
 
-    public Player(int indexClient) {
+    public Player(int indexClient, Timer timer) {
         myWorkers = new Worker[2];
         myWorkers[0] = new Worker(1);
         myWorkers[1] = new Worker(2);
         myGod = new BasicGod();
         gamerManager = new PlayerStateManager(myGod);
         this.indexClient = indexClient;
+        this.timer = timer;
     }
 
     public void setGod(God god){
@@ -96,6 +100,18 @@ public class Player implements Serializable {
 
     public int getIndexClient() {
         return indexClient;
+    }
+
+    public int getMissed_heartbeat() {
+        return missed_heartbeat;
+    }
+
+    public void setMissed_heartbeat(int missed_heartbeat) {
+        this.missed_heartbeat = missed_heartbeat;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 
     /**
@@ -200,20 +216,21 @@ public class Player implements Serializable {
     }
 
     public void controlHeartBeat(long timeStamp){
-        long actual= System.currentTimeMillis();
-        missed_heartbeat = 0;
-        //il timestamp non serve
-        if((actual - timeStamp) > 100000 ){
-            missed_heartbeat++;
-        }
+        System.out.println(missed_heartbeat+"riazzero"+ indexPlayer);
+        setMissed_heartbeat(0);
     }
 
     public boolean incrementMissedHeartBeat(){
-        missed_heartbeat++;
-        if(missed_heartbeat == MAX_HEARTBEATS_MISSED){
-            return false;
-        }else{
-            return true;
+        synchronized (LOCK) {
+            int mh = getMissed_heartbeat();
+            mh++;
+            System.out.println(mh + "player" + indexClient );
+            setMissed_heartbeat(mh);
+            if (getMissed_heartbeat() == MAX_HEARTBEATS_MISSED) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 

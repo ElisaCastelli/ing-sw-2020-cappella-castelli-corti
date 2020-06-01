@@ -4,6 +4,7 @@ package it.polimi.ingsw.server.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Timer;
 import java.util.stream.Collectors;
 
 import it.polimi.ingsw.network.User;
@@ -129,6 +130,11 @@ public class Game implements GameModel{
         return nPlayers;
     }
 
+    @Override
+    public void addPlayer(int indexClient, Timer timer) {
+        players.add(new Player(indexClient, timer));
+    }
+
     public boolean addPlayer(String name, int age, int indexClient){
         int playerIndex = searchByClientIndex(indexClient);
         players.get(playerIndex).setName(name);
@@ -145,6 +151,16 @@ public class Game implements GameModel{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void removeExtraPlayer() {
+        int playerSize = players.size();
+        for(int index = playerSize - 1; index >= nPlayers  ; index-- ){
+            players.get(index).getTimer().cancel();
+            players.get(index).getTimer().purge();
+            players.remove(index);
+        }
     }
 
     public void startGame(){
@@ -396,7 +412,7 @@ public class Game implements GameModel{
         players.get(indexPlayer).controlHeartBeat(timeStamp);
     }
 
-    public boolean incrementHeartBeat(int indexPlayer){
+    public boolean incrementHeartBeat(int indexPlayer, Timer timer){
         return players.get(indexPlayer).incrementMissedHeartBeat();
     }
 

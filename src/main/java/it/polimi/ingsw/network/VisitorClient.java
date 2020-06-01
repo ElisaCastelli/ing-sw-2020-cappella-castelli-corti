@@ -129,7 +129,7 @@ public class VisitorClient {
     }
 
     public void visit(CloseConnectionFromServerEvent connectionEvent){
-        view.ClosingConnectionEvent(connectionEvent.getClientIndex());
+        view.closingConnectionEvent(connectionEvent.getClientIndex(), connectionEvent.isGameNotAvailable());
     }
 
 }

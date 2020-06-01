@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 public class ProxyGameModel implements GameModel, Subject{
     private GameModel gameModel;
+    private final Object LOCK = new Object();
 
     private Observer observer;
     public ProxyGameModel() throws Exception {
@@ -45,9 +46,23 @@ public class ProxyGameModel implements GameModel, Subject{
     public void setNPlayers(int nPlayers) {
         gameModel.setNPlayers(nPlayers);
     }
+
+    @Override
+    public void addPlayer(int indexClient, Timer timer) {
+        synchronized (LOCK) {
+            gameModel.addPlayer(indexClient, timer);
+            incrementHeartBeat(indexClient, timer);
+        }
+    }
+
     @Override
     public boolean addPlayer(String name, int age, int indexClient) {
         return gameModel.addPlayer(name, age, indexClient);
+    }
+
+    @Override
+    public void removeExtraPlayer() {
+        gameModel.removeExtraPlayer();
     }
 
     @Override
@@ -321,17 +336,20 @@ public class ProxyGameModel implements GameModel, Subject{
 
     //da richiamare quando si aggiunge il player sull'array di giocatori
     @Override
-    public boolean incrementHeartBeat(int indexPlayer){
-        Timer t = new Timer();
-        t.scheduleAtFixedRate(new TimerTask() {
+    public boolean incrementHeartBeat(int indexClient, Timer timer){
+
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                boolean connected = gameModel.incrementHeartBeat(indexPlayer);
-                if(!connected){
-                    observer.updateUnreachableClient(indexPlayer);
+                synchronized (LOCK) {
+                    int indexPlayer = searchByClientIndex(indexClient);
+                    boolean connected = gameModel.incrementHeartBeat(indexPlayer, timer);
+                    if (!connected) {
+                        observer.updateUnreachableClient(indexClient);
+                    }
                 }
             }
-        }, 10000, 40000);
+        }, 10000, 100000);
         return  true;
     }
 

@@ -13,6 +13,10 @@ public class SendMessageToServer {
 
     private final ClientHandler clientHandler;
 
+    public ClientHandler getClientHandler() {
+        return clientHandler;
+    }
+
     public SendMessageToServer(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
     }
@@ -79,8 +83,9 @@ public class SendMessageToServer {
         clientHandler.sendMessage(new AckState());
     }
 
-    public void sendPong(int indexClient, long timeStamp){
-        ObjHeartBeat objHeartBeat =new ObjHeartBeat(indexClient, timeStamp);
+    public synchronized void sendPong(int indexClient, long timeStamp){
+        ObjHeartBeat objHeartBeat =new ObjHeartBeat(timeStamp);
+        objHeartBeat.setClientIndex(indexClient);
         clientHandler.sendMessage(objHeartBeat);
     }
 
@@ -89,7 +94,9 @@ public class SendMessageToServer {
     }
 
 
-    public void sendAckClosingConnection(int clientIndex) {
-        clientHandler.sendMessage(new CloseConnectionFromClientEvent(clientIndex));
+    public void sendAckClosingConnection(int indexClient) {
+        CloseConnectionFromClientEvent closeConnectionFromClientEvent = new CloseConnectionFromClientEvent();
+        closeConnectionFromClientEvent.setClientIndex(indexClient);
+        clientHandler.sendMessage(closeConnectionFromClientEvent);
     }
 }

@@ -13,14 +13,17 @@ public class SendMessageToClient {
         this.echoServer = echoServer;
     }
 
+    public EchoServer getEchoServer() {
+        return echoServer;
+    }
+
     public void sendAskNPlayer(){
         echoServer.updateClientArray(0);
         echoServer.getClientArray().get(0).sendUpdate(new AskNPlayerEvent());
     }
 
-    public void sendYouHaveToWait(int indexClient) {
+    public void sendYouHaveToWait(int indexClient ) {
         echoServer.sendWaiting(new ObjWait(), indexClient);
-
     }
 
     public void YouCanPlay(int npLayer) {
@@ -96,13 +99,12 @@ public class SendMessageToClient {
         echoServer.sendBroadCast(askBuildBeforeMove);
     }
 
-    public void sendCloseConnection() {
-        echoServer.sendBroadCast(new CloseConnectionFromServerEvent());
+    public void sendCloseConnection(int indexClient, boolean gameNotAvailable) {
+        if(echoServer.getClientWaiting().size() > 0 ){
+            echoServer.sendWaiting(new CloseConnectionFromServerEvent(gameNotAvailable), indexClient);
+        }else {
+            echoServer.send(new CloseConnectionFromServerEvent(gameNotAvailable), indexClient);
+        }
     }
 
-    public void close(int indexClient) {
-        echoServer.getClientArray().remove(indexClient);
-        echoServer.getClientWaiting().remove(indexClient);
-        echoServer.getClientArray().get(indexClient).close();
-    }
 }

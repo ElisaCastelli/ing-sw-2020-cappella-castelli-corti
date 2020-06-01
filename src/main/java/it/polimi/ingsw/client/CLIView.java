@@ -597,9 +597,13 @@ public class CLIView extends View {
     }
 
     @Override
-    public void ClosingConnectionEvent(int indexClient) {
+    public void closingConnectionEvent(int indexClient, boolean gameNotAvailable) {
         new Thread(() -> {
-            System.out.println("A client is not responding, the connection will be closed");
+            if(gameNotAvailable){
+                System.out.println("A game has already started -> Try to connect later");
+            }else {
+                System.out.println("A client is not responding, the connection will be closed");
+            }
             sendMessageToServer.sendAckClosingConnection(indexClient);
         }).start();
     }
