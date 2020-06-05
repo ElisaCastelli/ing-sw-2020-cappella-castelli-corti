@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.playerState.PlayerState;
 
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public interface GameModel {
     Board getBoard();
@@ -18,13 +19,14 @@ public interface GameModel {
     int getNPlayers();
     void setNPlayers(int nPlayers);
     void startGame();
-    void addPlayer(int indexClient, Timer timer);
+    void addPlayer(int indexClient, Timer timer, TimerTask timerTask);
     boolean addPlayer(String name, int age, int indexClient);
     void removeExtraPlayer();
+    void remove(int indexPlayer);
     boolean askState();
     int searchByName(String name);
     int searchByClientIndex(int indexClient);
-    public int searchByPlayerIndex(int playerIndex);
+    int searchByPlayerIndex(int playerIndex);
     ArrayList<String> getCards()throws Exception;
     UpdateBoardEvent gameData(boolean reach);
     ArrayList<String> getTempCard();
@@ -51,6 +53,7 @@ public interface GameModel {
     int getWinner();
     void setDeadPlayer(int indexPlayer);
     void setPause();
-    void controlHeartBeat(int indexClient, long timeStamp);
-    boolean incrementHeartBeat(int indexClient, Timer timer );
+    void controlHeartBeat(int indexClient);
+    boolean incrementHeartBeat(int indexClient);
+    void reset();
 }

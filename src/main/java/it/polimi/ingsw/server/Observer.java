@@ -13,7 +13,7 @@ import it.polimi.ingsw.server.model.gameComponents.Board;
 
 public interface Observer {
     void subscribe();
-    ObjNumPlayer updateNPlayer();
+    void updateNPlayer();
     void updateTempCard(int clientIndex);
     void updateInitializeWorker(int indexClient,int indexPlayer);
     void updateNotInitializeWorker(int indexClient);
@@ -22,7 +22,7 @@ public interface Observer {
     void updateBoard(boolean reach);
     void updateWhoIsPlaying();
     void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove);
-    void updateSpecialTurn(ObjWorkerToMove objWorkerToMove);
+    void updateSpecialTurn(int row, int column, int indexWorkerToMove );
     void updateBasicTurn(int indexWorker, int rowWorker, int columnWorker);
     void updateAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
     void canMove();
@@ -38,4 +38,7 @@ public interface Observer {
     void updateStartTurn();
     void updateWhoHasLost(int indexClient);
     void updateUnreachableClient(int indexClient);
+    void updateControlSetNPlayer();
+    void reset();
+    void closeGame();
 }

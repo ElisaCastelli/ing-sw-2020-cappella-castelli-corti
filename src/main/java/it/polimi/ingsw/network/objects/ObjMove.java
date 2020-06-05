@@ -12,7 +12,6 @@ public class ObjMove extends ObjMessage {
     int columnStart;
     int row; //row where I wanna move
     int column; //column where I wanna move
-    boolean isDone;
 
     public ObjMove(int indexWorkerToMove, int rowStart, int columnStart, int row, int column, boolean isDone) {
         this.indexWorkerToMove = indexWorkerToMove;
@@ -20,11 +19,6 @@ public class ObjMove extends ObjMessage {
         this.columnStart = columnStart;
         this.row = row;
         this.column = column;
-        this.isDone = isDone;
-    }
-
-    public ObjMove(boolean isDone) {
-        this.isDone = isDone;
     }
 
     public int getIndexWorkerToMove() {
@@ -47,10 +41,6 @@ public class ObjMove extends ObjMessage {
         return column;
     }
 
-    public boolean isDone() {
-        return isDone;
-    }
-
     public void setIndexWorkerToMove(int indexWorkerToMove) {
         this.indexWorkerToMove = indexWorkerToMove;
     }
@@ -61,10 +51,6 @@ public class ObjMove extends ObjMessage {
 
     public void setColumn(int column) {
         this.column = column;
-    }
-
-    public void setDone(boolean done) {
-        isDone = done;
     }
 
     @Override

@@ -5,18 +5,8 @@ import it.polimi.ingsw.network.VisitorServer;
 
 public class ObjHeartBeat extends ObjMessage {
 
-    private long timeStamp;
-
-    public ObjHeartBeat( long timeStamp) {
-        this.timeStamp= timeStamp;
-    }
-
     public String getMessageHeartbeat() {
         return "--HEARTBEATS--";
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
     }
 
     @Override

@@ -83,8 +83,8 @@ public class SendMessageToServer {
         clientHandler.sendMessage(new AckState());
     }
 
-    public synchronized void sendPong(int indexClient, long timeStamp){
-        ObjHeartBeat objHeartBeat =new ObjHeartBeat(timeStamp);
+    public synchronized void sendPong(int indexClient){
+        ObjHeartBeat objHeartBeat =new ObjHeartBeat();
         objHeartBeat.setClientIndex(indexClient);
         clientHandler.sendMessage(objHeartBeat);
     }

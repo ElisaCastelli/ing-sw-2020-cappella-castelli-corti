@@ -11,7 +11,7 @@ import it.polimi.ingsw.server.Observer;
 
 public interface Subject {
     void subscribeObserver(Observer observer);
-    ObjNumPlayer notifySetNPlayers();
+    void notifySetNPlayers();
     void notifyAddPlayer();
     void notifyAskState(int indexClient,int indexPlayer);
     void notifyTempCard(int indexClient);
@@ -19,7 +19,7 @@ public interface Subject {
     void notifyWorkersNotInitialized();
     void notifyWhoIsPlaying();
     void notifySetReachable(int indexWorker, boolean secondMove);
-    void notifySpecialTurn(ObjWorkerToMove objWorkerToMove);
+    void notifySpecialTurn(int row, int column, int indexWorkerToMove);
     void notifyBasicTurn(int indexWorker, int rowWorker, int columnWorker);
     void notifyAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
     void notifyUpdateBoard(boolean reach);

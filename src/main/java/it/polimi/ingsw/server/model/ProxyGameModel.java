@@ -47,12 +47,39 @@ public class ProxyGameModel implements GameModel, Subject{
         gameModel.setNPlayers(nPlayers);
     }
 
-    @Override
-    public void addPlayer(int indexClient, Timer timer) {
+    public void addPlayerProxy(int indexClient, Timer timer) {
+        TimerTask timerTask =new TimerTask() {
+            @Override
+            public void run() {
+                synchronized (LOCK) {
+                    int indexPlayer = searchByClientIndex(indexClient);
+                    if(indexPlayer != -1) {
+                        boolean connected = gameModel.incrementHeartBeat(indexPlayer);
+                        if (!connected) {
+                            observer.updateUnreachableClient(indexClient);
+                        }
+                    }else{
+                        timer.cancel();
+                        timer.purge();
+                    }
+                }
+            }
+        };
         synchronized (LOCK) {
-            gameModel.addPlayer(indexClient, timer);
-            incrementHeartBeat(indexClient, timer);
+            gameModel.addPlayer(indexClient, timer, timerTask);
+            incrementHeartBeats(timer, timerTask);
         }
+
+    }
+
+    @Override
+    public void addPlayer(int indexClient, Timer timer, TimerTask timerTask) {
+
+    }
+
+    @Override
+    public boolean incrementHeartBeat(int indexClient) {
+        return false;
     }
 
     @Override
@@ -63,6 +90,26 @@ public class ProxyGameModel implements GameModel, Subject{
     @Override
     public void removeExtraPlayer() {
         gameModel.removeExtraPlayer();
+    }
+
+    @Override
+    public void remove(int indexClient) {
+        int indexPlayer = searchByClientIndex(indexClient);
+        gameModel.remove(indexPlayer);
+        int sizePlayerArray = gameModel.getPlayerArray().size();
+        if(sizePlayerArray != 0){
+            if(getNPlayers() == 0 && indexClient == 0) {
+                observer.updateControlSetNPlayer();
+            }
+            //il gioo è già iniziato e ci sono tutti
+            if(getNPlayers() != 0 &&  sizePlayerArray == getNPlayers() - 1){
+                reset();
+                observer.closeGame();
+            }
+
+        }else{
+            observer.reset();
+        }
     }
 
     @Override
@@ -220,12 +267,9 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.getState();
     }
 
-
-
-
     @Override
-    public ObjNumPlayer notifySetNPlayers(){
-        return observer.updateNPlayer();
+    public void notifySetNPlayers(){
+        observer.updateNPlayer();
     }
 
     @Override
@@ -269,8 +313,8 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void notifySpecialTurn(ObjWorkerToMove objWorkerToMove) {
-        observer.updateSpecialTurn(objWorkerToMove);
+    public void notifySpecialTurn(int row, int column, int indexWorkerToMove) {
+        observer.updateSpecialTurn(row, column, indexWorkerToMove);
     }
 
     @Override
@@ -330,31 +374,23 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void controlHeartBeat(int indexClient, long timeStamp) {
-        gameModel.controlHeartBeat(indexClient, timeStamp);
+    public void controlHeartBeat(int indexClient) {
+        gameModel.controlHeartBeat(indexClient);
     }
 
     //da richiamare quando si aggiunge il player sull'array di giocatori
-    @Override
-    public boolean incrementHeartBeat(int indexClient, Timer timer){
-
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                synchronized (LOCK) {
-                    int indexPlayer = searchByClientIndex(indexClient);
-                    boolean connected = gameModel.incrementHeartBeat(indexPlayer, timer);
-                    if (!connected) {
-                        observer.updateUnreachableClient(indexClient);
-                    }
-                }
-            }
-        }, 10000, 100000);
+    public boolean incrementHeartBeats(Timer timer ,TimerTask timerTask){
+        timer.scheduleAtFixedRate(timerTask , 10000, 100000);
         return  true;
     }
 
     @Override
     public void setIndexPossibleBlock(int indexPossibleBlock) {
         gameModel.setIndexPossibleBlock(indexPossibleBlock);
+    }
+
+    @Override
+    public void reset() {
+        gameModel.reset();
     }
 }

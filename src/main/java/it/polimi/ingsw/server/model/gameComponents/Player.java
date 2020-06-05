@@ -9,6 +9,7 @@ import it.polimi.ingsw.server.model.god.God;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Player implements Serializable {
@@ -37,25 +38,28 @@ public class Player implements Serializable {
     /**
      * This is an integer associated with the client
      */
-    private final int indexClient;
+    private int indexClient;
 
-    private final int MAX_HEARTBEATS_MISSED=5;
+    private final int MAX_HEARTBEATS_MISSED=4;
     private int missed_heartbeat = 0;
     private final Timer timer;
+    private final TimerTask timerTask;
     private final Object LOCK = new Object();
 
 
     final PlayerStateManager gamerManager;
 
 
-    public Player(int indexClient, Timer timer) {
+    public Player(int indexClient, Timer timer, TimerTask timerTask) {
         myWorkers = new Worker[2];
         myWorkers[0] = new Worker(1);
         myWorkers[1] = new Worker(2);
         myGod = new BasicGod();
         gamerManager = new PlayerStateManager(myGod);
         this.indexClient = indexClient;
+        this.indexPlayer = indexClient;
         this.timer = timer;
+        this.timerTask = timerTask;
     }
 
     public void setGod(God god){
@@ -84,6 +88,12 @@ public class Player implements Serializable {
     public int getIndexPlayer() {
         return indexPlayer;
     }
+    public int getIndexClient() {
+        return indexClient;
+    }
+    public void setIndexClient(int indexClient) {
+        this.indexClient = indexClient;
+    }
 
     public boolean isPlaying(){
         return gamerManager.isPlaying();
@@ -98,9 +108,7 @@ public class Player implements Serializable {
         return boxes;
     }
 
-    public int getIndexClient() {
-        return indexClient;
-    }
+
 
     public int getMissed_heartbeat() {
         return missed_heartbeat;
@@ -112,6 +120,10 @@ public class Player implements Serializable {
 
     public Timer getTimer() {
         return timer;
+    }
+
+    public TimerTask getTimerTask() {
+        return timerTask;
     }
 
     /**
@@ -215,7 +227,7 @@ public class Player implements Serializable {
         return gamerManager.canBuildBeforeWorkerMove();
     }
 
-    public void controlHeartBeat(long timeStamp){
+    public void controlHeartBeat(){
         System.out.println(missed_heartbeat+"riazzero"+ indexPlayer);
         setMissed_heartbeat(0);
     }
@@ -224,7 +236,7 @@ public class Player implements Serializable {
         synchronized (LOCK) {
             int mh = getMissed_heartbeat();
             mh++;
-            System.out.println(mh + "player" + indexClient );
+            System.out.println(mh + "client" + indexClient );
             setMissed_heartbeat(mh);
             if (getMissed_heartbeat() == MAX_HEARTBEATS_MISSED) {
                 return false;

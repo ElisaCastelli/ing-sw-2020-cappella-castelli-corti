@@ -26,11 +26,13 @@ public class CLIView extends View {
 
     @Override
     public void askWantToPlay(AskWantToPlay askWantToPlay){
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             //santoriniName();
             System.out.println("sto cencando di entare nella partita");
             sendMessageToServer.sendAskWantToPlay(askWantToPlay);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
 
@@ -48,21 +50,25 @@ public class CLIView extends View {
 
     @Override
     public void askNPlayer() {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             System.out.println(Color.CYAN+"How many Player ? [ 2 o 3 ]"+Color.RESET);
             int response=inputTwoOrThree(input);
             sendMessageToServer.sendNPlayer(response);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
     @Override
     public void askPlayer(int clientIndex){
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            String name=askName(input);
-            int age= askAge(input);
+            String name = askName(input);
+            int age = askAge(input);
             sendMessageToServer.sendPlayer(name, age, clientIndex);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public String askName(Scanner input) {
@@ -78,11 +84,13 @@ public class CLIView extends View {
 
     @Override
     public void setNPlayer(int nPlayer){
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             System.out.println("Start");
             this.nPlayer = nPlayer;
             sendMessageToServer.sendAckStartGame();
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @Override
@@ -103,8 +111,11 @@ public class CLIView extends View {
 
     @Override
     public void ask3Card(ArrayList<String> cards) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
+            while(input.hasNext()) {
+                input.next();
+            }
             ArrayList<Integer> cardTemp = new ArrayList<>();
             boolean[] scelte = new boolean[cards.size()];
             for (int i = 0; i < cards.size(); i++) {
@@ -128,14 +139,19 @@ public class CLIView extends View {
 
             sendMessageToServer.send3card(cardTemp);
 
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
 
     @Override
     public void askCard(ArrayList<String> cards) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
+            while(input.hasNext()) {
+                input.next();
+            }
             boolean choose = false;
             int scelta = -1;
             for (int index = 0; index < cards.size(); index++) {
@@ -150,12 +166,14 @@ public class CLIView extends View {
                 }
             }
             sendMessageToServer.sendCard(scelta, indexPlayer);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @Override
     public void initializeWorker(){
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             ArrayList<Box> boxes = new ArrayList<>();
             int indexWorker = 0;
@@ -176,13 +194,15 @@ public class CLIView extends View {
                 }
             }
             sendMessageToServer.sendWorker(boxes,indexPlayer);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
 
     @Override
     public void askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             int row1 = askWorkerToMoveEvent.getRow1();
             int column1 = askWorkerToMoveEvent.getColumn1();
@@ -203,13 +223,15 @@ public class CLIView extends View {
                 objWorkerToMove = new ObjWorkerToMove(2, row2, column2,false);
             }
             sendMessageToServer.sendWorkerToMove(objWorkerToMove);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
 
     }
 
     @Override
     public void areYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             int row;
             int column;
@@ -236,13 +258,15 @@ public class CLIView extends View {
             } else {
                 askWorker(askWorkerToMoveEvent);
             }
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
 
     }
 
     @Override
     public void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             System.out.println("You Have the possibility to Build a Block before moving the Worker");
             System.out.println("If you decide to do so, You'll not be able to move up a building with your Worker");
@@ -259,12 +283,14 @@ public class CLIView extends View {
             sendMessageToServer.sendBlockBeforeMove(objBlockBeforeMove);
 
 
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @Override
     public void moveWorker(AskMoveEvent askMoveEvent) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             int row = askMoveEvent.getRow();
             int column = askMoveEvent.getColumn();
@@ -285,19 +311,16 @@ public class CLIView extends View {
             intInputValue = columnSelected(input);
             objMove.setColumn(intInputValue);
 
-            if (!askMoveEvent.isFirstTime()) {
-                //così facciamo fare solo due mosse
-                //todo da spostare lato server guardando la askmove
-                objMove.setDone(true);
-            }
             sendMessageToServer.sendMoveWorker(objMove);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
 
     }
 
     @Override
     public void anotherMove(AskMoveEvent askMoveEvent) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             System.out.println("You Have the possibility to make another move");
             System.out.println("Do You want to?: ");
@@ -311,7 +334,9 @@ public class CLIView extends View {
             } else {
                 moveWorker(askMoveEvent);
             }
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @Override
@@ -322,7 +347,7 @@ public class CLIView extends View {
 
     @Override
     public void buildMove(AskBuildEvent askBuildEvent) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             int indexWorker = askBuildEvent.getIndexWorker();
             int rowWorker = askBuildEvent.getRowWorker();
@@ -349,18 +374,19 @@ public class CLIView extends View {
             int inputPossibleBlock = twoNumbers(input);
 
             objBlock.setPossibleBlock(inputPossibleBlock);
-
             if (!askBuildEvent.isFirstTime()) {
                 objBlock.setDone(true);
             }
             sendMessageToServer.sendBuildMove(objBlock);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
 
     }
 
     @Override
     public void anotherBuild(AskBuildEvent askBuildEvent) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             System.out.println("Your god gives you the possibility to make another build.");
             System.out.println("Do You want to?: ");
@@ -374,7 +400,9 @@ public class CLIView extends View {
                 ObjBlock objBlock = new ObjBlock(true);
                 sendMessageToServer.sendBuildMove(objBlock);
             }
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
 
     }
 
@@ -590,22 +618,26 @@ public class CLIView extends View {
 
     @Override
     public void printHeartBeat(ObjHeartBeat objHeartBeat){
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             System.out.println(objHeartBeat.getMessageHeartbeat());
-            sendMessageToServer.sendPong(objHeartBeat.getClientIndex(), objHeartBeat.getTimeStamp());
-        }).start();
+            sendMessageToServer.sendPong(objHeartBeat.getClientIndex());
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @Override
     public void closingConnectionEvent(int indexClient, boolean gameNotAvailable) {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             if(gameNotAvailable){
                 System.out.println("A game has already started -> Try to connect later");
             }else {
                 System.out.println("A client is not responding, the connection will be closed");
             }
             sendMessageToServer.sendAckClosingConnection(indexClient);
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 }
 

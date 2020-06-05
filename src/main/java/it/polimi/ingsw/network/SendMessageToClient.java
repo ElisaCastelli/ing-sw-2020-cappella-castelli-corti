@@ -17,7 +17,11 @@ public class SendMessageToClient {
         return echoServer;
     }
 
-    public void sendAskNPlayer(){
+    public void sendAskNPlayer(boolean anotherAsk){
+        if(anotherAsk) {
+            echoServer.getClientArray().remove(0);
+        }
+        //deve prendere il server in posizione 0
         echoServer.updateClientArray(0);
         echoServer.getClientArray().get(0).sendUpdate(new AskNPlayerEvent());
     }
@@ -106,5 +110,9 @@ public class SendMessageToClient {
             echoServer.send(new CloseConnectionFromServerEvent(gameNotAvailable), indexClient);
         }
     }
+    public void sendCloseConnection(boolean gameNotAvailable){
+        echoServer.sendBroadCast(new CloseConnectionFromServerEvent(gameNotAvailable));
+    }
+
 
 }

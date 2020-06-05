@@ -1,10 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Timer;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import it.polimi.ingsw.network.User;
@@ -131,8 +128,8 @@ public class Game implements GameModel{
     }
 
     @Override
-    public void addPlayer(int indexClient, Timer timer) {
-        players.add(new Player(indexClient, timer));
+    public void addPlayer(int indexClient, Timer timer, TimerTask timerTask) {
+        players.add(new Player(indexClient, timer, timerTask));
     }
 
     public boolean addPlayer(String name, int age, int indexClient){
@@ -157,11 +154,32 @@ public class Game implements GameModel{
     public void removeExtraPlayer() {
         int playerSize = players.size();
         for(int index = playerSize - 1; index >= nPlayers  ; index-- ){
+            players.get(index).getTimerTask().cancel();
             players.get(index).getTimer().cancel();
             players.get(index).getTimer().purge();
             players.remove(index);
         }
     }
+
+    @Override
+    public void remove ( int indexPlayer ){
+        players.get(indexPlayer).getTimerTask().cancel();
+        players.get(indexPlayer).getTimer().cancel();
+        players.get(indexPlayer).getTimer().purge();
+        players.remove(indexPlayer);
+        updateIndexInArray( indexPlayer );
+    }
+
+    public void updateIndexInArray( int indexPlayer ){
+        for(Player player : players){
+            if(player.getIndexPlayer() > indexPlayer ){
+                player.setIndexClient(player.getIndexPlayer() - 1);
+                player.setIndexPlayer(player.getIndexPlayer() - 1);
+            }
+        }
+    }
+
+
 
     public void startGame(){
         players.get(0).goPlay();
@@ -407,14 +425,26 @@ public class Game implements GameModel{
         stateManager.goPause();
     }
 
-    public void controlHeartBeat(int indexClient, long timeStamp) {
+    public void controlHeartBeat(int indexClient) {
         int indexPlayer= searchByClientIndex(indexClient);
-        players.get(indexPlayer).controlHeartBeat(timeStamp);
+        players.get(indexPlayer).controlHeartBeat();
     }
 
-    public boolean incrementHeartBeat(int indexPlayer, Timer timer){
+    public boolean incrementHeartBeat(int indexPlayer){
         return players.get(indexPlayer).incrementMissedHeartBeat();
     }
 
+    @Override
+    public void reset() {
+        board.clear();
+        players.clear();
+        playersDead.clear();
+        nPlayers = 0;
+        ackCounter = 0;
+        tempCard.clear();
+        cardUsed.clear();
+        ///todo da fare ready stato per reinizializzazione
+        stateManager = new GameStateManager(players, playersDead);
+    }
 }
 

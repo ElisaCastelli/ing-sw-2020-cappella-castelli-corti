@@ -37,7 +37,7 @@ public class VirtualView implements Observer {
         if(gameModel.getNPlayers() == 0 && getPlayerArray().size() == 0){
 
             controller.addPlayer(indexClient);
-            sendMessageToClient.sendAskNPlayer();
+            sendMessageToClient.sendAskNPlayer(false);
 
         }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() == 0){
             //non hanno settato ancora ma hai la possibilità di giocare
@@ -78,8 +78,9 @@ public class VirtualView implements Observer {
     }
 
     @Override
-    public ObjNumPlayer updateNPlayer() {
-        return new ObjNumPlayer(gameModel.getNPlayers());
+    public void updateNPlayer() {
+        System.out.println("setting nplayer "+gameModel.getNPlayers());
+
     }
 
     public void addPlayer(String name, int age, int indexClient){
@@ -164,8 +165,8 @@ public class VirtualView implements Observer {
     }
 
 
-    public void initializeWorker(ObjWorkers objWorkers) {
-        controller.initializeWorker(objWorkers.getBox1(),objWorkers.getBox2());
+    public void initializeWorker(Box box1, Box box2) {
+        controller.initializeWorker(box1,box2);
     }
 
     @Override
@@ -202,11 +203,11 @@ public class VirtualView implements Observer {
     public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker ){ controller.canMoveSpecialTurn(indexWorker, rowWorker, columnWorker);}
 
     /// richiamato
-    public void setBoxReachable(ObjWorkerToMove objWorkerToMove){
-        if(objWorkerToMove.isReady()){
-            controller.canBuildBeforeWorkerMove(objWorkerToMove);
+    public void setBoxReachable(int row, int column, int indexWorkerToMove, boolean isReady){
+        if(isReady){
+            controller.canBuildBeforeWorkerMove(row, column, indexWorkerToMove);
         }else {
-            controller.setBoxReachable(objWorkerToMove.getIndexWorkerToMove(), false);
+            controller.setBoxReachable(indexWorkerToMove , false);
         }
     }
     ///richiamato
@@ -228,12 +229,12 @@ public class VirtualView implements Observer {
     }
 
     ///richiamato
-    public void move(ObjMove objMove){
-        if(isReachable(objMove.getRow(), objMove.getColumn())){
-            controller.movePlayer(objMove);
+    public void move(int rowStart, int columnStart, int row, int column, int indexWorkerToMove){
+        if(isReachable( row, column)){
+            controller.movePlayer(rowStart, columnStart, row, column, indexWorkerToMove);
         }else{
             updateBoard(true);
-            AskMoveEvent askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRowStart(), objMove.getColumnStart(), true, false);
+            AskMoveEvent askMoveEvent = new AskMoveEvent(indexWorkerToMove, rowStart, columnStart, true, false);
             askMoveEvent.setWrongBox(true);
             askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
             sendMessageToClient.sendAskMoveEvent(askMoveEvent);
@@ -241,8 +242,8 @@ public class VirtualView implements Observer {
     }
 
     @Override
-    public void updateSpecialTurn(ObjWorkerToMove objWorkerToMove) {
-         canBuildSpecialTurn(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(), objWorkerToMove.getColumn());
+    public void updateSpecialTurn(int row, int column, int indexWorkerToMove) {
+         canBuildSpecialTurn(indexWorkerToMove, row, column);
     }
 
     @Override
@@ -397,17 +398,85 @@ public class VirtualView implements Observer {
         controller.setPause();
     }
 
-    public void printHeartBeat(String messageHeartbeat, int indexClient, long timeStamp) {
-        controller.heartBeat(indexClient, timeStamp);
+    public void printHeartBeat(String messageHeartbeat, int indexClient) {
+        controller.heartBeat(indexClient);
         System.out.println(messageHeartbeat);
     }
 
     @Override
     public void updateUnreachableClient(int indexClient) {
-        sendMessageToClient.sendCloseConnection(indexClient, false);
+        synchronized (LOCK) {
+            controlStillOpen(indexClient);
+        }
     }
 
     public void close(int indexClient) {
         System.out.println("client: "+ indexClient +" will be closed");
+    }
+
+    public void controlStillOpen(int indexClient){
+        //todo da controllare quanto migliorabile
+        synchronized (LOCK) {
+            ArrayList<ServerHandler> serverHandlersWaiting = sendMessageToClient.getEchoServer().getClientWaiting();
+            ArrayList<ServerHandler> serverHandlers = sendMessageToClient.getEchoServer().getClientArray();
+
+
+            //quando ancora stanno aspettando l'nplayer e il tizio 0 si disconnette o un altro x
+            if (serverHandlersWaiting.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
+                boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+                if (closed) {
+                    serverHandlersWaiting.remove(indexClient);
+                    controller.removePlayer(indexClient);
+                } else {
+                    sendMessageToClient.sendCloseConnection(indexClient, false);
+                }
+            } else if (serverHandlersWaiting.size() > 0 && gameModel.getNPlayers() == 0) {
+                boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+                if (closed) {
+                    serverHandlersWaiting.remove(indexClient);
+                    controller.removePlayer(indexClient);
+                    sendMessageToClient.getEchoServer().updateIndexClientWaiting(indexClient);
+                } else {
+                    sendMessageToClient.sendCloseConnection(indexClient, false);
+                }
+            } else if (serverHandlers.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
+                if(indexClient < gameModel.getNPlayers()) {
+                    boolean closed = serverHandlers.get(indexClient).isClosed();
+                    if (closed) {
+                        serverHandlers.remove(indexClient);
+                        controller.removePlayer(indexClient);
+                        sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
+                    } else {
+                        sendMessageToClient.sendCloseConnection(indexClient, false);
+                    }
+                }else if(serverHandlersWaiting.size() != 0){
+                    serverHandlersWaiting.remove(indexClient);
+                    controller.removePlayer(indexClient);
+                }
+            }
+        }
+    }
+
+
+    public void updateControlSetNPlayer(){
+        boolean done = controller.controlSetNPlayer();
+        if(!done){
+            sendMessageToClient.sendAskNPlayer(true);
+        }else{
+            sendMessageToClient.getEchoServer().closeServerHandlers();
+
+        }
+    }
+
+    @Override
+    public void closeGame() {
+        sendMessageToClient.sendCloseConnection( false);
+        reset();
+    }
+
+    @Override
+    public void reset() {
+        sendMessageToClient.getEchoServer().getClientArray().clear();
+        sendMessageToClient.getEchoServer().getClientWaiting().clear();
     }
 }

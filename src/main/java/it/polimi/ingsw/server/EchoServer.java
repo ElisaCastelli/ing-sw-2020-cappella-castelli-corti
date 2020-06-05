@@ -2,32 +2,47 @@ package it.polimi.ingsw.server;
 
 
 import it.polimi.ingsw.network.SendMessageToClient;
-import it.polimi.ingsw.network.events.AskPlayerEvent;
 import it.polimi.ingsw.network.events.CloseConnectionFromServerEvent;
-import it.polimi.ingsw.network.events.StartGameEvent;
-import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class EchoServer {
     private static ArrayList<ServerHandler> clientArray = new ArrayList<>();
     private static ArrayList<ServerHandler> clientWaiting = new ArrayList<>();
     private static int portNumber;
-
+    private final Object LOCKClientArray = new Object();
+    private final Object LOCKWaitingArray = new Object();
 
     public EchoServer(int portNumber) {
         EchoServer.portNumber =portNumber;
     }
 
+    ///magari prima di inserire il nome e l'età faccio un controllo che non ci siano extra player e nel caso li chiudo
+
     public void updateClientArray(int indexClientWaiting){
-        clientArray.add(clientWaiting.get(indexClientWaiting));
+        synchronized (LOCKClientArray) {
+            clientArray.add(clientWaiting.get(indexClientWaiting));
+            int size = clientArray.size();
+            clientArray.get(size - 1).setIndexClientArray(size - 1);
+        }
+    }
+    public void updateIndexClientWaiting(int indexClientWaiting){
+        synchronized (LOCKWaitingArray) {
+            for (int index = indexClientWaiting; index < clientWaiting.size(); index++) {
+                clientWaiting.get(index).setIndexClientArray(index);
+            }
+        }
+    }
+    public void updateIndexClient(int indexClientWaiting){
+        synchronized (LOCKClientArray) {
+            for (int index = indexClientWaiting; index < clientArray.size(); index++) {
+                clientArray.get(index).setIndexClientArray(index);
+            }
+        }
     }
 
     public ArrayList<ServerHandler> getClientArray() {
@@ -51,28 +66,35 @@ public class EchoServer {
         clientWaiting.get(indexArrayClient).sendUpdate(objMessage);
     }
 
-    public void closeServerHandler(){
-        if(clientWaiting.size() > 0){
-            for(ServerHandler serverHandler: clientWaiting){
-                serverHandler.close();
+    public void closeServerHandlers(){
+        synchronized (LOCKClientArray) {
+            if (clientWaiting.size() > 0) {
+                for (ServerHandler serverHandler : clientWaiting) {
+                    serverHandler.close();
+                }
+            } else {
+                for (ServerHandler serverHandler : clientArray) {
+                    serverHandler.close();
+                }
             }
-        }else{
-            for (ServerHandler serverHandler : clientArray){
-                serverHandler.close();
-            }
+            clientWaiting.clear();
+            clientArray.clear();
         }
     }
 
-    public void resetWaiting(){
-        int sizeWaiting = clientWaiting.size();
-        int sizeInGame = clientArray.size();
-        if (sizeWaiting > sizeInGame) {
-            for(int i = sizeInGame; i < sizeWaiting; i++){
-                clientWaiting.get(i).sendUpdate(new CloseConnectionFromServerEvent(true));
+    public void resetWaiting() {
+        synchronized (LOCKWaitingArray) {
+            int sizeWaiting = clientWaiting.size();
+            int sizeInGame = clientArray.size();
+            if (sizeWaiting > sizeInGame) {
+                for (int i = sizeInGame; i < sizeWaiting; i++) {
+                    clientWaiting.get(i).sendUpdate(new CloseConnectionFromServerEvent(true));
+                }
             }
+            clientWaiting.clear();
         }
-        clientWaiting.clear();
     }
+
 
     //non lo considerate è per dopo se vogliamo fare la lobby, non è mai richiamato
     public void acceptClientWaiting(ServerSocket serverSocket) {
@@ -102,7 +124,7 @@ public class EchoServer {
         } finally {
             try {
                 if (serverSocket != null) {
-                    closeServerHandler();
+                    closeServerHandlers();
                     serverSocket.close();
                 }
             } catch (IOException e) {

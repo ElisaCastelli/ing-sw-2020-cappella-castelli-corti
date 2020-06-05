@@ -61,11 +61,11 @@ public class VisitorServer {
     }
 
     public void visit (ObjWorkers objWorkers){
-        virtualView.initializeWorker(objWorkers);
+        virtualView.initializeWorker(objWorkers.getBox1(),objWorkers.getBox2());
     }
 
     public void visit (ObjWorkerToMove objWorkerToMove){
-        virtualView.setBoxReachable(objWorkerToMove);
+        virtualView.setBoxReachable(objWorkerToMove.getRow(),objWorkerToMove.getColumn(),objWorkerToMove.getIndexWorkerToMove(),objWorkerToMove.isReady());
     }
 
     public void visit(AckUpdateBoard ackUpdateBoard){
@@ -77,7 +77,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjMove objMove){
-        virtualView.move(objMove);
+        virtualView.move(objMove.getRowStart(), objMove.getColumnStart(), objMove.getRow(), objMove.getColumn(), objMove.getIndexWorkerToMove());
     }
 
     public void visit(AckMove ackMove){
@@ -93,7 +93,7 @@ public class VisitorServer {
     }
 
     public void visit(ObjHeartBeat objHeartBeat){
-        virtualView.printHeartBeat(objHeartBeat.getMessageHeartbeat(), objHeartBeat.getClientIndex(), objHeartBeat.getTimeStamp());
+        virtualView.printHeartBeat(objHeartBeat.getMessageHeartbeat(), objHeartBeat.getClientIndex());
     }
 
     public void visit(CloseConnectionFromClientEvent closeConnectionClientEvent){

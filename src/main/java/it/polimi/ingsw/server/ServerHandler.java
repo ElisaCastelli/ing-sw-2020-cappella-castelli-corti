@@ -1,9 +1,5 @@
 package it.polimi.ingsw.server;
 
-//import it.polimi.ingsw.network.HeartBeatServer;
-import it.polimi.ingsw.network.User;
-import it.polimi.ingsw.network.events.AskNPlayerEvent;
-//import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.events.AskWantToPlay;
 
 import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
@@ -34,8 +30,19 @@ public class ServerHandler extends Thread{
         this.outputStream=outputStream;
         this.inputStream=inputStream;
         this.virtualView = virtualView;
-
         this.indexClientArray=indexClientArray;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public int getIndexClientArray() {
+        return indexClientArray;
+    }
+
+    public void setIndexClientArray(int indexClientArray) {
+        this.indexClientArray = indexClientArray;
     }
 
     public void sendHeartBeat(){
@@ -43,13 +50,16 @@ public class ServerHandler extends Thread{
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                if (!closed) {
-                    System.out.println("sending HeartBeat");
-                    sendUpdate(new ObjHeartBeat(System.currentTimeMillis()));
-                }else{
-                    t.cancel();
+                try {
+                    if (!closed) {
+                        System.out.println("sending HeartBeat");
+                        sendUpdate(new ObjHeartBeat());
+                    } else {
+                        t.cancel();
+                    }
+                }catch ( Exception e){
+                    e.printStackTrace();
                 }
-
             }
         };
         t.scheduleAtFixedRate(tt, 50000, 60000);
@@ -63,29 +73,43 @@ public class ServerHandler extends Thread{
     }
 
     public void listening(){
-        while (!closed){
-            ObjMessage message = null;
-            try{
-                message = (ObjMessage) inputStream.readObject();
-                if(message instanceof CloseConnectionFromClientEvent)
-                    closed=true;
-                message.accept(new VisitorServer(virtualView));
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            while (!closed) {
+                ObjMessage objMessage = null;
+
+                try {
+                    objMessage = (ObjMessage) inputStream.readObject();
+                } catch (IOException | ClassNotFoundException e) {
+                    closed = true;
+                }
+                if (objMessage instanceof CloseConnectionFromClientEvent)
+                    closed = true;
+                if (objMessage != null)
+                    objMessage.accept(new VisitorServer(virtualView));
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        virtualView.controlStillOpen(indexClientArray);
         close();
     }
 
 
     public void sendUpdate(ObjMessage objMessage) {
+        objMessage.setClientIndex(indexClientArray);
+
         try {
-            objMessage.setClientIndex(indexClientArray);
             outputStream.writeObject(objMessage);
-            outputStream.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            outputStream.reset();
+        } catch (IOException e) {
+            System.out.println("connection reset");
+            e.printStackTrace();
+        }
+
     }
 
 

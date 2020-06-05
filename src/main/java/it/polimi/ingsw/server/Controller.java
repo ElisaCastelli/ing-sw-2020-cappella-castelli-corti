@@ -3,11 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.events.AskBuildEvent;
 import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
-import it.polimi.ingsw.network.events.UpdateBoardEvent;
-import it.polimi.ingsw.network.objects.ObjMove;
-import it.polimi.ingsw.network.objects.ObjNumPlayer;
-import it.polimi.ingsw.network.objects.ObjState;
-import it.polimi.ingsw.network.objects.ObjWorkerToMove;
+
 import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
@@ -21,14 +17,22 @@ public class Controller  {
         this.gameModel=gameModel;
     }
 
-    public ObjNumPlayer setNPlayers(int nPlayers){
+    public void setNPlayers(int nPlayers){
         gameModel.setNPlayers(nPlayers);
-        return gameModel.notifySetNPlayers();
+        gameModel.notifySetNPlayers();
+    }
+
+    public boolean controlSetNPlayer(){
+        int nPlayers= gameModel.getNPlayers();
+        if(nPlayers != 0){
+            return true;
+        }
+        return false;
     }
 
     public void addPlayer(int indexPlayer){
         Timer timer = new Timer();
-        gameModel.addPlayer(indexPlayer, timer);
+        gameModel.addPlayerProxy(indexPlayer, timer);
     }
     public void addPlayer(String name, int age, int indexClient){
         boolean addCompleted = gameModel.addPlayer(name, age, indexClient);
@@ -39,6 +43,10 @@ public class Controller  {
 
     public void removeExtraPlayer(){
         gameModel.removeExtraPlayer();
+    }
+
+    public void removePlayer(int indexClient){
+        gameModel.remove(indexClient);
     }
 
     public void startGame(){
@@ -81,12 +89,12 @@ public class Controller  {
 
     }
 
-    public void canBuildBeforeWorkerMove ( ObjWorkerToMove objWorkerToMove ){
+    public void canBuildBeforeWorkerMove ( int row, int column, int indexWorkerToMove){
         boolean canBuildBeforeWorkerMove = gameModel.canBuildBeforeWorkerMove();
         if(canBuildBeforeWorkerMove){
-            gameModel.notifySpecialTurn(objWorkerToMove);
+            gameModel.notifySpecialTurn( row, column, indexWorkerToMove );
         }else{
-            gameModel.notifyBasicTurn(objWorkerToMove.getIndexWorkerToMove(), objWorkerToMove.getRow(),objWorkerToMove.getColumn());
+            gameModel.notifyBasicTurn(indexWorkerToMove, row , column);
         }
     }
 
@@ -134,17 +142,17 @@ public class Controller  {
         gameModel.notifySetReachable(indexWorker , secondMove);
     }
     ///richiamato
-    public void movePlayer(ObjMove objMove) {
-        boolean moved = gameModel.movePlayer(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn());
+    public void movePlayer(int rowStart, int columnStart, int row, int column, int indexWorkerToMove) {
+        boolean moved = gameModel.movePlayer(indexWorkerToMove, row, column);
         AskMoveEvent askMoveEvent;
         if(moved){
-            askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn(), false, true);
+            askMoveEvent = new AskMoveEvent(indexWorkerToMove, row, column, false, true);
         }else{
-            askMoveEvent = new AskMoveEvent(objMove.getIndexWorkerToMove(), objMove.getRow(), objMove.getColumn(),false,false);
+            askMoveEvent = new AskMoveEvent(indexWorkerToMove, row, column,false,false);
         }
 
-        askMoveEvent.setRowStart(objMove.getRowStart());
-        askMoveEvent.setColumnStart(objMove.getColumnStart());
+        askMoveEvent.setRowStart(rowStart);
+        askMoveEvent.setColumnStart(columnStart);
         int clientIndex = gameModel.searchByPlayerIndex(gameModel.whoIsPlaying());
         gameModel.notifyMovedWorker(askMoveEvent, clientIndex);
     }
@@ -221,7 +229,7 @@ public class Controller  {
         gameModel.setPause();
     }
 
-    public void heartBeat(int indexClient, long timeStamp) {
-        gameModel.controlHeartBeat(indexClient, timeStamp);
+    public void heartBeat(int indexClient) {
+        gameModel.controlHeartBeat(indexClient);
     }
 }
