@@ -1,57 +1,43 @@
 package it.polimi.ingsw.network;
-
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 
-
 public class VisitorClient {
-
     public final View view;
-
     public VisitorClient(View view) {
         this.view=view;
     }
 
-
     public void visit(AskWantToPlay askWantToPlay){
         view.askWantToPlay(askWantToPlay);
     }
-
     public void visit(AskNPlayerEvent askNPlayerEvent){
         view.askNPlayer();
     }
-
     public void visit (ObjWait objWait){
         view.youHaveToWait();
     }
-
     public void visit (ObjYouCanPlay ObjYouCanPlay){
         view.youCanPlay();
     }
-
     public void visit(AskPlayerEvent askPlayerEvent){
         view.askPlayer(askPlayerEvent.getClientIndex());
     }
-
     public void visit(StartGameEvent start){
         view.setNPlayer(start.getnPlayer());
     }
-
     public void visit(ObjState objState){
         view.setIndexPlayer(objState);
     }
-
     public void visit(Ask3CardsEvent ask3CardsEvent) {
         if(ask3CardsEvent.getClientIndex() == ask3CardsEvent.getCurrentClientPlaying())
             view.ask3Card(ask3CardsEvent.getCardArray());
     }
-
     public void visit(AskCard askCard) {
         if(askCard.getClientIndex() == askCard.getCurrentClientPlaying())
             view.askCard(askCard.getCardTemp());
     }
-
     public void visit(AskInitializeWorker askInitializeWorker){
         if(askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentClientPlaying()) {
             view.initializeWorker();
@@ -60,11 +46,9 @@ public class VisitorClient {
         }
     }
 
-
     public void visit (UpdateBoardEvent updateBoardEvent){
         view.updateBoard(updateBoardEvent);
     }
-
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         if(askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
             if (askWorkerToMoveEvent.isFirstAsk()) {
@@ -80,7 +64,6 @@ public class VisitorClient {
         if(askBuildBeforeMove.getClientIndex() == askBuildBeforeMove.getCurrentClientPlaying())
             view.askBuildBeforeMove(askBuildBeforeMove.getIndexWorker(), askBuildBeforeMove.getRowWorker(), askBuildBeforeMove.getColumnWorker());
     }
-
     public void visit(AskMoveEvent askMoveEvent){
         if(askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
             //Questa è la prima ask
@@ -94,7 +77,6 @@ public class VisitorClient {
             System.out.println("non sto muovendo un worker");
         }
     }
-
     public void visit(AskBuildEvent askBuildEvent){
         if(askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
             //Qui entra se è veramente la prima volta o se ha inserito una box non valida
@@ -106,29 +88,23 @@ public class VisitorClient {
             //clientHandler.sendMessage(new AckState());
         }
     }
-
     public void visit(WinnerEvent winnerEvent){
         if(winnerEvent.getClientIndex() == winnerEvent.getCurrentClientPlaying())
             view.winnerEvent();
         else
             view.someoneWon();
     }
-
     public void visit(LoserEvent loserEvent){
         view.loserEvent();
     }
-
     public void visit(WhoHasLostEvent whoHasLostEvent){
         if(whoHasLostEvent.getClientIndex() != whoHasLostEvent.getCurrentClientPlaying())
             view.whoHasLost();
     }
-
     public void visit(ObjHeartBeat objHeartBeat){
         view.printHeartBeat(objHeartBeat);
     }
-
     public void visit(CloseConnectionFromServerEvent connectionEvent){
         view.closingConnectionEvent(connectionEvent.getClientIndex(), connectionEvent.isGameNotAvailable());
     }
-
 }

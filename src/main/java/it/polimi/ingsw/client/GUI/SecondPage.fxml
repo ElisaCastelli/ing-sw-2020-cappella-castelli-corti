@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.ViewGUIController">
+   <children>
+      <AnchorPane layoutX="470.0" layoutY="400.0" prefHeight="250.0" prefWidth="400.0" style="-fx-background-color: rgba(174, 228,234 , 0.6); -fx-background-radius: 20;">
+         <children>
+            <Text fill="#1976d3" layoutX="60.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold; -fx-font-family: Futura;" text="Name: " textAlignment="CENTER">
+               <font>
+                  <Font name="Gill Sans" size="18.0" />
+               </font>
+            </Text>
+            <TextField id="playerName" fx:id="playerName" layoutX="150.0" layoutY="30.0" />
+            <Text id="messageNameError" fx:id="messageNameError" fill="#ee0b0b" layoutX="60.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#1976d3" layoutX="60.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Futura;" text="Age: ">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <TextField id="playerAge" fx:id="playerAge" layoutX="150.0" layoutY="120.0" />
+            <Text id="messageAgeError" fx:id="messageAgeError" fill="#ee0b0b" layoutX="60.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="buttonDataPlayer" layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#loadData" style="-fx-background-color: white; -fx-background-radius: 5; -fx-font-family: Futura;" text="Send" textFill="#1976d3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Button fx:id="closeButton" layoutX="1254.0" mnemonicParsing="false" onAction="#closeButtonHandler" style="-fx-background-color: #d3461b#d3461b;" text="X" textFill="#fcf9f9" />
+   </children>
+</AnchorPane>

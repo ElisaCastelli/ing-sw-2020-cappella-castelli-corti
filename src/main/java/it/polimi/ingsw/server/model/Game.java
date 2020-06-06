@@ -68,6 +68,18 @@ public class Game implements GameModel{
         stateManager = new GameStateManager(players, playersDead);
     }
 
+    public boolean someoneWithYourName(String namePlayer){
+        boolean exist = false;
+        int i=0;
+        while(i<players.size() && !exist){
+            if(namePlayer.equals(players.get(i).getName())){
+                exist=true;
+            }
+            i++;
+        }
+        return exist;
+    }
+
     public void goPlayingNext(){
         int indexPlay = whoIsPlaying();
         if(!players.get(indexPlay).amIDead()){
@@ -103,18 +115,6 @@ public class Game implements GameModel{
         }else{
             players.get(indexLoser - 1).goPlay();
         }
-    }
-
-    public boolean someoneWithYourName(String namePlayer){
-        boolean exist = false;
-        int i=0;
-        while(i<players.size() && !exist){
-            if(namePlayer.equals(players.get(i).getName())){
-                exist=true;
-            }
-            i++;
-        }
-        return exist;
     }
 
     public Board getBoard(){
@@ -205,6 +205,8 @@ public class Game implements GameModel{
             }
         }
     }
+
+
 
     public void startGame(){
         players.get(0).goPlay();

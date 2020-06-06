@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.GUI.ViewGUIController;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -96,7 +98,7 @@ public class Client {
         if(view != null ){
             switch (view){
                 case "gui":
-                    //viewClient = new ViewGUIController();
+                    viewClient = new ViewGUIController();
                     break;
                 case "cli":
                     viewClient = new CLIView();

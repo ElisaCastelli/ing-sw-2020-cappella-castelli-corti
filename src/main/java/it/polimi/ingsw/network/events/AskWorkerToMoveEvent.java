@@ -14,6 +14,9 @@ public class AskWorkerToMoveEvent extends Event {
     int indexWorker;
     boolean firstAsk;
 
+    public AskWorkerToMoveEvent(){
+
+    }
     public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, boolean firstAsk) {
         this.row1 = row1;
         this.column1 = column1;

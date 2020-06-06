@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class CLIView implements View {
 
-    SendMessageToServer sendMessageToServer;
+    private SendMessageToServer sendMessageToServer;
     private static final int numCards = 14;
     private static int indexPlayer = -1;
     private int nPlayer;
@@ -520,6 +520,7 @@ public class CLIView implements View {
     }
 
     public void printBoard(boolean reach, int currentPlayer){
+
         if (nPlayer == 2){
             System.out.println();
             System.out.println();

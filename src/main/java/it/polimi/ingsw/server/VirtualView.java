@@ -247,7 +247,7 @@ public class VirtualView implements Observer {
 
     @Override
     public void updateSpecialTurn(int row, int column, int indexWorkerToMove) {
-         canBuildSpecialTurn(indexWorkerToMove, row, column);
+        canBuildSpecialTurn(indexWorkerToMove, row, column);
     }
 
     @Override

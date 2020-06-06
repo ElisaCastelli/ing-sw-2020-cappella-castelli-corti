@@ -47,7 +47,6 @@ public class SendMessageToClient {
             echoServer.send(new ObjWait(),0);
         }
     }
-
     public void sendAskPlayerAgain(int indexClient){
         echoServer.send(new AskPlayerEvent(), indexClient);
     }

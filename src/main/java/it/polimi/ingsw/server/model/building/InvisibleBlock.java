@@ -21,4 +21,9 @@ public class InvisibleBlock implements Block {
                 "blockName='" + blockName + '\'' +
                 '}';
     }
+
+    @Override
+    public int getBlockIdentifier() {
+        return -1;
+    }
 }

@@ -64,7 +64,7 @@ public class SendMessageToServer {
     }
 
     public void sendMoveWorker(ObjMove objMove) {
-            clientHandler.sendMessage(objMove);
+        clientHandler.sendMessage(objMove);
     }
 
     public void sendAckMove(AckMove ackMove) {

@@ -1,0 +1,15 @@
+.bodybg{
+    -fx-background-image: url("/page1.jpg");
+}
+
+.bodyBoard{
+    -fx-background-image: url("/SantoriniBoard1280x800.png");
+    -fx-background-size: 100%;
+}
+
+.buttonBoard {
+    -fx-background-color: Transparent;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+

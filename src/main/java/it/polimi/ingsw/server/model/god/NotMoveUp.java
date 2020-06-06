@@ -67,6 +67,7 @@ public class NotMoveUp extends GodDecorator {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
+       //Si potrebbe togliere perchè è un controllo già fatto in set
         return super.moveWorker(worker, pos);
     }
 
@@ -93,7 +94,4 @@ public class NotMoveUp extends GodDecorator {
         return super.checkWin(initialPos, finalBox);
     }
 
-    public boolean canMoveUp (Worker worker, Box finalBox) {
-        return moveUp || (finalBox.getCounter() - worker.getHeight() != 1);
-    }
 }

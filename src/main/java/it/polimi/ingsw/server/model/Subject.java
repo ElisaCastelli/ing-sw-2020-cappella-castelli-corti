@@ -16,6 +16,7 @@ public interface Subject {
     void notifyAskState(int indexClient,int indexPlayer);
     void notifyTempCard(int indexClient);
     void notifyAddWorker();
+    void notifyNewAddPlayer(int indexClient);
     void notifyWorkersNotInitialized();
     void notifyWhoIsPlaying();
     void notifySetReachable(int indexWorker, boolean secondMove);
@@ -33,5 +34,4 @@ public interface Subject {
     void notifyContinueBuild(AskBuildEvent askBuildEvent);
     void notifyStartTurn();
     void notifyWhoHasLost(int indexClient);
-    void notifyNewAddPlayer(int indexClient);
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.objects;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
+
 public class ObjHeartBeat extends ObjMessage {
 
     public String getMessageHeartbeat() {
@@ -19,3 +20,5 @@ public class ObjHeartBeat extends ObjMessage {
         visitorClient.visit(this);
     }
 }
+
+

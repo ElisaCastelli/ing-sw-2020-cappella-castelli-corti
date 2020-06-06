@@ -23,6 +23,7 @@ public interface GameModel {
     void startGame();
     void addPlayer(int indexClient, Timer timer, TimerTask timerTask);
     boolean addPlayer(String name, int age, int indexClient);
+    boolean checkAckPlayer();
     void removeExtraPlayer();
     void remove(int indexPlayer);
     boolean askState();
@@ -58,5 +59,4 @@ public interface GameModel {
     void controlHeartBeat(int indexClient);
     boolean incrementHeartBeat(int indexClient);
     void reset();
-    boolean checkAckPlayer();
 }
