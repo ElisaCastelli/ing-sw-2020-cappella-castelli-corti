@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 public class Building implements Serializable {
     private final ArrayList < Block > arrayOfBlocks;
-
     public Building () {
         arrayOfBlocks = new ArrayList <> () ;
     }
@@ -19,11 +18,9 @@ public class Building implements Serializable {
         if( arrayOfBlocks.size ( ) == 0 ) {
             arrayOfBlocks.add ( getBlock (1 ) );
             //arrayOfBlocks.get(0).print();
-
         }else if( arrayOfBlocks.size ( ) == 1 ) {
             arrayOfBlocks.add ( getBlock (2 ) );
             //arrayOfBlocks.get(1).print();
-
         } else if ( arrayOfBlocks.size() == 2 ) {
             arrayOfBlocks.add(getBlock(3));
             //arrayOfBlocks.get(2).print();
@@ -32,16 +29,15 @@ public class Building implements Serializable {
             //arrayOfBlocks.get(3).print();
         }
     }
-
     /**
      * this method is used by Atlas to build a dome at any case
      * @param domeIdent is set to 4 to identify the Dome
      */
     public void build ( int domeIdent ) {
-        arrayOfBlocks.add( getBlock( domeIdent ) );
-        while( arrayOfBlocks.size( ) < 4 ) {
+        while( arrayOfBlocks.size( ) < 3 ) {
             arrayOfBlocks.add( getBlock(5 ) );
         }
+        arrayOfBlocks.add( getBlock( domeIdent ) );
     }
     /**
      * @param blockIdentifier is an int passed by the method Build to build the rightful block
@@ -65,7 +61,10 @@ public class Building implements Serializable {
             BuildingInvisibleBlk invisibleBlkBuilder = new BuildingInvisibleBlk();
             block = invisibleBlkBuilder.getBlock();
         }
-       return block;
+        return block;
+    }
+    public Block getBlockCounter( int counter ){
+        return arrayOfBlocks.get(counter);
     }
 
     /**
@@ -87,12 +86,11 @@ public class Building implements Serializable {
      */
     public void print () {
         Iterator < Block > blockIterator = arrayOfBlocks.iterator();
-
         if ( arrayOfBlocks.size() != 0 ) {
             System.out.println( "Building:" );
-                while ( ( blockIterator.hasNext() ) ) {
-                    System.out.println( blockIterator.next() + " " );
-                }
+            while ( ( blockIterator.hasNext() ) ) {
+                System.out.println( blockIterator.next() + " " );
+            }
         }
     }
     /**
@@ -102,6 +100,5 @@ public class Building implements Serializable {
         if( arrayOfBlocks.size() != 0 ){
             arrayOfBlocks.clear();
         }
-
     }
 }

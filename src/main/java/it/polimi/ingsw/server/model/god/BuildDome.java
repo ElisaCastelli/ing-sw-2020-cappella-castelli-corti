@@ -84,8 +84,9 @@ public class BuildDome extends GodDecorator {
     public boolean moveBlock(Box pos) {
         //todo test
         if(indexPossibleBlock == 1){
+            if(pos.getCounter() == 3)
+                completeTowers++;
             pos.build(4);
-            completeTowers++;
         }else{
             super.moveBlock(pos);
             if (pos.getCounter() == 4)

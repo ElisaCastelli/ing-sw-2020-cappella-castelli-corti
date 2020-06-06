@@ -105,8 +105,28 @@ public class Game implements GameModel{
         }
     }
 
+    public boolean someoneWithYourName(String namePlayer){
+        boolean exist = false;
+        int i=0;
+        while(i<players.size() && !exist){
+            if(namePlayer.equals(players.get(i).getName())){
+                exist=true;
+            }
+            i++;
+        }
+        return exist;
+    }
+
     public Board getBoard(){
         return board;
+    }
+
+    public int getRowWorker(int indexWorker){
+        return players.get(whoIsPlaying()).getWorkerBox(indexWorker - 1).getRow();
+    }
+
+    public int getColumnWorker(int indexWorker){
+        return players.get(whoIsPlaying()).getWorkerBox(indexWorker - 1).getColumn();
     }
 
     /**
@@ -133,21 +153,28 @@ public class Game implements GameModel{
     }
 
     public boolean addPlayer(String name, int age, int indexClient){
-        int playerIndex = searchByClientIndex(indexClient);
-        players.get(playerIndex).setName(name);
-        players.get(playerIndex).setAge(age);
-        ackCounter++;
-
-        sortGamers();
-        for(Player player : players ){
-            int indexPlayer = searchByName(player.getName());
-            player.setIndexPlayer(indexPlayer);
+        if(!someoneWithYourName(name)){
+            int playerIndex = searchByClientIndex(indexClient);
+            players.get(playerIndex).setName(name);
+            players.get(playerIndex).setAge(age);
+            ackCounter++;
+            sortGamers();
+            for(Player player : players ){
+                int indexPlayer = searchByName(player.getName());
+                player.setIndexPlayer(indexPlayer);
+            }
+            return true;
+        }else{
+            return false;
         }
+    }
+    public boolean checkAckPlayer(){
         if(ackCounter == nPlayers){
             ackCounter = 0;
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -178,8 +205,6 @@ public class Game implements GameModel{
             }
         }
     }
-
-
 
     public void startGame(){
         players.get(0).goPlay();

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.god;
 
+import it.polimi.ingsw.server.model.building.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
@@ -50,9 +51,27 @@ public class BuildABlockUnderItself extends GodDecorator {
     @Override
     public void setPossibleBuild(Worker worker) {
         super.setPossibleBuild(worker);
-        if(worker.getHeight() <= 2)
+        if(worker.getHeight() <= 2){
             worker.getActualBox().setReachable(true);
-        //todo ricordarsi di fare la clear anche della casella del proprio worker
+            Block block = whatCanIBuild(worker.getActualBox());
+            if(block != null)
+                worker.getActualBox().getPossibleBlock().add(block);
+        }
+    }
+
+    public Block whatCanIBuild(Box box){
+        int sizeArrayBlocks = box.getBuilding().getArrayOfBlocks().size();
+        Block block;
+        if(sizeArrayBlocks == 0){
+            block = new Base();
+        } else if(sizeArrayBlocks == 1){
+            block = new Middle();
+        }else if(sizeArrayBlocks == 2) {
+            block = new Top();
+        }else if (sizeArrayBlocks == 3){
+            block = new Dome();
+        }else block = null;
+        return block;
     }
 
     /**

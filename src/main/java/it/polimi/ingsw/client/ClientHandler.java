@@ -18,10 +18,11 @@ public class ClientHandler {
     private final Object LOCK=new Object();
     private boolean closed= false;
 
-    public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket) {
+    public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket, View view) {
         this.inputStream = inputStream;
         this.outputStream = outputStream;
         this.socket = socket;
+        this.view = view;
     }
 
     public View getView() {
@@ -29,8 +30,8 @@ public class ClientHandler {
     }
 
     public void listening () {
-        view = new CLIView(new SendMessageToServer(this));
-
+        SendMessageToServer sendMessageToServer = new SendMessageToServer(this);
+        view.setSendMessageToServer(sendMessageToServer);
         try {
             while (!closed) {
                 ObjMessage objMessage = null;

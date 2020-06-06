@@ -18,6 +18,7 @@ public interface Observer {
     void updateInitializeWorker(int indexClient,int indexPlayer);
     void updateNotInitializeWorker(int indexClient);
     void updatePlayer();
+    void updateNewAddPlayer(int indexClient);
     void updateAskState(int indexClient, int indexPlayer);
     void updateBoard(boolean reach);
     void updateWhoIsPlaying();

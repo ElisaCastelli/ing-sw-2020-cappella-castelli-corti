@@ -48,6 +48,10 @@ public class SendMessageToClient {
         }
     }
 
+    public void sendAskPlayerAgain(int indexClient){
+        echoServer.send(new AskPlayerEvent(), indexClient);
+    }
+
     public void sendStartGameEvent(int nPlayers) {
         echoServer.sendBroadCast(new StartGameEvent(nPlayers));
     }

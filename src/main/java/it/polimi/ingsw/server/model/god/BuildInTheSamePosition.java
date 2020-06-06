@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.god;
 
+import it.polimi.ingsw.server.model.building.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
@@ -56,11 +57,29 @@ public class BuildInTheSamePosition extends MoveTwice {
         else {
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-                if (boxNextTo != null && super.samePosition( boxNextTo) && boxNextTo.getCounter() <= 2) {
+                if (boxNextTo != null && super.samePosition(boxNextTo) && boxNextTo.getCounter() <= 2) {
                     boxNextTo.setReachable(true);
+                    Block block = whatCanIBuild(boxNextTo);
+                    if(block != null)
+                        boxNextTo.getPossibleBlock().add(block);
                 }
             }
         }
+    }
+
+    public Block whatCanIBuild(Box box){
+        int sizeArrayBlocks = box.getBuilding().getArrayOfBlocks().size();
+        Block block;
+        if(sizeArrayBlocks == 0){
+            block = new Base();
+        } else if(sizeArrayBlocks == 1){
+            block = new Middle();
+        }else if(sizeArrayBlocks == 2) {
+            block = new Top();
+        }else if (sizeArrayBlocks == 3){
+            block = new Dome();
+        }else block = null;
+        return block;
     }
 
     /**

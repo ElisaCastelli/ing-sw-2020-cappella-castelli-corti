@@ -23,11 +23,11 @@ public class VisitorClient {
     }
 
     public void visit (ObjWait objWait){
-        System.out.println("devo aspettare");
+        view.youHaveToWait();
     }
 
     public void visit (ObjYouCanPlay ObjYouCanPlay){
-        System.out.println("puoi giocare");
+        view.youCanPlay();
     }
 
     public void visit(AskPlayerEvent askPlayerEvent){
@@ -40,7 +40,6 @@ public class VisitorClient {
 
     public void visit(ObjState objState){
         view.setIndexPlayer(objState);
-        System.out.println("ho settato lo stato");
     }
 
     public void visit(Ask3CardsEvent ask3CardsEvent) {

@@ -164,6 +164,10 @@ public class VirtualView implements Observer {
         sendMessageToClient.sendUpdateBoard(gameModel.gameData(reach));
     }
 
+    @Override
+    public void updateNewAddPlayer(int indexClient){
+        sendMessageToClient.sendAskPlayerAgain(indexClient);
+    }
 
     public void initializeWorker(Box box1, Box box2) {
         controller.initializeWorker(box1,box2);

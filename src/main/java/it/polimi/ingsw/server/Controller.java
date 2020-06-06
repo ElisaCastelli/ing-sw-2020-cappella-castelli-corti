@@ -34,10 +34,15 @@ public class Controller  {
         Timer timer = new Timer();
         gameModel.addPlayerProxy(indexPlayer, timer);
     }
+
     public void addPlayer(String name, int age, int indexClient){
         boolean addCompleted = gameModel.addPlayer(name, age, indexClient);
         if(addCompleted){
-            gameModel.notifyAddPlayer();
+            if(gameModel.checkAckPlayer()){
+                gameModel.notifyAddPlayer();
+            }
+        }else{
+            gameModel.notifyNewAddPlayer(indexClient);
         }
     }
 
@@ -133,14 +138,12 @@ public class Controller  {
         }
     }
 
-
-
-
     /// richiamato
     public void setBoxReachable(int indexWorker, boolean secondMove) {
         gameModel.setBoxReachable(indexWorker);
         gameModel.notifySetReachable(indexWorker , secondMove);
     }
+
     ///richiamato
     public void movePlayer(int rowStart, int columnStart, int row, int column, int indexWorkerToMove) {
         boolean moved = gameModel.movePlayer(indexWorkerToMove, row, column);
@@ -148,7 +151,11 @@ public class Controller  {
         if(moved){
             askMoveEvent = new AskMoveEvent(indexWorkerToMove, row, column, false, true);
         }else{
-            askMoveEvent = new AskMoveEvent(indexWorkerToMove, row, column,false,false);
+            if(gameModel.getRowWorker(indexWorkerToMove) == rowStart && gameModel.getColumnWorker(indexWorkerToMove) == columnStart){
+                askMoveEvent = new AskMoveEvent(indexWorkerToMove, rowStart, columnStart, true, false);
+            }else{
+                askMoveEvent = new AskMoveEvent(indexWorkerToMove, row, column,false,false);
+            }
         }
 
         askMoveEvent.setRowStart(rowStart);
@@ -175,7 +182,6 @@ public class Controller  {
                 gameModel.notifyWin(winnerClient);
             }else{
                 gameModel.notifyWhoHasLost(indexClient);
-
             }
         }else{
             gameModel.notifyCanBuild(indexWorker, rowWorker, columnWorker);

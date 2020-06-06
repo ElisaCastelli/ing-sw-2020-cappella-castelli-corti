@@ -9,35 +9,34 @@ import it.polimi.ingsw.server.model.gameComponents.Box;
 
 import java.util.ArrayList;
 
-public abstract class View {
-
-    public abstract void askWantToPlay(AskWantToPlay askWantToPlay);
-
-    public abstract void setBoard(Board board);
-    public abstract void updateBoard(UpdateBoardEvent updateBoardEvent);
-    public abstract void askNPlayer();
-    public abstract void setNPlayer(int nPlayer);
-    public abstract void askPlayer(int clientIndex);
-
-    public abstract void setIndexPlayer(ObjState objState);
-    public abstract int getIndexPlayer();
-    public abstract void ask3Card(ArrayList<String> cards);
-    public abstract void askCard(ArrayList<String> cards);
-    public abstract void initializeWorker();
-    public abstract void askWorker(AskWorkerToMoveEvent askMoveEvent);
-    public abstract void areYouSure(AskWorkerToMoveEvent askMoveEvent);
-    public abstract void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
-    public abstract void moveWorker(AskMoveEvent askMoveEvent);
-    public abstract void anotherMove(AskMoveEvent askMoveEvent);
-    public abstract void printPossibleBlocks(int row, int column);
-    public abstract void wrongMove();
-    public abstract void buildMove(AskBuildEvent askBuildEvent);
-    public abstract void anotherBuild(AskBuildEvent askBuildEvent);
-    public abstract void loserEvent();
-    public abstract void winnerEvent();
-    public abstract void someoneWon();
-    public abstract void whoHasLost();
-
-    public abstract void printHeartBeat(ObjHeartBeat objHeartBeat);
-    public abstract void closingConnectionEvent(int indexClient, boolean GameNotAvailable);
+public interface View {
+    void askWantToPlay(AskWantToPlay askWantToPlay);
+    void youCanPlay();
+    void youHaveToWait();
+    void setSendMessageToServer(SendMessageToServer sendMessageToServer);
+    void setBoard(Board board);
+    void updateBoard(UpdateBoardEvent updateBoardEvent);
+    void askNPlayer();
+    void setNPlayer(int nPlayer);
+    void askPlayer(int clientIndex);
+    void setIndexPlayer(ObjState objState);
+    int getIndexPlayer();
+    void ask3Card(ArrayList<String> cards);
+    void askCard(ArrayList<String> cards);
+    void initializeWorker();
+    void askWorker(AskWorkerToMoveEvent askMoveEvent);
+    void areYouSure(AskWorkerToMoveEvent askMoveEvent);
+    void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker);
+    void moveWorker(AskMoveEvent askMoveEvent);
+    void anotherMove(AskMoveEvent askMoveEvent);
+    void printPossibleBlocks(int row, int column);
+    void wrongMove();
+    void buildMove(AskBuildEvent askBuildEvent);
+    void anotherBuild(AskBuildEvent askBuildEvent);
+    void loserEvent();
+    void winnerEvent();
+    void someoneWon();
+    void whoHasLost();
+    void printHeartBeat(ObjHeartBeat objHeartBeat);
+    void closingConnectionEvent(int indexClient, boolean GameNotAvailable);
 }

@@ -8,10 +8,11 @@ import it.polimi.ingsw.server.model.building.Block;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CLIView extends View {
+public class CLIView implements View {
 
     SendMessageToServer sendMessageToServer;
     private static final int numCards = 14;
@@ -20,14 +21,17 @@ public class CLIView extends View {
     private ArrayList<User> usersArray;
     private Board board;
 
-    public CLIView(SendMessageToServer sendMessageToServer) {
+    public CLIView() {
+    }
+
+    public void setSendMessageToServer(SendMessageToServer sendMessageToServer) {
         this.sendMessageToServer = sendMessageToServer;
     }
 
     @Override
     public void askWantToPlay(AskWantToPlay askWantToPlay){
         Thread thread = new Thread(() -> {
-            //santoriniName();
+            santoriniName();
             System.out.println("sto cencando di entare nella partita");
             sendMessageToServer.sendAskWantToPlay(askWantToPlay);
         });
@@ -35,6 +39,15 @@ public class CLIView extends View {
         thread.start();
     }
 
+    @Override
+    public void youCanPlay() {
+        System.out.println("You can play");
+    }
+
+    @Override
+    public void youHaveToWait() {
+        System.out.println("You have to wait");
+    }
 
     @Override
     public void updateBoard(UpdateBoardEvent updateBoardEvent) {
@@ -51,6 +64,7 @@ public class CLIView extends View {
     @Override
     public void askNPlayer() {
         Thread thread = new Thread(() -> {
+            clearScreen();
             Scanner input = new Scanner(System.in);
             System.out.println(Color.CYAN+"How many Player ? [ 2 o 3 ]"+Color.RESET);
             int response=inputTwoOrThree(input);
@@ -59,6 +73,7 @@ public class CLIView extends View {
         thread.setDaemon(true);
         thread.start();
     }
+
     @Override
     public void askPlayer(int clientIndex){
         Thread thread = new Thread(() -> {
@@ -79,8 +94,6 @@ public class CLIView extends View {
         System.out.println("Player age : ");
         return inputNumber(input);
     }
-
-
 
     @Override
     public void setNPlayer(int nPlayer){
@@ -113,9 +126,6 @@ public class CLIView extends View {
     public void ask3Card(ArrayList<String> cards) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            while(input.hasNext()) {
-                input.next();
-            }
             ArrayList<Integer> cardTemp = new ArrayList<>();
             boolean[] scelte = new boolean[cards.size()];
             for (int i = 0; i < cards.size(); i++) {
@@ -126,32 +136,28 @@ public class CLIView extends View {
                 System.out.println("[ " + cardIndex + "] " + cards.get(cardIndex));
             }
 
-            while (cardTemp.size() < nPlayer) {
-                int cardDrawn = inputNumber(input);
-                while (cardDrawn >= numCards || cardDrawn < 0 || scelte[cardDrawn]) {
-                    System.out.println("Select again the card.");
-                    cardDrawn = inputNumber(input);
+                while (cardTemp.size() < nPlayer) {
+                    int cardDrawn = inputNumber(input);
+                    while (cardDrawn >= numCards || cardDrawn < 0 || scelte[cardDrawn]) {
+                        System.out.println("Select again the card.");
+                        cardDrawn = inputNumber(input);
+                    }
+                    System.out.println("Scelta carta numero " + cardDrawn);
+                    cardTemp.add(cardDrawn);
+                    scelte[cardDrawn] = true;
                 }
-                System.out.println("Scelta carta numero " + cardDrawn);
-                cardTemp.add(cardDrawn);
-                scelte[cardDrawn] = true;
-            }
 
-            sendMessageToServer.send3card(cardTemp);
+                sendMessageToServer.send3card(cardTemp);
 
         });
         thread.setDaemon(true);
         thread.start();
     }
 
-
     @Override
     public void askCard(ArrayList<String> cards) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            while(input.hasNext()) {
-                input.next();
-            }
             boolean choose = false;
             int scelta = -1;
             for (int index = 0; index < cards.size(); index++) {
@@ -179,7 +185,7 @@ public class CLIView extends View {
             int indexWorker = 0;
             while (indexWorker < 2) {
 
-                System.out.println("Place the Worker " + indexWorker);
+                    System.out.println("Place the Worker " + indexWorker);
 
                 int row = rowSelected(input);
                 int column = columnSelected(input);
@@ -199,7 +205,6 @@ public class CLIView extends View {
         thread.start();
     }
 
-
     @Override
     public void askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         Thread thread = new Thread(() -> {
@@ -209,11 +214,11 @@ public class CLIView extends View {
             int row2 = askWorkerToMoveEvent.getRow2();
             int column2 = askWorkerToMoveEvent.getColumn2();
 
-            System.out.println("You're going to do your move-> What Worker You wanna move?");
-            System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row   " + column1 + " <-column");
-            System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row   " + column2 + " <-column");
-            System.out.println("Control the board and choose...");
-            printBoard(false, askWorkerToMoveEvent.getCurrentClientPlaying());
+                System.out.println("You're going to do your move-> What Worker You wanna move?");
+                System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row   " + column1 + " <-column");
+                System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row   " + column2 + " <-column");
+                System.out.println("Control the board and choose...");
+                printBoard(false, askWorkerToMoveEvent.getCurrentClientPlaying());
 
             int intInputValue = twoNumbers(input);
             ObjWorkerToMove objWorkerToMove;
@@ -226,7 +231,6 @@ public class CLIView extends View {
         });
         thread.setDaemon(true);
         thread.start();
-
     }
 
     @Override
@@ -247,8 +251,7 @@ public class CLIView extends View {
             System.out.println("Are You sure you want move the " + indexWorker + " worker? ");
             System.out.println("Position : " + row + " <-row   " + column + " <-column");
 
-            System.out.println("[ 1 ] -> " + " YES")
-            ;
+            System.out.println("[ 1 ] -> " + " YES");
             System.out.println("[ 0 ] -> " + " NO");
 
             int intInputValue = twoNumbers(input);
@@ -261,7 +264,6 @@ public class CLIView extends View {
         });
         thread.setDaemon(true);
         thread.start();
-
     }
 
     @Override
@@ -279,10 +281,7 @@ public class CLIView extends View {
             if(intInputValue == 1){
                 objBlockBeforeMove.setWantToBuild(true);
             }
-
             sendMessageToServer.sendBlockBeforeMove(objBlockBeforeMove);
-
-
         });
         thread.setDaemon(true);
         thread.start();
@@ -315,7 +314,6 @@ public class CLIView extends View {
         });
         thread.setDaemon(true);
         thread.start();
-
     }
 
     @Override
@@ -374,14 +372,10 @@ public class CLIView extends View {
             int inputPossibleBlock = twoNumbers(input);
 
             objBlock.setPossibleBlock(inputPossibleBlock);
-            if (!askBuildEvent.isFirstTime()) {
-                objBlock.setDone(true);
-            }
             sendMessageToServer.sendBuildMove(objBlock);
         });
         thread.setDaemon(true);
         thread.start();
-
     }
 
     @Override
@@ -403,7 +397,6 @@ public class CLIView extends View {
         });
         thread.setDaemon(true);
         thread.start();
-
     }
 
     public void printPossibleBlocks(int row, int column){
@@ -494,7 +487,7 @@ public class CLIView extends View {
                     return Color.CYAN_BOLD + board.getBox(row, column).print() + Color.RESET+ " X";
                 }
             } else
-            return "X";
+                return "X";
         }else {
             if (board.getBox(row, column).getWorker() != null) {
                 if (board.getBox(row, column).getWorker().getIndexPlayer() == 0) {
@@ -584,36 +577,70 @@ public class CLIView extends View {
         }
     }
 
+    public void clearScreen(){
+        final String os = System.getProperty("os.name");
+        if (os.contains("Windows")) {
+            try {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                Runtime.getRuntime().exec("clear");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void santoriniName(){
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " ");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ " "+ " "+ " ");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "A");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S");
-        System.out.println(" "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " ");
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ " "+ " "+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ "N"+ "N"+ " "+ " "+ " "+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ Color.RED_BOLD_BRIGHT + " "+ "R"+ "R"+ " "+ " "+ " "+ "R"+ "R"+ "R"+ "R"+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ "N"+ "N"+ " "+ " "+ " "+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ Color.CYAN_BOLD_BRIGHT +  " "+ " "+ "N"+ "N"+ " "+ "N"+ "N"+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ Color.RED_BOLD_BRIGHT + " "+ " "+ "R"+ "R"+ " "+ "R"+ "R"+ "R"+ "R"+ "R"+ "R"+ "R"+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ "I"+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "N"+ "N"+ " "+ "N"+ "N"+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ " "+ "I"+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ " "+ " "+ Color.CYAN_BOLD_BRIGHT +  " "+ " "+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ Color.RED_BOLD_BRIGHT + " "+ " "+ "R"+ "R"+ "R"+ "R"+ " "+ " "+ " "+ " "+ "R"+ "R"+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ " "+ " "+ Color.CYAN_BOLD_BRIGHT +  " "+ " "+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ " "+ " "+ " "+ "T"+ "T"+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ Color.RED_BOLD_BRIGHT + " "+ " "+ "R"+ "R"+ "R"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ " "+ "I"+ "I"+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ " "+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ "A"+ "A"+ "A"+ " "+ "A"+ Color.CYAN_BOLD_BRIGHT +  " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ " "+ "T"+ "T"+ "T"+ "T"+ "T"+ " "+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ Color.RED_BOLD_BRIGHT + " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ "I"+ "I"+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
+        System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ "A"+ "A"+ " "+ Color.CYAN_BOLD_BRIGHT +  " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ " "+ " "+ "T"+ "T"+ "T"+ " "+ " "+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ Color.RED_BOLD_BRIGHT + " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
     }
 
     @Override
     public void loserEvent() {
-        System.out.println("Game Over"); //todo da sistemare
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ "M"+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ "M"+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ "R"+ "R"+ "R"+ "R"+ " "+ " "+" "+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ "M"+ "M"+ "M"+ "M"+ "M"+ "M"+ " "+ " "+ "M"+ "M"+ "M"+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ "R"+ "R"+ " "+ "R"+ "R"+ "R"+ "R"+ "R"+ "R"+ "R"+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ "M"+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ "M"+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ "E"+ "E"+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ "V"+ "V"+ " "+ " "+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ "R"+ "R"+ "R"+ "R"+ " "+ " "+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ " "+ " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ "V"+ "V"+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "R"+ "R"+ "R"+" "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ "A"+ "A"+ "A"+ " "+ "A"+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "V"+ "V"+ "V"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ "A"+ "A"+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "V"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ " "+ Color.RESET);
     }
 
     @Override
     public void winnerEvent() {
-        System.out.println("You Won"); //todo da sistemare
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "N"+ "N"+ " "+ "N"+ "N"+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "N"+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "U"+ "U"+ "U"+ " "+ " "+ "U"+ "U"+ "U"+ " "+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
+        System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ "U"+ "U"+ "U"+ "U"+ "U"+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
     }
 
     @Override
     public void someoneWon() {
-        System.out.println("An opponent won. Game Over"); //todo da sistemare
+        System.out.println("An opponent won. Game Over");
     }
 
     @Override
     public void whoHasLost() {
-        System.out.println("An opponent lost"); //todo da sistemare
+        System.out.println("An opponent lost");
     }
 
     @Override

@@ -34,6 +34,17 @@ public class ProxyGameModel implements GameModel, Subject{
     public Board getBoard(){
         return gameModel.getBoard();
     }
+
+    @Override
+    public int getColumnWorker(int indexWorker) {
+        return gameModel.getColumnWorker(indexWorker);
+    }
+
+    @Override
+    public int getRowWorker(int indexWorker) {
+        return gameModel.getRowWorker(indexWorker);
+    }
+
     @Override
     public ArrayList<Player> getPlayerArray(){
         return gameModel.getPlayerArray();
@@ -278,6 +289,16 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
+    public boolean checkAckPlayer() {
+        return gameModel.checkAckPlayer();
+    }
+
+    @Override
+    public void notifyNewAddPlayer(int indexClient) {
+        observer.updateNewAddPlayer(indexClient);
+    }
+
+    @Override
     public void notifyAskState(int indexClient,int indexPlayer) {
         observer.updateAskState(indexClient,indexPlayer);
     }
@@ -297,8 +318,6 @@ public class ProxyGameModel implements GameModel, Subject{
         int indexClient = searchByPlayerIndex(gameModel.whoIsPlaying());
         observer.updateNotInitializeWorker(indexClient);
     }
-
-
 
     @Override
     public void notifyWhoIsPlaying(){

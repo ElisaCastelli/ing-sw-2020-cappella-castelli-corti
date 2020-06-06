@@ -58,6 +58,7 @@ public class GoingState extends GameState{
         Box starterBox = players.get(indexPlayer).getWorkerBox(indexWorker - 1);
         boolean movedBlock = players.get(indexPlayer).playBlock(board.getBox(row, column));
         starterBox.clearBoxesNextTo();
+        starterBox.setReachable(false);
         return movedBlock;
     }
 

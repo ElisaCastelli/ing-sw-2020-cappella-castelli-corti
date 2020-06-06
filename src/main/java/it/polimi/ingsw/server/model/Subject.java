@@ -33,4 +33,5 @@ public interface Subject {
     void notifyContinueBuild(AskBuildEvent askBuildEvent);
     void notifyStartTurn();
     void notifyWhoHasLost(int indexClient);
+    void notifyNewAddPlayer(int indexClient);
 }

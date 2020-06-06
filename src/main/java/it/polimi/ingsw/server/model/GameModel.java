@@ -15,6 +15,8 @@ import java.util.TimerTask;
 
 public interface GameModel {
     Board getBoard();
+    int getColumnWorker(int indexWorker);
+    int getRowWorker(int indexWorker);
     ArrayList<Player> getPlayerArray();
     int getNPlayers();
     void setNPlayers(int nPlayers);
@@ -56,4 +58,5 @@ public interface GameModel {
     void controlHeartBeat(int indexClient);
     boolean incrementHeartBeat(int indexClient);
     void reset();
+    boolean checkAckPlayer();
 }
