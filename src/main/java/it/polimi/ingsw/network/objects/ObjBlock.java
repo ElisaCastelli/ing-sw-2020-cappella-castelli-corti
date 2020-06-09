@@ -3,6 +3,9 @@ package it.polimi.ingsw.network.objects;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
+/**
+ * message block to build
+ */
 public class ObjBlock extends ObjMessage {
 
     int indexWorker;
@@ -15,13 +18,21 @@ public class ObjBlock extends ObjMessage {
     boolean done;
     boolean isSpecialTurn;
 
-
+    /**
+     * constructor of the class
+     *
+     * @param indexWorker   index of a worker
+     * @param rowWorker     row  of a worker
+     * @param columnWorker  column of the worker
+     * @param firstTime     boolean for the first time
+     * @param isSpecialTurn boolean for a special turn
+     */
     public ObjBlock(int indexWorker, int rowWorker, int columnWorker, boolean firstTime, boolean isSpecialTurn) {
         this.indexWorker = indexWorker;
         this.rowWorker = rowWorker;
         this.columnWorker = columnWorker;
         this.firstTime = firstTime;
-        this.isSpecialTurn= isSpecialTurn;
+        this.isSpecialTurn = isSpecialTurn;
     }
 
     public ObjBlock(boolean done) {
@@ -80,14 +91,21 @@ public class ObjBlock extends ObjMessage {
         return isSpecialTurn;
     }
 
-    public void setSpecialTurn(boolean specialTurn) {
-        isSpecialTurn = specialTurn;
-    }
-
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
     @Override
-    public void accept(VisitorServer visitorServer) throws Exception {
+    public void accept(VisitorServer visitorServer) {
         visitorServer.visit(this);
     }
+
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
 
     @Override
     public void accept(VisitorClient visitorClient) {

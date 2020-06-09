@@ -3,16 +3,29 @@ package it.polimi.ingsw.network.objects;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
+/**
+ * message move worker
+ */
 public class ObjMove extends ObjMessage {
 
     private static final long serialVersionUID = -6284934856022193045L;
 
-    int indexWorkerToMove;
-    int rowStart;
-    int columnStart;
+    final int indexWorkerToMove;
+    final int rowStart;
+    final int columnStart;
     int row; //row where I wanna move
     int column; //column where I wanna move
 
+    /**
+     * constructor of the class
+     *
+     * @param indexWorkerToMove index of the worker
+     * @param rowStart          row start of the worker
+     * @param columnStart       column start of the worker
+     * @param row               final row of the worker
+     * @param column            final column of the worker
+     * @param isDone            boolean for the choice of the player
+     */
     public ObjMove(int indexWorkerToMove, int rowStart, int columnStart, int row, int column, boolean isDone) {
         this.indexWorkerToMove = indexWorkerToMove;
         this.rowStart = rowStart;
@@ -41,10 +54,6 @@ public class ObjMove extends ObjMessage {
         return column;
     }
 
-    public void setIndexWorkerToMove(int indexWorkerToMove) {
-        this.indexWorkerToMove = indexWorkerToMove;
-    }
-
     public void setRow(int row) {
         this.row = row;
     }
@@ -53,10 +62,22 @@ public class ObjMove extends ObjMessage {
         this.column = column;
     }
 
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
+
     @Override
-    public void accept(VisitorServer visitorServer) throws Exception {
+    public void accept(VisitorServer visitorServer) {
         visitorServer.visit(this);
     }
+
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
 
     @Override
     public void accept(VisitorClient visitorClient) {

@@ -32,7 +32,7 @@ public class CLIView implements View {
     public void askWantToPlay(AskWantToPlay askWantToPlay){
         Thread thread = new Thread(() -> {
             santoriniName();
-            System.out.println("sto cencando di entare nella partita");
+            System.out.println("I'm trying to join a game");
             sendMessageToServer.sendAskWantToPlay(askWantToPlay);
         });
         thread.setDaemon(true);
@@ -86,11 +86,25 @@ public class CLIView implements View {
         thread.start();
     }
 
-    public String askName(Scanner input) {
+
+    public String askName(Scanner input){
+
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Player name :");
         return input.nextLine();
     }
     public int askAge(Scanner input) {
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Player age : ");
         return inputNumber(input);
     }
@@ -107,8 +121,7 @@ public class CLIView implements View {
     }
 
     @Override
-    public void setIndexPlayer(ObjState objState){
-        indexPlayer = objState.getIndexPlayer();
+    public void setIndexPlayer(int indexPlayer){
         if(indexPlayer == 0) {
             System.out.println("I have to play");
             sendMessageToServer.sendAckPlayer();
@@ -199,11 +212,12 @@ public class CLIView implements View {
                     }
                 }
             }
-            sendMessageToServer.sendWorker(boxes,indexPlayer);
+            sendMessageToServer.sendWorker(boxes);
         });
         thread.setDaemon(true);
         thread.start();
     }
+
 
     @Override
     public void askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
@@ -417,6 +431,11 @@ public class CLIView implements View {
 
     //Questo metodo va richiamato se si vuole un numero da tastiera
     public int inputNumber(Scanner input){
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int intInputValue = 0;
         while (true) {
             ///System.out.println("Enter a whole number.");
@@ -431,6 +450,11 @@ public class CLIView implements View {
         }
     }
     public int twoNumbers(Scanner input){
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int intInputValue;
         intInputValue = inputNumber(input);
         while(intInputValue >= 2 || intInputValue < 0){
@@ -440,6 +464,11 @@ public class CLIView implements View {
         return intInputValue;
     }
     public int inputTwoOrThree(Scanner input){
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int intInputValue;
         intInputValue = inputNumber(input);
         while(intInputValue <2 ||  intInputValue > 3){
@@ -450,6 +479,11 @@ public class CLIView implements View {
     }
     //Questo metodo serve per selezionare una riga che sia raggiungibile
     public int rowSelected(Scanner input){
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int intInputValue;
         System.out.println("Select row:");
         intInputValue = inputNumber(input);
@@ -461,6 +495,11 @@ public class CLIView implements View {
     }
     //Questo metodo serve per selezionare una colonna che sia raggiungibile
     public int columnSelected(Scanner input){
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int intInputValue;
         System.out.println("Select column:");
         intInputValue = inputNumber(input);

@@ -3,17 +3,30 @@ package it.polimi.ingsw.network.objects;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
-public class ObjNumPlayer  extends ObjMessage{
-    private int nPlayer;
+/**
+ * message number of player
+ */
+public class ObjNumPlayer extends ObjMessage {
+    private final int nPlayer;
 
-    public ObjNumPlayer(int nPlayer){
-        this.nPlayer=nPlayer;
+    /**
+     * constructor of the class
+     *
+     * @param nPlayer number of player
+     */
+    public ObjNumPlayer(int nPlayer) {
+        this.nPlayer = nPlayer;
     }
-    public int getnPlayer() {
+
+    public int getNPlayer() {
         return nPlayer;
     }
 
-
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitor the class of the visitor pattern server's side
+     */
     @Override
     public void accept(VisitorServer visitor) {
         try {
@@ -23,6 +36,11 @@ public class ObjNumPlayer  extends ObjMessage{
         }
     }
 
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
     @Override
     public void accept(VisitorClient visitorClient) {
         throw new UnsupportedOperationException();

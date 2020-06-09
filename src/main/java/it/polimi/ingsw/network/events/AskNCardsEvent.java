@@ -1,32 +1,39 @@
-package it.polimi.ingsw.network.objects;
+package it.polimi.ingsw.network.events;
 
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.server.model.playerState.PlayerState;
+
+import java.util.ArrayList;
 
 /**
- * message state of the game
+ * message ask n cards event
  */
-public class ObjState extends ObjMessage {
 
-    private static final long serialVersionUID = -10489342L;
-
-    int indexPlayer;
+public class AskNCardsEvent extends Event {
+    final ArrayList<String> cardArray;
+    PlayerState state;
 
     /**
      * constructor of the class
      *
-     * @param indexPlayer index of the player
+     * @param cardArray array of all cards
      */
-    public ObjState(int indexPlayer) {
-        this.indexPlayer = indexPlayer;
+
+    public AskNCardsEvent(ArrayList<String> cardArray) {
+        this.cardArray = cardArray;
     }
 
-    public int getIndexPlayer() {
-        return indexPlayer;
+    public void setState(PlayerState state) {
+        this.state = state;
     }
 
-    public void setIndexPlayer(int indexPlayer) {
-        this.indexPlayer = indexPlayer;
+    public PlayerState getState() {
+        return state;
+    }
+
+    public ArrayList<String> getCardArray() {
+        return cardArray;
     }
 
     /**

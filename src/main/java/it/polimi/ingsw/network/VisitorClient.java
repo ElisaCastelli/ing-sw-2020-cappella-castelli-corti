@@ -1,71 +1,177 @@
 package it.polimi.ingsw.network;
+
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 
+/**
+ * Visitor pattern client's side to invoke methods on the view
+ */
+
 public class VisitorClient {
+
+    //todo fai metodo per chi non gioca così da togliere le sout
+
     public final View view;
+
+    /**
+     * class constructor
+     *
+     * @param view is the interface allocated for a client
+     */
     public VisitorClient(View view) {
-        this.view=view;
+        this.view = view;
     }
 
-    public void visit(AskWantToPlay askWantToPlay){
+    /**
+     * method to establish a connect with the server
+     *
+     * @param askWantToPlay is a message to start the communication with the server
+     */
+    public void visit(AskWantToPlay askWantToPlay) {
         view.askWantToPlay(askWantToPlay);
     }
-    public void visit(AskNPlayerEvent askNPlayerEvent){
+
+    /**
+     * method to ask the player the number of player in a game
+     *
+     * @param askNPlayerEvent is a message to ask the user for the number of player in a game
+     */
+    public void visit(AskNPlayerEvent askNPlayerEvent) {
         view.askNPlayer();
     }
-    public void visit (ObjWait objWait){
+
+    /**
+     * method to ask the player to wait for anther game
+     *
+     * @param objWait is a message to notify the user that he has to wait for a game
+     */
+    public void visit(ObjWait objWait) {
         view.youHaveToWait();
     }
-    public void visit (ObjYouCanPlay ObjYouCanPlay){
+
+    /**
+     * method to notify the player he can play in a game
+     *
+     * @param ObjYouCanPlay is a message to notify the user that he can join a game
+     */
+
+    public void visit(ObjYouCanPlay ObjYouCanPlay) {
         view.youCanPlay();
     }
-    public void visit(AskPlayerEvent askPlayerEvent){
+
+    /**
+     * method to ask the player for his name and his age
+     *
+     * @param askPlayerEvent is a message to ask for the name and tha age of the player
+     */
+
+    public void visit(AskPlayerEvent askPlayerEvent) {
         view.askPlayer(askPlayerEvent.getClientIndex());
     }
-    public void visit(StartGameEvent start){
-        view.setNPlayer(start.getnPlayer());
-    }
-    public void visit(ObjState objState){
-        view.setIndexPlayer(objState);
-    }
-    public void visit(Ask3CardsEvent ask3CardsEvent) {
-        if(ask3CardsEvent.getClientIndex() == ask3CardsEvent.getCurrentClientPlaying())
-            view.ask3Card(ask3CardsEvent.getCardArray());
-    }
-    public void visit(AskCard askCard) {
-        if(askCard.getClientIndex() == askCard.getCurrentClientPlaying())
-            view.askCard(askCard.getCardTemp());
-    }
-    public void visit(AskInitializeWorker askInitializeWorker){
-        if(askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentClientPlaying()) {
-            view.initializeWorker();
-        }else{
-            System.out.println("non sto inizializzando il worker");
-        }
+
+    /**
+     * method to notify that a game has started
+     *
+     * @param start is a message to notify the user that the game has started
+     */
+
+    public void visit(StartGameEvent start) {
+        view.setNPlayer(start.getNPlayer());
     }
 
-    public void visit (UpdateBoardEvent updateBoardEvent){
+    /**
+     * method to set some info as cache in the interface
+     *
+     * @param objState is a message to notify the user of the game state
+     */
+
+    public void visit(ObjState objState) {
+        view.setIndexPlayer(objState.getIndexPlayer());
+    }
+
+    /**
+     * method to ask the youngest player the cards of all the players in the game
+     *
+     * @param askNCardsEvent is a message to ask the player for the cards of all the players in the game
+     */
+
+    public void visit(AskNCardsEvent askNCardsEvent) {
+        if (askNCardsEvent.getClientIndex() == askNCardsEvent.getCurrentClientPlaying())
+            view.ask3Card(askNCardsEvent.getCardArray());
+    }
+
+    /**
+     * method to ask the player to select a card for the game
+     *
+     * @param askCard is a message to ask the player to select a card for the game
+     */
+
+    public void visit(AskCard askCard) {
+        if (askCard.getClientIndex() == askCard.getCurrentClientPlaying())
+            view.askCard(askCard.getCardTemp());
+    }
+
+    /**
+     * method to ask the player to initialize his worker
+     *
+     * @param askInitializeWorker is a message to ask the player to initialize his Workers on the board
+     */
+
+    public void visit(AskInitializeWorker askInitializeWorker) {
+        if (askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentClientPlaying()) {
+            view.initializeWorker();
+        }
+        //initialize worker
+
+    }
+
+    /**
+     * method to update the state of a game
+     *
+     * @param updateBoardEvent is a message to notify the player for the state of the board
+     */
+
+    public void visit(UpdateBoardEvent updateBoardEvent) {
         view.updateBoard(updateBoardEvent);
     }
+
+    /**
+     * method to ask the player which one of his worker he want to move
+     *
+     * @param askWorkerToMoveEvent is a message to ask the player what worker he want to move
+     */
+
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
-        if(askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
+        if (askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
             if (askWorkerToMoveEvent.isFirstAsk()) {
                 view.askWorker(askWorkerToMoveEvent);
             } else if (!askWorkerToMoveEvent.isFirstAsk()) {
                 view.areYouSure(askWorkerToMoveEvent);
             }
-        }else{
-            System.out.println("non sto setreachablando un worker");
         }
+            //set reachable worker
     }
-    public void visit(AskBuildBeforeMove askBuildBeforeMove){
-        if(askBuildBeforeMove.getClientIndex() == askBuildBeforeMove.getCurrentClientPlaying())
+
+    /**
+     * method to ask the player if he want to build before making a move with his worker
+     *
+     * @param askBuildBeforeMove is a message to ask the player if he want to move his worker before building a block
+     */
+
+    public void visit(AskBuildBeforeMove askBuildBeforeMove) {
+        if (askBuildBeforeMove.getClientIndex() == askBuildBeforeMove.getCurrentClientPlaying())
             view.askBuildBeforeMove(askBuildBeforeMove.getIndexWorker(), askBuildBeforeMove.getRowWorker(), askBuildBeforeMove.getColumnWorker());
     }
-    public void visit(AskMoveEvent askMoveEvent){
-        if(askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
+
+    /**
+     * method to ask the player to move a worker on the board
+     *
+     * @param askMoveEvent is a message to ask the player to move a worker on the board
+     */
+
+    public void visit(AskMoveEvent askMoveEvent) {
+        if (askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
             //Questa è la prima ask
             if (askMoveEvent.isFirstTime()) {
                 view.moveWorker(askMoveEvent);
@@ -73,38 +179,78 @@ public class VisitorClient {
             } else {
                 view.anotherMove(askMoveEvent);
             }
-        }else{
-            System.out.println("non sto muovendo un worker");
         }
+        //moving worker
     }
-    public void visit(AskBuildEvent askBuildEvent){
-        if(askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
+
+    /**
+     * method to ask the player to build a block on the board
+     *
+     * @param askBuildEvent is a message to ask the player to build a block on the board
+     */
+
+    public void visit(AskBuildEvent askBuildEvent) {
+        if (askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
             //Qui entra se è veramente la prima volta o se ha inserito una box non valida
             if (askBuildEvent.isFirstTime()) {
                 view.buildMove(askBuildEvent);
             } else { //Può fare una mossa speciale
                 view.anotherBuild(askBuildEvent);
             }
-            //clientHandler.sendMessage(new AckState());
         }
     }
-    public void visit(WinnerEvent winnerEvent){
-        if(winnerEvent.getClientIndex() == winnerEvent.getCurrentClientPlaying())
+
+    /**
+     * method to notify the winner
+     *
+     * @param winnerEvent is a message to notify the winner
+     */
+
+    public void visit(WinnerEvent winnerEvent) {
+        if (winnerEvent.getClientIndex() == winnerEvent.getCurrentClientPlaying())
             view.winnerEvent();
         else
             view.someoneWon();
     }
-    public void visit(LoserEvent loserEvent){
+
+    /**
+     * method to notify the loser
+     *
+     * @param loserEvent is a message to notify the loser
+     */
+
+    public void visit(LoserEvent loserEvent) {
         view.loserEvent();
     }
-    public void visit(WhoHasLostEvent whoHasLostEvent){
-        if(whoHasLostEvent.getClientIndex() != whoHasLostEvent.getCurrentClientPlaying())
+
+    /**
+     * method to notify the others player that someone died
+     *
+     * @param whoHasLostEvent is a message to notify others players that someone died
+     */
+
+    public void visit(WhoHasLostEvent whoHasLostEvent) {
+        if (whoHasLostEvent.getClientIndex() != whoHasLostEvent.getCurrentClientPlaying())
             view.whoHasLost();
     }
-    public void visit(ObjHeartBeat objHeartBeat){
+
+    /**
+     * method to control the connection with the server
+     *
+     * @param objHeartBeat is a message to test the connection's validity
+     */
+
+    public void visit(ObjHeartBeat objHeartBeat) {
         view.printHeartBeat(objHeartBeat);
     }
-    public void visit(CloseConnectionFromServerEvent connectionEvent){
-        view.closingConnectionEvent(connectionEvent.getClientIndex(), connectionEvent.isGameNotAvailable());
+
+    /**
+     * method to close the connection with the server
+     *
+     * @param closeConnectionFromServerEvent is a message to notify the connection's closing
+     */
+
+    public void visit(CloseConnectionFromServerEvent closeConnectionFromServerEvent) {
+        view.closingConnectionEvent(closeConnectionFromServerEvent.getClientIndex(), closeConnectionFromServerEvent.isGameNotAvailable());
     }
 }

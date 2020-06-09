@@ -4,18 +4,32 @@ import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
+/**
+ * message ask move event
+ */
+
 public class AskMoveEvent extends ObjMessage {
 
     private static final long serialVersionUID = 6294837110495348563L;
 
-    int rowStart=-1;
-    int columnStart=-1;
-    int row;
-    int column;
-    int indexWorker;
+    int rowStart = -1;
+    int columnStart = -1;
+    final int row;
+    final int column;
+    final int indexWorker;
     boolean firstTime;
-    boolean wrongBox=false;
-    boolean isDone;
+    boolean wrongBox = false;
+    final boolean isDone;
+
+    /**
+     * constructor of the class
+     *
+     * @param indexWorker index of the worker
+     * @param row         row of the worker
+     * @param column      column of the worker
+     * @param firstTime   boolean for the first of the first ask
+     * @param isDone      boolean for decision of the player
+     */
 
     public AskMoveEvent(int indexWorker, int row, int column, boolean firstTime, boolean isDone) {
         this.row = row;
@@ -24,6 +38,7 @@ public class AskMoveEvent extends ObjMessage {
         this.firstTime = firstTime;
         this.isDone = isDone;
     }
+
     public int getRowStart() {
         return rowStart;
     }
@@ -39,6 +54,7 @@ public class AskMoveEvent extends ObjMessage {
     public void setColumnStart(int columnStart) {
         this.columnStart = columnStart;
     }
+
     public int getRow() {
         return row;
     }
@@ -72,11 +88,21 @@ public class AskMoveEvent extends ObjMessage {
         return isDone;
     }
 
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
     @Override
     public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
     @Override
     public void accept(VisitorClient visitorClient) {
         visitorClient.visit(this);

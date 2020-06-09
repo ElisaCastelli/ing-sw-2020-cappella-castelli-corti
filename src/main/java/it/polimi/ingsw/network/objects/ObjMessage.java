@@ -5,6 +5,9 @@ import it.polimi.ingsw.network.VisitorServer;
 
 import java.io.Serializable;
 
+/**
+ * abstract message for the visitor pattern
+ */
 public abstract class ObjMessage implements Serializable {
     private int clientIndex;
     private int currentClientPlaying;
@@ -25,6 +28,17 @@ public abstract class ObjMessage implements Serializable {
         this.clientIndex = clientIndex;
     }
 
-    public abstract void accept(VisitorServer visitorServer) throws Exception;
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
+    public abstract void accept(VisitorServer visitorServer);
+
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
     public abstract void accept(VisitorClient visitorClient);
 }

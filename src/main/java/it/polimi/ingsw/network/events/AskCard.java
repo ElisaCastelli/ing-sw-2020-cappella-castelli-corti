@@ -5,30 +5,47 @@ import it.polimi.ingsw.network.VisitorServer;
 
 import java.util.ArrayList;
 
-public class AskCard extends Event{
+/**
+ * message ask card event
+ */
+
+public class AskCard extends Event {
 
     private static final long serialVersionUID = 984771837456293048L;
 
-    ArrayList<String> cardTemp;
+    final ArrayList<String> cardTemp;
 
-    public AskCard(ArrayList<String> cardTemp){
-        this.cardTemp=cardTemp;
+    /**
+     * constructor of the class
+     *
+     * @param cardTemp array of chosen cards
+     */
+
+    public AskCard(ArrayList<String> cardTemp) {
+        this.cardTemp = cardTemp;
     }
 
     public ArrayList<String> getCardTemp() {
         return cardTemp;
     }
 
-    public void setCardTemp(ArrayList<String> cardTemp) {
-        this.cardTemp = cardTemp;
-    }
-
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
     @Override
     public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
     @Override
-    public void accept(VisitorClient visitorClient) { visitorClient.visit(this);
+    public void accept(VisitorClient visitorClient) {
+        visitorClient.visit(this);
     }
 }

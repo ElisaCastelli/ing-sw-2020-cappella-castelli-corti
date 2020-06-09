@@ -4,6 +4,10 @@ import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
+/**
+ * message ask build event
+ */
+
 public class AskBuildEvent extends ObjMessage {
 
     private static final long serialVersionUID = 5035948712944284350L;
@@ -13,8 +17,19 @@ public class AskBuildEvent extends ObjMessage {
     int columnWorker;
     boolean firstTime;
     boolean wrongBox;
-    boolean Done;
+    final boolean Done;
     boolean specialTurn;
+
+    /**
+     * constructor of the class
+     *
+     * @param indexWorker  index of the worker
+     * @param rowWorker    row of the worker
+     * @param columnWorker column of the worker
+     * @param firstTime    boolean for the first ask
+     * @param Done         boolean for the decision of the player
+     * @param specialTurn  boolean if is a special turn for the player
+     */
 
     public AskBuildEvent(int indexWorker, int rowWorker, int columnWorker, boolean firstTime, boolean Done, boolean specialTurn) {
         this.indexWorker = indexWorker;
@@ -66,14 +81,21 @@ public class AskBuildEvent extends ObjMessage {
         return specialTurn;
     }
 
-    public void setSpecialTurn(boolean specialTurn) {
-        this.specialTurn = specialTurn;
-    }
-
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
     @Override
-    public void accept(VisitorServer visitorServer) throws Exception {
+    public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
 
     @Override
     public void accept(VisitorClient visitorClient) {

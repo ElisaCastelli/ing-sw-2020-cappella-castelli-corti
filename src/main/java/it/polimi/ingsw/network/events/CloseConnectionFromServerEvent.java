@@ -3,26 +3,42 @@ package it.polimi.ingsw.network.events;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
-public class CloseConnectionFromServerEvent extends  Event {
+/**
+ * message closing event
+ */
 
-    boolean GameNotAvailable;
+public class CloseConnectionFromServerEvent extends Event {
 
+    private final boolean gameNotAvailable;
+
+    /**
+     * constructor for the class
+     *
+     * @param gameNotAvailable boolean for the reason of the disconnection
+     */
     public CloseConnectionFromServerEvent(boolean gameNotAvailable) {
-        GameNotAvailable = gameNotAvailable;
+        this.gameNotAvailable = gameNotAvailable;
     }
 
     public boolean isGameNotAvailable() {
-        return GameNotAvailable;
+        return gameNotAvailable;
     }
 
-    public void setGameNotAvailable(boolean gameNotAvailable) {
-        GameNotAvailable = gameNotAvailable;
-    }
-
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
     @Override
     public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
 
     @Override
     public void accept(VisitorClient visitorClient) {

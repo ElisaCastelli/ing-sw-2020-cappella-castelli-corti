@@ -3,26 +3,42 @@ package it.polimi.ingsw.network.events;
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
 
-public class StartGameEvent extends Event{
+/**
+ * message start event
+ */
+public class StartGameEvent extends Event {
 
-    private int nPlayer;
+    private final int nPlayer;
 
-    public StartGameEvent(int nPlayer){
-        this.nPlayer=nPlayer;
+    /**
+     * constructor of class
+     *
+     * @param nPlayer number of players
+     */
+    public StartGameEvent(int nPlayer) {
+        this.nPlayer = nPlayer;
     }
 
-    public int getnPlayer() {
+    public int getNPlayer() {
         return nPlayer;
     }
 
-    public void setnPlayer(int nPlayer) {
-        this.nPlayer = nPlayer;
-    }
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorServer the class of the visitor pattern server's side
+     */
 
     @Override
     public void accept(VisitorServer visitorServer) {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * accept method of the visitor pattern
+     *
+     * @param visitorClient the class of the visitor pattern client's side
+     */
 
     @Override
     public void accept(VisitorClient visitorClient) {
