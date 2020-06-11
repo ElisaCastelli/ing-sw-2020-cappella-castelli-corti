@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client;
 
+/**
+ * Enum used to collect all the color used to print the game field
+ */
 public enum Color {
     //Color end string, color reset
     RESET("\033[0m"),

@@ -12,22 +12,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class that manages the CLI view
+ */
 public class CLIView implements View {
-
+    /**
+     * Object use to send message to the server
+     */
     private SendMessageToServer sendMessageToServer;
-    private static final int numCards = 14;
+    /**
+     * Index of the player
+     */
     private static int indexPlayer = -1;
+    /**
+     * Number of the gamers playing the match
+     */
     private int nPlayer;
+    /**
+     * Array of User objects that contains some information about the players
+     */
     private ArrayList<User> usersArray;
+    /**
+     * This is a copy of the object Board that describe the game field and that is used to print the actual game situation
+     */
     private Board board;
 
+    /**
+     * Empty constructor
+     */
     public CLIView() {
     }
 
+    /**
+     * Setter method for the SendMessageToServer object
+     * @param sendMessageToServer is the object to set
+     */
     public void setSendMessageToServer(SendMessageToServer sendMessageToServer) {
         this.sendMessageToServer = sendMessageToServer;
     }
 
+    /**
+     * Method called from the VisitorClient when the clientHandler received an AskWantToPlay message
+     * @param askWantToPlay is the message send from the server to ask to the player if he wants to play
+     */
     @Override
     public void askWantToPlay(AskWantToPlay askWantToPlay){
         Thread thread = new Thread(() -> {
@@ -39,28 +66,43 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the clientHandler received an YouCanPlay message
+     */
     @Override
     public void youCanPlay() {
         System.out.println("You can play");
     }
 
+    /**
+     *Method called from the VisitorClient when the clientHandler received an YouHaveToWait message
+     */
     @Override
     public void youHaveToWait() {
         System.out.println("You have to wait");
     }
 
+    /**
+     * Method called from the VisitorClient everytime the clientHandler received an updateBoard message
+     * to update and print the users state and the actual board situation
+     * @param usersArray is the ArrayList of users taking part to the game
+     * @param board is the object Board describe the game field
+     * @param isShowReachable is a boolean that indicates if the printed board has to show the reachable boxes
+     * @param currentPlaying is the integer index of the gamer playing in this turn
+     * @param indexClient is the index of the client associated with the player
+     */
     @Override
-    public void updateBoard(UpdateBoardEvent updateBoardEvent) {
-        this.usersArray = updateBoardEvent.getUserArray();
-        this.board = updateBoardEvent.getBoard();
-        printBoard(updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying());
-    }
-
-    @Override
-    public void setBoard(Board board) {
+    public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient) {
+        this.usersArray = usersArray;
         this.board = board;
+        printBoard(isShowReachable, currentPlaying);
     }
 
+    /**
+     * Method called from the VisitorClient of the first player connected when the ClientHandler receives an AskNPlayer message.
+     * It's used to ask the number of the players taking part in the game, the number of client the server must wait for before
+     * start the game
+     */
     @Override
     public void askNPlayer() {
         Thread thread = new Thread(() -> {
@@ -74,6 +116,11 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives an AskPlayer message.
+     * It's used to ask name and age to the player and then to send this data to the server
+     * @param clientIndex is the index of the client associated with the player
+     */
     @Override
     public void askPlayer(int clientIndex){
         Thread thread = new Thread(() -> {
@@ -86,29 +133,41 @@ public class CLIView implements View {
         thread.start();
     }
 
-
+    /**
+     * Method used to manage the input of the entering of the player name
+     * @param input is the Scanner object used to read the input
+     * @return the name string read from the Scanner
+     */
     public String askName(Scanner input){
-
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         System.out.println("Player name :");
         return input.nextLine();
     }
+
+    /**
+     * Method used to manage the input of the entering of the player age
+     * @param input is the Scanner object used to read the input
+     * @return the age integer from the Scanner
+     */
     public int askAge(Scanner input) {
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         System.out.println("Player age : ");
         return inputNumber(input);
     }
 
+    /**
+     * Method used to set the number of the gamers playing and then send an AckStartGame message to answer
+     * to the startGameEvent message
+     * @param nPlayer is the number of the gamers playing
+     */
     @Override
     public void setNPlayer(int nPlayer){
         Thread thread = new Thread(() -> {
@@ -120,6 +179,11 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * Method used to set the personal index of the player to know if the player can play or must wait his turn
+     * and then send an AckPlayer message to reply to the ObjState message
+     * @param indexPlayer is the index of the player
+     */
     @Override
     public void setIndexPlayer(int indexPlayer){
         if(indexPlayer == 0) {
@@ -130,43 +194,46 @@ public class CLIView implements View {
         }
     }
 
-    @Override
-    public int getIndexPlayer(){
-        return indexPlayer;
-    }
-
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives an Ask3Card message.
+     * It's received only from the youngest player that used it to choose three cards for all the participants
+     * and then to send them to the server
+     * @param cards is the ArrayList of cards name from which the user can choose
+     */
     @Override
     public void ask3Card(ArrayList<String> cards) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             ArrayList<Integer> cardTemp = new ArrayList<>();
-            boolean[] scelte = new boolean[cards.size()];
+            boolean[] cardsChoose = new boolean[cards.size()];
             for (int i = 0; i < cards.size(); i++) {
-                scelte[i] = false;
+                cardsChoose[i] = false;
             }
-            System.out.println("Scegli gli indici di " + nPlayer + " carte");
+            System.out.println("Choose the index of " + nPlayer + " cards");
             for (int cardIndex = 0; cardIndex < cards.size(); cardIndex++) {
                 System.out.println("[ " + cardIndex + "] " + cards.get(cardIndex));
             }
-
-                while (cardTemp.size() < nPlayer) {
-                    int cardDrawn = inputNumber(input);
-                    while (cardDrawn >= numCards || cardDrawn < 0 || scelte[cardDrawn]) {
-                        System.out.println("Select again the card.");
-                        cardDrawn = inputNumber(input);
-                    }
-                    System.out.println("Scelta carta numero " + cardDrawn);
-                    cardTemp.add(cardDrawn);
-                    scelte[cardDrawn] = true;
+            while (cardTemp.size() < nPlayer) {
+                int cardDrawn = inputNumber(input);
+                while (cardDrawn >= cards.size() || cardDrawn < 0 || cardsChoose[cardDrawn]) {
+                    System.out.println("Select again the card");
+                    cardDrawn = inputNumber(input);
                 }
-
-                sendMessageToServer.send3card(cardTemp);
-
+                System.out.println("Card number " + cardDrawn + " choose!");
+                cardTemp.add(cardDrawn);
+                cardsChoose[cardDrawn] = true;
+            }
+            sendMessageToServer.send3card(cardTemp);
         });
         thread.setDaemon(true);
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives an AskCard message.
+     * It's used by a player to choose his own card and then to send it to the server
+     * @param cards is the ArrayList of the cards name from which the user can choose
+     */
     @Override
     public void askCard(ArrayList<String> cards) {
         Thread thread = new Thread(() -> {
@@ -190,6 +257,11 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives an AskInizializeWorker message.
+     * It's used to ask to the player in which cells he wants to initialize his two workers
+     * and then send this two positions to the server
+     */
     @Override
     public void initializeWorker(){
         Thread thread = new Thread(() -> {
@@ -218,21 +290,26 @@ public class CLIView implements View {
         thread.start();
     }
 
-
+    /**
+     *Method called from the VisitorClient when the ClientHandler receives for the first time an AskWorkerToMoveEvent message.
+     *This method is used by the player to choose the worker to move
+     * @param row1 is the row of the box occupied by the worker 1
+     * @param column1 is the column of the box occupied by the worker 1
+     * @param row2 is the row of the box occupied by the worker 2
+     * @param column2 is the column of the box occupied by the worker 2
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param clientIndex is the integer index associated to the client
+     */
     @Override
-    public void askWorker(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+    public void askWorker(int row1, int column1, int row2, int column2, int currentPlaying, int clientIndex) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            int row1 = askWorkerToMoveEvent.getRow1();
-            int column1 = askWorkerToMoveEvent.getColumn1();
-            int row2 = askWorkerToMoveEvent.getRow2();
-            int column2 = askWorkerToMoveEvent.getColumn2();
 
                 System.out.println("You're going to do your move-> What Worker You wanna move?");
                 System.out.println("[ 0 ] -> "+ " in position : "+ row1 + " <-row   " + column1 + " <-column");
                 System.out.println("[ 1 ] -> "+ " in position : "+ row2 + " <-row   " + column2 + " <-column");
                 System.out.println("Control the board and choose...");
-                printBoard(false, askWorkerToMoveEvent.getCurrentClientPlaying());
+                printBoard(false, currentPlaying);
 
             int intInputValue = twoNumbers(input);
             ObjWorkerToMove objWorkerToMove;
@@ -247,21 +324,31 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives not for the first time an AskWorkerToMoveEvent message.
+     * this method is used to ask to the player if he is sure about the worker to move chosen and in case to send an ObjWorkerToMove object to the server ,
+     * otherwise to recall the method askWorker and permit to the player to make another choice
+     * @param row1 is the row of the box occupied by the worker 1
+     * @param column1 is the column of the box occupied by the worker 1
+     * @param row2 is the row of the box occupied by the worker 2
+     * @param column2 is the column of the box occupied by the worker 2
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param clientIndex is the integer index associated to the client
+     */
     @Override
-    public void areYouSure(AskWorkerToMoveEvent askWorkerToMoveEvent) {
+    public void areYouSure(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             int row;
             int column;
-            int indexWorker = askWorkerToMoveEvent.getIndexWorker();
             if (indexWorker == 1) {
-                row = askWorkerToMoveEvent.getRow1();
-                column = askWorkerToMoveEvent.getColumn1();
+                row = row1;
+                column = column1;
             } else {
-                row = askWorkerToMoveEvent.getRow2();
-                column = askWorkerToMoveEvent.getColumn2();
+                row = row2;
+                column = column2;
             }
-
             System.out.println("Are You sure you want move the " + indexWorker + " worker? ");
             System.out.println("Position : " + row + " <-row   " + column + " <-column");
 
@@ -273,13 +360,21 @@ public class CLIView implements View {
                 ObjWorkerToMove objWorkerToMove = new ObjWorkerToMove(indexWorker, row, column, true);
                 sendMessageToServer.sendWorkerToMove(objWorkerToMove);
             } else {
-                askWorker(askWorkerToMoveEvent);
+                askWorker(row1, column1, row2, column2, currentPlaying, clientIndex);
             }
         });
         thread.setDaemon(true);
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives an AskBeforeBuildMove message.
+     * It's used to ask if the players with a special god wants to build a block before move
+     * and then to send an ObjBlockBeforeMove to the server using the object SenMessageToServer
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param rowWorker is the row of the box occupied by the worker
+     * @param columnWorker is the column of the box occupied by the worker
+     */
     @Override
     public void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
         Thread thread = new Thread(() -> {
@@ -301,17 +396,24 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * Method called from the VisitorClient when the ClientHandler receives an AskMoveEVent message.
+     * It's used to ask to the player in which position he wants to move his worker and then send to the server an ObjMove message using the object SenMessageToServer
+     * @param row is the starting row of the worker to move
+     * @param column is the starting column of the worker to move
+     * @param indexWorker is the integer index of the worker the player chose to move
+     * @param isWrongBox is a boolean that indicates if the move is wrong
+     * @param clientIndex is the integer index associated to the client
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param firstTime is a boolean that indicates if this is the first move tried in this turn
+     */
     @Override
-    public void moveWorker(AskMoveEvent askMoveEvent) {
+    public void moveWorker(int row, int column, int indexWorker, boolean isWrongBox, boolean firstTime, int clientIndex, int currentPlaying) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            int row = askMoveEvent.getRow();
-            int column = askMoveEvent.getColumn();
-            int indexWorker = askMoveEvent.getIndexWorker();
-
             ObjMove objMove = new ObjMove(indexWorker, row, column, 0, 0, false);
 
-            if (askMoveEvent.isWrongBox()) {
+            if (isWrongBox) {
                 wrongMove();
             }
             System.out.println("you have chosen the worker " + indexWorker);
@@ -330,8 +432,19 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * This method is used by player with special gods that can move more than once to ask if they want to move again
+     * @param row is the row of the box occupied by the worker
+     * @param column is the column of the box occupied by the worker
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param isWrongBox is a boolean that indicates if the move is wrong
+     * @param firstTime is a boolean that indicates if this is the first move tried in this turn
+     * @param clientIndex is the integer index associated to the client
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param done is a boolean used to indicates if the move turn is over
+     */
     @Override
-    public void anotherMove(AskMoveEvent askMoveEvent) {
+    public void anotherMove(int row, int column, int indexWorker, boolean isWrongBox,boolean firstTime, int clientIndex, int currentPlaying, boolean done) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             System.out.println("You Have the possibility to make another move");
@@ -341,33 +454,44 @@ public class CLIView implements View {
 
             int intInputValue = twoNumbers(input);
             if (intInputValue == 0) {
-                AckMove ackMove = new AckMove(askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
+                AckMove ackMove = new AckMove(indexWorker, row, column);
                 sendMessageToServer.sendAckMove(ackMove);
             } else {
-                moveWorker(askMoveEvent);
+                moveWorker(row, column, indexWorker, isWrongBox,firstTime,clientIndex,currentPlaying);
             }
         });
         thread.setDaemon(true);
         thread.start();
     }
 
-    @Override
+    /**
+     * This method is called when a player tries to reach a box unreachable
+     */
     public void wrongMove(){
         System.out.println("You Made the wrong move: the Box was unreachable");
         System.out.println("Repeat the move...and now don't make the same mistake ");
     }
 
+    /**
+     *
+     * Method used to ask to the player where he wants to build after showing him the reachable boxes
+     * @param rowWorker is the row of the box occupied by the worker
+     * @param columnWorker is the column of the box occupied by the worker
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param isWrongBox is a boolean that indicates if the move is wrong
+     * @param isFirstTime is a boolean that indicates if this is the first move tried in this turn
+     * @param isSpecialTurn is a boolean used to identify special moves
+     * @param clientIndex is the integer index associated to the client
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param done is a boolean used to indicates if the move turn is over
+     */
     @Override
-    public void buildMove(AskBuildEvent askBuildEvent) {
+    public void buildMove(int rowWorker, int columnWorker, int indexWorker, boolean isWrongBox, boolean isFirstTime, boolean isSpecialTurn, int clientIndex, int currentPlaying, boolean done) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            int indexWorker = askBuildEvent.getIndexWorker();
-            int rowWorker = askBuildEvent.getRowWorker();
-            int columnWorker = askBuildEvent.getColumnWorker();
-            ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker, askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn());
+            ObjBlock objBlock = new ObjBlock(indexWorker, rowWorker, columnWorker, isFirstTime, isSpecialTurn);
             int intInputValue;
-
-            if (askBuildEvent.isWrongBox()) {
+            if (isWrongBox) {
                 wrongMove();
             } else {
                 System.out.println("You're going to build now -> Where do you wanna build?");
@@ -384,7 +508,6 @@ public class CLIView implements View {
             System.out.println("You selected the Box: "+ "( "+ objBlock.getRowBlock()+" , "+ objBlock.getColumnBlock()+" )");
             System.out.println("Let me Know what Block you want to build, select the correct index");
             int inputPossibleBlock = twoNumbers(input);
-
             objBlock.setPossibleBlock(inputPossibleBlock);
             sendMessageToServer.sendBuildMove(objBlock);
         });
@@ -392,8 +515,20 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * This method is used by player with special gods that can move build than once to ask him if he wants to
+     * @param rowWorker is the row of the box occupied by the worker
+     * @param columnWorker is the column of the box occupied by the worker
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param isWrongBox is a boolean that indicates if the move is wrong
+     * @param isFirstTime is a boolean that indicates if this is the first move tried in this turn
+     * @param isSpecialTurn is a boolean used to identify special moves
+     * @param clientIndex is the integer index associated to the client
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param done is a boolean used to indicates if the move turn is over
+     */
     @Override
-    public void anotherBuild(AskBuildEvent askBuildEvent) {
+    public void anotherBuild(int rowWorker, int columnWorker, int indexWorker, boolean isWrongBox, boolean isFirstTime, boolean isSpecialTurn, int clientIndex, int currentPlaying, boolean done) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             System.out.println("Your god gives you the possibility to make another build.");
@@ -403,7 +538,7 @@ public class CLIView implements View {
 
             int inputValue = twoNumbers(input);
             if(inputValue == 1){
-                buildMove(askBuildEvent);
+                buildMove(rowWorker, columnWorker, indexWorker, isWrongBox, isFirstTime, isSpecialTurn,clientIndex,currentPlaying,done);
             }else {
                 ObjBlock objBlock = new ObjBlock(true);
                 sendMessageToServer.sendBuildMove(objBlock);
@@ -413,6 +548,11 @@ public class CLIView implements View {
         thread.start();
     }
 
+    /**
+     * This method it's used to print the possible block to build in the chosen position
+     * @param row is the integer of the row of the Box where the player wants to build
+     * @param column is the integer of the column of the Box where the player wants to build
+     */
     public void printPossibleBlocks(int row, int column){
         Box posWorker = board.getBox(row, column);
         System.out.println("Here you can see what kind of block you can build");
@@ -429,8 +569,12 @@ public class CLIView implements View {
         }
     }
 
-    //Questo metodo va richiamato se si vuole un numero da tastiera
-    public int inputNumber(Scanner input){
+    /**
+     *This method is used to managed the inout of only numbers
+     * @param input is the Scanner object used to read the user inputs
+     * @return the value read
+     */
+    private int inputNumber(Scanner input){
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
@@ -449,7 +593,13 @@ public class CLIView implements View {
             }
         }
     }
-    public int twoNumbers(Scanner input){
+
+    /**
+     * This method is used to managed the input only of 0,1 or 2
+     * @param input is the Scanner object used to read the user inputs
+     * @return the value read
+     */
+    private int twoNumbers(Scanner input){
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
@@ -463,7 +613,13 @@ public class CLIView implements View {
         }
         return intInputValue;
     }
-    public int inputTwoOrThree(Scanner input){
+
+    /**
+     * This method is used to managed the input only of 2 or 3
+     * @param input is the Scanner object used to read the user inputs
+     * @return the value read
+     */
+    private int inputTwoOrThree(Scanner input){
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
@@ -477,8 +633,13 @@ public class CLIView implements View {
         }
         return intInputValue;
     }
-    //Questo metodo serve per selezionare una riga che sia raggiungibile
-    public int rowSelected(Scanner input){
+
+    /**
+     * This method is used to select a row reachable
+     * @param input is the Scanner object used to read the user inputs
+     * @return the integer value of the row choose
+     */
+    private int rowSelected(Scanner input){
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
@@ -493,8 +654,13 @@ public class CLIView implements View {
         }
         return intInputValue;
     }
-    //Questo metodo serve per selezionare una colonna che sia raggiungibile
-    public int columnSelected(Scanner input){
+
+    /**
+     * This method is used to select a column reachable
+     * @param input is the Scanner object used to read the user inputs
+     * @return the integer value of the columnn choose
+     */
+    private int columnSelected(Scanner input){
         try {
             System.in.read(new byte[System.in.available()]);
         } catch (IOException e) {
@@ -509,13 +675,24 @@ public class CLIView implements View {
         }
         return intInputValue;
     }
-    //Questo metodo controlla se il numero inserito può appartenere a una casella adiacente
-    public boolean boxReachable (int input){
+
+    /**
+     * This method is used to check if the input number can be associated with a box reachable
+     * @param input is the integer value to check
+     * @return true if the value is correct or false on the other hand
+     */
+    private boolean boxReachable (int input){
         return input >= 0 && input < 5;
     }
 
-
-    public String printByIndexPlayer(int row, int column, boolean reach){
+    /**
+     * This method is used to return the string corresponding to the workers and the box reachable into a requested box
+     * @param row is the integer used to point to the row of the box to be printed
+     * @param column is the integer used to point to the column of the box to be printed
+     * @param reach is a boolean used to understand if the method must print the box reachable or only the workers
+     * @return the string to print
+     */
+    private String printByIndexPlayer(int row, int column, boolean reach){
         if(board.getBox(row, column).isReachable() && reach){
             if (board.getBox(row, column).getWorker() != null) {
                 if (board.getBox(row, column).getWorker().getIndexPlayer() == 0) {
@@ -540,15 +717,30 @@ public class CLIView implements View {
         }
     }
 
-    public String printName(int indexPlayer){
+    /**
+     * Method used to return a string of the player name
+     * @param indexPlayer is the integer index of the player requested
+     * @return the name string of the player requested
+     */
+    private String printName(int indexPlayer){
         return usersArray.get(indexPlayer).getName();
     }
-
-    public String printGod(int indexPlayer){
+    /**
+     * Method used to return a string of the god name
+     * @param indexPlayer is the integer index of the player requested
+     * @return the god name string of the player requested
+     */
+    private String printGod(int indexPlayer){
         return usersArray.get(indexPlayer).getNameCard();
     }
 
-    public String printStatePlayer(int indexPlayer, int currentPlayer){
+    /**
+     *  Method used to return a string of the player state
+     * @param indexPlayer is the integer index of the player requested
+     * @param currentPlayer is the integer index of the player who is playing
+     * @return the state string of the player requested
+     */
+    private String printStatePlayer(int indexPlayer, int currentPlayer){
         if(usersArray.get(indexPlayer).isDead()){
             return "Is dead";
         }else if (usersArray.get(indexPlayer).getClient() == currentPlayer){
@@ -558,7 +750,12 @@ public class CLIView implements View {
         }
     }
 
-    public void printBoard(boolean reach, int currentPlayer){
+    /**
+     * This method is called to print the game field and the list of the participants with their states, names and gods
+     * @param reach is a boolean attribute that indicates if it needs to print the reachable boxes
+     * @param currentPlayer is the index of the player who is playing his turn
+     */
+    private void printBoard(boolean reach, int currentPlayer){
 
         if (nPlayer == 2){
             System.out.println();
@@ -617,7 +814,10 @@ public class CLIView implements View {
         }
     }
 
-    public void clearScreen(){
+    /**
+     * This method is called to clear the console
+     */
+    private void clearScreen(){
         final String os = System.getProperty("os.name");
         if (os.contains("Windows")) {
             try {
@@ -635,7 +835,10 @@ public class CLIView implements View {
         }
     }
 
-    public void santoriniName(){
+    /**
+     * This method is used to print the name of the game
+     */
+    private void santoriniName(){
         System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ " "+ " "+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
         System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
         System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ "S"+ "S"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ "T"+ Color.RESET);
@@ -647,6 +850,9 @@ public class CLIView implements View {
         System.out.println(Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ "S"+ "S"+ "S"+ "S"+ " "+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ "A"+ "A"+ " "+ Color.CYAN_BOLD_BRIGHT +  " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.GREEN_BOLD_BRIGHT + " "+ " "+ " "+ "T"+ "T"+ "T"+ " "+ " "+ " "+ Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ Color.RED_BOLD_BRIGHT + " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.MAGENTA_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ " "+ " "+ Color.BLUE_BOLD_BRIGHT + " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ Color.CYAN_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "I"+ "I"+ "I"+ "I"+ Color.RESET);
     }
 
+    /**
+     * This method is used to show to the user who lost the end of the game
+     */
     @Override
     public void loserEvent() {
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
@@ -660,6 +866,9 @@ public class CLIView implements View {
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ "A"+ "A"+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "V"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ " "+ Color.RESET);
     }
 
+    /**
+     * This method is used to show to the user who win the end of the game
+     */
     @Override
     public void winnerEvent() {
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
@@ -673,26 +882,41 @@ public class CLIView implements View {
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ "U"+ "U"+ "U"+ "U"+ "U"+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
     }
 
+    /**
+     * This method is used to show to the user that an opponent has won
+     */
     @Override
     public void someoneWon() {
         System.out.println("An opponent won. Game Over");
     }
 
+    /**
+     * This method is used to show to the user that an opponent has lost
+     */
     @Override
     public void whoHasLost() {
         System.out.println("An opponent lost");
     }
 
+    /**
+     * Method used to send, using the SendMessageToServer object, a Pong message to the server after received a ping
+     * @param objHeartBeat is the message Ping received from the visitorClient
+     */
     @Override
     public void printHeartBeat(ObjHeartBeat objHeartBeat){
         Thread thread = new Thread(() -> {
-            System.out.println(objHeartBeat.getMessageHeartbeat());
-            sendMessageToServer.sendPong(objHeartBeat.getClientIndex());
+           sendMessageToServer.sendPong(objHeartBeat.getClientIndex());
         });
         thread.setDaemon(true);
         thread.start();
     }
 
+    /**
+     * Method used to send to the server the request of closing the connection
+     * @param indexClient is the index associated to the client
+     * @param gameNotAvailable is a boolean used to indicate if the connection will be close because the game is already
+     * started or because of a problem
+     */
     @Override
     public void closingConnectionEvent(int indexClient, boolean gameNotAvailable) {
         Thread thread = new Thread(() -> {

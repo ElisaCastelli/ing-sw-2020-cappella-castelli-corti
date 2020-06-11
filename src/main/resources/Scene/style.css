@@ -13,3 +13,13 @@
     -fx-border-width: 2;
 }
 
+.bodyWin{
+    -fx-background-image: url("/youWin.jpg");
+}
+.bodyLose{
+    -fx-background-image: url("/youLose.jpg");
+}
+
+.invisibleButton{
+    -fx-background-color: Transparent;
+}

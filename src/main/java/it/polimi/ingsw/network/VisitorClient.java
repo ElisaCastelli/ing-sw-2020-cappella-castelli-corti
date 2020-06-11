@@ -123,7 +123,6 @@ public class VisitorClient {
             view.initializeWorker();
         }
         //initialize worker
-
     }
 
     /**
@@ -133,7 +132,7 @@ public class VisitorClient {
      */
 
     public void visit(UpdateBoardEvent updateBoardEvent) {
-        view.updateBoard(updateBoardEvent);
+        view.updateBoard(updateBoardEvent.getUserArray(),updateBoardEvent.getBoard(), updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying(), updateBoardEvent.getClientIndex());
     }
 
     /**
@@ -145,9 +144,9 @@ public class VisitorClient {
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         if (askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
             if (askWorkerToMoveEvent.isFirstAsk()) {
-                view.askWorker(askWorkerToMoveEvent);
+                view.askWorker(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
             } else if (!askWorkerToMoveEvent.isFirstAsk()) {
-                view.areYouSure(askWorkerToMoveEvent);
+                view.areYouSure(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getIndexWorker(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
             }
         }
             //set reachable worker
@@ -174,10 +173,10 @@ public class VisitorClient {
         if (askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
             //Questa è la prima ask
             if (askMoveEvent.isFirstTime()) {
-                view.moveWorker(askMoveEvent);
+                view.moveWorker(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying());
                 ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
             } else {
-                view.anotherMove(askMoveEvent);
+                view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
             }
         }
         //moving worker
@@ -193,9 +192,9 @@ public class VisitorClient {
         if (askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
             //Qui entra se è veramente la prima volta o se ha inserito una box non valida
             if (askBuildEvent.isFirstTime()) {
-                view.buildMove(askBuildEvent);
+                view.buildMove(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             } else { //Può fare una mossa speciale
-                view.anotherBuild(askBuildEvent);
+                view.anotherBuild(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             }
         }
     }

@@ -8,16 +8,27 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
+/**
+ * This class is used to create the connection of a client with the server
+ */
 public class Client {
+    /**
+     * String attribute that contains the client ip number
+     */
     private static String ip;
+    /**
+     * Integer attribute that contains the server port number the users wants to connect to
+     */
     private static int portNumber;
+    /**
+     * View  attribute that contains an istance of the type of view (CliView or GUIControllerView) that the user choose
+     */
     private static View viewClient;
 
-    public Client() {
-        //ip = InetAddress.getByName("localhost");
-        //Client.portNumber =portNumber;
-    }
-
+    /**
+     * This is the launch method for the client
+     * @param args is an Array of strings that contains arguments specified by the player when the client is launched
+     */
     public static void  main(String[] args) {
         HashMap<String,String> hashMap = new HashMap<>();
 
@@ -41,15 +52,6 @@ public class Client {
             System.out.println("Success!");
         parseClient(hashMap);
 
-        //inizializzazione fatta senza main
-        /*try {
-            ip = InetAddress.getByName("localhost");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        portNumber = 1234;*/
-
-        // establish the connection with server port portnumber
         Socket clientSocket = null;
         try {
             clientSocket = new Socket(ip, portNumber);
@@ -75,6 +77,10 @@ public class Client {
         }
     }
 
+    /**
+     * This method function is to parse the input args to instantiate the client ip, the server port and the view type the users choose
+     * @param hashMap that contains the args allowed
+     */
     private static void parseClient(HashMap<String, String> hashMap) {
         boolean redo = false;
 
@@ -116,33 +122,4 @@ public class Client {
             System.out.println("Success!");
     }
 
-}/*
-class ParseCmdLine {
-    public static void main(String[] args) {
-
-
-             use this type of check for arguments that require arguments
-            if (arg.equals("-ip")) {
-                if (i < args.length) {
-                    ip = args[i++];
-                    j++;
-                }else
-                    System.err.println("-output requires a ip address");
-            }else if (arg.equals("-port")) {
-                if (i < args.length) {
-                    //controllo lunghezza porta
-                    j++;
-                    port = Integer.parseInt(args[i++]);
-                }else
-                    System.err.println("-output requires a integer");
-            }else if (arg.equals("-view")) {
-                if (i < args.length) {
-                    view = args[i++];
-                    j++;
-                }else
-                    System.err.println("-output requires -cli or -gui");
-            }else{
-                vflag = true;
-            }
-        }
-}*/
+}
