@@ -2,32 +2,15 @@ package it.polimi.ingsw.network.events;
 
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
-
-import java.util.ArrayList;
+import it.polimi.ingsw.network.objects.ObjMessage;
 
 /**
- * message ask card event
+ * message ask initialize worker event
  */
 
-public class AskCard extends Event {
+public class AskInitializeWorkerEvent extends Event {
 
-    private static final long serialVersionUID = 984771837456293048L;
-
-    final ArrayList<String> cardTemp;
-
-    /**
-     * constructor of the class
-     *
-     * @param cardTemp array of chosen cards
-     */
-
-    public AskCard(ArrayList<String> cardTemp) {
-        this.cardTemp = cardTemp;
-    }
-
-    public ArrayList<String> getCardTemp() {
-        return cardTemp;
-    }
+    private static final long serialVersionUID = 8103853948576392375L;
 
     /**
      * accept method of the visitor pattern
@@ -44,6 +27,7 @@ public class AskCard extends Event {
      *
      * @param visitorClient the class of the visitor pattern client's side
      */
+
     @Override
     public void accept(VisitorClient visitorClient) {
         visitorClient.visit(this);

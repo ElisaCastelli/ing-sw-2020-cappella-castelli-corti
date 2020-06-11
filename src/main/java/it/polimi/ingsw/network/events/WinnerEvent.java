@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
  * message win event
  */
 
-public class WinnerEvent extends ObjMessage {
+public class WinnerEvent extends Event {
 
     /**
      * accept method of the visitor pattern

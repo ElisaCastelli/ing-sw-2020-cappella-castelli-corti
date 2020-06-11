@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.network.events.AskBuildEvent;
-import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 
 import it.polimi.ingsw.server.model.ProxyGameModel;
@@ -73,8 +72,8 @@ public class Controller  {
         gameModel.notifyTempCard(clientIndex);
     }
 
-    public void setCard(int playerIndex, int godCard) throws Exception {
-        int clientIndex = gameModel.chooseCard(playerIndex, godCard);
+    public void setCard(int godCard){
+        int clientIndex = gameModel.chooseCard(godCard);
         gameModel.notifyTempCard(clientIndex);
     }
 

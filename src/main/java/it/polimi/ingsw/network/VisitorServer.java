@@ -27,11 +27,11 @@ public class VisitorServer {
     /**
      * method to establish a connect with the client
      *
-     * @param askWantToPlay is a message to start the communication with the client
+     * @param askWantToPlayEvent is a message to start the communication with the client
      */
 
-    public void visit(AskWantToPlay askWantToPlay) {
-        virtualView.askWantToPlay(askWantToPlay.getIndexClient());
+    public void visit(AskWantToPlayEvent askWantToPlayEvent) {
+        virtualView.askWantToPlay(askWantToPlayEvent.getIndexClient());
     }
 
     /**
@@ -97,7 +97,7 @@ public class VisitorServer {
 
     public void visit(ObjCard objCard) {
         try {
-            virtualView.setCard(objCard.getIndexPlayer(), objCard.getCardChose());
+            virtualView.setCard(objCard.getCardChose());
         } catch (Exception e) {
             e.printStackTrace();
         }

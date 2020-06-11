@@ -35,7 +35,7 @@ public interface GameModel {
     ArrayList<String> getTempCard();
     ArrayList<String> getCardUsed();
     int chooseTempCard(ArrayList<Integer> tempCard);
-    int chooseCard(int playerIndex, int godCard)throws Exception ;
+    int chooseCard(int godCard);
     int whoIsPlaying();
     void goPlayingNext();
     boolean initializeWorker(Box box1, Box box2);

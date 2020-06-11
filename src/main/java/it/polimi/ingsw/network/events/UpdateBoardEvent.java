@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * message update of the game's data
  */
-public class UpdateBoardEvent extends ObjMessage {
+public class UpdateBoardEvent extends Event {
 
     private static final long serialVersionUID = 1038573990901284957L;
 

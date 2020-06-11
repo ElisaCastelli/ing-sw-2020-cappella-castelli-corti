@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.network.events.AskWantToPlay;
+import it.polimi.ingsw.network.events.AskWantToPlayEvent;
 
 import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
 import it.polimi.ingsw.network.objects.ObjHeartBeat;
@@ -67,7 +67,7 @@ public class ServerHandler extends Thread{
 
     @Override
     public void run(){
-        sendUpdate(new AskWantToPlay(indexClientArray));
+        sendUpdate(new AskWantToPlayEvent(indexClientArray));
         sendHeartBeat();
         listening();
     }

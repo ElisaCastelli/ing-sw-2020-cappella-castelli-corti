@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 /**
  * message losing event
  */
-public class WhoHasLostEvent extends ObjMessage {
+public class WhoHasLostEvent extends Event {
     /**
      * accept method of the visitor pattern
      *

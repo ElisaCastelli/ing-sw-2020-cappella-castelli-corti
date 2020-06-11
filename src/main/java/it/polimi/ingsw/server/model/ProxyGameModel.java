@@ -1,12 +1,8 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.network.events.AskBuildEvent;
-import it.polimi.ingsw.network.events.AskCard;
 import it.polimi.ingsw.network.events.AskMoveEvent;
 import it.polimi.ingsw.network.events.UpdateBoardEvent;
-import it.polimi.ingsw.network.objects.ObjNumPlayer;
-import it.polimi.ingsw.network.objects.ObjState;
-import it.polimi.ingsw.network.objects.ObjWorkerToMove;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
@@ -162,8 +158,8 @@ public class ProxyGameModel implements GameModel, Subject{
         return gameModel.chooseTempCard(tempCard);
     }
     @Override
-    public int chooseCard(int playerIndex, int godCard) throws Exception {
-        return gameModel.chooseCard(playerIndex, godCard);
+    public int chooseCard(int godCard) {
+        return gameModel.chooseCard(godCard);
     }
     @Override
     public void goPlayingNext(){

@@ -17,7 +17,7 @@ public interface View {
      * Method called from the VisitorClient when the clientHandler received an AskWantToPlay message
      * @param askWantToPlay is the message send from the server to ask to the player if he wants to play
      */
-    void askWantToPlay(AskWantToPlay askWantToPlay);
+    void askWantToPlay(AskWantToPlayEvent askWantToPlay);
     /**
      * Method called from the VisitorClient when the clientHandler received an YouCanPlay message
      */

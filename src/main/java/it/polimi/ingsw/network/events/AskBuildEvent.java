@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
  * message ask build event
  */
 
-public class AskBuildEvent extends ObjMessage {
+public class AskBuildEvent extends Event {
 
     private static final long serialVersionUID = 5035948712944284350L;
 

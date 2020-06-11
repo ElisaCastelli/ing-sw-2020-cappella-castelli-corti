@@ -3,47 +3,41 @@
       "name": "Apollo",
       "effects": [
         "SwitchWorker",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Artemis",
       "effects": [
         "MoveWorkerTwice",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Athena",
       "effects": [
-        "OpponentBlock",
-        "MoveBeforeBuild"
+        "OpponentBlock"
       ]
     },
     {
       "name": "Atlas",
       "effects": [
         "BuildDome",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Demeter",
       "effects": [
         "OtherPositionToBuild",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Hephaestus",
       "effects": [
         "BuildInTheSamePosition",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
@@ -51,16 +45,14 @@
       "effects": [
         "SwitchWorker",
         "ShiftWorker",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Pan",
       "effects": [
         "DownTwoOrMoreLevelsWin",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
@@ -74,40 +66,35 @@
       "name": "Charon",
       "effect":[
         "FerryAnOpponentWorker",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Cronus",
       "effect":[
         "CompleteTowersWin",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Hestia",
       "effect":[
         "BuildNotAlongThePerimeter",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     },
     {
       "name": "Triton",
       "effect":[
         "MoveInfinityTimesAlongThePerimeter",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
       },
     {
       "name": "Zeus",
       "effect":[
         "BuildABlockUnderItself",
-        "NotMoveUp",
-        "MoveBeforeBuild"
+        "NotMoveUp"
       ]
     }
 ]

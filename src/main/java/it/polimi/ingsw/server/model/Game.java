@@ -265,7 +265,8 @@ public class Game implements GameModel{
        return searchByPlayerIndex(playerIndex);
     }
 
-    public int chooseCard(int playerIndex, int indexCard) {
+    public int chooseCard(int indexCard) {
+        int playerIndex = whoIsPlaying();
         players.get(playerIndex).setGod(tempCard.get(indexCard));
         cardUsed.add(tempCard.get(indexCard));
         tempCard.remove(tempCard.get(indexCard));

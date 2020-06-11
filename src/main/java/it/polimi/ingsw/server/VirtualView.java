@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
 
+
 import java.util.ArrayList;
 
 public class VirtualView implements Observer {
@@ -98,10 +99,10 @@ public class VirtualView implements Observer {
 
     public void getCards() {
         try {
-            Ask3CardsEvent ask3CardsEvent = new Ask3CardsEvent(gameModel.getCards());
+            AskNCardsEvent askNCardsEvent = new AskNCardsEvent(gameModel.getCards());
             int clientIndex = gameModel.searchByPlayerIndex(0);
-            ask3CardsEvent.setCurrentClientPlaying(clientIndex);
-            sendMessageToClient.sendCards(ask3CardsEvent);
+            askNCardsEvent.setCurrentClientPlaying(clientIndex);
+            sendMessageToClient.sendCards(askNCardsEvent);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,8 +112,8 @@ public class VirtualView implements Observer {
         controller.setTempCard(tempCard);
     }
 
-    public void setCard(int playerIndex, int godCard) throws Exception {
-        controller.setCard(playerIndex, godCard);
+    public void setCard(int godCard){
+        controller.setCard(godCard);
     }
 
     @Override
@@ -134,18 +135,18 @@ public class VirtualView implements Observer {
 
     @Override
     public void updateTempCard(int clientIndex){
-        AskCard askCard = new AskCard(gameModel.getTempCard());
-        askCard.setCurrentClientPlaying(clientIndex);
+        AskCardEvent askCardEvent = new AskCardEvent(gameModel.getTempCard());
+        askCardEvent.setCurrentClientPlaying(clientIndex);
 
-        if(askCard.getCardTemp().size() != 0){
-            sendMessageToClient.sendAskCard(askCard);
+        if(askCardEvent.getCardTemp().size() != 0){
+            sendMessageToClient.sendAskCard(askCardEvent);
         }
         else{
             System.out.println("Sending board");
             updateBoard(false);
-            AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
-            askInitializeWorker.setCurrentClientPlaying(clientIndex);
-            sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
+            AskInitializeWorkerEvent askInitializeWorkerEvent = new AskInitializeWorkerEvent();
+            askInitializeWorkerEvent.setCurrentClientPlaying(clientIndex);
+            sendMessageToClient.sendAskInitializeWorker(askInitializeWorkerEvent);
         }
     }
 
@@ -182,17 +183,17 @@ public class VirtualView implements Observer {
             askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
             sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
         }else{
-            AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
-            askInitializeWorker.setCurrentClientPlaying(indexClient);
-            sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
+            AskInitializeWorkerEvent askInitializeWorkerEvent = new AskInitializeWorkerEvent();
+            askInitializeWorkerEvent.setCurrentClientPlaying(indexClient);
+            sendMessageToClient.sendAskInitializeWorker(askInitializeWorkerEvent);
         }
     }
 
     @Override
     public void updateNotInitializeWorker(int indexClient){
-        AskInitializeWorker askInitializeWorker = new AskInitializeWorker();
-        askInitializeWorker.setCurrentClientPlaying(indexClient);
-        sendMessageToClient.sendAskInitializeWorker(askInitializeWorker);
+        AskInitializeWorkerEvent askInitializeWorkerEvent = new AskInitializeWorkerEvent();
+        askInitializeWorkerEvent.setCurrentClientPlaying(indexClient);
+        sendMessageToClient.sendAskInitializeWorker(askInitializeWorkerEvent);
     }
 
 
@@ -259,9 +260,9 @@ public class VirtualView implements Observer {
 
     @Override
     public void updateAskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
-        AskBuildBeforeMove askBuildBeforeMove = new AskBuildBeforeMove(indexWorker, rowWorker, columnWorker);
-        askBuildBeforeMove.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
-        sendMessageToClient.sendAskBuildBeforeMove(askBuildBeforeMove);
+        AskBuildBeforeMoveEvent askBuildBeforeMoveEvent = new AskBuildBeforeMoveEvent(indexWorker, rowWorker, columnWorker);
+        askBuildBeforeMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+        sendMessageToClient.sendAskBuildBeforeMove(askBuildBeforeMoveEvent);
     }
 
     public void buildBeforeMove(int indexWorker, int rowWorker, int columnWorker, boolean wantToBuild){

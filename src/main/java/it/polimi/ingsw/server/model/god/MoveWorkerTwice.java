@@ -57,6 +57,8 @@ public class MoveWorkerTwice extends MoveTwice {
      */
     @Override
     public void setPossibleBuild(Worker worker) {
+        if(!super.firstTime)
+            super.firstTime = true ;
         super.setPossibleBuild(worker);
     }
 

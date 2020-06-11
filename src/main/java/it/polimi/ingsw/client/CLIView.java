@@ -56,7 +56,7 @@ public class CLIView implements View {
      * @param askWantToPlay is the message send from the server to ask to the player if he wants to play
      */
     @Override
-    public void askWantToPlay(AskWantToPlay askWantToPlay){
+    public void askWantToPlay(AskWantToPlayEvent askWantToPlay){
         Thread thread = new Thread(() -> {
             santoriniName();
             System.out.println("I'm trying to join a game");
@@ -251,7 +251,7 @@ public class CLIView implements View {
                     choose = true;
                 }
             }
-            sendMessageToServer.sendCard(scelta, indexPlayer);
+            sendMessageToServer.sendCard(scelta);
         });
         thread.setDaemon(true);
         thread.start();

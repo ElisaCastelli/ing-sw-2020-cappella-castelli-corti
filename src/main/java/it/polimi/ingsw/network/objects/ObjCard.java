@@ -12,29 +12,18 @@ public class ObjCard extends ObjMessage {
     private static final long serialVersionUID = -8393284750293847561L;
 
     private final int cardChoose;
-    private int indexPlayer;
 
     /**
      * constructor of the class
      *
      * @param cardChoose  int for the chosen card
-     * @param indexPlayer index of the player
      */
-    public ObjCard(int cardChoose, int indexPlayer) {
+    public ObjCard(int cardChoose) {
         this.cardChoose = cardChoose;
-        this.indexPlayer = indexPlayer;
     }
 
     public int getCardChose() {
         return cardChoose;
-    }
-
-    public int getIndexPlayer() {
-        return indexPlayer;
-    }
-
-    public void setIndexPlayer(int indexPlayer) {
-        this.indexPlayer = indexPlayer;
     }
 
     /**

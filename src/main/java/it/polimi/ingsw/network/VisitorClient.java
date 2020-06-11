@@ -26,10 +26,10 @@ public class VisitorClient {
     /**
      * method to establish a connect with the server
      *
-     * @param askWantToPlay is a message to start the communication with the server
+     * @param askWantToPlayEvent is a message to start the communication with the server
      */
-    public void visit(AskWantToPlay askWantToPlay) {
-        view.askWantToPlay(askWantToPlay);
+    public void visit(AskWantToPlayEvent askWantToPlayEvent) {
+        view.askWantToPlay(askWantToPlayEvent);
     }
 
     /**
@@ -104,22 +104,22 @@ public class VisitorClient {
     /**
      * method to ask the player to select a card for the game
      *
-     * @param askCard is a message to ask the player to select a card for the game
+     * @param askCardEvent is a message to ask the player to select a card for the game
      */
 
-    public void visit(AskCard askCard) {
-        if (askCard.getClientIndex() == askCard.getCurrentClientPlaying())
-            view.askCard(askCard.getCardTemp());
+    public void visit(AskCardEvent askCardEvent) {
+        if (askCardEvent.getClientIndex() == askCardEvent.getCurrentClientPlaying())
+            view.askCard(askCardEvent.getCardTemp());
     }
 
     /**
      * method to ask the player to initialize his worker
      *
-     * @param askInitializeWorker is a message to ask the player to initialize his Workers on the board
+     * @param askInitializeWorkerEvent is a message to ask the player to initialize his Workers on the board
      */
 
-    public void visit(AskInitializeWorker askInitializeWorker) {
-        if (askInitializeWorker.getClientIndex() == askInitializeWorker.getCurrentClientPlaying()) {
+    public void visit(AskInitializeWorkerEvent askInitializeWorkerEvent) {
+        if (askInitializeWorkerEvent.getClientIndex() == askInitializeWorkerEvent.getCurrentClientPlaying()) {
             view.initializeWorker();
         }
         //initialize worker
@@ -155,12 +155,12 @@ public class VisitorClient {
     /**
      * method to ask the player if he want to build before making a move with his worker
      *
-     * @param askBuildBeforeMove is a message to ask the player if he want to move his worker before building a block
+     * @param askBuildBeforeMoveEvent is a message to ask the player if he want to move his worker before building a block
      */
 
-    public void visit(AskBuildBeforeMove askBuildBeforeMove) {
-        if (askBuildBeforeMove.getClientIndex() == askBuildBeforeMove.getCurrentClientPlaying())
-            view.askBuildBeforeMove(askBuildBeforeMove.getIndexWorker(), askBuildBeforeMove.getRowWorker(), askBuildBeforeMove.getColumnWorker());
+    public void visit(AskBuildBeforeMoveEvent askBuildBeforeMoveEvent) {
+        if (askBuildBeforeMoveEvent.getClientIndex() == askBuildBeforeMoveEvent.getCurrentClientPlaying())
+            view.askBuildBeforeMove(askBuildBeforeMoveEvent.getIndexWorker(), askBuildBeforeMoveEvent.getRowWorker(), askBuildBeforeMoveEvent.getColumnWorker());
     }
 
     /**

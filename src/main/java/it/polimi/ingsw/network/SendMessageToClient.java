@@ -128,11 +128,11 @@ public class SendMessageToClient {
     /**
      * send the request for a card of a player
      *
-     * @param askCard is an event to ask a card for a specific player
+     * @param askCardEvent is an event to ask a card for a specific player
      */
 
-    public void sendAskCard(AskCard askCard) {
-        echoServer.sendBroadCast(askCard);
+    public void sendAskCard(AskCardEvent askCardEvent) {
+        echoServer.sendBroadCast(askCardEvent);
     }
 
     /**
@@ -148,10 +148,10 @@ public class SendMessageToClient {
     /**
      * send the request for the initialization of the workers
      *
-     * @param askInitializeWorker is a message to ask the user to initialize his Workers on the board
+     * @param askInitializeWorkerEvent is a message to ask the user to initialize his Workers on the board
      */
-    public void sendAskInitializeWorker(AskInitializeWorker askInitializeWorker) {
-        echoServer.sendBroadCast(askInitializeWorker);
+    public void sendAskInitializeWorker(AskInitializeWorkerEvent askInitializeWorkerEvent) {
+        echoServer.sendBroadCast(askInitializeWorkerEvent);
     }
 
     /**
@@ -167,11 +167,11 @@ public class SendMessageToClient {
     /**
      * send the request to the client to build before making a move
      *
-     * @param askBuildBeforeMove is a message to ask the user if he want to move his worker before building a block
+     * @param askBuildBeforeMoveEvent is a message to ask the user if he want to move his worker before building a block
      */
 
-    public void sendAskBuildBeforeMove(AskBuildBeforeMove askBuildBeforeMove) {
-        echoServer.sendBroadCast(askBuildBeforeMove);
+    public void sendAskBuildBeforeMove(AskBuildBeforeMoveEvent askBuildBeforeMoveEvent) {
+        echoServer.sendBroadCast(askBuildBeforeMoveEvent);
     }
 
     /**

@@ -2,26 +2,31 @@ package it.polimi.ingsw.network.events;
 
 import it.polimi.ingsw.network.VisitorClient;
 import it.polimi.ingsw.network.VisitorServer;
-import it.polimi.ingsw.network.objects.ObjMessage;
+
+import java.util.ArrayList;
 
 /**
- * message starting connection event
+ * message ask card event
  */
-public class AskWantToPlay extends ObjMessage {
 
-    final int indexClient;
+public class AskCardEvent extends Event {
+
+    private static final long serialVersionUID = 984771837456293048L;
+
+    final ArrayList<String> cardTemp;
 
     /**
      * constructor of the class
      *
-     * @param indexClient index of the client
+     * @param cardTemp array of chosen cards
      */
-    public AskWantToPlay(int indexClient) {
-        this.indexClient = indexClient;
+
+    public AskCardEvent(ArrayList<String> cardTemp) {
+        this.cardTemp = cardTemp;
     }
 
-    public int getIndexClient() {
-        return indexClient;
+    public ArrayList<String> getCardTemp() {
+        return cardTemp;
     }
 
     /**
@@ -29,10 +34,9 @@ public class AskWantToPlay extends ObjMessage {
      *
      * @param visitorServer the class of the visitor pattern server's side
      */
-
     @Override
     public void accept(VisitorServer visitorServer) {
-        visitorServer.visit(this);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -40,7 +44,6 @@ public class AskWantToPlay extends ObjMessage {
      *
      * @param visitorClient the class of the visitor pattern client's side
      */
-
     @Override
     public void accept(VisitorClient visitorClient) {
         visitorClient.visit(this);

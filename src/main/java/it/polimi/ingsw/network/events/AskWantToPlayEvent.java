@@ -5,21 +5,34 @@ import it.polimi.ingsw.network.VisitorServer;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
 /**
- * message ask initialize worker event
+ * message starting connection event
  */
+public class AskWantToPlayEvent extends Event {
 
-public class AskInitializeWorker extends ObjMessage {
+    final int indexClient;
 
-    private static final long serialVersionUID = 8103853948576392375L;
+    /**
+     * constructor of the class
+     *
+     * @param indexClient index of the client
+     */
+    public AskWantToPlayEvent(int indexClient) {
+        this.indexClient = indexClient;
+    }
+
+    public int getIndexClient() {
+        return indexClient;
+    }
 
     /**
      * accept method of the visitor pattern
      *
      * @param visitorServer the class of the visitor pattern server's side
      */
+
     @Override
     public void accept(VisitorServer visitorServer) {
-        throw new UnsupportedOperationException();
+        visitorServer.visit(this);
     }
 
     /**

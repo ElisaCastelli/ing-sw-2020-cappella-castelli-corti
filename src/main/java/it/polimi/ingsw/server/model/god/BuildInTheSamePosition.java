@@ -42,6 +42,8 @@ public class BuildInTheSamePosition extends MoveTwice {
      */
     @Override
     public void setPossibleMove(Worker worker) {
+        if(!super.firstTime)
+            super.firstTime = true ;
         super.setPossibleMove(worker);
     }
 

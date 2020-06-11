@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 /**
  * message ask build before move event
  */
-public class AskBuildBeforeMove extends ObjMessage {
+public class AskBuildBeforeMoveEvent extends Event {
 
     final int indexWorker;
     final int rowWorker;
@@ -20,7 +20,7 @@ public class AskBuildBeforeMove extends ObjMessage {
      * @param rowWorker    row of the worker
      * @param columnWorker column of the worker
      */
-    public AskBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
+    public AskBuildBeforeMoveEvent(int indexWorker, int rowWorker, int columnWorker) {
         this.indexWorker = indexWorker;
         this.rowWorker = rowWorker;
         this.columnWorker = columnWorker;

@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 /**
  * message to the player who has lost
  */
-public class LoserEvent extends ObjMessage {
+public class LoserEvent extends Event {
     /**
      * accept method of the visitor pattern
      *

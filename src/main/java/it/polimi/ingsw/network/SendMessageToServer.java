@@ -2,7 +2,7 @@ package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.client.ClientHandler;
 import it.polimi.ingsw.network.ack.*;
-import it.polimi.ingsw.network.events.AskWantToPlay;
+import it.polimi.ingsw.network.events.AskWantToPlayEvent;
 import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
@@ -28,11 +28,11 @@ public class SendMessageToServer {
     /**
      * a method to send the response to join a game
      *
-     * @param askWantToPlay identify an object to ask if the client can join a game
+     * @param askWantToPlayEvent identify an object to ask if the client can join a game
      */
 
-    public void sendAskWantToPlay(AskWantToPlay askWantToPlay) {
-        clientHandler.sendMessage(askWantToPlay);
+    public void sendAskWantToPlay(AskWantToPlayEvent askWantToPlayEvent) {
+        clientHandler.sendMessage(askWantToPlayEvent);
     }
 
     /**
@@ -91,11 +91,10 @@ public class SendMessageToServer {
      * a method to send the card chosen by a player for a game
      *
      * @param choseCardIndex index of the card in the array
-     * @param indexPlayer    index of the user who is playing
      */
 
-    public void sendCard(int choseCardIndex, int indexPlayer) {
-        ObjCard objCard = new ObjCard(choseCardIndex, indexPlayer);
+    public void sendCard(int choseCardIndex) {
+        ObjCard objCard = new ObjCard(choseCardIndex);
         clientHandler.sendMessage(objCard);
     }
 
