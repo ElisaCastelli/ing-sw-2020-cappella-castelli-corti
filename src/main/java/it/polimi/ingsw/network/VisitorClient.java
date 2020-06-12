@@ -98,7 +98,7 @@ public class VisitorClient {
 
     public void visit(AskNCardsEvent askNCardsEvent) {
         if (askNCardsEvent.getClientIndex() == askNCardsEvent.getCurrentClientPlaying())
-            view.ask3Card(askNCardsEvent.getCardArray());
+            view.askNCard(askNCardsEvent.getCardArray());
     }
 
     /**

@@ -3,38 +3,105 @@ package it.polimi.ingsw.server.model.gameState;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
-public class GameState {
+/**
+ * Abstract class with common methods for the different states
+ */
+public abstract class GameState {
     public void setWinner(int winner){};
-    public int getWinner(){return -1;};
-    public void startTurn(int indexPlayer){}
 
+    public int getWinner(){return -1;};
+
+    /**
+     * Method used to check if the player can build before move
+     * @param indexPlayer of the player
+     * @return true if it's possible to build before move
+     */
     public boolean canBuildBeforeWorkerMove(int indexPlayer){ return false; };
 
+    /**
+     * Method used to check if the player can move
+     * @param indexPlayer of the player
+     * @return true if it's possible to  move
+     */
     public boolean canMove(int indexPlayer){return false;}
 
+    /**
+     * Method used to check if the player can  move inn special turns
+     * @param indexPlayer of the player
+     * @param indexWorker of the worker to move
+     * @return true if it's possible to  move
+     */
     public boolean canMoveSpecialTurn(int indexPlayer, int indexWorker){return false;}
 
+    /**
+     * Method used to set the possible reachable boxes
+     * @param indexPlayer of the player
+     * @param indexWorker of the worker to move
+     */
     public void setBoxReachable(int indexPlayer, int indexWorker){}
 
+    /**
+     * Method to move a worker
+     * @param indexPlayer of the player
+     * @param indexWorker of the worker to move
+     * @param row to reach with a move
+     * @param column to reach with a move
+     * @param board game field
+     * @return true if the move works
+     */
     public boolean movePlayer(int indexPlayer, int indexWorker, int row, int column, Board board){return false;}
 
+    /**
+     * Method used to check if the player can build
+     * @param indexPlayer of the player
+     * @param indexWorker  of the worker moved before build
+     * @return true if it's possible to  build
+     */
     public boolean canBuild(int indexPlayer, int indexWorker){return false;}
 
+    /**
+     * Method used to set the possible buildable boxes
+     * @param indexPlayer of the player
+     * @param indexWorker of the worker moved before build
+     */
     public void setBoxBuilding(int indexPlayer, int indexWorker){ }
 
+    /**
+     * Method to build a block
+     * @param indexPlayer of the player
+     * @param indexWorker of the worker to move
+     * @param row to reach with a move
+     * @param column to reach with a move
+     * @param board game field
+     * @return true if the move works
+     */
     public boolean buildBlock(int indexPlayer, int indexWorker, int row, int column, Board board){return false;}
 
+    /**
+     * Method to set the possible block buildable
+     * @param indexPlayer of the player
+     * @param indexPossibleBlock of the block to build
+     */
     public void setIndexPossibleBlock(int indexPlayer, int indexPossibleBlock) {}
 
-    public void finishTurn(int indexPlayer){}
-
+    /**
+     * Method to check the victory
+     * @param indexPlayer of the player
+     * @param startBox starting position
+     * @param indexWorker worker moved
+     * @return true if the player has won
+     */
     public boolean checkWin(int indexPlayer, Box startBox, int indexWorker){return false;}
 
+    /**
+     * Method to check the victory after build
+     * @return true if the player has won
+     */
     public boolean checkWinAfterBuild(){return false;}
 
-    public void setWinningPlayer(int indexPlayer){}
-
+    /**
+     * Method to set a dead player
+     * @param indexPlayer of the player
+     */
     public void setDeadPlayer(int indexPlayer){ }
-
-
 }

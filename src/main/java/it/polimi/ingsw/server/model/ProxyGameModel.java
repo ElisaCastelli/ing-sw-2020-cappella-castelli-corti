@@ -420,11 +420,6 @@ public class ProxyGameModel implements GameModel, Subject{
     }
 
     @Override
-    public void setPause() {
-        gameModel.setPause();
-    }
-
-    @Override
     public GameState getState(){
         return gameModel.getState();
     }

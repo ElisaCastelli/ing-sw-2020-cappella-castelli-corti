@@ -1,16 +1,22 @@
 package it.polimi.ingsw.server.model.gameState;
 
+/**
+ * State used if the game is over
+ */
 public class EndState extends GameState{
+    /**
+     * index of the winner player
+     */
     int winner;
-    public EndState(){
 
-    }
+    public EndState(){ }
 
+    @Override
     public void setWinner(int winner){
         this.winner = winner;
     }
 
-    //Ritorna indice del client
+    @Override
     public int getWinner(){
         return winner;
     }

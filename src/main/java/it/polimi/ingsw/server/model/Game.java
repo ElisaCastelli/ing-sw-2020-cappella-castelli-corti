@@ -627,11 +627,6 @@ public class Game implements GameModel{
         stateManager.setDeadPlayer(indexPlayer);
     }
 
-    @Override
-    public void setPause(){
-        stateManager.goPause();
-    }
-
     /**
      * This method resets the heartbeat counter if it receives a response from the client
      * @param indexClient client index who sends the heartbeat response

@@ -326,9 +326,6 @@ public class Controller  {
     public void setDeadPlayer(int indexPlayer){
         gameModel.setDeadPlayer(indexPlayer);
     }
-    public void setPause() {
-        gameModel.setPause();
-    }
 
     /**
      * This method resets the heartbeat counter if it receives a response from the client

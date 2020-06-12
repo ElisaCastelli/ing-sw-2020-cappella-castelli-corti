@@ -632,7 +632,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param actionEvent is the object associated to the click event
      */
     @FXML
-    public void loadData(ActionEvent actionEvent) {
+    public void loadDataPlayer(ActionEvent actionEvent) {
         messageNameError.setText("");
         messageAgeError.setText("");
         String name= playerName.getText();
@@ -657,7 +657,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param cards is the ArrayList of cards name from which the user can choose
      */
     @Override
-    public void ask3Card(ArrayList<String> cards){
+    public void askNCard(ArrayList<String> cards){
         System.out.println("Ask cards");
         Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/allCardsPage.fxml");
@@ -774,7 +774,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param actionEvent is the object associated to the click event
      */
     @FXML
-    public void select(ActionEvent actionEvent) {
+    public void selectPositionInGameField(ActionEvent actionEvent) {
         Button cell = (Button) actionEvent.getSource();
         AnchorPane pane = (AnchorPane) cell.getParent();
         if (state == 3) {
@@ -868,7 +868,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param actionEvent is the object associated to the click event
      */
     @FXML
-    public void sure(ActionEvent actionEvent){
+    public void surePaneYes(ActionEvent actionEvent){
         if(state==5){
             ObjWorkerToMove objWorkerToMove = new ObjWorkerToMove(workerToMove.getWorker().getWorkerId(), workerToMove.getRow(), workerToMove.getColumn(), true);
             sendMessageToServer.sendWorkerToMove(objWorkerToMove);
@@ -896,7 +896,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param actionEvent is the object associated to the click event
      */
     @FXML
-    public void notSure(ActionEvent actionEvent){
+    public void surePaneNo(ActionEvent actionEvent){
         if(state==5){
             askWorker(-1,-1,-1,-1,currentPlayer,indexClient);
         }

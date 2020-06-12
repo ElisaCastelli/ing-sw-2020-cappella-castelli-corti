@@ -232,8 +232,6 @@ public interface GameModel {
 
     void setDeadPlayer(int indexPlayer);
 
-    void setPause();
-
     /**
      * This method resets the heartbeat counter if it receives a response from the client
      * @param indexClient client index who sends the heartbeat response

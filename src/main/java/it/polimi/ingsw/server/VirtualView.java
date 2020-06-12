@@ -7,7 +7,6 @@ import it.polimi.ingsw.server.model.ProxyGameModel;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Player;
 
-
 import java.util.ArrayList;
 
 public class VirtualView implements Observer {
@@ -455,10 +454,6 @@ public class VirtualView implements Observer {
     public void updateWhoHasLost(int loserClient) {
         sendMessageToClient.sendWhoHasLost(loserClient);
         canMove();
-    }
-
-    public void setPause(){
-        controller.setPause();
     }
 
     public void printHeartBeat(String messageHeartbeat, int indexClient) {

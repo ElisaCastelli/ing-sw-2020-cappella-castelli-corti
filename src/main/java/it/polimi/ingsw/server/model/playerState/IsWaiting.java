@@ -4,32 +4,23 @@ import it.polimi.ingsw.server.model.god.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+/**
+ * Class of the player's state if he is in the game yet  but is the turn of an opponent
+ */
 public class IsWaiting extends PlayerState{
+
+    /**
+     * Player's card
+     */
     private God myGod;
+
+    /**
+     * Object PlayerStateManager to manage the changes of the state
+     */
     private final PlayerStateManager playerManager;
+
     public IsWaiting(God myGod, PlayerStateManager playerManager){
         this.myGod=myGod;
         this.playerManager=playerManager;
-    }
-
-    @Override
-    public boolean moveWorker(Worker worker, Box pos){
-        System.out.println("Pausa NOOOOOOOOOOOO");
-        return super.moveWorker(worker,pos);
-    }
-
-    @Override
-    public boolean moveBlock(Box pos) {
-        return myGod.moveBlock(pos);
-    }
-
-    @Override
-    public void setPossibleMove(Worker worker) {
-        myGod.setPossibleMove(worker);
-    }
-
-    @Override
-    public void setPossibleBuild(Worker worker) {
-        myGod.setPossibleBuild(worker);
     }
 }

@@ -201,7 +201,7 @@ public class CLIView implements View {
      * @param cards is the ArrayList of cards name from which the user can choose
      */
     @Override
-    public void ask3Card(ArrayList<String> cards) {
+    public void askNCard(ArrayList<String> cards) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             ArrayList<Integer> cardTemp = new ArrayList<>();

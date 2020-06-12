@@ -65,7 +65,7 @@ public interface View {
      * Method calledfrom the VisitorClient when the ClientHandler receives an Ask3Card message.
      * @param cards is the ArrayList of cards name from which the user can choose
      */
-    void ask3Card(ArrayList<String> cards);
+    void askNCard(ArrayList<String> cards);
     /**
      * Method called from the VisitorClient when the ClientHandler receives an AskCard message.
      * @param cards is the ArrayList of the cards name from which the user can choose
