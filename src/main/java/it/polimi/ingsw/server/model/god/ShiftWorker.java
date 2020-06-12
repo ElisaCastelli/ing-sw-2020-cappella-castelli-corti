@@ -34,6 +34,7 @@ public class ShiftWorker extends GodDecorator {
     public ArrayList<String> getEffects() {
         return super.getEffects();
     }
+
     /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move
      * @param worker Which worker is the check applied
@@ -48,12 +49,6 @@ public class ShiftWorker extends GodDecorator {
             if (boxNextTo!=null && !boxNextTo.notWorker() && (worker.getIndexPlayer()!= boxNextTo.getWorker().getIndexPlayer()) && boxNextTo.getCounter() - worker.getHeight() <= 1
                     && (directionControl(worker, boxNextTo) == null || (!directionControl(worker, boxNextTo).notWorker() || directionControl(worker, boxNextTo).getCounter() == 4))){
                 boxNextTo.setReachable(false);
-            }
-
-            if(boxNextTo!=null){
-                System.out.println("è raggiungibile?:"+boxNextTo.isReachable());
-            }else{
-                System.out.println("è raggiungibile?:"+false);
             }
         }
     }
@@ -86,7 +81,6 @@ public class ShiftWorker extends GodDecorator {
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
@@ -97,7 +91,6 @@ public class ShiftWorker extends GodDecorator {
 
     /**
      * This methods checks if the player win
-     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

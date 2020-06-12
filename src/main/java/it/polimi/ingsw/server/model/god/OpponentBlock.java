@@ -20,7 +20,6 @@ public class OpponentBlock extends GodDecorator {
         super.setName(godName);
     }
 
-
     @Override
     public void setEffect(ArrayList<String> effects) {
         super.setEffect(effects);
@@ -67,17 +66,13 @@ public class OpponentBlock extends GodDecorator {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        if ( pos.getCounter() - worker.getHeight() == 1)
-            moveUp = true;
-        else
-            moveUp = false;
+        moveUp = pos.getCounter() - worker.getHeight() == 1;
         System.out.println("ho impostato il moveup:"+isMoveUp());
         return super.moveWorker(worker, pos);
     }
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */

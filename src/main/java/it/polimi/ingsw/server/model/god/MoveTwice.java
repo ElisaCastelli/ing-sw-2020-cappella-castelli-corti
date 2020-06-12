@@ -8,7 +8,13 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
  */
 public abstract class MoveTwice extends GodDecorator {
 
+    /**
+     * This attribute memorizes the first move box
+     */
     public Box oldBoxMove = null;
+    /**
+     * This attribute tells if it is the first move or not
+     */
     public boolean firstTime = true;
 
     public MoveTwice(God newGod) {
@@ -110,6 +116,10 @@ public abstract class MoveTwice extends GodDecorator {
         }
     }
 
+    /**
+     * @param finalBox box where the player wants to build or to move
+     * @return true if the two boxes are the same position
+     */
     public boolean samePosition ( Box finalBox ){
         return oldBoxMove == finalBox;
     }

@@ -19,7 +19,6 @@ public class NotMoveUp extends GodDecorator {
         super.setName(godName);
     }
 
-
     @Override
     public void setEffect(ArrayList<String> effects) {
         super.setEffect(effects);
@@ -67,13 +66,11 @@ public class NotMoveUp extends GodDecorator {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-       //Si potrebbe togliere perchè è un controllo già fatto in set
         return super.moveWorker(worker, pos);
     }
 
     /**
      * This method builds a building block in a position on the board
-     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
@@ -84,7 +81,6 @@ public class NotMoveUp extends GodDecorator {
 
     /**
      * This methods checks if the player win
-     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

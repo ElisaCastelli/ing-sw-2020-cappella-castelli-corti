@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.model.god;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
-import javax.naming.InterruptedNamingException;
 import java.util.ArrayList;
 
 /**

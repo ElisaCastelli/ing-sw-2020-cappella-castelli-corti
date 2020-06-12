@@ -10,8 +10,6 @@ import java.util.ArrayList;
  */
 public class Box implements Serializable {
 
-    //private static final long serialVersionUID = -293850302L;
-
     /**
      * This attribute is a building that can be built in this box
      */
@@ -19,7 +17,7 @@ public class Box implements Serializable {
     /**
      * This attribute is a worker that can occupy this box
      */
-    private Worker worker; //MAGARI POTREMMO TOGLIERLO
+    private Worker worker;
     /**
      * This attribute indicates the row of the matrix where the box is located
      */
@@ -28,12 +26,20 @@ public class Box implements Serializable {
      * This attribute indicates the column of the matrix where the box is located
      */
     private int column;
+    /**
+     * This attribute indicates if a box is reachable by a worker or not
+     */
     private boolean reachable;
+    /**
+     * This attribute memorizes the eight adjacent boxes of the box
+     */
     private ArrayList<Box> boxesNextTo;
+    /**
+     * This attribute indicates which block can build
+     */
     private ArrayList<Block> possibleBlock;
 
     /**
-     *
      * @param row row of the box
      * @param column column of the box
      * Constructor with parameters
@@ -61,6 +67,10 @@ public class Box implements Serializable {
      */
     public int getColumn() {
         return column;
+    }
+
+    public void setWorker(Worker worker){
+        this.worker = worker;
     }
 
     public Worker getWorker() {
@@ -93,10 +103,6 @@ public class Box implements Serializable {
 
     public ArrayList<Block> getPossibleBlock() {
         return possibleBlock;
-    }
-
-    public void setPossibleBlock(ArrayList<Block> possibleBlock) {
-        this.possibleBlock = possibleBlock;
     }
 
     public boolean isReachable() {
@@ -144,10 +150,6 @@ public class Box implements Serializable {
         return vuota;
     }
 
-    public void setWorker(Worker worker){
-        this.worker = worker;
-    }
-
     /**
      * This method calls the method build of Building if the counter is less than five
      */
@@ -163,15 +165,22 @@ public class Box implements Serializable {
         building.build(domeIdentifier);
     }
 
+    /**
+     * This method clears the adjacent boxes
+     */
     public void clearBoxesNextTo(){
         for (Box nextTo : boxesNextTo) {
-            if(nextTo!=null){
+            if(nextTo != null){
                 nextTo.getPossibleBlock().clear();
                 nextTo.setReachable(false);
             }
         }
     }
 
+    /**
+     * This method checks if there are any reachable boxes
+     * @return true if there is at least one reachable box, false if there are no reachable boxes
+     */
     public boolean checkPossible(){
         boolean possible = false;
         int index = 0;
@@ -186,18 +195,6 @@ public class Box implements Serializable {
         return possible;
     }
 
-    public boolean isNext(Box box){
-        int i=0;
-        boolean next=false;
-        while(i<8 && !next){
-           if(boxesNextTo.get(i)==box){
-               next=true;
-           }
-            i++;
-        }
-        return next;
-    }
-
     /**
      * This method prints the content of the box
      */
@@ -205,11 +202,12 @@ public class Box implements Serializable {
         return "█";
     }
 
+    /**
+     * This method prints the arrayOfBlock size
+     * @return an int which represents the size of the array
+     */
     public int printsize(){
-        if(building.getArrayOfBlocks().size() > 0){
-            return building.getArrayOfBlocks().size();
-        }
-        return 0;
+        return Math.max(building.getArrayOfBlocks().size(), 0);
     }
 }
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.god;
 
+import it.polimi.ingsw.server.model.building.Block;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
@@ -11,9 +12,12 @@ import java.util.ArrayList;
 public interface God {
 
     /**
-     * These attributes are the God name, his ability description and the decorators that it is gone to use
+     * These attribute is the God name
      */
     String name = "";
+    /**
+     * This array will contain all the decorator classes that each God is going to use
+     */
     ArrayList<String> effects = new ArrayList<>();
 
     String getName();
@@ -51,6 +55,17 @@ public interface God {
      */
     boolean moveBlock ( Box pos );
 
+    /**
+     * This method checks which block could be built in a box
+     * @param box box that is going to be checked
+     * @return type of block that can be built
+     */
+    Block whatCanIBuild(Box box);
+
+    /**
+     * This method sets the index of the block that could be built
+     * @param indexPossibleBlock index of the block
+     */
     void setIndexPossibleBlock(int indexPossibleBlock);
 
     /**
@@ -61,6 +76,9 @@ public interface God {
      */
     boolean checkWin ( Box initialPos, Box finalBox );
 
+    /**
+     * This method is used by a God with the ability to build before the worker move
+     * @return true if the player has this God, otherwise returns always false
+     */
     boolean canBuildBeforeWorkerMove();
-
 }

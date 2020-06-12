@@ -1,5 +1,4 @@
 package it.polimi.ingsw.server.model.gameComponents;
-import it.polimi.ingsw.client.Color;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,7 +30,9 @@ public class Board implements Serializable{
         setBoxesNext();
     }
 
-
+    /**
+     * This method sets the eight adjacent boxes for each box of the matrix
+     */
     public void setBoxesNext(){
         for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
@@ -71,7 +72,6 @@ public class Board implements Serializable{
     }
 
     /**
-     *
      * @param row indicates the row of the box in the matrix i want
      * @param column indicates the column of the box in the matrix i want
      * @return the box in position matrix[row][column]
@@ -84,9 +84,9 @@ public class Board implements Serializable{
     public ArrayList<Box> getBoxesNextTo(int row, int column){
         ArrayList<Box> nextTo = new ArrayList<>();
         for(int r = row-1 ; r <= row+1; r++){
-            for(int c = column-1; c <= column+1; c++){
-                if(!(r==row && c==column)){
-                    if( r>=0 && r<5 && c>=0 && c<5 ){
+            for(int c = column-1; c <= column + 1; c++){
+                if(!(r == row && c == column)){
+                    if( r >= 0 && r < 5 && c >= 0 && c < 5 ){
                         nextTo.add(getBox(r,c));
                     }
                     else
@@ -97,6 +97,9 @@ public class Board implements Serializable{
         return nextTo;
     }
 
+    /**
+     * This method clears the attribute reachable for each box of the matrix
+     */
     public void clearReachable(){
         for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
@@ -104,5 +107,4 @@ public class Board implements Serializable{
             }
         }
     }
-
 }

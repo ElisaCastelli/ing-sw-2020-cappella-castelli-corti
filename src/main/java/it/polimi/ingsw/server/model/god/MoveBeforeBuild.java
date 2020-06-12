@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 import java.util.ArrayList;
 public class MoveBeforeBuild extends GodDecorator {
-
+//todo controllare che serva veramente
     private boolean isWorkerMoved;
 
     public MoveBeforeBuild (God newGod) {

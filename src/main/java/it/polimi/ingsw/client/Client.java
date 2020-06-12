@@ -3,9 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.GUI.ViewGUIController;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 
 /**

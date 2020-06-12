@@ -11,8 +11,13 @@ import java.util.ArrayList;
  */
 public class BasicGod implements God {
 
-
+    /**
+     * This is the God name
+     */
     private String name;
+    /**
+     * This array will contain all the decorator classes that each God is going to use
+     */
     private ArrayList<String> effects;
 
     public void setName(String name) {
@@ -59,14 +64,15 @@ public class BasicGod implements God {
                 if(block != null)
                     boxNextTo.getPossibleBlock().add(block);
             }
-            if(boxNextTo!=null){
-                System.out.println("Posso costruire?:"+boxNextTo.isReachable());
-            }else{
-                System.out.println("Posso costruire?:"+false);
-            }
         }
     }
 
+    /**
+     * This method checks which block could be built in a box
+     * @param box box that is going to be checked
+     * @return type of block that can be built
+     */
+    @Override
     public Block whatCanIBuild(Box box){
         int sizeArrayBlocks = box.getBuilding().getArrayOfBlocks().size();
 
@@ -83,9 +89,6 @@ public class BasicGod implements God {
 
         return block;
     }
-
-
-
 
     /**
      * This method implements the worker move from its start position to its final position
@@ -114,10 +117,12 @@ public class BasicGod implements God {
         return true;
     }
 
+    /**
+     * This method sets the index of the block that could be built
+     * @param indexPossibleBlock index of the block
+     */
     @Override
-    public void setIndexPossibleBlock(int indexPossibleBlock) {
-
-    }
+    public void setIndexPossibleBlock(int indexPossibleBlock) {}
 
     /**
      * This method implements the basic winning rule: if the worker moves up a maximum of one level and it is level 3, the player wins.
@@ -130,7 +135,10 @@ public class BasicGod implements God {
         return finalBox.getCounter() - initialPos.getCounter() == 1 && finalBox.getCounter() == 3;
     }
 
-
+    /**
+     * This method is used by a God with the ability to build before the worker move
+     * @return always false
+     */
     @Override
     public boolean canBuildBeforeWorkerMove() {
         return false;

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public class BuildBeforeWorkerMove extends MoveTwice {
 
+    /**
+     * This attribute tells if the worker has been moved or not
+     */
     private boolean workerMoved = false;
 
     public BuildBeforeWorkerMove(God newGod) {
@@ -49,13 +52,8 @@ public class BuildBeforeWorkerMove extends MoveTwice {
             super.setPossibleMove(worker);
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-                if (boxNextTo!=null && boxNextTo.getCounter() - worker.getHeight() == 1 ){
+                if (boxNextTo != null && boxNextTo.getCounter() - worker.getHeight() == 1 ){
                     boxNextTo.setReachable(false);
-                }
-                if(boxNextTo!=null){
-                    System.out.println("è raggiungibile?:"+boxNextTo.isReachable());
-                }else{
-                    System.out.println("è raggiungibile?:"+false);
                 }
             }
         }
@@ -70,9 +68,8 @@ public class BuildBeforeWorkerMove extends MoveTwice {
         super.setPossibleBuild(worker);
     }
 
-    //todo Finire commento
     /**
-     * This method implements two cases of the worker move because of this ability:
+     * This method moves the chosen worker to the new position on the board
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -91,7 +88,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     @Override
     public boolean moveBlock(Box pos) {
         if( super.firstTime && workerMoved ){//basic move
-            workerMoved=false;
+            workerMoved = false;
             super.moveBlock(pos);
             if (pos.getCounter() == 4)
                 completeTowers++;
@@ -100,14 +97,13 @@ public class BuildBeforeWorkerMove extends MoveTwice {
             super.moveTwice(pos);
             return true;
         }else{//second time of decorator move
-            workerMoved=false;
+            workerMoved = false;
             return super.moveTwice(pos);
         }
     }
 
     /**
      * This methods checks if the player win
-     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins
@@ -117,6 +113,9 @@ public class BuildBeforeWorkerMove extends MoveTwice {
         return super.checkWin(initialPos, finalBox);
     }
 
+    /**
+     * @return true because who has this decorator class has the possibility to build before the worker move
+     */
     @Override
     public boolean canBuildBeforeWorkerMove() {
         return true;

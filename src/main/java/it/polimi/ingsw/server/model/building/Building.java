@@ -4,11 +4,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * This class represents the building using a factory method
+ */
 public class Building implements Serializable {
+
+    /**
+     * This attribute memorizes the levels of the building
+     */
     private final ArrayList < Block > arrayOfBlocks;
+
     public Building () {
         arrayOfBlocks = new ArrayList <> () ;
     }
+
     /**
      * As it is a factory method it build a block based on the size of arrayOfBlocks
      * without asking the gamer to specified the block.
@@ -29,6 +38,7 @@ public class Building implements Serializable {
             //arrayOfBlocks.get(3).print();
         }
     }
+
     /**
      * this method is used by Atlas to build a dome at any case
      * @param domeIdent is set to 4 to identify the Dome
@@ -39,6 +49,7 @@ public class Building implements Serializable {
         }
         arrayOfBlocks.add( getBlock( domeIdent ) );
     }
+
     /**
      * @param blockIdentifier is an int passed by the method Build to build the rightful block
      * @return the block created to Build so that can be added to arrayOfBlocks
@@ -63,6 +74,11 @@ public class Building implements Serializable {
         }
         return block;
     }
+
+    /**
+     * @param counter is anindex of the arrayOfBlocks
+     * @return the block in the list at the specified index
+     */
     public Block getBlockCounter( int counter ){
         return arrayOfBlocks.get(counter);
     }
@@ -75,12 +91,14 @@ public class Building implements Serializable {
     public String getBlocksNameInArray ( int pos ) {
         return arrayOfBlocks.get( pos ).toString();
     }
+
     /**
      * @return the array is a list of the block that was created in a Box
      */
     public ArrayList<Block> getArrayOfBlocks () {
         return arrayOfBlocks;
     }
+
     /**
      * this method print out the building of a single box
      */
@@ -93,6 +111,7 @@ public class Building implements Serializable {
             }
         }
     }
+
     /**
      * this method clear the arrayOfBlock so that the size of the list is equal to zero and the building is !=null
      */

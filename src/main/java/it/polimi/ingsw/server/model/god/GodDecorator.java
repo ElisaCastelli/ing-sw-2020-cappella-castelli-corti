@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.god;
 
+import it.polimi.ingsw.server.model.building.Block;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
@@ -12,8 +13,17 @@ import java.util.ArrayList;
 public abstract class GodDecorator implements God {
 
     protected final God newGod;
+    /**
+     * This attribute indicates if the opponent workers can move up a level
+     */
     protected static boolean moveUp;
+    /**
+     * This attribute counts how many complete towers are on the board
+     */
     protected static int completeTowers;
+    /**
+     * This attribute is the index of the block that the player wants to build
+     */
     protected static int indexPossibleBlock;
 
     public GodDecorator ( God newGod ) {
@@ -37,6 +47,7 @@ public abstract class GodDecorator implements God {
     public void setEffect(ArrayList<String> effects) {
         newGod.setEffect(effects);
     }
+
     /**
      * This method tells which positions can get reached by a worker
      * @param worker Which worker is the check applied
@@ -76,9 +87,24 @@ public abstract class GodDecorator implements God {
         return this.newGod.moveBlock( pos );
     }
 
+    /**
+     * This method checks which block could be built in a box
+     *
+     * @param box box that is going to be checked
+     * @return type of block that can be built
+     */
+    @Override
+    public Block whatCanIBuild(Box box) {
+        return this.newGod.whatCanIBuild(box);
+    }
+
+    /**
+     * This method sets the index of the block that could be built
+     * @param possibleBlock index of the block
+     */
     @Override
     public void setIndexPossibleBlock(int possibleBlock) {
-        indexPossibleBlock= possibleBlock;
+        indexPossibleBlock = possibleBlock;
     }
 
     /**
@@ -92,6 +118,10 @@ public abstract class GodDecorator implements God {
         return this.newGod.checkWin( initialPos, finalBox );
     }
 
+    /**
+     * This method is used by a God with the ability to build before the worker move
+     * @return true if the player has this God, otherwise returns always false
+     */
     @Override
     public boolean canBuildBeforeWorkerMove() {
         return this.newGod.canBuildBeforeWorkerMove();

@@ -1,19 +1,32 @@
 package it.polimi.ingsw.server.model.building;
 
+/**
+ * This class represents the first level of the building
+ */
 public class Base implements Block {
+
+    /**
+     * This attribute identifies the block
+     */
     private final int blockIdentifier;
+
+    /**
+     * This attribute is the name of the block
+     */
     private final String blockName;
 
     public Base() {
         this.blockIdentifier = 1;
         this.blockName="Base";
     }
+
     /**
      * @return the int of the identifier of the block
      */
     public int getBlockIdentifier() {
         return blockIdentifier;
     }
+
     /**
      *@return the name of the block
      */

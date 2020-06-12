@@ -14,16 +14,12 @@ import java.util.TimerTask;
 
 public class ServerHandler extends Thread{
 
-    ///al posto del client array
     int indexClientArray;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
     private Socket socket;
     private boolean closed= false;
-
-
-
 
     public ServerHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView, int indexClientArray){
         this.socket=socket;
@@ -35,10 +31,6 @@ public class ServerHandler extends Thread{
 
     public boolean isClosed() {
         return closed;
-    }
-
-    public int getIndexClientArray() {
-        return indexClientArray;
     }
 
     public void setIndexClientArray(int indexClientArray) {
@@ -109,7 +101,6 @@ public class ServerHandler extends Thread{
             System.out.println("connection reset");
             e.printStackTrace();
         }
-
     }
 
 

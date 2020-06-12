@@ -59,19 +59,14 @@ public class BuildABlockUnderItself extends GodDecorator {
         }
     }
 
-    public Block whatCanIBuild(Box box){
-        int sizeArrayBlocks = box.getBuilding().getArrayOfBlocks().size();
-        Block block;
-        if(sizeArrayBlocks == 0){
-            block = new Base();
-        } else if(sizeArrayBlocks == 1){
-            block = new Middle();
-        }else if(sizeArrayBlocks == 2) {
-            block = new Top();
-        }else if (sizeArrayBlocks == 3){
-            block = new Dome();
-        }else block = null;
-        return block;
+    /**
+     * This method checks which block could be built in a box
+     * @param box box that is going to be checked
+     * @return type of block that can be built
+     */
+    @Override
+    public Block whatCanIBuild(Box box) {
+        return super.whatCanIBuild(box);
     }
 
     /**

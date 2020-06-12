@@ -10,8 +10,6 @@ import java.io.Serializable;
 
 public class Worker implements Serializable {
 
-    //private static final long serialVersionUID = -39403829432L;
-
     /**
      * this parameter is to identify the worker of the player
      */
@@ -121,9 +119,8 @@ public class Worker implements Serializable {
     }
 
     /**
-     *is a method to clear and reinitialize the worker
+     *It is a method to clear and reinitialize the worker
      */
-
     public void clear(){
         workerId=0;
         height=0;

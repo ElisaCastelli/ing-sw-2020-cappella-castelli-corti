@@ -499,7 +499,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     public void setSendMessageToServer(SendMessageToServer sendMessageToServer){
         this.sendMessageToServer=sendMessageToServer;
-
     }
 
     /**
@@ -520,7 +519,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param askWantToPlay is the message send from the server to ask to the player if he wants to play
      */
     @Override
-    public void askWantToPlay(AskWantToPlay askWantToPlay) {
+    public void askWantToPlay(AskWantToPlayEvent askWantToPlay) {
         System.out.println("Vuoi giocare?");
         indexClient=askWantToPlay.getIndexClient();
         new Thread(() -> Application.launch(GUIMain.class)).start();
@@ -532,7 +531,7 @@ public class ViewGUIController  implements Initializable,View {
      */
     @FXML
     public void sendWantToPlay(ActionEvent actionEvent){
-        sendMessageToServer.sendAskWantToPlay(new AskWantToPlay(indexClient));
+        sendMessageToServer.sendAskWantToPlay(new AskWantToPlayEvent(indexClient));
     }
 
     /**
@@ -751,7 +750,7 @@ public class ViewGUIController  implements Initializable,View {
             buttonTwoOfThree.setDisable(true);
             buttonThreeOfThree.setDisable(true);
         }
-        sendMessageToServer.sendCard(indexCard,indexPlayer);
+        sendMessageToServer.sendCard(indexCard);
     }
 
     /**
