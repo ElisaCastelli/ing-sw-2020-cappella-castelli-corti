@@ -35,7 +35,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="2" prefHeight="125.0" prefWidth="125.0" GridPane.columnIndex="1">
@@ -44,7 +44,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
@@ -62,7 +62,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
@@ -71,7 +71,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="6" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -80,7 +80,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -89,7 +89,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="8" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -98,7 +98,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="9" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -107,7 +107,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="10" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
@@ -116,7 +116,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="11" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
@@ -125,7 +125,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="12" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -134,7 +134,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="13" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -143,7 +143,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="14" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
@@ -152,7 +152,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="15" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
@@ -161,7 +161,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="16" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
@@ -170,7 +170,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="17" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -179,7 +179,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="18" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
@@ -188,7 +188,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="19" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
@@ -197,7 +197,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="20" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
@@ -206,7 +206,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="21" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -215,7 +215,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="22" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
@@ -224,7 +224,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="23" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
@@ -233,7 +233,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="24" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
@@ -242,7 +242,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
             <AnchorPane id="25" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
@@ -251,7 +251,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onAction="#select" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
+                  <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
          </children>
@@ -352,8 +352,8 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Button layoutX="60.0" layoutY="50.0" mnemonicParsing="false" onAction="#sure" style="-fx-font-family: futura;" text="Yes" />
-            <Button layoutX="150.0" layoutY="50.0" mnemonicParsing="false" onAction="#notSure" style="-fx-font-family: futura;" text="No" />
+            <Button layoutX="60.0" layoutY="50.0" mnemonicParsing="false" onAction="#surePaneYes" style="-fx-font-family: futura;" text="Yes" />
+            <Button layoutX="150.0" layoutY="50.0" mnemonicParsing="false" onAction="surePaneNo" style="-fx-font-family: futura;" text="No" />
          </children>
       </AnchorPane>
       <Button fx:id="closeButton" layoutX="1254.0" mnemonicParsing="false" onAction="#closeButtonHandler" style="-fx-background-color: #d3461b#d3461b;" text="X" textFill="#fcf9f9" />

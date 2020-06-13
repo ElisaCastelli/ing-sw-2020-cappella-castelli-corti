@@ -32,7 +32,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Button fx:id="buttonDataPlayer" layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#loadData" style="-fx-background-color: white; -fx-background-radius: 5; -fx-font-family: Futura;" text="Send" textFill="#1976d3">
+            <Button fx:id="buttonDataPlayer" layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#loadDataPlayer" style="-fx-background-color: white; -fx-background-radius: 5; -fx-font-family: Futura;" text="Send" textFill="#1976d3">
                <font>
                   <Font size="16.0" />
                </font>

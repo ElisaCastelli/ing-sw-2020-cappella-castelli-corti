@@ -584,8 +584,8 @@ public class VirtualView implements Observer {
     }
 
     /**
-     * This method closes the connection with a client
-     * @param indexClient client index who has to be disconnected
+     * This method receive the notify of the connection closing
+     * @param indexClient client index who get disconnected
      */
     public void close(int indexClient) {
         System.out.println("client: "+ indexClient +" will be closed");

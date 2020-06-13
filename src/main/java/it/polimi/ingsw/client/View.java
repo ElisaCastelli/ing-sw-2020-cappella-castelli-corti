@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.network.events.*;
-import it.polimi.ingsw.network.events.AskWorkerToMoveEvent;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.network.*;
-import it.polimi.ingsw.server.model.gameComponents.Box;
 
 import java.util.ArrayList;
 
@@ -161,11 +159,11 @@ public interface View {
     /**
      * This method is used to show to the user who lost the end of the game
      */
-    void loserEvent();
+    void loserEvent(int indexClient);
     /**
      * This method is used to show to the user who win the end of the game
      */
-    void winnerEvent();
+    void winnerEvent(int indexClient);
     /**
      * This method is used to show to the user that an opponent has won
      */

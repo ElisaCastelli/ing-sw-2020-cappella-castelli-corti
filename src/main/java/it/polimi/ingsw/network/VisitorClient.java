@@ -10,8 +10,6 @@ import it.polimi.ingsw.network.objects.*;
 
 public class VisitorClient {
 
-    //todo fai metodo per chi non gioca così da togliere le sout
-
     public final View view;
 
     /**
@@ -122,7 +120,6 @@ public class VisitorClient {
         if (askInitializeWorkerEvent.getClientIndex() == askInitializeWorkerEvent.getCurrentClientPlaying()) {
             view.initializeWorker();
         }
-        //initialize worker
     }
 
     /**
@@ -149,7 +146,6 @@ public class VisitorClient {
                 view.areYouSure(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getIndexWorker(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
             }
         }
-            //set reachable worker
     }
 
     /**
@@ -179,7 +175,6 @@ public class VisitorClient {
                 view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
             }
         }
-        //moving worker
     }
 
     /**
@@ -207,7 +202,7 @@ public class VisitorClient {
 
     public void visit(WinnerEvent winnerEvent) {
         if (winnerEvent.getClientIndex() == winnerEvent.getCurrentClientPlaying())
-            view.winnerEvent();
+            view.winnerEvent(winnerEvent.getClientIndex());
         else
             view.someoneWon();
     }
@@ -219,7 +214,7 @@ public class VisitorClient {
      */
 
     public void visit(LoserEvent loserEvent) {
-        view.loserEvent();
+        view.loserEvent(loserEvent.getClientIndex());
     }
 
     /**

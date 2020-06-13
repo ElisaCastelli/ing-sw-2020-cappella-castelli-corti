@@ -58,6 +58,7 @@ public class CLIView implements View {
     @Override
     public void askWantToPlay(AskWantToPlayEvent askWantToPlay){
         Thread thread = new Thread(() -> {
+            clearScreen();
             santoriniName();
             System.out.println("I'm trying to join a game");
             sendMessageToServer.sendAskWantToPlay(askWantToPlay);
@@ -93,6 +94,7 @@ public class CLIView implements View {
      */
     @Override
     public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient) {
+        clearScreen();
         this.usersArray = usersArray;
         this.board = board;
         printBoard(isShowReachable, currentPlaying);
@@ -106,7 +108,6 @@ public class CLIView implements View {
     @Override
     public void askNPlayer() {
         Thread thread = new Thread(() -> {
-            clearScreen();
             Scanner input = new Scanner(System.in);
             System.out.println(Color.CYAN+"How many Player ? [ 2 o 3 ]"+Color.RESET);
             int response=inputTwoOrThree(input);
@@ -447,7 +448,7 @@ public class CLIView implements View {
     public void anotherMove(int row, int column, int indexWorker, boolean isWrongBox,boolean firstTime, int clientIndex, int currentPlaying, boolean done) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
-            System.out.println("You Have the possibility to make another move");
+            System.out.println("You have the possibility to make another move");
             System.out.println("Do You want to?: ");
             System.out.println("[ 1 ] -> " + "YES");
             System.out.println("[ 0 ] -> " + "NO");
@@ -854,7 +855,7 @@ public class CLIView implements View {
      * This method is used to show to the user who lost the end of the game
      */
     @Override
-    public void loserEvent() {
+    public void loserEvent(int indexClient) {
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  Color.RESET);
@@ -864,13 +865,15 @@ public class CLIView implements View {
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ " "+ " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ " "+ " "+ " "+ " "+ "M"+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ "V"+ "V"+ " "+ "V"+ "V"+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "R"+ "R"+ "R"+" "+ " "+ " "+ Color.RESET);
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ " "+ " "+ "A"+ "A"+ "A"+ " "+ "A"+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "V"+ "V"+ "V"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ " "+ " "+ "E"+ "E"+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ Color.RESET);
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ "A"+ "A"+ "A"+ "A"+ "A"+ " "+ "A"+ "A"+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ " "+ " "+ "M"+ "M"+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "V"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "E"+ "E"+ "E"+ "E"+ "E"+ "E"+ " "+ " "+ " "+ "R"+ "R"+ " "+ " "+ " "+ " "+ Color.RESET);
+
+        //sendMessageToServer.sendAckClosingConnection(indexClient);
     }
 
     /**
      * This method is used to show to the user who win the end of the game
      */
     @Override
-    public void winnerEvent() {
+    public void winnerEvent(int indexClient) {
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ Color.RESET);
@@ -880,6 +883,9 @@ public class CLIView implements View {
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ "W"+ "W"+ " "+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ " "+ " "+ "N"+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "U"+ "U"+ "U"+ " "+ " "+ "U"+ "U"+ "U"+ " "+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ "U"+ "U"+ "U"+ "U"+ "U"+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
+
+        sendMessageToServer.sendAckClosingConnection(indexClient);
+
     }
 
     /**

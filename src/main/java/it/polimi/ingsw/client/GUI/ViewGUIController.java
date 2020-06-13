@@ -1075,7 +1075,7 @@ public class ViewGUIController  implements Initializable,View {
      * This method is used to load the scene of losing game
      */
     @Override
-    public void loserEvent() {
+    public void loserEvent(int indexClient) {
         Platform.runLater(() -> {
             GUIMain.changeFinal("Scene/youLose.fxml");
         });
@@ -1085,7 +1085,7 @@ public class ViewGUIController  implements Initializable,View {
      *This method is used to load the scene of winning game
      */
     @Override
-    public void winnerEvent() {
+    public void winnerEvent(int indexClient) {
         Platform.runLater(() -> {
             GUIMain.changeFinal("Scene/youWin.fxml");
         });
