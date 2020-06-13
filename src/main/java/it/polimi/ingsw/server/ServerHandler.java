@@ -12,21 +12,30 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * This class handles all the clients that get connected
+ */
 public class ServerHandler extends Thread{
 
+    /**
+     * This attribute is the index that the client occupies in the clientArray of EchoServer class
+     */
     int indexClientArray;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
     private Socket socket;
-    private boolean closed= false;
+    /**
+     * This attribute identifies if the client is closed or not
+     */
+    private boolean closed = false;
 
     public ServerHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView, int indexClientArray){
-        this.socket=socket;
-        this.outputStream=outputStream;
-        this.inputStream=inputStream;
+        this.socket = socket;
+        this.outputStream = outputStream;
+        this.inputStream = inputStream;
         this.virtualView = virtualView;
-        this.indexClientArray=indexClientArray;
+        this.indexClientArray = indexClientArray;
     }
 
     public boolean isClosed() {
@@ -37,6 +46,9 @@ public class ServerHandler extends Thread{
         this.indexClientArray = indexClientArray;
     }
 
+    /**
+     * This method sends an heartbeat and starts the timer
+     */
     public void sendHeartBeat(){
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
@@ -57,6 +69,9 @@ public class ServerHandler extends Thread{
         t.scheduleAtFixedRate(tt, 50000, 60000);
     }
 
+    /**
+     * This method sends a message to the new client and waits to receives messages
+     */
     @Override
     public void run(){
         sendUpdate(new AskWantToPlayEvent(indexClientArray));
@@ -64,6 +79,9 @@ public class ServerHandler extends Thread{
         listening();
     }
 
+    /**
+     * This method receives all the messages from the client
+     */
     public void listening(){
         try {
             while (!closed) {
@@ -86,7 +104,10 @@ public class ServerHandler extends Thread{
         close();
     }
 
-
+    /**
+     * This method sends a message to the client
+     * @param objMessage object message to send
+     */
     public void sendUpdate(ObjMessage objMessage) {
         objMessage.setClientIndex(indexClientArray);
 
@@ -103,7 +124,9 @@ public class ServerHandler extends Thread{
         }
     }
 
-
+    /**
+     * This method closes the connection of the client
+     */
     public void close(){
         try {
             socket.close();

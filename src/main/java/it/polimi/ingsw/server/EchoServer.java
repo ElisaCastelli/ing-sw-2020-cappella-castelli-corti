@@ -9,20 +9,44 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-
+/**
+ * This class represents the server
+ */
 public class EchoServer {
+
+    /**
+     * This attribute is the array of players who are going to play the game
+     */
     private static ArrayList<ServerHandler> clientArray = new ArrayList<>();
+
+    /**
+     * This attribute is the array of players who have to wait to get in the game
+     */
     private static ArrayList<ServerHandler> clientWaiting = new ArrayList<>();
+
+    /**
+     * This attribute is the number port of the server
+     */
     private static int portNumber;
+
+    /**
+     * This attribute is the lock used for the client array
+     */
     private final Object LOCKClientArray = new Object();
+
+    /**
+     * This attribute is the lock used for the client waiting array
+     */
     private final Object LOCKWaitingArray = new Object();
 
     public EchoServer(int portNumber) {
-        EchoServer.portNumber =portNumber;
+        EchoServer.portNumber = portNumber;
     }
 
-    ///magari prima di inserire il nome e l'età faccio un controllo che non ci siano extra player e nel caso li chiudo
-
+    /**
+     * This method adds a client, who is in the clientWaiting array, in clientArray
+     * @param indexClientWaiting index of the clientWaiting array
+     */
     public void updateClientArray(int indexClientWaiting){
         synchronized (LOCKClientArray) {
             clientArray.add(clientWaiting.get(indexClientWaiting));
@@ -30,6 +54,11 @@ public class EchoServer {
             clientArray.get(size - 1).setIndexClientArray(size - 1);
         }
     }
+
+    /**
+     * This method updates the clientWaiting indexes when a client disconnected
+     * @param indexClientWaiting index of the clientWaiting array who disconnected
+     */
     public void updateIndexClientWaiting(int indexClientWaiting){
         synchronized (LOCKWaitingArray) {
             for (int index = indexClientWaiting; index < clientWaiting.size(); index++) {
@@ -37,9 +66,14 @@ public class EchoServer {
             }
         }
     }
-    public void updateIndexClient(int indexClientWaiting){
+
+    /**
+     * This method updates the clientArray indexes when a client who is in the game disconnected
+     * @param indexClient client index who disconnected
+     */
+    public void updateIndexClient(int indexClient){
         synchronized (LOCKClientArray) {
-            for (int index = indexClientWaiting; index < clientArray.size(); index++) {
+            for (int index = indexClient; index < clientArray.size(); index++) {
                 clientArray.get(index).setIndexClientArray(index);
             }
         }
@@ -53,19 +87,37 @@ public class EchoServer {
         return clientWaiting;
     }
 
+    /**
+     * This method sends a same message to all clients
+     * @param objMessage object message to send
+     */
     public void sendBroadCast(ObjMessage objMessage){
         for(ServerHandler serverHandler : clientArray){
             serverHandler.sendUpdate(objMessage);
         }
     }
+
+    /**
+     * This method sends a message to one client
+     * @param objMessage object message to send
+     * @param indexArrayClient index of the clientArray to send the message
+     */
     public void send(ObjMessage objMessage, int indexArrayClient){
         clientArray.get(indexArrayClient).sendUpdate(objMessage);
     }
 
+    /**
+     * This method sends a waiting message to a client
+     * @param objMessage object message to send
+     * @param indexArrayClient index of the clientArray to send the message
+     */
     public void sendWaiting(ObjMessage objMessage,int indexArrayClient){
         clientWaiting.get(indexArrayClient).sendUpdate(objMessage);
     }
 
+    /**
+     * This method closes all the clients
+     */
     public void closeServerHandlers(){
         synchronized (LOCKClientArray) {
             if (clientWaiting.size() > 0) {
@@ -82,6 +134,9 @@ public class EchoServer {
         }
     }
 
+    /**
+     * This method remove all the clients who are not in the clientArray
+     */
     public void resetWaiting() {
         synchronized (LOCKWaitingArray) {
             int sizeWaiting = clientWaiting.size();
@@ -95,8 +150,10 @@ public class EchoServer {
         }
     }
 
-
-    //non lo considerate è per dopo se vogliamo fare la lobby, non è mai richiamato
+    /**
+     * This method accepts the client and puts them in the clientWaiting array
+     * @param serverSocket server socket of the client
+     */
     public void acceptClientWaiting(ServerSocket serverSocket) {
         VirtualView virtualView = null;
         try {
@@ -106,7 +163,7 @@ public class EchoServer {
         }
         try{
             while(true) {
-                Socket clientSocket = new Socket();
+                Socket clientSocket;
 
                 clientSocket = serverSocket.accept();
                 System.out.println("Un client si è connesso" + clientSocket);
@@ -133,8 +190,11 @@ public class EchoServer {
         }
     }
 
+    /**
+     * This method is the launcher that starts the server
+     * @param args arguments
+     */
     public static void main(String[] args) {
-        //inizializzazione fatta senza main
         portNumber = 1234;
         ServerSocket serverSocket = null;
         try {
