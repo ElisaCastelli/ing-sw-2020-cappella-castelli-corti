@@ -102,13 +102,13 @@ public class CardCreator {
      * alternative method to read from Json file and to generate decorated god's using strings
      * Not used because the hashMap method was more solid
      */
-    public void setGodsByString() {
+    public ArrayList<God> setGodsByString() {
 
         BasicGod godJson;
-        for (int index = 0; index < godsByJson.size(); index++) {
+        for (BasicGod basicGod : godsByJson) {
 
             God g;
-            godJson = godsByJson.get(index);
+            godJson = basicGod;
             g = godJson;
 
             for (int indexEffects = 0; indexEffects < godJson.getEffects().size(); indexEffects++) {
@@ -140,6 +140,7 @@ public class CardCreator {
             }
             cardsGod.add(g);
         }
+        return cardsGod;
     }
 
     /**

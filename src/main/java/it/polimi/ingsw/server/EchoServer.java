@@ -4,10 +4,12 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.SendMessageToClient;
 import it.polimi.ingsw.network.events.CloseConnectionFromServerEvent;
 import it.polimi.ingsw.network.objects.ObjMessage;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class represents the server
@@ -45,9 +47,10 @@ public class EchoServer {
 
     /**
      * This method adds a client, who is in the clientWaiting array, in clientArray
+     *
      * @param indexClientWaiting index of the clientWaiting array
      */
-    public void updateClientArray(int indexClientWaiting){
+    public void updateClientArray(int indexClientWaiting) {
         synchronized (LOCKClientArray) {
             clientArray.add(clientWaiting.get(indexClientWaiting));
             int size = clientArray.size();
@@ -57,9 +60,10 @@ public class EchoServer {
 
     /**
      * This method updates the clientWaiting indexes when a client disconnected
+     *
      * @param indexClientWaiting index of the clientWaiting array who disconnected
      */
-    public void updateIndexClientWaiting(int indexClientWaiting){
+    public void updateIndexClientWaiting(int indexClientWaiting) {
         synchronized (LOCKWaitingArray) {
             for (int index = indexClientWaiting; index < clientWaiting.size(); index++) {
                 clientWaiting.get(index).setIndexClientArray(index);
@@ -69,9 +73,10 @@ public class EchoServer {
 
     /**
      * This method updates the clientArray indexes when a client who is in the game disconnected
+     *
      * @param indexClient client index who disconnected
      */
-    public void updateIndexClient(int indexClient){
+    public void updateIndexClient(int indexClient) {
         synchronized (LOCKClientArray) {
             for (int index = indexClient; index < clientArray.size(); index++) {
                 clientArray.get(index).setIndexClientArray(index);
@@ -89,36 +94,39 @@ public class EchoServer {
 
     /**
      * This method sends a same message to all clients
+     *
      * @param objMessage object message to send
      */
-    public void sendBroadCast(ObjMessage objMessage){
-        for(ServerHandler serverHandler : clientArray){
+    public void sendBroadCast(ObjMessage objMessage) {
+        for (ServerHandler serverHandler : clientArray) {
             serverHandler.sendUpdate(objMessage);
         }
     }
 
     /**
      * This method sends a message to one client
-     * @param objMessage object message to send
+     *
+     * @param objMessage       object message to send
      * @param indexArrayClient index of the clientArray to send the message
      */
-    public void send(ObjMessage objMessage, int indexArrayClient){
+    public void send(ObjMessage objMessage, int indexArrayClient) {
         clientArray.get(indexArrayClient).sendUpdate(objMessage);
     }
 
     /**
      * This method sends a waiting message to a client
-     * @param objMessage object message to send
+     *
+     * @param objMessage       object message to send
      * @param indexArrayClient index of the clientArray to send the message
      */
-    public void sendWaiting(ObjMessage objMessage,int indexArrayClient){
+    public void sendWaiting(ObjMessage objMessage, int indexArrayClient) {
         clientWaiting.get(indexArrayClient).sendUpdate(objMessage);
     }
 
     /**
      * This method closes all the clients
      */
-    public void closeServerHandlers(){
+    public void closeServerHandlers() {
         synchronized (LOCKClientArray) {
             if (clientWaiting.size() > 0) {
                 for (ServerHandler serverHandler : clientWaiting) {
@@ -152,6 +160,7 @@ public class EchoServer {
 
     /**
      * This method accepts the client and puts them in the clientWaiting array
+     *
      * @param serverSocket server socket of the client
      */
     public void acceptClientWaiting(ServerSocket serverSocket) {
@@ -161,8 +170,8 @@ public class EchoServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            while(true) {
+        try {
+            while (true) {
                 Socket clientSocket;
 
                 clientSocket = serverSocket.accept();
@@ -192,19 +201,67 @@ public class EchoServer {
 
     /**
      * This method is the launcher that starts the server
+     *
      * @param args arguments
      */
     public static void main(String[] args) {
-        portNumber = 1234;
+
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        final int N_ARGUMENT = 2;
+        int i = 0;
+        String arg;
+
+        while (i < args.length && args[i].startsWith("-")) {
+            arg = args[i++];
+
+            if (i < args.length) {
+                hashMap.put(arg.substring(1), args[i++]);
+            } else {
+                System.err.println("-" + arg + " requires an argument");
+            }
+        }
+
+        if (N_ARGUMENT != args.length)
+            System.err.println("Usage: ParseCmdLine [-ip] address [-port] port [-view] view");
+        else
+            System.out.println("Success!");
+
+        parseServer(hashMap);
+
+
+        EchoServer echoServer = new EchoServer(portNumber);
+
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(portNumber);
         } catch (IOException e) {
+            System.out.println("connection refused");
             e.printStackTrace();
         }
-
-        EchoServer echoServer = new EchoServer(portNumber);
         echoServer.acceptClientWaiting(serverSocket);
+
+    }
+
+    /**
+     * method used to parse args chosen by user
+     *
+     * @param hashMap used to parse args
+     */
+    private static void parseServer(HashMap<String, String> hashMap) {
+        boolean redo = false;
+        String port = hashMap.get("port");
+
+        if (port != null) {
+            int socketPort = Integer.parseInt(port);
+            portNumber = socketPort;
+        } else {
+            redo = true;
+        }
+        if (redo) {
+            System.err.println("Usage: [-port] port ");
+        } else
+            System.out.println("Success!: the port chosen is: " + portNumber);
     }
 
 }

@@ -1,100 +1,100 @@
 [
-    {
-      "name": "Apollo",
-      "effects": [
-        "SwitchWorker",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Artemis",
-      "effects": [
-        "MoveWorkerTwice",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Athena",
-      "effects": [
-        "OpponentBlock"
-      ]
-    },
-    {
-      "name": "Atlas",
-      "effects": [
-        "BuildDome",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Demeter",
-      "effects": [
-        "OtherPositionToBuild",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Hephaestus",
-      "effects": [
-        "BuildInTheSamePosition",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Minotaur",
-      "effects": [
-        "SwitchWorker",
-        "ShiftWorker",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Pan",
-      "effects": [
-        "DownTwoOrMoreLevelsWin",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Prometheus",
-      "effects": [
-        "BuildBeforeWorkerMove",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Charon",
-      "effect":[
-        "FerryAnOpponentWorker",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Cronus",
-      "effect":[
-        "CompleteTowersWin",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Hestia",
-      "effect":[
-        "BuildNotAlongThePerimeter",
-        "NotMoveUp"
-      ]
-    },
-    {
-      "name": "Triton",
-      "effect":[
-        "MoveInfinityTimesAlongThePerimeter",
-        "NotMoveUp"
-      ]
-      },
-    {
-      "name": "Zeus",
-      "effect":[
-        "BuildABlockUnderItself",
-        "NotMoveUp"
-      ]
-    }
+  {
+    "name": "Apollo",
+    "effects": [
+      "SwitchWorker",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Artemis",
+    "effects": [
+      "MoveWorkerTwice",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Athena",
+    "effects": [
+      "OpponentBlock"
+    ]
+  },
+  {
+    "name": "Atlas",
+    "effects": [
+      "BuildDome",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Demeter",
+    "effects": [
+      "OtherPositionToBuild",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Hephaestus",
+    "effects": [
+      "BuildInTheSamePosition",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Minotaur",
+    "effects": [
+      "SwitchWorker",
+      "ShiftWorker",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Pan",
+    "effects": [
+      "DownTwoOrMoreLevelsWin",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Prometheus",
+    "effects": [
+      "BuildBeforeWorkerMove",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Charon",
+    "effect": [
+      "FerryAnOpponentWorker",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Cronus",
+    "effect": [
+      "CompleteTowersWin",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Hestia",
+    "effect": [
+      "BuildNotAlongThePerimeter",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Triton",
+    "effect": [
+      "MoveInfinityTimesAlongThePerimeter",
+      "NotMoveUp"
+    ]
+  },
+  {
+    "name": "Zeus",
+    "effect": [
+      "BuildABlockUnderItself",
+      "NotMoveUp"
+    ]
+  }
 ]

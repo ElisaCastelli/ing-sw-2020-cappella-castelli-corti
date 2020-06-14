@@ -68,9 +68,10 @@ public class Player implements Serializable {
         this.timer = timer;
         this.timerTask = timerTask;
     }
-
+    //todo ma perchè funziona se non si setta il god sul playerstatemanager...sarà sempre un basic god
     public void setGod(God god){
         myGod = god;
+        gamerManager.setMyGod(myGod);
     }
 
     public God getGod(){
