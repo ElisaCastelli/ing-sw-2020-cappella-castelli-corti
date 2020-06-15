@@ -58,7 +58,7 @@ public class BasicGod implements God {
     public void setPossibleBuild(Worker worker) {
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
+            if (boxNextTo != null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
                 boxNextTo.setReachable(true);
                 Block block = whatCanIBuild(boxNextTo);
                 if(block != null)
@@ -83,10 +83,9 @@ public class BasicGod implements God {
             block = new Middle();
         }else if(sizeArrayBlocks == 2) {
             block = new Top();
-        }else if (sizeArrayBlocks == 3){
+        }else {
             block = new Dome();
-        }else block = null;
-
+        }
         return block;
     }
 

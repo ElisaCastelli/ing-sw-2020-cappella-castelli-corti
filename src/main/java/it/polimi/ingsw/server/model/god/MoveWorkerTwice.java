@@ -70,9 +70,7 @@ public class MoveWorkerTwice extends MoveTwice {
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        if ( !super.samePosition( pos ))
-            return super.moveTwice( worker, pos );
-        return false;
+        return super.moveTwice( worker, pos );
     }
 
     /**

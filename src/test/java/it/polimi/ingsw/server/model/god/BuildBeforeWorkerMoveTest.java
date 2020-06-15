@@ -1,26 +1,41 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildBeforeWorkerMoveTest {
 
+    private God god = new BuildBeforeWorkerMove(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("BuildBeforeWorkerMove");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Prometheus");
+        assertEquals("Prometheus", god.getName());
+        assertEquals("BuildBeforeWorkerMove", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleMove() {
-        //PROMETEO
-        God god=new BuildBeforeWorkerMove(new BasicGod());
-        Worker worker=new Worker(1);
-        Worker worker2=new Worker(2);
-        Worker worker3=new Worker(3);
+        Worker worker = new Worker(1);
+        Worker worker2 = new Worker(2);
+        Worker worker3 = new Worker(3);
         Board board = new Board();
 
         worker.initializePos(board.getBox(0,1),board);
         worker2.initializePos(board.getBox(1,2),board);
         worker3.initializePos(board.getBox(3,3),board);
+        assertTrue(god.canBuildBeforeWorkerMove());
 
         //build-move-build
         System.out.println("build-move-build");
@@ -45,6 +60,7 @@ class BuildBeforeWorkerMoveTest {
         god.setPossibleMove(worker2);
         worker2.getActualBox().clearBoxesNextTo();
         assertTrue(god.moveWorker(worker2,board.getBox(0,2)));
+        assertFalse(god.checkWin(board.getBox(1,2), worker2.getActualBox()));
         System.out.println("moving in 0,2 with high"+board.getBox(0,2).getCounter());
         System.out.println("can build everywhere");
         god.setPossibleBuild(worker2);
@@ -54,10 +70,9 @@ class BuildBeforeWorkerMoveTest {
 
     @Test
     void moveBlock() {
-        God god=new BuildBeforeWorkerMove(new BasicGod());
-        Worker worker=new Worker(1);
-        Worker worker2=new Worker(2);
-        Worker worker3=new Worker(3);
+        Worker worker = new Worker(1);
+        Worker worker2 = new Worker(2);
+        Worker worker3 = new Worker(3);
         Board board = new Board();
 
         worker.initializePos(board.getBox(0,1),board);
@@ -106,13 +121,10 @@ class BuildBeforeWorkerMoveTest {
         assertEquals(1,board.getBox(1,1).getCounter());
         System.out.println("can build everywhere");
         System.out.println("build in 2,1");
+        board.getBox(2,1).build();
+        board.getBox(2,1).build();
         assertTrue(god.moveBlock(board.getBox(2,1)));
-        assertEquals(2,board.getBox(2,1).getCounter());
+        assertEquals(4,board.getBox(2,1).getCounter());
         assertEquals(2,board.getBox(1,1).getWorker().getWorkerId());
-
-
-
-
-
     }
 }

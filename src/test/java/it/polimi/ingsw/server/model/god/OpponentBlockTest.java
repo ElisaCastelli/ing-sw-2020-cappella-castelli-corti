@@ -1,20 +1,33 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OpponentBlockTest {
 
+    private God god = new OpponentBlock(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("OpponentBlock");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Athena");
+        assertEquals("Athena", god.getName());
+        assertEquals("OpponentBlock", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
 
     @Test
     void moveWorker() {
-        //ATENA
-        God god=new OpponentBlock(new BasicGod());
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
         Worker worker3=new Worker(3);
@@ -55,9 +68,9 @@ class OpponentBlockTest {
         assertTrue(god.moveWorker(worker,board.getBox(0,2)));
         assertTrue(god.moveWorker(worker,board.getBox(0,3)));
         assertEquals(2,worker.getActualBox().getCounter());
-
-
-
+        assertFalse(god.checkWin(board.getBox(0,2), worker.getActualBox()));
+        god.setPossibleBuild(worker);
+        assertTrue(god.moveBlock(board.getBox(0,4)));
     }
 
 }

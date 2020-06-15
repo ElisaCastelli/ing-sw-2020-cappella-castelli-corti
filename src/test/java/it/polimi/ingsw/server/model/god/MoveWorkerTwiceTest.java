@@ -2,21 +2,37 @@ package it.polimi.ingsw.server.model.god;
 
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoveWorkerTwiceTest {
 
+    private God god = new MoveWorkerTwice(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("MoveWorkerTwice");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Artemis");
+        assertEquals("Artemis", god.getName());
+        assertEquals("MoveWorkerTwice", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleMove() {
-        God god = new MoveWorkerTwice(new BasicGod());
         Board board = new Board();
         Worker myWorker = new Worker(1);
         Worker worker2=new Worker(2);
+        assertFalse(god.canBuildBeforeWorkerMove());
 
         myWorker.initializePos(board.getBox(0,1),board);
         worker2.initializePos(board.getBox(1,1),board);
@@ -59,7 +75,6 @@ class MoveWorkerTwiceTest {
 
     @Test
     void moveWorker() {
-        God god = new MoveWorkerTwice(new BasicGod());
         Board board = new Board();
         Worker myWorker = new Worker(1);
 
@@ -67,9 +82,13 @@ class MoveWorkerTwiceTest {
 
         //Prima mossa normale
         assertFalse(god.moveWorker(myWorker, board.getBox(1,0)));
+        assertFalse(god.checkWin(board.getBox(0,1), myWorker.getActualBox()));
         //Seconda mossa speciale
         assertTrue(god.moveWorker(myWorker, board.getBox(2,0)));
         //Terza mossa consecutiva. è come se fosse la prima
         assertFalse(god.moveWorker(myWorker, board.getBox(3,0)));
+
+        god.setPossibleBuild(myWorker);
+        assertTrue(god.moveBlock(board.getBox(3,1)));
     }
 }

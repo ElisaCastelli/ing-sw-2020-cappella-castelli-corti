@@ -1,17 +1,33 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildInTheSamePositionTest {
 
+    private God god = new BuildInTheSamePosition(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("BuildInTheSamePosition");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Hephaestus");
+        assertEquals("Hephaestus", god.getName());
+        assertEquals("BuildInTheSamePosition", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleBuild() {
-        God god=new BuildInTheSamePosition(new BasicGod());
+        God god = new BuildInTheSamePosition(new BasicGod());
         Board board = new Board();
         Worker myWorker = new Worker(1);
         //Controllo e costruisco livello 1 e 2
@@ -76,12 +92,15 @@ class BuildInTheSamePositionTest {
 
     @Test
     void moveBlock() {
-        God god=new BuildInTheSamePosition(new BasicGod());
+        God god = new BuildInTheSamePosition(new BasicGod());
         Board board = new Board();
         Worker myWorker = new Worker(1);
 
         //Costruisco livello 1 e 2
-        myWorker.initializePos(board.getBox(3, 1),board);
+        myWorker.initializePos(board.getBox(2, 1),board);
+        god.setPossibleMove(myWorker);
+        assertTrue(god.moveWorker(myWorker, board.getBox(3,1)));
+        assertFalse(god.checkWin(board.getBox(2,1), myWorker.getActualBox()));
 
         assertFalse(god.moveBlock(board.getBox(2,2)));
 
@@ -102,5 +121,10 @@ class BuildInTheSamePositionTest {
 
         //Costruisco livello 3 come prima mossa
         assertTrue(god.moveBlock(board.getBox(2,2)));
+
+        god.setPossibleBuild(myWorker);
+        assertFalse(god.moveBlock(board.getBox(4,0)));
+        board.getBox(3,1).clearBoxesNextTo();
+        god.setPossibleMove(myWorker);
     }
 }

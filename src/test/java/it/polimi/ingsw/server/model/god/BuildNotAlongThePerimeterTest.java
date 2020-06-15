@@ -1,22 +1,41 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildNotAlongThePerimeterTest {
 
+    private God god = new BuildNotAlongThePerimeter(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("BuildNotAlongThePerimeter");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Hestia");
+        assertEquals("Hestia", god.getName());
+        assertEquals("BuildNotAlongThePerimeter", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleBuild() {
-        God god = new BuildNotAlongThePerimeter(new BasicGod());
         Worker myWorker = new Worker(1);
         Worker opponentWorker = new Worker(2);
         Board board = new Board();
 
-        myWorker.initializePos(board.getBox(1,1),board);
+        myWorker.initializePos(board.getBox(0,1),board);
+        god.setPossibleMove(myWorker);
+        assertTrue(god.moveWorker(myWorker,board.getBox(1,1)));
+        board.getBox(0,1).clearBoxesNextTo();
+        assertFalse(god.checkWin(board.getBox(0,1), myWorker.getActualBox()));
         opponentWorker.initializePos(board.getBox(1,2),board);
 
         board.getBox(2,1).build();
@@ -86,5 +105,10 @@ class BuildNotAlongThePerimeterTest {
         assertFalse(board.getBox(4,3).isReachable());
 
         assertTrue(god.moveBlock(board.getBox(3,3)));
+
+        god.setPossibleBuild(myWorker);
+        assertFalse(god.moveBlock(board.getBox(1,2)));
+        board.getBox(1,1).clearBoxesNextTo();
+        god.setPossibleMove(myWorker);
     }
 }

@@ -1,17 +1,32 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildABlockUnderItselfTest {
 
+    private God god = new BuildABlockUnderItself(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("BuildABlockUnderItself");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Zeus");
+        assertEquals("Zeus", god.getName());
+        assertEquals("BuildABlockUnderItself", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleBuild() {
-        God god = new BuildABlockUnderItself(new BasicGod());
         Worker myWorker = new Worker(1);
         Board board = new Board();
 
@@ -70,7 +85,6 @@ class BuildABlockUnderItselfTest {
 
     @Test
     void moveBlock() {
-        God god = new BuildABlockUnderItself(new BasicGod());
         Worker myWorker = new Worker(1);
         Board board = new Board();
 
@@ -97,7 +111,21 @@ class BuildABlockUnderItselfTest {
         assertFalse(board.getBox(0,0).isReachable());
 
         //mossa normale
+        board.getBox(0, 1).build();
+        board.getBox(0, 1).build();
+        board.getBox(0, 1).build();
         god.moveBlock(board.getBox(0,1));
-        assertEquals(1, board.getBox(0,1).getCounter());
+        assertEquals(4, board.getBox(0,1).getCounter());
+    }
+
+    @Test
+    void moveWorker() {
+        Worker myWorker = new Worker(1);
+        Board board = new Board();
+
+        myWorker.initializePos(board.getBox(0,0),board);
+        god.setPossibleMove(myWorker);
+        assertTrue(god.moveWorker(myWorker, board.getBox(0,1)));
+        assertFalse(god.checkWin(board.getBox(0,0), myWorker.getActualBox()));
     }
 }

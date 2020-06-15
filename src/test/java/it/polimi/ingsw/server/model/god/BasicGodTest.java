@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 
@@ -17,6 +16,7 @@ class BasicGodTest {
         Worker workerToMove = new Worker(1);
         Board board = new Board();
 
+        assertFalse(BGTest.canBuildBeforeWorkerMove());
         board.getBox(0,2 ).build();
         workerToMove.setActualBox(board.getBox(0,2));
         workerToMove.setHeight(board.getBox(0,2).getCounter());
@@ -121,6 +121,41 @@ class BasicGodTest {
     }
 
     @Test
+    void whatCanIBuild() {
+        God BGTest = new BasicGod();
+        Worker myWorker = new Worker(1);
+        Board board = new Board();
+
+        board.getBox(0,1).build();
+
+        board.getBox(0,2).build();
+        board.getBox(0,2).build();
+
+        board.getBox(1,0).build();
+        board.getBox(1,0).build();
+        board.getBox(1,0).build();
+
+        myWorker.setActualBox(board.getBox(1,1));
+        myWorker.setHeight(board.getBox(1,1).getCounter());
+        board.getBox(1,1).setWorker(myWorker);
+
+        board.getBox(1,2).build();
+        board.getBox(1,2).build();
+        board.getBox(1,2).build();
+        board.getBox(1,2).build();
+
+        BGTest.setPossibleBuild(myWorker);
+
+        assertEquals("Base", board.getBox(0, 0).getPossibleBlock().get(0).toString());
+        assertEquals("Middle", board.getBox(0, 1).getPossibleBlock().get(0).toString());
+        assertEquals("Top", board.getBox(0, 2).getPossibleBlock().get(0).toString());
+        assertEquals("Dome", board.getBox(1, 0).getPossibleBlock().get(0).toString());
+        assertEquals("Base", board.getBox(2, 0).getPossibleBlock().get(0).toString());
+        assertEquals("Base", board.getBox(2, 1).getPossibleBlock().get(0).toString());
+        assertEquals("Base", board.getBox(2, 2).getPossibleBlock().get(0).toString());
+    }
+
+    @Test
     void moveWorker() {
         God BGTest = new BasicGod();
         Worker myWorker = new Worker(1);
@@ -159,6 +194,7 @@ class BasicGodTest {
         God BGTest = new BasicGod();
         Board board = new Board();
 
+        BGTest.setIndexPossibleBlock(0);
         BGTest.moveBlock(board.getBox(1,2));
 
         assertEquals(1, board.getBox(1,2).getCounter());

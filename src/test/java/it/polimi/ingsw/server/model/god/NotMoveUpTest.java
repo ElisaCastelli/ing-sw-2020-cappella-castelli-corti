@@ -1,22 +1,39 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class NotMoveUpTest {
 
+    private God god = new NotMoveUp(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("NotMoveUp");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("God");
+        assertEquals("God", god.getName());
+        assertEquals("NotMoveUp", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleMove() {
-        God myGod = new NotMoveUp(new BasicGod());
         God opponentGod = new OpponentBlock(new BasicGod());
         Board board = new Board();
         Worker myWorker = new Worker(1);
+        myWorker.setIndexPlayer(0);
         Worker opponentWorker = new Worker(2);
+        myWorker.setIndexPlayer(1);
 
         myWorker.initializePos(board.getBox(4,2), board);
 
@@ -32,7 +49,7 @@ class NotMoveUpTest {
         board.getBox(4,1).build();
         board.getBox(4,1).build();
         //Set normale: Atena non si è ancora mossa
-        myGod.setPossibleMove(myWorker);
+        god.setPossibleMove(myWorker);
 
         assertFalse(board.getBox(3,1).isReachable());
         assertTrue(board.getBox(3,2).isReachable());
@@ -43,7 +60,7 @@ class NotMoveUpTest {
         //Atena si alza di un livello
         board.getBox(4,2).clearBoxesNextTo();
         opponentGod.moveWorker(opponentWorker, board.getBox(4,1));
-        myGod.setPossibleMove(myWorker);
+        god.setPossibleMove(myWorker);
 
         assertFalse(board.getBox(3,1).isReachable());
         assertFalse(board.getBox(3,2).isReachable());
@@ -54,7 +71,7 @@ class NotMoveUpTest {
         //Atena scende di un livello
         board.getBox(4,2).clearBoxesNextTo();
         opponentGod.moveWorker(opponentWorker, board.getBox(3,1));
-        myGod.setPossibleMove(myWorker);
+        god.setPossibleMove(myWorker);
 
         assertFalse(board.getBox(3,1).isReachable());
         assertTrue(board.getBox(3,2).isReachable());
@@ -103,6 +120,14 @@ class NotMoveUpTest {
 
     @Test
     void moveWorker() {
-        //Forse non serve fare questo test
+        Board board = new Board();
+        Worker myWorker = new Worker(1);
+
+        myWorker.initializePos(board.getBox(0,0), board);
+
+        assertTrue(god.moveWorker(myWorker, board.getBox(1,1)));
+        assertFalse(god.checkWin(board.getBox(0,0), myWorker.getActualBox()));
+        god.setPossibleBuild(myWorker);
+        assertTrue(god.moveBlock(board.getBox(1,2)));
     }
 }

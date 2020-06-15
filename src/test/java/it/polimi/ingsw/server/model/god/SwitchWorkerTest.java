@@ -1,23 +1,34 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
-import it.polimi.ingsw.server.model.god.BasicGod;
-import it.polimi.ingsw.server.model.god.God;
-import it.polimi.ingsw.server.model.god.SwitchWorker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SwitchWorkerTest {
 
+    private God god = new SwitchWorker(new BasicGod());
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("SwitchWorker");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Apollo");
+        assertEquals("Apollo", god.getName());
+        assertEquals("SwitchWorker", god.getEffects().get(0));
+        assertEquals("BasicGod", god.getEffects().get(1));
+    }
+
     @Test
     void setPossibleMove() {
-        God god=new SwitchWorker(new BasicGod());
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
-        Worker worker3=new Worker(3);
 
         Board board = new Board();
 
@@ -34,7 +45,6 @@ class SwitchWorkerTest {
 
     @Test
     void setPossibleBuild() {
-        God god=new SwitchWorker(new BasicGod());
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
 
@@ -52,7 +62,6 @@ class SwitchWorkerTest {
 
     @Test
     void moveWorker() {
-        God god=new SwitchWorker(new BasicGod());
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
         Worker worker3=new Worker(3);
@@ -78,12 +87,16 @@ class SwitchWorkerTest {
         assertFalse(board.getBox(0, 1).notWorker());
         assertFalse(board.getBox(1, 1).notWorker());
 
-        //CONTROLLO CHE NON POSSO COSTRUIRE INTORNO PER VEDERE SE HA FATTO CASINO CHE GLI WORKER
+        //CONTROLLO CHE NON POSSO COSTRUIRE INTORNO PER VEDERE SE HA FATTO CASINO CON GLI WORKER
         god.setPossibleBuild(worker);
         worker.getActualBox().clearBoxesNextTo();
         god.setPossibleBuild(worker2);
         worker2.getActualBox().clearBoxesNextTo();
+        board.getBox(4,4).build();
+        board.getBox(4,4).build();
+        board.getBox(4,4).build();
         god.setPossibleBuild(worker3);
+        assertTrue(god.moveBlock(board.getBox(4,4)));
         worker3.getActualBox().clearBoxesNextTo();
     }
 }

@@ -45,7 +45,7 @@ public class CardCreator {
     public void readCard() {
 
         ObjectMapper mapper = new ObjectMapper();
-        JsonParser parser = null;
+        JsonParser parser;
         try {
             parser = mapper.getFactory().createParser(new File("src/main/java/it/polimi/ingsw/server/model/parse/gods.json"));
             if (parser.nextToken() != JsonToken.START_ARRAY) {
@@ -113,9 +113,7 @@ public class CardCreator {
 
             for (int indexEffects = 0; indexEffects < godJson.getEffects().size(); indexEffects++) {
 
-                if ("MoveBeforeBuild".equals(godJson.getEffects().get(indexEffects))) {
-                    g = new MoveBeforeBuild(g);
-                } else if ("BuildBeforeWorkerMove".equals((godJson.getEffects().get(indexEffects)))) {
+                if ("BuildBeforeWorkerMove".equals((godJson.getEffects().get(indexEffects)))) {
                     g = new BuildBeforeWorkerMove(g);
                 } else if ("NotMoveUp".equals(godJson.getEffects().get(indexEffects))) {
                     g = new NotMoveUp(g);

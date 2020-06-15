@@ -1,18 +1,35 @@
 package it.polimi.ingsw.server.model.god;
 
 import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.gameComponents.Worker;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShiftWorkerTest {
 
+    private God god = new ShiftWorker(new SwitchWorker(new BasicGod()));
+
+    @BeforeEach
+    void init(){
+        ArrayList<String> effects = new ArrayList<>();
+        effects.add("ShiftWorker");
+        effects.add("SwitchWorker");
+        effects.add("BasicGod");
+        god.setEffect(effects);
+        god.setName("Minotaur");
+        assertEquals("Minotaur", god.getName());
+        assertEquals("ShiftWorker", god.getEffects().get(0));
+        assertEquals("SwitchWorker", god.getEffects().get(1));
+        assertEquals("BasicGod", god.getEffects().get(2));
+    }
+
     @Test
     void setPossibleMove() {
-        God god = new ShiftWorker(new SwitchWorker(new BasicGod()));
         Worker worker=new Worker(1);
         Worker worker2=new Worker(2);
         Worker worker3=new Worker(3);
@@ -37,13 +54,15 @@ class ShiftWorkerTest {
 
     @Test
     void moveWorker() {
-        //MINOTAURO
-        God god=new ShiftWorker(new SwitchWorker(new BasicGod()));
         Worker worker=new Worker(1);
+        worker.setIndexPlayer(0);
         Worker worker2=new Worker(2);
+        worker2.setIndexPlayer(1);
         Worker worker3=new Worker(3);
+        worker3.setIndexPlayer(1);
         Board board = new Board();
-        board.setBoxesNext();
+        Board board2 = new Board();
+
         worker.initializePos(board.getBox(1,1),board);
         worker2.initializePos(board.getBox(0,0),board);
         worker3.initializePos(board.getBox(3,3),board);
@@ -60,7 +79,7 @@ class ShiftWorkerTest {
         worker2.getActualBox().clearBoxesNextTo();
 
         //MOSSA SPECIALE
-        assertTrue(god.moveWorker(worker,board.getBox(2,2)));
+        assertTrue(god.moveWorker(worker, board.getBox(2,2)));
         assertFalse(board.getBox(0,0).notWorker());
         assertTrue(board.getBox(1,1).notWorker());
         assertFalse(board.getBox(2,2).notWorker());
@@ -68,6 +87,35 @@ class ShiftWorkerTest {
         assertEquals(2,board.getBox(0,0).getWorker().getWorkerId());
         assertEquals(1,board.getBox(2,2).getWorker().getWorkerId());
         assertEquals(3,board.getBox(3,3).getWorker().getWorkerId());
+        assertFalse(god.checkWin(board.getBox(1,1), worker.getActualBox()));
+        god.setPossibleBuild(worker);
+        assertTrue(god.moveBlock(board.getBox(1,1)));
+
+        worker.initializePos(board2.getBox(2,2),board2);
+        worker.setIndexPlayer(0);
+        worker2.initializePos(board2.getBox(3,1),board2);
+        worker2.setIndexPlayer(1);
+        worker3.initializePos(board2.getBox(2,1),board2);
+        worker3.setIndexPlayer(1);
+
+        god.setPossibleMove(worker);
+        assertTrue(god.moveWorker(worker, board2.getBox(3,1)));
+        board2.getBox(2,2).clearBoxesNextTo();
+        god.setPossibleMove(worker);
+        assertTrue(god.moveWorker(worker, board2.getBox(2,1)));
+        board2.getBox(3,1).clearBoxesNextTo();
+        assertTrue(god.moveWorker(worker2, board2.getBox(3,1)));
+        god.setPossibleMove(worker);
+        assertTrue(god.moveWorker(worker, board2.getBox(3,1)));
+        board2.getBox(2,1).clearBoxesNextTo();
+        assertTrue(god.moveWorker(worker3, board2.getBox(2,2)));
+        god.setPossibleMove(worker);
+        assertTrue(god.moveWorker(worker, board2.getBox(2,2)));
+        board2.getBox(3,1).clearBoxesNextTo();
+        worker2.initializePos(board2.getBox(2,1),board2);
+        god.setPossibleMove(worker);
+        assertTrue(god.moveWorker(worker, board2.getBox(2,1)));
+        board2.getBox(2,2).clearBoxesNextTo();
     }
 
 }

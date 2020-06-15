@@ -54,7 +54,7 @@ public class BuildDome extends GodDecorator {
         super.setPossibleBuild(worker);
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-            if (boxNextTo!=null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
+            if (boxNextTo != null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker()) {
                 boxNextTo.setReachable(true);
                 if(boxNextTo.getPossibleBlock().size() < 3) {
                     Block block = new Dome();
@@ -82,7 +82,6 @@ public class BuildDome extends GodDecorator {
      */
     @Override
     public boolean moveBlock(Box pos) {
-        //todo test
         if(indexPossibleBlock == 1){
             if(pos.getCounter() == 3)
                 completeTowers++;
