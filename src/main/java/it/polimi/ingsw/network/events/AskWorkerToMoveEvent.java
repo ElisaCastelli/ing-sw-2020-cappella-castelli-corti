@@ -17,6 +17,7 @@ public class AskWorkerToMoveEvent extends Event {
     int column2;
     int indexWorker;
     boolean firstAsk;
+    boolean canMove;
 
     /**
      * empty constructor of the class
@@ -34,13 +35,14 @@ public class AskWorkerToMoveEvent extends Event {
      * @param column2  column second worker
      * @param firstAsk boolean first ask
      */
-    public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, boolean firstAsk) {
+    public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, boolean firstAsk, boolean canMove) {
         this.row1 = row1;
         this.column1 = column1;
         this.row2 = row2;
         this.column2 = column2;
         indexWorker = -1;
         this.firstAsk = firstAsk;
+        this.canMove = canMove;
     }
 
     public boolean isFirstAsk() {
@@ -69,6 +71,10 @@ public class AskWorkerToMoveEvent extends Event {
 
     public void setIndexWorker(int indexWorker) {
         this.indexWorker = indexWorker;
+    }
+
+    public boolean isCanMove() {
+        return canMove;
     }
 
     /**

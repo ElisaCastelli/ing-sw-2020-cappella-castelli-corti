@@ -192,8 +192,12 @@ public class Controller  {
      * @param secondMove true if it is a second worker move because of a God ability, otherwise it is false
      */
     public void setBoxReachable(int indexWorker, boolean secondMove) {
-        gameModel.setBoxReachable(indexWorker);
-        gameModel.notifySetReachable(indexWorker , secondMove);
+        boolean oneReachable = gameModel.setBoxReachable(indexWorker);
+        if(oneReachable) {
+            gameModel.notifySetReachable(indexWorker, secondMove);
+        }else{
+            gameModel.notifyNotReachable(indexWorker, secondMove);
+        }
     }
 
     /**

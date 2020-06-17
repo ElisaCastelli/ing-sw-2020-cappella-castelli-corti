@@ -41,10 +41,10 @@ public class BuildInTheSamePosition extends MoveTwice {
      * @param worker Which worker is the check applied
      */
     @Override
-    public void setPossibleMove(Worker worker) {
+    public boolean setPossibleMove(Worker worker) {
         if(!super.firstTime)
             super.firstTime = true ;
-        super.setPossibleMove(worker);
+        return super.setPossibleMove(worker);
     }
 
     /**

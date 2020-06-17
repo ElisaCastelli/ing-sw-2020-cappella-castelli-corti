@@ -53,6 +53,12 @@ public interface Subject {
     void notifySetReachable(int indexWorker, boolean secondMove);
 
     /**
+     * This method notifies to the observers that they have pick the other worker because this one can't move
+     * @param indexWorker worker index that is moved
+     * @param secondMove true if it is a second worker move because of a God ability, otherwise it is false
+     */
+    void notifyNotReachable(int indexWorker, boolean secondMove);
+    /**
      * This method notifies to the observers that it is a special turn for a player
      * @param row row of the box where the chosen worker is
      * @param column column of the box where the chosen worker is

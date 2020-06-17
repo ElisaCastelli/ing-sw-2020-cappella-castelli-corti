@@ -60,7 +60,8 @@ public abstract class GameState {
      * @param indexPlayer of the player
      * @param indexWorker of the worker to move
      */
-    public void setBoxReachable(int indexPlayer, int indexWorker) {
+    public boolean setBoxReachable(int indexPlayer, int indexWorker) {
+        return false;
     }
 
     /**

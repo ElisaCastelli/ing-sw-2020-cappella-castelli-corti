@@ -202,9 +202,9 @@ public class Player implements Serializable {
      * This method calls the setPossibleMove in the playerStateManager
      * @param indexWorker index of the worker which is getting the possible moves
      */
-    public void setPossibleMove( int indexWorker ){
-        gamerManager.setMyGod(myGod);
-        gamerManager.setPossibleMove(myWorkers[indexWorker]);
+    public boolean setPossibleMove( int indexWorker ){
+        //gamerManager.setMyGod(myGod);
+        return gamerManager.setPossibleMove(myWorkers[indexWorker]);
     }
 
     /**

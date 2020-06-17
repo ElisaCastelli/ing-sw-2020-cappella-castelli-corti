@@ -80,8 +80,8 @@ public class GameStateManager {
      * @param indexPlayer of the player
      * @param indexWorker of the worker to move
      */
-    public void setBoxReachable(int indexPlayer, int indexWorker) {
-        currentState.setBoxReachable(indexPlayer, indexWorker);
+    public boolean setBoxReachable(int indexPlayer, int indexWorker) {
+        return currentState.setBoxReachable(indexPlayer, indexWorker);
     }
 
     /**

@@ -53,8 +53,8 @@ public abstract class GodDecorator implements God {
      * @param worker Which worker is the check applied
      */
     @Override
-    public void setPossibleMove(Worker worker) {
-        this.newGod.setPossibleMove( worker );
+    public boolean setPossibleMove(Worker worker) {
+        return this.newGod.setPossibleMove( worker );
     }
 
     /**

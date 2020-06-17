@@ -8,7 +8,12 @@ class InvisibleBlockTest {
     final InvisibleBlock invisibleBlock=new InvisibleBlock();
     @Test
     void getBlockName() {
-        assertEquals("I'm invisible",invisibleBlock.getBlockName());
+        assertEquals("I'm Invisible",invisibleBlock.getBlockName());
     }
+    @Test
+    void getBlockIdentifier(){
+        assertEquals(-1, invisibleBlock.getBlockIdentifier());
+    }
+
 
 }

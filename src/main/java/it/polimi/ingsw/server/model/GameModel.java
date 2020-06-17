@@ -174,7 +174,7 @@ public interface GameModel {
      * This method sets all the boxes that a worker can reach
      * @param indexWorker worker index that the player wants to move
      */
-    void setBoxReachable(int indexWorker);
+    boolean setBoxReachable(int indexWorker);
 
     /**
      * This method moves a worker from a box to another

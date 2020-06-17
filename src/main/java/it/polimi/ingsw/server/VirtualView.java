@@ -207,7 +207,7 @@ public class VirtualView implements Observer {
     public void updateInitializeWorker(int indexClient, int indexPlayer){
         updateBoard(false);
         if(indexPlayer == 0){
-            AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true);
+            AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true, true);
             askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
             sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
         }else{
@@ -281,12 +281,22 @@ public class VirtualView implements Observer {
     public void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove){
         updateBoard(true);
         if(!secondMove) {
-            AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, false);
+            AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, false, true);
             askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
             askWorkerToMoveEvent.setIndexWorker(indexWorker);
             sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
         }
     }
+    @Override
+    public void updateNotReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove){
+        updateBoard(true);
+        AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true,false);
+        askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
+        askWorkerToMoveEvent.setIndexWorker(indexWorker);
+        sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
+    }
+
+
 
     /**
      * This method sends a message memorizing the positions of the player workers
@@ -294,9 +304,9 @@ public class VirtualView implements Observer {
      * @param firstMove boolean that identifies if it is the first time for this player
      * @return object with the positions of the player workers
      */
-    public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove){
+    public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove, boolean canMove){
         ArrayList<Box> positions = gameModel.getWorkersPos(indexPlayer);
-        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(), positions.get(1).getRow(), positions.get(1).getColumn(),firstMove);
+        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(), positions.get(1).getRow(), positions.get(1).getColumn(),firstMove, canMove);
     }
 
     /**
@@ -547,7 +557,7 @@ public class VirtualView implements Observer {
     public void updateStartTurn(){
         int indexPlayer = gameModel.whoIsPlaying();
         int indexClient = gameModel.searchByPlayerIndex(indexPlayer);
-        AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true);
+        AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true, true);
         askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
         sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
     }

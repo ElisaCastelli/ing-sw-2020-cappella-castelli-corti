@@ -94,6 +94,20 @@ public interface View {
      * @param clientIndex is the integer index associated to the client
      */
     void areYouSure(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex);
+
+    /**
+     *
+     * @param row1 is the row of the box occupied by the worker 1
+     * @param column1 is the column of the box occupied by the worker 1
+     * @param row2 is the row of the box occupied by the worker 2
+     * @param column2 is the column of the box occupied by the worker 2
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param clientIndex is the integer index associated to the client
+     */
+    void otherWorkerToMove(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex);
+
+
     /**
      * Method called from the VisitorClient when the ClientHandler receives an AskBeforeBuildMove message.
      * @param indexWorker is the integer index of the worker the player wants to move
@@ -157,9 +171,13 @@ public interface View {
      */
     void anotherBuild(int rowWorker, int columnWorker, int indexWorker, boolean isWrongBox, boolean isFirstTime, boolean isSpecialTurn, int clientIndex, int currentPlaying, boolean done);
     /**
+     * This method is used when is not the player's turn
+     */
+    void isNotMyTurn();
+    /**
      * This method is used to show to the user who lost the end of the game
      */
-    void loserEvent(int indexClient);
+    void loserEvent();
     /**
      * This method is used to show to the user who win the end of the game
      */
@@ -184,4 +202,5 @@ public interface View {
      * started or because of a problem
      */
     void closingConnectionEvent(int indexClient, boolean GameNotAvailable);
+
 }

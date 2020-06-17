@@ -61,6 +61,15 @@ public interface Observer {
     void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove);
 
     /**
+     * This method sends an update of the board and ask for another worker to move because this one can't move
+     * @param indexClient client index who is playing
+     * @param indexPlayer player index
+     * @param indexWorker worker index that the player wants to move
+     * @param secondMove boolean that identifies if it is the first or the second move
+     */
+    void updateNotReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove);
+
+    /**
      * This method tells that the player can build before the worker move
      * @param row row of the box where the worker is
      * @param column column of the box where the worker is

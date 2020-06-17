@@ -325,8 +325,8 @@ public class ProxyGameModel implements GameModel, Subject{
      * @param indexWorker worker index that the player wants to move
      */
     @Override
-    public void setBoxReachable(int indexWorker) {
-        gameModel.setBoxReachable(indexWorker);
+    public boolean setBoxReachable(int indexWorker) {
+        return gameModel.setBoxReachable(indexWorker);
     }
 
     @Override
@@ -496,6 +496,17 @@ public class ProxyGameModel implements GameModel, Subject{
     public void notifySetReachable(int indexWorker, boolean secondMove){
         int indexClient = searchByPlayerIndex(gameModel.whoIsPlaying());
         observer.updateReachable(indexClient, gameModel.whoIsPlaying(), indexWorker, secondMove);
+    }
+
+    /**
+     * This method notifies to the observers that they have pick the other worker because this one can't move
+     * @param indexWorker worker index that is moved
+     * @param secondMove true if it is a second worker move because of a God ability, otherwise it is false
+     */
+    @Override
+    public void notifyNotReachable(int indexWorker, boolean secondMove) {
+        int indexClient = searchByPlayerIndex(gameModel.whoIsPlaying());
+        observer.updateNotReachable(indexClient, gameModel.whoIsPlaying(), indexWorker, secondMove);
     }
 
     /**

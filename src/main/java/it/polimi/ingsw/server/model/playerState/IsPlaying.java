@@ -78,8 +78,8 @@ public class IsPlaying extends PlayerState{
      * @param worker to move
      */
     @Override
-    public void setPossibleMove( Worker worker){
-        myGod.setPossibleMove(worker);
+    public boolean setPossibleMove( Worker worker){
+        return myGod.setPossibleMove(worker);
     }
 
     /**

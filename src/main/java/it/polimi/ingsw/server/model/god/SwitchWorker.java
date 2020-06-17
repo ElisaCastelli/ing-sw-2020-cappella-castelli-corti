@@ -40,7 +40,7 @@ public class SwitchWorker extends GodDecorator {
      * @param worker Which worker is the check applied
      */
     @Override
-    public void setPossibleMove(Worker worker) {
+    public boolean setPossibleMove(Worker worker) {
 
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
@@ -48,7 +48,7 @@ public class SwitchWorker extends GodDecorator {
                 boxNextTo.setReachable(true);
             }
         }
-        super.setPossibleMove(worker);
+        return super.setPossibleMove(worker);
     }
 
     /**

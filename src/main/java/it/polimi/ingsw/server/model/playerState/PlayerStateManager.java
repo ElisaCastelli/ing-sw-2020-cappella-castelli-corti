@@ -144,8 +144,8 @@ public class PlayerStateManager {
      * Method to set the possible boxes reachable
      * @param worker to move
      */
-    public void setPossibleMove( Worker worker ){
-        currentState.setPossibleMove(worker);
+    public boolean setPossibleMove( Worker worker ){
+        return currentState.setPossibleMove(worker);
     }
 
     /**

@@ -40,8 +40,8 @@ public class MoveWorkerTwice extends MoveTwice {
      * @param worker Which worker is the check applied
      */
     @Override
-    public void setPossibleMove(Worker worker) {
-        super.setPossibleMove(worker);
+    public boolean setPossibleMove(Worker worker) {
+        boolean oneReachable = super.setPossibleMove(worker);
         if (!super.firstTime){
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
@@ -49,6 +49,7 @@ public class MoveWorkerTwice extends MoveTwice {
                     boxNextTo.setReachable(false);
             }
         }
+        return oneReachable;
     }
 
     /**

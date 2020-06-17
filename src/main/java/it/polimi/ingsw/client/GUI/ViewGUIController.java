@@ -860,6 +860,21 @@ public class ViewGUIController  implements Initializable,View {
     }
 
     /**
+     *
+     * @param row1 is the row of the box occupied by the worker 1
+     * @param column1 is the column of the box occupied by the worker 1
+     * @param row2 is the row of the box occupied by the worker 2
+     * @param column2 is the column of the box occupied by the worker 2
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param clientIndex is the integer index associated to the client
+     */
+    @Override
+    public void otherWorkerToMove(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex) {
+        //TODO da fare
+    }
+
+    /**
      * This method is associated with a button used to ask confirm to some choice of the player
      * If the state is 5, when the button is clicked means that  the player is sure about the worker to move chosen and to send an ObjWorkerToMove object to the server
      * If the state is 7, when the button is clicked means that the player chose to build before making a move
@@ -1072,10 +1087,18 @@ public class ViewGUIController  implements Initializable,View {
     }
 
     /**
+     * This method is used when is not the player's turn
+     */
+    @Override
+    public void isNotMyTurn() {
+
+    }
+
+    /**
      * This method is used to load the scene of losing game
      */
     @Override
-    public void loserEvent(int indexClient) {
+    public void loserEvent() {
         Platform.runLater(() -> {
             GUIMain.changeFinal("Scene/youLose.fxml");
         });

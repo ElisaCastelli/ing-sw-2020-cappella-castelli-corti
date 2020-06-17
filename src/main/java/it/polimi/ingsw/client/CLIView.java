@@ -76,7 +76,7 @@ public class CLIView implements View {
     }
 
     /**
-     *Method called from the VisitorClient when the clientHandler received an YouHaveToWait message
+     * Method called from the VisitorClient when the clientHandler received an YouHaveToWait message
      */
     @Override
     public void youHaveToWait() {
@@ -366,6 +366,23 @@ public class CLIView implements View {
         });
         thread.setDaemon(true);
         thread.start();
+    }
+
+    /**
+     *
+     * @param row1 is the row of the box occupied by the worker 1
+     * @param column1 is the column of the box occupied by the worker 1
+     * @param row2 is the row of the box occupied by the worker 2
+     * @param column2 is the column of the box occupied by the worker 2
+     * @param indexWorker is the integer index of the worker the player wants to move
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param clientIndex is the integer index associated to the client
+     */
+    @Override
+    public void otherWorkerToMove(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex) {
+        System.out.println("Sorry but You selected the worker "+ indexWorker+" , that can't move in this turn");
+        System.out.println("Please pick the other one:");
+        askWorker(row1, column1, row2, column2, currentPlaying, clientIndex);
     }
 
     /**
@@ -837,6 +854,13 @@ public class CLIView implements View {
     }
 
     /**
+     * This method is used when is not the player's turn
+     */
+    public void isNotMyTurn(){
+        System.out.println(Color.CYAN + "Waiting for my turn..." + Color.RESET);
+    }
+
+    /**
      * This method is used to print the name of the game
      */
     private void santoriniName(){
@@ -855,7 +879,7 @@ public class CLIView implements View {
      * This method is used to show to the user who lost the end of the game
      */
     @Override
-    public void loserEvent(int indexClient) {
+    public void loserEvent() {
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ Color.RESET);
         System.out.println(Color.RED_BOLD_BRIGHT + " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ "G"+ "G"+ "G"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+  Color.RESET);
@@ -894,6 +918,7 @@ public class CLIView implements View {
     @Override
     public void someoneWon() {
         System.out.println("An opponent won. Game Over");
+        loserEvent();
     }
 
     /**

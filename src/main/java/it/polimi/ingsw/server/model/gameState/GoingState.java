@@ -76,8 +76,8 @@ public class GoingState extends GameState {
      * @param indexWorker of the worker to move
      */
     @Override
-    public void setBoxReachable(int indexPlayer, int indexWorker) {
-        players.get(indexPlayer).setPossibleMove(indexWorker - 1);
+    public boolean setBoxReachable(int indexPlayer, int indexWorker) {
+        return players.get(indexPlayer).setPossibleMove(indexWorker - 1);
     }
 
     /**

@@ -41,13 +41,14 @@ public class BasicGod implements God {
      * @param worker Which worker is the check applied
      */
     @Override
-    public void setPossibleMove(Worker worker) {
+    public boolean setPossibleMove(Worker worker) {
         for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
             Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
             if (boxNextTo != null && boxNextTo.notWorker() && boxNextTo.getCounter()!= 4 && (boxNextTo.getCounter() - worker.getHeight() <= 1) ){
                 boxNextTo.setReachable(true);
             }
         }
+        return true;
     }
 
     /**

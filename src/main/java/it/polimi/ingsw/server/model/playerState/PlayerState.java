@@ -43,7 +43,7 @@ public abstract class PlayerState {
      * Method to set the possible boxes reachable
      * @param worker to move
      */
-    public void setPossibleMove( Worker worker ){ }
+    public boolean setPossibleMove( Worker worker ){return false; }
 
     /**
      * Method to set the possible boxes buildable

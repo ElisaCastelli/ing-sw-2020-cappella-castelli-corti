@@ -119,6 +119,8 @@ public class VisitorClient {
     public void visit(AskInitializeWorkerEvent askInitializeWorkerEvent) {
         if (askInitializeWorkerEvent.getClientIndex() == askInitializeWorkerEvent.getCurrentClientPlaying()) {
             view.initializeWorker();
+        }else{
+            view.isNotMyTurn();
         }
     }
 
@@ -141,10 +143,16 @@ public class VisitorClient {
     public void visit(AskWorkerToMoveEvent askWorkerToMoveEvent) {
         if (askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
             if (askWorkerToMoveEvent.isFirstAsk()) {
-                view.askWorker(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
-            } else if (!askWorkerToMoveEvent.isFirstAsk()) {
+                if(askWorkerToMoveEvent.isCanMove()) {
+                    view.askWorker(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
+                }else{
+                    view.otherWorkerToMove(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(),  askWorkerToMoveEvent.getIndexWorker(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
+                }
+                } else if (!askWorkerToMoveEvent.isFirstAsk()) {
                 view.areYouSure(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getIndexWorker(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
             }
+        }else{
+            view.isNotMyTurn();
         }
     }
 
@@ -155,8 +163,11 @@ public class VisitorClient {
      */
 
     public void visit(AskBuildBeforeMoveEvent askBuildBeforeMoveEvent) {
-        if (askBuildBeforeMoveEvent.getClientIndex() == askBuildBeforeMoveEvent.getCurrentClientPlaying())
+        if (askBuildBeforeMoveEvent.getClientIndex() == askBuildBeforeMoveEvent.getCurrentClientPlaying()) {
             view.askBuildBeforeMove(askBuildBeforeMoveEvent.getIndexWorker(), askBuildBeforeMoveEvent.getRowWorker(), askBuildBeforeMoveEvent.getColumnWorker());
+        }else{
+            view.isNotMyTurn();
+        }
     }
 
     /**
@@ -174,6 +185,8 @@ public class VisitorClient {
             } else {
                 view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
             }
+        }else{
+            view.isNotMyTurn();
         }
     }
 
@@ -191,6 +204,8 @@ public class VisitorClient {
             } else { //Può fare una mossa speciale
                 view.anotherBuild(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             }
+        }else{
+            view.isNotMyTurn();
         }
     }
 
@@ -214,7 +229,7 @@ public class VisitorClient {
      */
 
     public void visit(LoserEvent loserEvent) {
-        view.loserEvent(loserEvent.getClientIndex());
+        view.loserEvent();
     }
 
     /**

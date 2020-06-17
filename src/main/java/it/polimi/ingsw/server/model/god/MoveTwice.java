@@ -26,8 +26,8 @@ public abstract class MoveTwice extends GodDecorator {
      * @param worker Which worker is the check applied
      */
     @Override
-    public void setPossibleMove(Worker worker) {
-        super.setPossibleMove(worker);
+    public boolean setPossibleMove(Worker worker) {
+        return super.setPossibleMove(worker);
     }
 
     /**

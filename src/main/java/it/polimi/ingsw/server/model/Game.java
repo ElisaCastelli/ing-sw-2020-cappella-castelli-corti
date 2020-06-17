@@ -503,10 +503,10 @@ public class Game implements GameModel{
      * @param indexWorker worker index that the player wants to move
      */
     @Override
-    public void setBoxReachable(int indexWorker){
+    public boolean setBoxReachable(int indexWorker){
         board.clearReachable();
         int indexPlayer = whoIsPlaying();
-        stateManager.setBoxReachable(indexPlayer, indexWorker);
+        return stateManager.setBoxReachable(indexPlayer, indexWorker);
     }
 
     /**

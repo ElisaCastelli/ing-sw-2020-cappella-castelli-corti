@@ -26,9 +26,7 @@ public class InvisibleBlock implements Block {
      */
     @Override
     public String toString () {
-        return "InvisibleBlock{" +
-                "blockName='" + blockName + '\'' +
-                '}';
+        return getBlockName();
     }
 
     /**
