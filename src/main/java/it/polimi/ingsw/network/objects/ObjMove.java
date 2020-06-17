@@ -15,6 +15,7 @@ public class ObjMove extends ObjMessage {
     final int columnStart;
     int row; //row where I wanna move
     int column; //column where I wanna move
+    boolean firstTime;
 
     /**
      * constructor of the class
@@ -60,6 +61,14 @@ public class ObjMove extends ObjMessage {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    public void setFirstTime(boolean firstTime) {
+        this.firstTime = firstTime;
+    }
+
+    public boolean isFirstTime() {
+        return firstTime;
     }
 
     /**

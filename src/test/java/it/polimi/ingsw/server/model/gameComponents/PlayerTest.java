@@ -1,9 +1,7 @@
-package it.polimi.ingsw.server.model;
+package it.polimi.ingsw.server.model.gameComponents;
 
-import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.gameComponents.Box;
-import it.polimi.ingsw.server.model.gameComponents.Player;
-import it.polimi.ingsw.server.model.gameComponents.Worker;
+import it.polimi.ingsw.server.model.god.BasicGod;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Timer;
@@ -18,7 +16,23 @@ class PlayerTest {
             System.out.println("timer task");
         }
     });
+    Player player = new Player(0, new Timer(), new TimerTask() {
+        @Override
+        public void run() {
+            System.out.println("timer task");
+        }
+    });
     Board boardTest = new Board();
+
+    @BeforeEach
+    void init(){
+        pTest.setIndexPlayer(0);
+        player.setIndexPlayer(1);
+        pTest.setGod(new BasicGod());
+        player.setGod(new BasicGod());
+        pTest.goPlay();
+        player.goPlay();
+    }
 
     @Test
     void setName() {
@@ -33,8 +47,17 @@ class PlayerTest {
     }
 
     @Test
+    void setIndexPlayer(){
+        pTest.setIndexPlayer(0);
+        assertEquals(0, pTest.getIndexPlayer());
+        pTest.setIndexClient(2);
+        assertEquals(2, pTest.getIndexClient());
+        assertTrue(pTest.isPlaying());
+        pTest.goWaiting();
+    }
+
+    @Test
     void getWorkerBox() {
-        Worker w = new Worker(1);
         pTest.initializeWorker(boardTest.getBox(0, 0), boardTest.getBox( 1,1 ), boardTest);
         assertEquals(boardTest.getBox(0, 0), pTest.getWorkerBox(0));
     }
@@ -42,26 +65,36 @@ class PlayerTest {
 
     @Test
     void initializeWorker() {
-        int index=0;
         Box b = boardTest.getBox(0,0);
         Box c = boardTest.getBox(1,1);
-        pTest.initializeWorker(b,c, boardTest);
-        assertEquals(b,pTest.getWorkerBox(index));
+        assertTrue(pTest.initializeWorker(b, c, boardTest));
+        assertEquals(b, pTest.getWorkersBox().get(0));
+        assertEquals(c, pTest.getWorkersBox().get(1));
+
+        Box a = boardTest.getBox(3,3);
+        Box d = boardTest.getBox(2, 1);
+        assertFalse(player.initializeWorker(b, a, boardTest));
+        assertFalse(player.initializeWorker(d, c, boardTest));
     }
 
     @Test
     void setPossibleMove() {
         boardTest.clear();
+        pTest.setGod(new BasicGod());
+        assertNotNull(pTest.getGod());
+        pTest.goPlay();
         pTest.initializeWorker(boardTest.getBox(1,1), boardTest.getBox(3, 3), boardTest);
-        pTest.setPossibleMove(1);
-        for(int index=0; index<8; index++){
-            assertTrue(pTest.getWorkerBox(1).getBoxesNextTo().get(index).isReachable());
+        pTest.setPossibleMove(0);
+        for(int index = 0; index < 8; index++){
+            assertTrue(pTest.getWorkerBox(0).getBoxesNextTo().get(index).isReachable());
         }
     }
 
     @Test
     void setPossibleBuild() {
         boardTest.clear();
+        pTest.goPlay();
+        pTest.setGod(new BasicGod());
         pTest.initializeWorker(boardTest.getBox(0, 1), boardTest.getBox( 1,1 ), boardTest);
         boardTest.getBox(0,0).build();
         boardTest.getBox(0,0).build();
@@ -113,11 +146,13 @@ class PlayerTest {
         pTest.initializeWorker(boardTest.getBox(0, 0), boardTest.getBox( 1,1 ), boardTest);
         pTest.playWorker(1,boardTest.getBox(2,2));
         assertTrue(pTest.checkWin(boardTest.getBox(1, 1), boardTest.getBox(2, 2)));
+        assertTrue(pTest.amITheWinner());
     }
 
     @Test
     void checkWorkers() {
         boardTest.clear();
+        pTest.goPlay();
         pTest.initializeWorker(boardTest.getBox(0, 0), boardTest.getBox( 1,0 ), boardTest);
         boardTest.getBox(1,1).build();
         boardTest.getBox(1,1).build();
@@ -128,6 +163,7 @@ class PlayerTest {
         boardTest.getBox(2,0).build();
         boardTest.getBox(2,0).build();
         assertFalse(pTest.checkWorkers());
+        pTest.checkWorker(0);
     }
 
     @Test
@@ -145,7 +181,15 @@ class PlayerTest {
         boardTest.getBox(1,0).build();
         boardTest.getBox(1,0).build();
         boardTest.getBox(1,0).build();
+        pTest.goPlay();
         assertFalse(pTest.checkBuilding(0));
         assertTrue(pTest.checkBuilding(1));
+        pTest.setIndexPossibleBlock(0);
+        assertFalse(pTest.canBuildBeforeWorkerMove());
+        pTest.clearWorkers();
+        assertNull(boardTest.getBox(0,0).getWorker());
+        assertNull(boardTest.getBox(3,3).getWorker());
+        pTest.goDead();
+        assertTrue(pTest.amIDead());
     }
 }

@@ -430,6 +430,7 @@ public class CLIView implements View {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             ObjMove objMove = new ObjMove(indexWorker, row, column, 0, 0, false);
+            objMove.setFirstTime(firstTime);
 
             if (isWrongBox) {
                 wrongMove();

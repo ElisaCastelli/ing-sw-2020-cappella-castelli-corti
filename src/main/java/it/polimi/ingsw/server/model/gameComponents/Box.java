@@ -81,14 +81,6 @@ public class Box implements Serializable {
         return building.getArrayOfBlocks().size();
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
     public ArrayList<Box> getBoxesNextTo() {
         return boxesNextTo;
     }
@@ -121,14 +113,14 @@ public class Box implements Serializable {
         if( worker != null ){
             worker.clear();
         }
-        worker=null;
+        worker = null;
     }
 
     /**
      * This method remove the worker from the box
      */
     public void clearWorker(){
-        worker=null;
+        worker = null;
     }
 
     /**
@@ -143,11 +135,11 @@ public class Box implements Serializable {
      * @return true if there isn't any building or worker, else return false
      */
     public boolean isEmpty(){
-        boolean vuota = true;
+        boolean empty = true;
         if((getCounter() != 0) || (worker != null)){
-            vuota = false;
+            empty = false;
         }
-        return vuota;
+        return empty;
     }
 
     /**

@@ -1,8 +1,5 @@
-package it.polimi.ingsw.server.model;
+package it.polimi.ingsw.server.model.gameComponents;
 
-import it.polimi.ingsw.server.model.gameComponents.Board;
-import it.polimi.ingsw.server.model.gameComponents.Box;
-import it.polimi.ingsw.server.model.gameComponents.Worker;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +28,8 @@ class BoxTest {
 
     @Test
     void clear() {
+        Worker w = new Worker(1);
+        w.initializePos(box, boardTest);
         box.clear();
         assertEquals(0, box.getCounter());
         assertNull(box.getWorker());
@@ -44,10 +43,10 @@ class BoxTest {
 
     @Test
     void build() {
-        int counter= box.getCounter();
-        counter++;
         box.build();
-        assertEquals(counter, box.getCounter());
+        assertEquals(1, box.getCounter());
+        box.build(4);
+        assertEquals(4, box.getCounter());
     }
 
     @Test
@@ -60,15 +59,15 @@ class BoxTest {
 
     @Test
     void setWorker() {
-        Worker w= new Worker(1);
+        Worker w = new Worker(1);
         box.setWorker(w);
-        assertEquals(w,box.getWorker());
+        assertEquals(w, box.getWorker());
     }
 
     @Test
     void notWorker() {
-        boolean worker= box.notWorker();
-        if(box.getWorker()!=null){
+        boolean worker = box.notWorker();
+        if(box.getWorker() != null){
             assertFalse(worker);
         }else{
             assertTrue(worker);
@@ -77,15 +76,15 @@ class BoxTest {
 
     @Test
     void isEmpty() {
-        boolean empty= box.isEmpty();
-        if(empty){
-            assertEquals(0, box.getCounter());
-            assertNull(box.getWorker());
-        }else{
-            assertNotEquals(0, box.getCounter());
-            assertNotEquals(null,box.getWorker());
-        }
+        box.isEmpty();
+        assertEquals(0, box.getCounter());
+        assertNull(box.getWorker());
+
+        Worker w = new Worker(1);
+        w.initializePos(box, boardTest);
+        assertFalse(box.isEmpty());
     }
+
     @Test
     void clearBoxesNextTo() {
         box.clearBoxesNextTo();

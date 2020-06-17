@@ -140,7 +140,7 @@ public class VisitorServer {
      */
 
     public void visit(ObjMove objMove) {
-        virtualView.move(objMove.getRowStart(), objMove.getColumnStart(), objMove.getRow(), objMove.getColumn(), objMove.getIndexWorkerToMove());
+        virtualView.move(objMove.getRowStart(), objMove.getColumnStart(), objMove.getRow(), objMove.getColumn(), objMove.getIndexWorkerToMove(), objMove.isFirstTime());
     }
 
     /**
@@ -160,7 +160,7 @@ public class VisitorServer {
      */
 
     public void visit(ObjBlock objBlock) {
-        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock(), objBlock.isSpecialTurn(), objBlock.getPossibleBlock());
+        virtualView.buildBlock(objBlock.getClientIndex(), objBlock.getIndexWorker(), objBlock.getRowWorker(), objBlock.getColumnWorker(), objBlock.getRowBlock(), objBlock.getColumnBlock(), objBlock.isFirstTime(), objBlock.isSpecialTurn(), objBlock.getPossibleBlock());
     }
 
     /**

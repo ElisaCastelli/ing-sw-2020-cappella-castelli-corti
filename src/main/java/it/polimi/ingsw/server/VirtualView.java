@@ -316,13 +316,17 @@ public class VirtualView implements Observer {
      * @param row row of the box where the player wants to move the worker
      * @param column column of the box where the player wants to move the worker
      * @param indexWorkerToMove worker index that the player wants to move
+     * @param firstTime boolean that identifies if it is the first player build or the second
      */
-    public void move(int rowStart, int columnStart, int row, int column, int indexWorkerToMove){
+    public void move(int rowStart, int columnStart, int row, int column, int indexWorkerToMove, boolean firstTime){
         if(isReachable( row, column)){
             controller.movePlayer(rowStart, columnStart, row, column, indexWorkerToMove);
         }else{
             updateBoard(true);
             AskMoveEvent askMoveEvent = new AskMoveEvent(indexWorkerToMove, rowStart, columnStart, true, false);
+            if(!firstTime){
+                askMoveEvent.setFirstTime(false);
+            }
             askMoveEvent.setWrongBox(true);
             askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
             sendMessageToClient.sendAskMoveEvent(askMoveEvent);
@@ -496,16 +500,19 @@ public class VirtualView implements Observer {
      * @param columnWorker column of the box where the worker is
      * @param row row of the box where the player wants to build
      * @param column column of the box where the player wants to build
+     * @param firstTime boolean that identifies if it is the first player build or the second
      * @param isSpecialTurn boolean that identifies if the player has built before worker move
      * @param indexPossibleBlock index of the block that the player wants to build
      */
-    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean isSpecialTurn, int indexPossibleBlock) {
+    public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean firstTime, boolean isSpecialTurn, int indexPossibleBlock) {
         if(isReachable(row, column)){
             controller.buildBlock(indexClient, indexWorker, rowWorker, columnWorker, row, column, isSpecialTurn, indexPossibleBlock);
         }else{
             updateBoard(true);
-            //todo Controllo se è la prima o la seconda mossa
             AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false, isSpecialTurn);
+            if(!firstTime){
+                askBuildEvent.setFirstTime(false);
+            }
             askBuildEvent.setWrongBox(true);
             askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
             sendMessageToClient.sendAskBuildEvent(askBuildEvent);
