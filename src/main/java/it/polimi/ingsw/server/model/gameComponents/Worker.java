@@ -26,6 +26,10 @@ public class Worker implements Serializable {
      * this parameter is to identify the color of the player
      */
     private int indexPlayer;
+    /**
+     * this parameter is to identify the color of the player
+     */
+    private int indexClient;
 
     /**
      *
@@ -99,6 +103,22 @@ public class Worker implements Serializable {
      */
     public void setIndexPlayer(int indexPlayer) {
         this.indexPlayer = indexPlayer;
+    }
+
+    /**
+     *
+     * @return this method return the index associated with the client
+     */
+    public int getIndexClient() {
+        return indexClient;
+    }
+
+    /**
+     *
+     * @param indexClient index of the player
+     */
+    public void setIndexClient(int indexClient) {
+        this.indexClient = indexClient;
     }
 
     /**

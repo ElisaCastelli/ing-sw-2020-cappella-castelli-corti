@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" visible="true">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" visible="true" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane fx:id="threeCardsPane" layoutX="220.0" layoutY="300.0" prefHeight="430.0" prefWidth="840.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
+      <ImageView fitHeight="250.0" fitWidth="800.0" layoutX="350.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../SenzaSfondo/waitCards.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="threeCardsPane" layoutX="150.0" layoutY="240.0" prefHeight="517.0" prefWidth="1007.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
          <children>
-            <Button fx:id="buttonOneOfThree" layoutX="20.0" layoutY="60.0" mnemonicParsing="false" prefHeight="340.0" prefWidth="240.0" onAction="#chooseCard">
+            <Button fx:id="buttonOneOfThree" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#chooseCard" prefHeight="420.0" prefWidth="300.0" styleClass="invisibleButton" stylesheets="@style.css">
                <graphic>
-                  <ImageView fx:id="cardOneOfThree" fitHeight="340.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardOneOfThree" fitHeight="420.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Button fx:id="buttonTwoOfThree" layoutX="290.0" layoutY="60.0" mnemonicParsing="false" prefHeight="340.0" prefWidth="240.0" onAction="#chooseCard">
+            <Button fx:id="buttonTwoOfThree" layoutX="350.0" layoutY="80.0" mnemonicParsing="false" onAction="#chooseCard" prefHeight="340.0" prefWidth="240.0" styleClass="invisibleButton" stylesheets="@style.css">
                <graphic>
-                  <ImageView fx:id="cardTwoOfThree" fitHeight="340.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardTwoOfThree" fitHeight="420.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Button fx:id="buttonThreeOfThree" layoutX="560.0" layoutY="60.0" mnemonicParsing="false" onAction="#chooseCard">
+            <Button fx:id="buttonThreeOfThree" layoutX="680.0" layoutY="80.0" mnemonicParsing="false" onAction="#chooseCard" styleClass="invisibleButton" stylesheets="@style.css">
                <graphic>
-                  <ImageView fx:id="cardThreeOfThree" fitHeight="340.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardThreeOfThree" fitHeight="420.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="CHOOSE YOUR CARD" x="280.0" y="40.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="CHOOSE YOUR CARD" x="370.0" y="50.0">
                <font>
                   <Font size="26.0" />
                </font></Text>
          </children>
       </AnchorPane>
-      <Button fx:id="closeButton" layoutX="1254.0" mnemonicParsing="false" onAction="#closeButtonHandler" style="-fx-background-color: #d3461b#d3461b;" text="X" textFill="#fcf9f9" />
    </children>
 </AnchorPane>

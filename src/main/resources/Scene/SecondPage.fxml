@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.ViewGUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <AnchorPane layoutX="470.0" layoutY="400.0" prefHeight="250.0" prefWidth="400.0" style="-fx-background-color: rgba(174, 228,234 , 0.6); -fx-background-radius: 20;">
          <children>
@@ -32,13 +32,12 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Button fx:id="buttonDataPlayer" layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#loadDataPlayer" style="-fx-background-color: white; -fx-background-radius: 5; -fx-font-family: Futura;" text="Send" textFill="#1976d3">
+            <Button fx:id="buttonDataPlayer" layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#loadDataPlayer" prefHeight="34.0" prefWidth="59.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-font-family: Futura;" text="Send" textFill="#1976d3">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="closeButton" layoutX="1254.0" mnemonicParsing="false" onAction="#closeButtonHandler" style="-fx-background-color: #d3461b#d3461b;" text="X" textFill="#fcf9f9" />
    </children>
 </AnchorPane>

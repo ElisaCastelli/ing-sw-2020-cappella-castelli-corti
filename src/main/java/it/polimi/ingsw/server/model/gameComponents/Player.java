@@ -61,6 +61,8 @@ public class Player implements Serializable {
         myWorkers = new Worker[2];
         myWorkers[0] = new Worker(1);
         myWorkers[1] = new Worker(2);
+        myWorkers[0].setIndexClient(indexClient);
+        myWorkers[1].setIndexClient(indexClient);
         myGod = new BasicGod();
         gamerManager = new PlayerStateManager(myGod);
         this.indexClient = indexClient;
@@ -114,6 +116,7 @@ public class Player implements Serializable {
 
     public void setIndexClient(int indexClient) {
         this.indexClient = indexClient;
+
     }
 
     public boolean isPlaying(){

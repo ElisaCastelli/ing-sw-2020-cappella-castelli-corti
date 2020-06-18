@@ -596,7 +596,7 @@ public class VirtualView implements Observer {
     @Override
     public void updateUnreachableClient(int indexClient) {
         synchronized (LOCK) {
-            controlStillOpen(indexClient);
+            controlStillOpen(indexClient,false);
         }
     }
 
@@ -612,46 +612,50 @@ public class VirtualView implements Observer {
      * This method controls if a client is still open
      * @param indexClient client index who has to be checked
      */
-    public void controlStillOpen(int indexClient){
+    public void controlStillOpen(int indexClient, boolean beforeStart){
         //todo da controllare quanto migliorabile
         synchronized (LOCK) {
             ArrayList<ServerHandler> serverHandlersWaiting = sendMessageToClient.getEchoServer().getClientWaiting();
             ArrayList<ServerHandler> serverHandlers = sendMessageToClient.getEchoServer().getClientArray();
-
-            //quando ancora stanno aspettando l'nplayer e il tizio 0 si disconnette o un altro x
-            if (serverHandlersWaiting.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
-                boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
-                if (closed) {
-                    serverHandlersWaiting.remove(indexClient);
-                    controller.removePlayer(indexClient);
-                } else {
-                    sendMessageToClient.sendCloseConnection(indexClient, false);
-                }
-            } else if (serverHandlersWaiting.size() > 0 && gameModel.getNPlayers() == 0) {
-                boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
-                if (closed) {
-                    serverHandlersWaiting.remove(indexClient);
-                    controller.removePlayer(indexClient);
-                    sendMessageToClient.getEchoServer().updateIndexClientWaiting(indexClient);
-                } else {
-                    sendMessageToClient.sendCloseConnection(indexClient, false);
-                }
-            } else if (serverHandlers.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
-                if(indexClient < gameModel.getNPlayers()) {
-                    boolean closed = serverHandlers.get(indexClient).isClosed();
+            if(!beforeStart){
+                //quando ancora stanno aspettando l'nplayer e il tizio 0 si disconnette o un altro x
+                if (serverHandlersWaiting.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
+                    boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
                     if (closed) {
-                        serverHandlers.remove(indexClient);
+                        serverHandlersWaiting.remove(indexClient);
                         controller.removePlayer(indexClient);
-                        sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
                     } else {
                         sendMessageToClient.sendCloseConnection(indexClient, false);
                     }
-                }else if(serverHandlersWaiting.size() != 0){
-                    serverHandlersWaiting.remove(indexClient);
-                    controller.removePlayer(indexClient);
+                } else if (serverHandlersWaiting.size() > 0 && gameModel.getNPlayers() == 0) {
+                    boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+                    if (closed) {
+                        serverHandlersWaiting.remove(indexClient);
+                        controller.removePlayer(indexClient);
+                        sendMessageToClient.getEchoServer().updateIndexClientWaiting(indexClient);
+                    } else {
+                        sendMessageToClient.sendCloseConnection(indexClient, false);
+                    }
+                } else if (serverHandlers.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
+                    if(indexClient < gameModel.getNPlayers()) {
+                        boolean closed = serverHandlers.get(indexClient).isClosed();
+                        if (closed) {
+                            serverHandlers.remove(indexClient);
+                            controller.removePlayer(indexClient);
+                            sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
+                        } else {
+                            sendMessageToClient.sendCloseConnection(indexClient, false);
+                        }
+                    }else if(serverHandlersWaiting.size() != 0){
+                        serverHandlersWaiting.remove(indexClient);
+                        controller.removePlayer(indexClient);
+                    }
                 }
+            }else{
+                serverHandlersWaiting.remove(indexClient);
             }
         }
+
     }
 
     /**

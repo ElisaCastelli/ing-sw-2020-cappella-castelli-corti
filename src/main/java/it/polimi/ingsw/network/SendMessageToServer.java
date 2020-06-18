@@ -184,9 +184,10 @@ public class SendMessageToServer {
      */
 
 
-    public void sendAckClosingConnection(int indexClient) {
+    public void sendAckClosingConnection(int indexClient, boolean beforeStart) {
         CloseConnectionFromClientEvent closeConnectionFromClientEvent = new CloseConnectionFromClientEvent();
         closeConnectionFromClientEvent.setClientIndex(indexClient);
+        closeConnectionFromClientEvent.setBeforeStart(beforeStart);
         clientHandler.sendMessage(closeConnectionFromClientEvent);
     }
 }

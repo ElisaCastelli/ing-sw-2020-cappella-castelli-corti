@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="firstPage" maxHeight="800.0" maxWidth="1280.0" minHeight="800.0" minWidth="1280.0" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.ViewGUIController">
+<AnchorPane id="firstPage" maxHeight="800.0" maxWidth="1280.0" minHeight="800.0" minWidth="1280.0" prefHeight="800.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="470.0" layoutY="450.0" maxHeight="150.0" maxWidth="370.0" minHeight="150.0" minWidth="370.0" prefHeight="150.0" prefWidth="370.0" style="-fx-background-color: rgba(174, 228,234 , 0.6); -fx-background-radius: 30;" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="470.0" AnchorPane.rightAnchor="440.0" AnchorPane.topAnchor="450.0">
          <children>
@@ -16,17 +16,16 @@
                </font>
             </Text>
             <TextField id="textNumPlayer" fx:id="textNumPlayer" layoutX="250.0" layoutY="20.0" prefWidth="60.0" promptText="2 or 3" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0" />
-            <Text fx:id="nPlayerMessage"  fill="#e13412" layoutX="60.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Futura;" AnchorPane.bottomAnchor="67.2578125" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="67.431640625">
+            <Text fx:id="nPlayerMessage" fill="#e13412" layoutX="60.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Futura;" AnchorPane.bottomAnchor="67.2578125" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="67.431640625">
                <font>
                   <Font size="14.0" />
                </font></Text>
-            <Button fx:id="buttonNplayer" layoutX="260.0" layoutY="100.0" mnemonicParsing="false" onAction="#loadNPlayer" style="-fx-background-color: white; -fx-font-family: futura;" text="Send" textFill="#1976d3" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="100.0">
+            <Button fx:id="buttonNplayer" layoutX="260.0" layoutY="100.0" minHeight="27.0" minWidth="48.0" mnemonicParsing="false" onAction="#loadNPlayer" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: white; -fx-font-family: futura;" text="Send" textFill="#1976d3">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="closeButton" layoutX="1254.0" mnemonicParsing="false" onAction="#closeButtonHandler" style="-fx-background-color: #d3461b#d3461b;" text="X" textFill="#fcf9f9" />
    </children>
 </AnchorPane>

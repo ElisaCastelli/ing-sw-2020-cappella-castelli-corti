@@ -21,10 +21,6 @@ public class CLIView implements View {
      */
     private SendMessageToServer sendMessageToServer;
     /**
-     * Index of the player
-     */
-    private static int indexPlayer = -1;
-    /**
      * Number of the gamers playing the match
      */
     private int nPlayer;
@@ -909,7 +905,7 @@ public class CLIView implements View {
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "U"+ "U"+ "U"+ " "+ " "+ "U"+ "U"+ "U"+ " "+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ "W"+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ "O"+ "O"+ "O"+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
         System.out.println(Color.YELLOW_BOLD_BRIGHT + " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "Y"+ "Y"+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ " "+ "U"+ "U"+ "U"+ "U"+ "U"+ " "+ "U"+ "U"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "W"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "O"+ "O"+ "O"+ "O"+ "O"+ "O"+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ " "+ " "+ " "+ " "+ " "+ "N"+ "N"+ " "+ " "+ Color.RESET);
 
-        sendMessageToServer.sendAckClosingConnection(indexClient);
+        sendMessageToServer.sendAckClosingConnection(indexClient,false);
 
     }
 
@@ -957,7 +953,7 @@ public class CLIView implements View {
             }else {
                 System.out.println("A client is not responding, the connection will be closed");
             }
-            sendMessageToServer.sendAckClosingConnection(indexClient);
+            sendMessageToServer.sendAckClosingConnection(indexClient,false);
         });
         thread.setDaemon(true);
         thread.start();

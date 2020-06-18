@@ -42,19 +42,6 @@ public class PlayerStateManager {
         currentState = isWaiting;
     }
 
-    public PlayerState getIsPlaying() {
-        return isPlaying;
-    }
-    public PlayerState getIsWaiting() {
-        return isWaiting;
-    }
-    public PlayerState getDead() {
-        return dead;
-    }
-    public PlayerState getWin() {
-        return win;
-    }
-
     public void setCurrentState(PlayerState newState ){
         currentState=newState;
     }
@@ -74,7 +61,7 @@ public class PlayerStateManager {
      */
     public void goPlaying(){
         if(currentState == isWaiting){
-            setCurrentState(isPlaying);
+            currentState= isPlaying;
         }
     }
 
@@ -83,7 +70,7 @@ public class PlayerStateManager {
      */
     public void goWaiting(){
         if(currentState==isPlaying){
-            setCurrentState(isWaiting);
+            currentState=isWaiting;
         }
     }
 
@@ -92,7 +79,7 @@ public class PlayerStateManager {
      */
     public void goDead(){
         if(currentState == isPlaying || currentState == isWaiting){
-            setCurrentState(dead);
+            currentState=dead;
         }
     }
 
@@ -101,7 +88,7 @@ public class PlayerStateManager {
      */
     public void goWin(){
         if(currentState == isPlaying){
-            setCurrentState(win);
+            currentState=win;
         }
     }
 

@@ -83,10 +83,9 @@ public class ServerHandler extends Thread{
      * This method receives all the messages from the client
      */
     public void listening(){
+        ObjMessage objMessage = null;
         try {
             while (!closed) {
-                ObjMessage objMessage = null;
-
                 try {
                     objMessage = (ObjMessage) inputStream.readObject();
                 } catch (IOException | ClassNotFoundException e) {
@@ -100,7 +99,7 @@ public class ServerHandler extends Thread{
         }catch (Exception e){
             e.printStackTrace();
         }
-        virtualView.controlStillOpen(indexClientArray);
+        virtualView.controlStillOpen(indexClientArray, objMessage.isBeforeStart());
         close();
     }
 

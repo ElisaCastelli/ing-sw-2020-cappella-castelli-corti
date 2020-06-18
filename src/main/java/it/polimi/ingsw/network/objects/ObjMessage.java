@@ -11,6 +11,7 @@ import java.io.Serializable;
 public abstract class ObjMessage implements Serializable {
     private int clientIndex;
     private int currentClientPlaying;
+    private boolean beforeStart = false;
 
     public int getClientIndex() {
         return clientIndex;
@@ -26,6 +27,14 @@ public abstract class ObjMessage implements Serializable {
 
     public void setClientIndex(int clientIndex) {
         this.clientIndex = clientIndex;
+    }
+
+    public boolean isBeforeStart() {
+        return beforeStart;
+    }
+
+    public void setBeforeStart(boolean beforeStart) {
+        this.beforeStart = beforeStart;
     }
 
     /**

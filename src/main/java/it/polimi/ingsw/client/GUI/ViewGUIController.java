@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.SendMessageToServer;
 import it.polimi.ingsw.network.User;
@@ -22,7 +21,6 @@ import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,10 +34,6 @@ public class ViewGUIController  implements Initializable,View {
      * Object use to send message to the server
      */
     private static SendMessageToServer sendMessageToServer;
-    /**
-     * Index of the player
-     */
-    private static int indexPlayer = -1;
     /**
      * Number of the gamers playing the match
      */
@@ -114,6 +108,10 @@ public class ViewGUIController  implements Initializable,View {
      * Level of the second block possible to build
      */
     private static int secondBlock;
+    /**
+     * Boolean to recognize a type of ClosingConnectionEvent
+     */
+    private static boolean gameNotAvailable;
 
     /**
      * Main pane of the scene where are shown all the cards
@@ -296,6 +294,16 @@ public class ViewGUIController  implements Initializable,View {
     private ImageView secondBlockPossible;
 
     /**
+     * ImageView to notify an opponent is choosing cards
+     */
+    @FXML
+    private ImageView waitCards2;
+    /**
+     * ImageView to notify an opponent is choosing cards
+     */
+    @FXML
+    private ImageView waitCards3;
+    /**
      * Text used to print the opponent's name
      */
     @FXML
@@ -384,14 +392,12 @@ public class ViewGUIController  implements Initializable,View {
      * @param usersArray is the ArrayList of users taking part to the game
      * @param indexClient is the index of the client associated with the player
      * @param board is the object Board describe the game field
-     * @param indexPlayer is the index of the player
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param state is the current situation
      */
-    public ViewGUIController(ArrayList<User> usersArray, int indexClient, Board board, int indexPlayer, int currentPlayer, int state) {
+    public ViewGUIController(ArrayList<User> usersArray, int indexClient, Board board, int currentPlayer, int state) {
         this.usersArray = usersArray;
         this.board = board;
-        this.indexPlayer = indexPlayer;
         this.currentPlayer = currentPlayer;
         this.indexClient = indexClient;
         this.state = state;
@@ -403,19 +409,17 @@ public class ViewGUIController  implements Initializable,View {
      * @param indexClient is the index of the client associated with the player
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param board is the object Board describe the game field
-     * @param indexPlayer is the index of the player
      * @param workerToMove
      * @param firstTime is a boolean that indicates if this is the first move tried in this turn
      * @param done is a boolean used to indicates if the move turn is over
      * @param specialTurn is a boolean used to identify special moves
      * @param state is the current situation
      */
-    public ViewGUIController(ArrayList<User> usersArray,int indexClient, int currentPlayer, Board board, int indexPlayer, Box workerToMove, boolean firstTime, boolean done, boolean specialTurn, int state){
+    public ViewGUIController(ArrayList<User> usersArray,int indexClient, int currentPlayer, Board board, Box workerToMove, boolean firstTime, boolean done, boolean specialTurn, int state){
         this.usersArray=usersArray;
         this.indexClient=indexClient;
         this.currentPlayer=currentPlayer;
         this.board=board;
-        this.indexPlayer=indexPlayer;
         this.workerToMove=workerToMove;
         this.firstTime=firstTime;
         this.specialTurn=specialTurn;
@@ -512,6 +516,7 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void youHaveToWait() {
+
     }
 
     /**
@@ -520,7 +525,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askWantToPlay(AskWantToPlayEvent askWantToPlay) {
-        System.out.println("Vuoi giocare?");
         indexClient=askWantToPlay.getIndexClient();
         new Thread(() -> Application.launch(GUIMain.class)).start();
     }
@@ -550,7 +554,7 @@ public class ViewGUIController  implements Initializable,View {
         currentPlayer=currentPlaying;
         this.indexClient=indexClient;
         Platform.runLater(() -> {
-            GUIMain.changeBoard("Scene/board.fxml", usersArray, indexClient, currentPlayer, board, indexPlayer);
+            GUIMain.changeBoard("Scene/board.fxml", usersArray, indexClient, currentPlayer, board/*, 0*/);
         });
     }
 
@@ -561,7 +565,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askNPlayer(){
-        System.out.println("Ask n player");
         Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/firstPage.fxml");
         });
@@ -592,7 +595,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void setNPlayer(int nPlayers){
-        System.out.println("Start");
         this.nPlayers = nPlayers;
         sendMessageToServer.sendAckStartGame();
     }
@@ -605,10 +607,11 @@ public class ViewGUIController  implements Initializable,View {
     @Override
     public void setIndexPlayer(int indexPlayer) {
         if(indexPlayer == 0) {
-            System.out.println("I have to play");
             sendMessageToServer.sendAckPlayer();
         }else{
-            System.out.println("I've to wait my turn");
+            /*Platform.runLater(() -> {
+                GUIMain.changeFinal("Scene/waitCards.fxml");
+            });*/
         }
     }
 
@@ -619,7 +622,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askPlayer(int clientIndex){
-        System.out.println("Ask player data");
         indexClient=clientIndex;
         Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/SecondPage.fxml");
@@ -637,18 +639,20 @@ public class ViewGUIController  implements Initializable,View {
         messageAgeError.setText("");
         String name= playerName.getText();
         String age= playerAge.getText();
-        if(name.length()!=0 && age.length()!=0){
-            buttonDataPlayer.setDisable(true);
-            sendMessageToServer.sendPlayer(name, Integer.parseInt(age), indexClient);
-        }else{
-            if(name.length()==0){
-                messageNameError.setText("The text field is empty!");
+        int ageNumber;
+        try {
+            ageNumber = Integer.parseInt(age);
+            if(name.length()!=0){
+                buttonDataPlayer.setDisable(true);
+                sendMessageToServer.sendPlayer(name, ageNumber, indexClient);
+            }else{
+                if(name.length()==0){
+                    messageNameError.setText("The text field is empty!");
+                }
             }
-            if(age.length()==0){
-                messageAgeError.setText("The text field is empty!");
-            }
+        } catch (NumberFormatException ne) {
+            messageAgeError.setText("Input is not a number, try again");
         }
-
     }
 
     /**
@@ -658,7 +662,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askNCard(ArrayList<String> cards){
-        System.out.println("Ask cards");
         Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/allCardsPage.fxml");
         });
@@ -676,7 +679,6 @@ public class ViewGUIController  implements Initializable,View {
         cardPane.setVisible(false);
         cardPressed.setDisable(true);
         if(cardsChoose.size()==nPlayers) {
-            System.out.println("Carte scelte");
             allCards.setVisible(false);
             sendMessageToServer.send3card(cardsChoose);
         }
@@ -710,7 +712,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askCard(ArrayList<String> cards){
-        System.out.println("Ask single card");
         cardsTemp=cards;
         if(nPlayers==2){
             Platform.runLater(() -> {
@@ -760,7 +761,7 @@ public class ViewGUIController  implements Initializable,View {
     @Override
     public void initializeWorker() {
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board, indexPlayer,null,false,false,false,  3);
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board, null,false,false,false,  3);
         });
     }
 
@@ -781,7 +782,7 @@ public class ViewGUIController  implements Initializable,View {
             Box boardBox = getBoxIndex(pane);
             if(boardBox!=null){
                 boxesChoose.add(boardBox);
-                printWorker(pane,indexPlayer);
+                printWorker(pane);
                 cell.toFront();
                 cell.setDisable(true);
                 if (boxesChoose.size() == 2) {
@@ -794,7 +795,7 @@ public class ViewGUIController  implements Initializable,View {
         }
         if(state==4){
             Box boardBox = getBoxIndex(pane);
-            if(boardBox.getWorker()!=null && boardBox.getWorker().getIndexPlayer()==indexPlayer){
+            if(boardBox.getWorker()!=null && boardBox.getWorker().getIndexClient()==indexClient){
                 disableAllButtons();
                 ObjWorkerToMove objWorkerToMove= new ObjWorkerToMove(boardBox.getWorker().getWorkerId(), boardBox.getRow(), boardBox.getColumn(),false);
                 situationTurn.setText("Worker choose");
@@ -830,7 +831,7 @@ public class ViewGUIController  implements Initializable,View {
         indexClient=clientIndex;
         currentPlayer=currentPlaying;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board, indexPlayer,null, false,false,false,4 );
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board,null, false,false,false,4 );
         });
     }
 
@@ -855,7 +856,7 @@ public class ViewGUIController  implements Initializable,View {
             workerToMove= board.getBox(row2,column2);
         }
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board, indexPlayer, workerToMove, false, false, false, 5 );
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board,  workerToMove, false, false, false, 5 );
         });
     }
 
@@ -941,7 +942,7 @@ public class ViewGUIController  implements Initializable,View {
     public void askBuildBeforeMove(int indexWorker, int rowWorker, int columnWorker) {
         workerToMove=board.getBox(rowWorker,columnWorker);
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, indexPlayer, workerToMove, false, false, false,7 );
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board,  workerToMove, false, false, false,7 );
         });
     }
 
@@ -963,7 +964,7 @@ public class ViewGUIController  implements Initializable,View {
         indexClient=clientIndex;
         currentPlayer=currentPlaying;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, indexPlayer, workerToMove,firstTime , false,false, 6 );
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, workerToMove,firstTime , false,false, 6 );
         });
     }
 
@@ -986,7 +987,7 @@ public class ViewGUIController  implements Initializable,View {
         this.firstTime=firstTime;
         this.done = done;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, indexPlayer, workerToMove,firstTime , done,false,8 );
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board,  workerToMove,firstTime , done,false,8 );
         });
     }
 
@@ -1012,7 +1013,7 @@ public class ViewGUIController  implements Initializable,View {
         this.done=done;
         this.specialTurn=isSpecialTurn;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, indexPlayer, workerToMove, firstTime, specialTurn, done, 9);
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, workerToMove, firstTime, specialTurn, done, 9);
         });
     }
 
@@ -1082,7 +1083,7 @@ public class ViewGUIController  implements Initializable,View {
         this.done=done;
         this.specialTurn=isSpecialTurn;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, indexPlayer, workerToMove, firstTime, specialTurn, done, 10);
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board,  workerToMove, firstTime, specialTurn, done, 10);
         });
     }
 
@@ -1119,7 +1120,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void someoneWon() {
-        System.out.println("An opponent won. Game Over"); //todo da sistemare
         Platform.runLater(() -> {
             GUIMain.changeFinal("Scene/youLose.fxml");
         });
@@ -1130,7 +1130,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void whoHasLost() {
-        System.out.println("An opponent lost"); //todo da sistemare
         Platform.runLater(() -> {
             GUIMain.changeFinal("Scene/youWin.fxml");
         });
@@ -1142,20 +1141,7 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void printHeartBeat(ObjHeartBeat objHeartBeat){
-        new Thread(() -> {
-            sendMessageToServer.sendPong(objHeartBeat.getClientIndex());
-        }).start();
-    }
-
-    /**
-     * This method is called from every scene when the player clicks on the exit button
-     * @param actionEvent is the object associated to the click event
-     */
-    @FXML
-    private void closeButtonHandler(ActionEvent actionEvent){
-        closingConnectionEvent(indexClient,false);
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+        sendMessageToServer.sendPong(objHeartBeat.getClientIndex());
     }
 
     /**
@@ -1166,14 +1152,29 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void closingConnectionEvent(int indexClient, boolean gameNotAvailable) {
-        new Thread(() -> {
-            if(gameNotAvailable){
-                System.out.println("A game has already started -> Try to connect later");
-            }else {
-                System.out.println("A client is not responding, the connection will be closed");
-            }
-            sendMessageToServer.sendAckClosingConnection(indexClient);
-        }).start();
+        if (gameNotAvailable) {
+            Platform.runLater(() -> {
+                GUIMain.changeFinal("Scene/alreadyStarted.fxml");
+            });
+        } else {
+            Platform.runLater(() -> {
+                GUIMain.changeFinal("Scene/notResponding.fxml");
+            });
+        }
+        if(state>0 && state<12){
+            sendMessageToServer.sendAckClosingConnection(indexClient,false);
+        }else{
+            sendMessageToServer.sendAckClosingConnection(indexClient,true);
+        }
+
+    }
+
+    /**
+     * Method to handle window closing
+     */
+    public void shutdown() {
+        closingConnectionEvent(indexClient,false);
+        Platform.exit();
     }
 
     /**
@@ -1222,7 +1223,7 @@ public class ViewGUIController  implements Initializable,View {
                     printBlock(board.getBox(row,col).getCounter(), (AnchorPane)gridBoard.getChildren().get(index), board.getBox(row,col));
                 }
                 if(board.getBox(row,col).getWorker()!=null){
-                    printWorker((AnchorPane)gridBoard.getChildren().get(index), board.getBox(row,col).getWorker().getIndexPlayer());
+                    printWorker((AnchorPane)gridBoard.getChildren().get(index));
                 }
                 AnchorPane pane= (AnchorPane)gridBoard.getChildren().get(index);
                 pane.getChildren().get(4).toFront();
@@ -1279,16 +1280,26 @@ public class ViewGUIController  implements Initializable,View {
     /**
      * This method is used to print a worker in a box, each player has his color of workers
      * @param actualPane is the AnchorPane associated to the box where there's a worker
-     * @param indexP is the index of the player owner of the worker
      */
-    private void printWorker( AnchorPane actualPane, int indexP){
+    private void printWorker( AnchorPane actualPane){
         Image worker;
-        if(indexP==0){
-            worker=new Image("/SenzaSfondo/WorkerRed.png");
-        }else if(indexP==1){
-            worker= new Image("/SenzaSfondo/WorkerBlue.png");
+        Box box= getBoxIndex(actualPane);
+        if(box.getWorker()==null){
+            if(indexClient==0){
+                worker=new Image("/SenzaSfondo/WorkerRed.png");
+            }else if(indexClient==1){
+                worker= new Image("/SenzaSfondo/WorkerBlue.png");
+            }else{
+                worker= new Image("/SenzaSfondo/WorkerYellow.png");
+            }
         }else{
-            worker= new Image("/SenzaSfondo/WorkerYellow.png");
+            if(box.getWorker().getIndexClient()==0){
+                worker=new Image("/SenzaSfondo/WorkerRed.png");
+            }else if(box.getWorker().getIndexClient()==1){
+                worker= new Image("/SenzaSfondo/WorkerBlue.png");
+            }else{
+                worker= new Image("/SenzaSfondo/WorkerYellow.png");
+            }
         }
         ImageView img= (ImageView)actualPane.getChildren().get(3);
         img.setImage(worker);
@@ -1342,9 +1353,11 @@ public class ViewGUIController  implements Initializable,View {
                 }
                 if(img1!=null){
                     cardTwoOfTwo.setImage(img1);
+
                 }else{
                     buttonTwoOfTwo.setDisable(true);
                 }
+                //waitCards2.setVisible(false);
             }
             else if(nPlayers==3){
                 if(img0!=null){
@@ -1360,15 +1373,17 @@ public class ViewGUIController  implements Initializable,View {
                 }else{
                     buttonThreeOfThree.setDisable(true);
                 }
+                //waitCards3.setVisible(false);
+
             }
         }
-        if(state>1){
-            myCard.setImage(new Image(usersArray.get(indexPlayer).getNameCard()+".jpg"));
+        if(state>1 && state!=11){
+            myCard.setImage(new Image(usersArray.get(indexClient).getNameCard()+".jpg"));
             situationTurn.setText("");
             if(nPlayers==2){
                 TwoOpponents.setVisible(false);
                 for(int indexP=0;indexP<usersArray.size();indexP++){
-                    if(indexPlayer!=indexP){
+                    if(indexClient!=indexP){
                         cardOpponent.setImage(new Image("/SenzaSfondo/"+usersArray.get(indexP).getNameCard()+".png"));
                         nameOpponent.setText(usersArray.get(indexP).getName());
                         stateOpponent.setText(printOpponentState(usersArray.get(indexP)));
@@ -1379,7 +1394,7 @@ public class ViewGUIController  implements Initializable,View {
                 oneOpponent.setVisible(false);
                 int find=0;
                 for(int indexP=0;indexP<usersArray.size();indexP++){
-                    if(indexPlayer!=indexP){
+                    if(indexClient!=indexP){
                         find++;
                         if(find==1){
                             cardFirstOpponent.setImage(new Image("/SenzaSfondo/"+usersArray.get(indexP).getNameCard()+".png"));
