@@ -14,12 +14,17 @@ public class Middle implements Block {
      */
     private final String blockName;
 
+    /**
+     * The constructor of the class
+     */
     public Middle() {
         this.blockIdentifier = 2;
-        this.blockName="Middle";
+        this.blockName = "Middle";
     }
 
     /**
+     * This method return the int of the identifier of the block
+     *
      * @return the int of the identifier of the block
      */
     public int getBlockIdentifier() {
@@ -27,13 +32,17 @@ public class Middle implements Block {
     }
 
     /**
-     *@return the name of the block
+     * This method return the name of the block
+     *
+     * @return the name of the block
      */
     public String getBlockName() {
         return blockName;
     }
 
     /**
+     * To sting method
+     *
      * @return this method print out the name of the block you have selected
      */
     @Override

@@ -7,7 +7,9 @@ import it.polimi.ingsw.network.VisitorServer;
  * message start event
  */
 public class StartGameEvent extends Event {
-
+    /**
+     * number of players
+     */
     private final int nPlayer;
 
     /**
@@ -19,6 +21,11 @@ public class StartGameEvent extends Event {
         this.nPlayer = nPlayer;
     }
 
+    /**
+     * Number of player getter
+     *
+     * @return number of player
+     */
     public int getNPlayer() {
         return nPlayer;
     }

@@ -15,7 +15,7 @@ import java.util.TimerTask;
 /**
  * This class handles all the clients that get connected
  */
-public class ServerHandler extends Thread{
+public class ServerHandler extends Thread {
 
     /**
      * This attribute is the index that the client occupies in the clientArray of EchoServer class
@@ -30,7 +30,16 @@ public class ServerHandler extends Thread{
      */
     private boolean closed = false;
 
-    public ServerHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView, int indexClientArray){
+    /**
+     * Constructor of the class
+     *
+     * @param socket           Server socket
+     * @param outputStream     output stream of the socket
+     * @param inputStream      input stream of the socket
+     * @param virtualView      view server's side
+     * @param indexClientArray index client
+     */
+    public ServerHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView, int indexClientArray) {
         this.socket = socket;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
@@ -38,9 +47,21 @@ public class ServerHandler extends Thread{
         this.indexClientArray = indexClientArray;
     }
 
+    /**
+     * Is closed getter
+     *
+     * @return true if is closed
+     */
+
     public boolean isClosed() {
         return closed;
     }
+
+    /**
+     * Index client setter
+     *
+     * @param indexClientArray index client
+     */
 
     public void setIndexClientArray(int indexClientArray) {
         this.indexClientArray = indexClientArray;
@@ -49,7 +70,7 @@ public class ServerHandler extends Thread{
     /**
      * This method sends an heartbeat and starts the timer
      */
-    public void sendHeartBeat(){
+    public void sendHeartBeat() {
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
@@ -61,7 +82,7 @@ public class ServerHandler extends Thread{
                     } else {
                         t.cancel();
                     }
-                }catch ( Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -73,7 +94,7 @@ public class ServerHandler extends Thread{
      * This method sends a message to the new client and waits to receives messages
      */
     @Override
-    public void run(){
+    public void run() {
         sendUpdate(new AskWantToPlayEvent(indexClientArray));
         sendHeartBeat();
         listening();
@@ -82,7 +103,7 @@ public class ServerHandler extends Thread{
     /**
      * This method receives all the messages from the client
      */
-    public void listening(){
+    public void listening() {
         ObjMessage objMessage = null;
         try {
             while (!closed) {
@@ -96,7 +117,7 @@ public class ServerHandler extends Thread{
                 if (objMessage != null)
                     objMessage.accept(new VisitorServer(virtualView));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         virtualView.controlStillOpen(indexClientArray, objMessage.isBeforeStart());
@@ -105,6 +126,7 @@ public class ServerHandler extends Thread{
 
     /**
      * This method sends a message to the client
+     *
      * @param objMessage object message to send
      */
     public void sendUpdate(ObjMessage objMessage) {
@@ -126,7 +148,7 @@ public class ServerHandler extends Thread{
     /**
      * This method closes the connection of the client
      */
-    public void close(){
+    public void close() {
         try {
             socket.close();
         } catch (IOException e) {

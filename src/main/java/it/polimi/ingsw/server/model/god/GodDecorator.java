@@ -26,65 +26,101 @@ public abstract class GodDecorator implements God {
      */
     protected static int indexPossibleBlock;
 
-    public GodDecorator ( God newGod ) {
+    /**
+     * Constructor of the class
+     *
+     * @param newGod God
+     */
+    public GodDecorator(God newGod) {
         this.newGod = newGod;
     }
 
+    /**
+     * Is Move Up getter
+     *
+     * @return true if it can move up a building
+     */
     public boolean isMoveUp() {
         return moveUp;
     }
 
-    public String getName(){
+    /**
+     * Name getter
+     *
+     * @return name of the card
+     */
+    public String getName() {
         return newGod.getName();
     }
 
-    public void setName(String name){
+    /**
+     * Name setter
+     *
+     * @param name name of the card
+     */
+    public void setName(String name) {
         newGod.setName(name);
     }
+
+    /**
+     * Effects getter
+     *
+     * @return array of effects of the card
+     */
     public ArrayList<String> getEffects() {
         return newGod.getEffects();
     }
+
+    /**
+     * Effects setter
+     *
+     * @param effects array of effects of the card
+     */
     public void setEffect(ArrayList<String> effects) {
         newGod.setEffect(effects);
     }
 
     /**
      * This method tells which positions can get reached by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
     public boolean setPossibleMove(Worker worker) {
-        return this.newGod.setPossibleMove( worker );
+        return this.newGod.setPossibleMove(worker);
     }
 
     /**
      * This method tells which positions can get built by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {
-        this.newGod.setPossibleBuild( worker );
+        this.newGod.setPossibleBuild(worker);
     }
 
     /**
      * This method moves the chosen worker to the new position on the board
+     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        return this.newGod.moveWorker( worker, pos );
+        return this.newGod.moveWorker(worker, pos);
     }
 
     /**
      * This method builds a building block in a position on the board
+     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
     @Override
     public boolean moveBlock(Box pos) {
-        return this.newGod.moveBlock( pos );
+        return this.newGod.moveBlock(pos);
     }
 
     /**
@@ -100,6 +136,7 @@ public abstract class GodDecorator implements God {
 
     /**
      * This method sets the index of the block that could be built
+     *
      * @param possibleBlock index of the block
      */
     @Override
@@ -109,17 +146,19 @@ public abstract class GodDecorator implements God {
 
     /**
      * This method checks if the player wins
+     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins
      */
     @Override
     public boolean checkWin(Box initialPos, Box finalBox) {
-        return this.newGod.checkWin( initialPos, finalBox );
+        return this.newGod.checkWin(initialPos, finalBox);
     }
 
     /**
      * This method is used by a God with the ability to build before the worker move
+     *
      * @return true if the player has this God, otherwise returns always false
      */
     @Override

@@ -9,7 +9,9 @@ import it.polimi.ingsw.network.objects.*;
  */
 
 public class VisitorClient {
-
+    /**
+     * View client's side
+     */
     public final View view;
 
     /**

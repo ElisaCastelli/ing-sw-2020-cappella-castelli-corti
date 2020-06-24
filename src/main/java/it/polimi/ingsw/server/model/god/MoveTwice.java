@@ -17,12 +17,18 @@ public abstract class MoveTwice extends GodDecorator {
      */
     public boolean firstTime = true;
 
+    /**
+     * Constructor of the class
+     *
+     * @param newGod God
+     */
     public MoveTwice(God newGod) {
         super(newGod);
     }
 
     /**
      * This method checks which positions can get reached by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -32,6 +38,7 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This method tells which positions can get built by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -41,6 +48,7 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This method moves the chosen worker to the new position on the board
+     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -52,6 +60,7 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This method builds a building block in a position on the board
+     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
@@ -62,6 +71,7 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This methods checks if the player win
+     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins
@@ -73,19 +83,19 @@ public abstract class MoveTwice extends GodDecorator {
 
     /**
      * This method enable the possibility to move twice a worker
-     * @param worker Which worker is applied the move
+     *
+     * @param worker   Which worker is applied the move
      * @param finalBox Position on the board where the worker wants to go
      * @return False if the player can do another move, true if the player do the second move
      */
-    public boolean moveTwice ( Worker worker, Box finalBox ) {
-        if ( firstTime ) {
+    public boolean moveTwice(Worker worker, Box finalBox) {
+        if (firstTime) {
             oldBoxMove = worker.getActualBox();
-            super.moveWorker( worker, finalBox );
+            super.moveWorker(worker, finalBox);
             firstTime = false;
             return false;
-        }
-        else {
-            super.moveWorker( worker, finalBox );
+        } else {
+            super.moveWorker(worker, finalBox);
             oldBoxMove = null;
             firstTime = true;
             return true;
@@ -93,21 +103,21 @@ public abstract class MoveTwice extends GodDecorator {
     }
 
     /**
-     * Thi method enable the possibility to build twice
+     * This method enable the possibility to build twice
+     *
      * @param finalBox Position on the board where the worker builds a building block
      * @return False if the player can do another construction, true if the player do the second construction
      */
-    public boolean moveTwice ( Box finalBox ) {
-        if ( firstTime ) {
+    public boolean moveTwice(Box finalBox) {
+        if (firstTime) {
             oldBoxMove = finalBox;
-            super.moveBlock( finalBox );
+            super.moveBlock(finalBox);
             if (finalBox.getCounter() == 4)
                 completeTowers++;
             firstTime = false;
             return false;
-        }
-        else {
-            super.moveBlock( finalBox );
+        } else {
+            super.moveBlock(finalBox);
             if (finalBox.getCounter() == 4)
                 completeTowers++;
             oldBoxMove = null;
@@ -117,10 +127,12 @@ public abstract class MoveTwice extends GodDecorator {
     }
 
     /**
+     * This method control if the worker is in the same position as before
+     *
      * @param finalBox box where the player wants to build or to move
      * @return true if the two boxes are the same position
      */
-    public boolean samePosition ( Box finalBox ){
+    public boolean samePosition(Box finalBox) {
         return oldBoxMove == finalBox;
     }
 }

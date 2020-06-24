@@ -8,27 +8,51 @@ import java.util.ArrayList;
 /**
  * This class implements the ability to move the same worker any times you want, but it has to move into a perimeter space.
  */
-public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
-
+public class MoveInfinityTimesAlongThePerimeter extends GodDecorator {
+    /**
+     * Constructor of the class
+     *
+     * @param newGod God
+     */
     public MoveInfinityTimesAlongThePerimeter(God newGod) {
         super(newGod);
     }
 
+    /**
+     * Name setter
+     *
+     * @param name name of the card
+     */
     @Override
     public void setName(String name) {
         super.setName(name);
     }
 
+    /**
+     * Effects setter
+     *
+     * @param effects array of effects of the card
+     */
     @Override
     public void setEffect(ArrayList<String> effects) {
         super.setEffect(effects);
     }
 
+    /**
+     * Name getter
+     *
+     * @return name of the card
+     */
     @Override
     public String getName() {
         return super.getName();
     }
 
+    /**
+     * Effects getter
+     *
+     * @return array of effects of the card
+     */
     @Override
     public ArrayList<String> getEffects() {
         return super.getEffects();
@@ -36,6 +60,7 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
 
     /**
      * This method tells which positions can get reached by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -45,6 +70,7 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
 
     /**
      * This method tells which positions can get built by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -54,22 +80,23 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
 
     /**
      * This method moves the chosen worker to the new position on the board, if this new position is along the perimeter, the player can move another time the worker
+     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully and the worker cannot do another move
      */
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
-        if (pos.getBoxesNextTo().contains(null)){
-            super.moveWorker( worker, pos);
+        if (pos.getBoxesNextTo().contains(null)) {
+            super.moveWorker(worker, pos);
             return false;
-        }
-        else
+        } else
             return super.moveWorker(worker, pos);
     }
 
     /**
      * This method builds a building block in a position on the board
+     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
@@ -83,6 +110,7 @@ public class MoveInfinityTimesAlongThePerimeter extends GodDecorator{
 
     /**
      * This methods checks if the player win
+     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

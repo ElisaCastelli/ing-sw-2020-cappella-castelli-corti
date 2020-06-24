@@ -8,7 +8,9 @@ import it.polimi.ingsw.network.VisitorServer;
  */
 
 public class CloseConnectionFromServerEvent extends Event {
-
+    /**
+     * boolean for the reason of the disconnection
+     */
     private final boolean gameNotAvailable;
 
     /**
@@ -20,6 +22,11 @@ public class CloseConnectionFromServerEvent extends Event {
         this.gameNotAvailable = gameNotAvailable;
     }
 
+    /**
+     * Game not available getter
+     *
+     * @return true if there isn't a game available
+     */
     public boolean isGameNotAvailable() {
         return gameNotAvailable;
     }

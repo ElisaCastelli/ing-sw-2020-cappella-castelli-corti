@@ -10,8 +10,13 @@ import it.polimi.ingsw.server.model.gameComponents.Box;
 public class ObjWorkers extends ObjMessage {
 
     private static final long serialVersionUID = -4928461924327192103L;
-
+    /**
+     * box first worker
+     */
     private final Box box1;
+    /**
+     * box second worker
+     */
     private final Box box2;
 
     /**
@@ -25,10 +30,21 @@ public class ObjWorkers extends ObjMessage {
         this.box2 = box2;
     }
 
+    /**
+     * Box1 getter
+     *
+     * @return box of the board
+     */
+
     public Box getBox1() {
         return box1;
     }
 
+    /**
+     * Box2 getter
+     *
+     * @return box of the board
+     */
     public Box getBox2() {
         return box2;
     }

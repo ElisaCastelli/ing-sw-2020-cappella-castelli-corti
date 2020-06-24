@@ -10,9 +10,17 @@ import it.polimi.ingsw.network.objects.ObjMessage;
 public class AckMove extends ObjMessage {
 
     private static final long serialVersionUID = 20398492L;
-
+    /**
+     * index of the worker
+     */
     final int indexWorker;
+    /**
+     * row of the worker
+     */
     final int rowWorker;
+    /**
+     * column of the worker
+     */
     final int columnWorker;
 
     /**
@@ -28,13 +36,30 @@ public class AckMove extends ObjMessage {
         this.columnWorker = columnWorker;
     }
 
+    /**
+     * Index of the worker getter
+     *
+     * @return index of the worker
+     */
     public int getIndexWorker() {
         return indexWorker;
     }
 
+    /**
+     * Row of the worker getter
+     *
+     * @return row of the worker
+     */
+
     public int getRowWorker() {
         return rowWorker;
     }
+
+    /**
+     * Column of the worker getter
+     *
+     * @return column of the worker
+     */
 
     public int getColumnWorker() {
         return columnWorker;

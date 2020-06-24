@@ -25,13 +25,14 @@ public class Client {
 
     /**
      * This is the launch method for the client
+     *
      * @param args is an Array of strings that contains arguments specified by the player when the client is launched
      */
-    public static void  main(String[] args) {
-        HashMap<String,String> hashMap = new HashMap<>();
+    public static void main(String[] args) {
+        HashMap<String, String> hashMap = new HashMap<>();
 
         final int N_ARGUMENT = 6;
-        int i=0;
+        int i = 0;
         String arg;
 
         while (i < args.length && args[i].startsWith("-")) {
@@ -56,7 +57,7 @@ public class Client {
         } catch (IOException e) {
             System.out.println("connection refused");
         }
-        if(clientSocket != null) {
+        if (clientSocket != null) {
             // obtaining input and out streams
             ObjectOutputStream outputStream = null;
             try {
@@ -77,30 +78,31 @@ public class Client {
 
     /**
      * This method function is to parse the input args to instantiate the client ip, the server port and the view type the users choose
+     *
      * @param hashMap that contains the args allowed
      */
     private static void parseClient(HashMap<String, String> hashMap) {
         boolean redo = false;
 
         String ipAddress = hashMap.get("ip");
-        if(ipAddress != null){
+        if (ipAddress != null) {
             //controlla validità indirizzo
             ip = ipAddress;
-        }else{
+        } else {
             redo = true;
         }
 
         String port = hashMap.get("port");
-        if(port != null ){
+        if (port != null) {
             int socketPort = Integer.parseInt(port);
             //controlla validità porta
             portNumber = socketPort;
-        }else{
+        } else {
             redo = true;
         }
         String view = hashMap.get("view");
-        if(view != null ){
-            switch (view){
+        if (view != null) {
+            switch (view) {
                 case "gui":
                     viewClient = new ViewGUIController();
                     break;
@@ -110,13 +112,13 @@ public class Client {
                 default:
                     redo = true;
             }
-        }else{
+        } else {
             redo = true;
         }
 
-        if(redo){
+        if (redo) {
             System.err.println("Usage: ParseCmdLine [-ip] address [-port] port [-view] view");
-        }else
+        } else
             System.out.println("Success!");
     }
 

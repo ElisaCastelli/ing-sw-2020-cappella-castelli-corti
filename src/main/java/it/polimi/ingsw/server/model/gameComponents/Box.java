@@ -1,4 +1,5 @@
 package it.polimi.ingsw.server.model.gameComponents;
+
 import it.polimi.ingsw.server.model.building.*;
 
 import java.io.Serializable;
@@ -40,13 +41,14 @@ public class Box implements Serializable {
     private ArrayList<Block> possibleBlock;
 
     /**
-     * @param row row of the box
+     * The constructor of the class
+     *
+     * @param row    row of the box
      * @param column column of the box
-     * Constructor with parameters
      */
-    public Box(int row, int column){ //controllare r e c da 0 a 5
+    public Box(int row, int column) { //controllare r e c da 0 a 5
         building = new Building();
-        possibleBlock= new ArrayList<>();
+        possibleBlock = new ArrayList<>();
         this.row = row;
         this.column = column;
         worker = null;
@@ -55,6 +57,7 @@ public class Box implements Serializable {
 
     /**
      * Row getter
+     *
      * @return the attribute row
      */
     public int getRow() {
@@ -63,44 +66,96 @@ public class Box implements Serializable {
 
     /**
      * Column getter
+     *
      * @return the attribute column
      */
     public int getColumn() {
         return column;
     }
 
-    public void setWorker(Worker worker){
+    /**
+     * Worker setter
+     *
+     * @param worker worker to set
+     */
+    public void setWorker(Worker worker) {
         this.worker = worker;
     }
+
+    /**
+     * Worker getter
+     *
+     * @return worker
+     */
 
     public Worker getWorker() {
         return worker;
     }
 
-    public int getCounter(){
+    /**
+     * Counter getter
+     *
+     * @return size of the building
+     */
+
+    public int getCounter() {
         return building.getArrayOfBlocks().size();
     }
+
+    /**
+     * BoxesNextTo getter
+     *
+     * @return array of Box
+     */
 
     public ArrayList<Box> getBoxesNextTo() {
         return boxesNextTo;
     }
 
-    public void setBoxesNextTo(ArrayList<Box> boxesNextTo){
+    /**
+     * BoxesNextTo setter
+     *
+     * @param boxesNextTo array of Box
+     */
+
+    public void setBoxesNextTo(ArrayList<Box> boxesNextTo) {
         this.boxesNextTo = boxesNextTo;
     }
+
+    /**
+     * Building getter
+     *
+     * @return Building
+     */
 
     public Building getBuilding() {
         return building;
     }
 
+    /**
+     * This method is recall to get what kin of block can be build in a box
+     *
+     * @return array of block
+     */
+
     public ArrayList<Block> getPossibleBlock() {
         return possibleBlock;
     }
 
+    /**
+     * This method is recall to control if a box is reachable by a worker
+     *
+     * @return true if is reachable and false if is not
+     */
     public boolean isReachable() {
         return reachable;
     }
 
+    /**
+     * Reachable setter
+     *
+     * @param reachable boolean to identify if is reachable by a worker
+     */
     public void setReachable(boolean reachable) {
         this.reachable = reachable;
     }
@@ -108,9 +163,9 @@ public class Box implements Serializable {
     /**
      * This method clear the attributes of a box setting them on default values
      */
-    public void clear(){
+    public void clear() {
         building.clear();
-        if( worker != null ){
+        if (worker != null) {
             worker.clear();
         }
         worker = null;
@@ -119,24 +174,27 @@ public class Box implements Serializable {
     /**
      * This method remove the worker from the box
      */
-    public void clearWorker(){
+    public void clearWorker() {
         worker = null;
     }
 
     /**
+     * This method is recall to control if there is a worker on the box
+     *
      * @return true if there is NOT a worker in the box, else return false
      */
-    public boolean notWorker(){
+    public boolean notWorker() {
         return worker == null;
     }
 
     /**
      * This method tells if the box is empty
+     *
      * @return true if there isn't any building or worker, else return false
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         boolean empty = true;
-        if((getCounter() != 0) || (worker != null)){
+        if ((getCounter() != 0) || (worker != null)) {
             empty = false;
         }
         return empty;
@@ -145,24 +203,25 @@ public class Box implements Serializable {
     /**
      * This method calls the method build of Building if the counter is less than five
      */
-    public void build(){
+    public void build() {
         building.build();
     }
 
     /**
-     * this method is used by Atlas to build a dome at any case
+     * This method is used by Atlas to build a dome at any case
+     *
      * @param domeIdentifier is set to 4 to identify the Dome
      */
-    public void build(int domeIdentifier){
+    public void build(int domeIdentifier) {
         building.build(domeIdentifier);
     }
 
     /**
      * This method clears the adjacent boxes
      */
-    public void clearBoxesNextTo(){
+    public void clearBoxesNextTo() {
         for (Box nextTo : boxesNextTo) {
-            if(nextTo != null){
+            if (nextTo != null) {
                 nextTo.getPossibleBlock().clear();
                 nextTo.setReachable(false);
             }
@@ -171,14 +230,15 @@ public class Box implements Serializable {
 
     /**
      * This method checks if there are any reachable boxes
+     *
      * @return true if there is at least one reachable box, false if there are no reachable boxes
      */
-    public boolean checkPossible(){
+    public boolean checkPossible() {
         boolean possible = false;
         int index = 0;
-        while((index < boxesNextTo.size()) && !possible){
-            if(boxesNextTo.get(index) != null){
-                if(boxesNextTo.get(index).isReachable()){
+        while ((index < boxesNextTo.size()) && !possible) {
+            if (boxesNextTo.get(index) != null) {
+                if (boxesNextTo.get(index).isReachable()) {
                     possible = true;
                 }
             }
@@ -189,16 +249,19 @@ public class Box implements Serializable {
 
     /**
      * This method prints the content of the box
+     *
+     * @return symbol for the worker
      */
-    public String print(){
+    public String print() {
         return "█";
     }
 
     /**
      * This method prints the arrayOfBlock size
+     *
      * @return an int which represents the size of the array
      */
-    public int printsize(){
+    public int printsize() {
         return Math.max(building.getArrayOfBlocks().size(), 0);
     }
 }

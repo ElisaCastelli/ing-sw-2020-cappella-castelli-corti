@@ -9,7 +9,9 @@ import it.polimi.ingsw.network.VisitorServer;
 public class ObjState extends ObjMessage {
 
     private static final long serialVersionUID = -10489342L;
-
+    /**
+     * index of the player
+     */
     int indexPlayer;
 
     /**
@@ -21,10 +23,20 @@ public class ObjState extends ObjMessage {
         this.indexPlayer = indexPlayer;
     }
 
+    /**
+     * Index of the player getter
+     *
+     * @return index of the player
+     */
     public int getIndexPlayer() {
         return indexPlayer;
     }
 
+    /**
+     * Index of the player setter
+     *
+     * @param indexPlayer index of the player
+     */
     public void setIndexPlayer(int indexPlayer) {
         this.indexPlayer = indexPlayer;
     }

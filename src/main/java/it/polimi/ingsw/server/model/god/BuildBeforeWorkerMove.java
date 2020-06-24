@@ -16,25 +16,50 @@ public class BuildBeforeWorkerMove extends MoveTwice {
      */
     private boolean workerMoved = false;
 
+    /**
+     * Constructor of the class
+     *
+     * @param newGod God
+     */
     public BuildBeforeWorkerMove(God newGod) {
         super(newGod);
     }
 
+    /**
+     * Name setter
+     *
+     * @param godName name of the card
+     */
     @Override
     public void setName(String godName) {
         super.setName(godName);
     }
 
+    /**
+     * Effects setter
+     *
+     * @param effects array of effects of the card
+     */
     @Override
     public void setEffect(ArrayList<String> effects) {
         super.setEffect(effects);
     }
 
+    /**
+     * Name getter
+     *
+     * @return name of the card
+     */
     @Override
     public String getName() {
         return super.getName();
     }
 
+    /**
+     * Effects getter
+     *
+     * @return array of effects of the card
+     */
     @Override
     public ArrayList<String> getEffects() {
         return super.getEffects();
@@ -42,18 +67,19 @@ public class BuildBeforeWorkerMove extends MoveTwice {
 
     /**
      * This method tells which positions can get reached by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
     public boolean setPossibleMove(Worker worker) {
         boolean oneReachable;
-        if(super.firstTime){
+        if (super.firstTime) {
             oneReachable = super.setPossibleMove(worker);
-        }else{
+        } else {
             oneReachable = super.setPossibleMove(worker);
             for (int indexBoxNextTo = 0; indexBoxNextTo < 8; indexBoxNextTo++) {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
-                if (boxNextTo != null && boxNextTo.getCounter() - worker.getHeight() == 1 ){
+                if (boxNextTo != null && boxNextTo.getCounter() - worker.getHeight() == 1) {
                     boxNextTo.setReachable(false);
                 }
             }
@@ -63,6 +89,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
 
     /**
      * This method tells which positions can get built by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -72,6 +99,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
 
     /**
      * This method moves the chosen worker to the new position on the board
+     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -79,26 +107,27 @@ public class BuildBeforeWorkerMove extends MoveTwice {
     @Override
     public boolean moveWorker(Worker worker, Box pos) {
         workerMoved = true;
-        return super.moveWorker(worker,pos);
+        return super.moveWorker(worker, pos);
     }
 
     /**
      * This method implements two cases of the build move: one build before the worker move, one build after the worker move
+     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
     @Override
     public boolean moveBlock(Box pos) {
-        if( super.firstTime && workerMoved ){//basic move
+        if (super.firstTime && workerMoved) {//basic move
             workerMoved = false;
             super.moveBlock(pos);
             if (pos.getCounter() == 4)
                 completeTowers++;
             return true;
-        }else if(super.firstTime){//first time of decorator move
+        } else if (super.firstTime) {//first time of decorator move
             super.moveTwice(pos);
             return true;
-        }else{//second time of decorator move
+        } else {//second time of decorator move
             workerMoved = false;
             return super.moveTwice(pos);
         }
@@ -106,6 +135,7 @@ public class BuildBeforeWorkerMove extends MoveTwice {
 
     /**
      * This methods checks if the player win
+     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

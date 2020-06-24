@@ -213,7 +213,7 @@ public class GUIMain extends Application{
 
     /**
      * This is the launcher method for the gui
-     * @param args
+     * @param args argument passed by command line
      */
     public static void main(String[] args) {
        launch(args);

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model.gameComponents;
 
-import it.polimi.ingsw.server.model.Game;
-
 import java.io.Serializable;
 
 /**
@@ -32,16 +30,18 @@ public class Worker implements Serializable {
     private int indexClient;
 
     /**
+     * The constructor of the class
      *
      * @param workerId this parameter is to identify the worker of the player
      */
     public Worker(int workerId) {
         this.workerId = workerId;
-        height=0;
-        actualBox=null;
+        height = 0;
+        actualBox = null;
     }
 
     /**
+     * This method is recall to get the height of the worker based on the building
      *
      * @return the level of the worker in a building
      */
@@ -50,6 +50,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to set the height of the worker based on the building
      *
      * @param height the level of the worker in a building
      */
@@ -58,6 +59,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to get the worker id
      *
      * @return the number of the worker associated with the player
      */
@@ -66,6 +68,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to set the worker id
      *
      * @param workerId can be 1 or 2 depends on the gamer's decision
      */
@@ -74,6 +77,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to get the box where the worker is positioned in the board
      *
      * @return the box in which it is set the worker
      */
@@ -82,6 +86,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to set the box where the worker is positioned in the board
      *
      * @param actualBox is a box in which it is set the worker
      */
@@ -90,6 +95,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to get the index of the player
      *
      * @return this method return the index associated with the player
      */
@@ -98,6 +104,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to set the index of the player
      *
      * @param indexPlayer index of the player
      */
@@ -106,6 +113,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to get the index of the client
      *
      * @return this method return the index associated with the client
      */
@@ -114,6 +122,7 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to set the index of the client
      *
      * @param indexClient index of the player
      */
@@ -122,32 +131,36 @@ public class Worker implements Serializable {
     }
 
     /**
+     * This method is recall to initialize the position of a worker in the Board
      *
      * @param requestedBox is the box where the player wants to put the worker
+     * @param board game's board
      * @return a boolean that is true if the worker is set in the requested position
+     *
      */
-    public boolean initializePos( Box requestedBox, Board board ){
-        if( board.getBox(requestedBox.getRow(), requestedBox.getColumn()).notWorker () ){
-            board.getBox(requestedBox.getRow(), requestedBox.getColumn()).setWorker( this );
+    public boolean initializePos(Box requestedBox, Board board) {
+        if (board.getBox(requestedBox.getRow(), requestedBox.getColumn()).notWorker()) {
+            board.getBox(requestedBox.getRow(), requestedBox.getColumn()).setWorker(this);
             actualBox = board.getBox(requestedBox.getRow(), requestedBox.getColumn());
-            System.out.println( "the box is now occupied by this worker" );
+            System.out.println("the box is now occupied by this worker");
             return true;
-        }else {
-            System.out.println( "the box is occupied" );
+        } else {
+            System.out.println("the box is occupied");
             return false;
         }
     }
 
     /**
-     *It is a method to clear and reinitialize the worker
+     * It is a method to clear and reinitialize the worker
      */
-    public void clear(){
-        workerId=0;
-        height=0;
-        actualBox=null;
+    public void clear() {
+        workerId = 0;
+        height = 0;
+        actualBox = null;
     }
 
     /**
+     * To sting method
      *
      * @return the toString of the worker
      */

@@ -25,6 +25,10 @@ public class AskCardEvent extends Event {
         this.cardTemp = cardTemp;
     }
 
+    /**
+     * Card temp getter
+     * @return array of cards
+     */
     public ArrayList<String> getCardTemp() {
         return cardTemp;
     }

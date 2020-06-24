@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 /**
  * Class of the player's state if he is in the game yet and it's his turn
  */
-public class IsPlaying extends PlayerState{
+public class IsPlaying extends PlayerState {
 
     /**
      * Player's card
@@ -19,10 +19,22 @@ public class IsPlaying extends PlayerState{
      */
     private final PlayerStateManager playerManager;
 
-    public IsPlaying(God myGod, PlayerStateManager playerManager){
+    /**
+     * Constructor of the class
+     *
+     * @param myGod         God of the player
+     * @param playerManager manager of the player
+     */
+    public IsPlaying(God myGod, PlayerStateManager playerManager) {
         this.myGod = myGod;
         this.playerManager = playerManager;
     }
+
+    /**
+     * God setter
+     *
+     * @param myGod God of he player
+     */
 
     public void setMyGod(God myGod) {
         this.myGod = myGod;
@@ -30,27 +42,30 @@ public class IsPlaying extends PlayerState{
 
     /**
      * Method to move a worker
+     *
      * @param worker to move
-     * @param pos to reach
+     * @param pos    to reach
      * @return true if the move works
      */
     @Override
-    public boolean moveWorker(Worker worker, Box pos){
-        return myGod.moveWorker( worker , pos);
+    public boolean moveWorker(Worker worker, Box pos) {
+        return myGod.moveWorker(worker, pos);
     }
 
     /**
      * Method to build a block
+     *
      * @param pos where build
      * @return true if the building works
      */
     @Override
-    public boolean moveBlock(Box pos){
+    public boolean moveBlock(Box pos) {
         return myGod.moveBlock(pos);
     }
 
     /**
      * Method to check the victory
+     *
      * @param boxStart starting position
      * @param boxReach position reached
      * @return true if the player has won
@@ -58,7 +73,7 @@ public class IsPlaying extends PlayerState{
     @Override
     public boolean checkWin(Box boxReach, Box boxStart) {
         boolean win = myGod.checkWin(boxStart, boxReach);
-        if(win){
+        if (win) {
             playerManager.goWin();
         }
         return win;
@@ -66,6 +81,7 @@ public class IsPlaying extends PlayerState{
 
     /**
      * Method to check the possibility of build before move
+     *
      * @return true if the player can build before move
      */
     @Override
@@ -75,24 +91,27 @@ public class IsPlaying extends PlayerState{
 
     /**
      * Method to set the possible boxes reachable
+     *
      * @param worker to move
      */
     @Override
-    public boolean setPossibleMove( Worker worker){
+    public boolean setPossibleMove(Worker worker) {
         return myGod.setPossibleMove(worker);
     }
 
     /**
      * Method to set the possible boxes buildable
+     *
      * @param worker moved to build
      */
     @Override
-    public void setPossibleBuild( Worker worker){
+    public void setPossibleBuild(Worker worker) {
         myGod.setPossibleBuild(worker);
     }
 
     /**
      * Method to set the possible block buildable
+     *
      * @param indexPossibleBlock of the block to build
      */
     @Override

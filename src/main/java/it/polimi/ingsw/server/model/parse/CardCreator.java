@@ -32,6 +32,8 @@ public class CardCreator {
     }
 
     /**
+     * Method for parsing cards
+     *
      * @return array of decorated god parsed by file
      */
     public ArrayList<God> parseCard() {
@@ -40,7 +42,7 @@ public class CardCreator {
     }
 
     /**
-     * method used to read cards from file and to parse them into a array of gods
+     * Method used to read cards from file and to parse them into a array of gods
      */
     public void readCard() {
 
@@ -99,8 +101,10 @@ public class CardCreator {
     }
 
     /**
-     * alternative method to read from Json file and to generate decorated god's using strings
+     * Alternative method to read from Json file and to generate decorated god's using strings
      * Not used because the hashMap method was more solid
+     *
+     * @return array of gods
      */
     public ArrayList<God> setGodsByString() {
 
@@ -142,7 +146,7 @@ public class CardCreator {
     }
 
     /**
-     * method to generate decorated god's using hashMap
+     * Method to generate decorated god's using hashMap
      */
     public void setGodsByHashMap() {
 

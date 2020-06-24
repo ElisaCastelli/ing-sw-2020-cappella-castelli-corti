@@ -14,9 +14,17 @@ import java.util.ArrayList;
 public class UpdateBoardEvent extends Event {
 
     private static final long serialVersionUID = 1038573990901284957L;
-
+    /**
+     * array of users
+     */
     private final ArrayList<User> userArray;
+    /**
+     * game's board
+     */
     final Board board;
+    /**
+     * boolean to show the reachable's box in a board
+     */
     final boolean showReachable;
 
     /**
@@ -32,14 +40,29 @@ public class UpdateBoardEvent extends Event {
         this.showReachable = showReachable;
     }
 
+    /**
+     * Board getter
+     *
+     * @return board of the game
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Array of user getter
+     *
+     * @return array of users
+     */
     public ArrayList<User> getUserArray() {
         return userArray;
     }
 
+    /**
+     * Show reachable getter
+     *
+     * @return true if he reachable hash to be seen
+     */
     public boolean isShowReachable() {
         return showReachable;
     }

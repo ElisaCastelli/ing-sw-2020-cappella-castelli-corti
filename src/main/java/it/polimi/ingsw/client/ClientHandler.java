@@ -31,20 +31,21 @@ public class ClientHandler {
      */
     private View view;
     /**
-     *Object use to guarantee the mutual exclusion to access a piece of code
+     * Object use to guarantee the mutual exclusion to access a piece of code
      */
-    private final Object LOCK=new Object();
+    private final Object LOCK = new Object();
     /**
-     *Boolean attribute used to control if the connection is close
+     * Boolean attribute used to control if the connection is close
      */
-    private boolean closed= false;
+    private boolean closed = false;
 
     /**
      * Constructor with parameters that characterize a client instance
-     * @param inputStream
-     * @param outputStream
-     * @param socket
-     * @param view
+     *
+     * @param inputStream  input stream of the socket
+     * @param outputStream output stream of the socket
+     * @param socket       client socket
+     * @param view         view client's side
      */
     public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket, View view) {
         this.inputStream = inputStream;
@@ -55,7 +56,8 @@ public class ClientHandler {
 
     /**
      * Getter method for the View
-     * @return
+     *
+     * @return view client's side
      */
     public View getView() {
         return view;
@@ -67,7 +69,7 @@ public class ClientHandler {
      * to the input stream and for reading objects once received. If the message received isn't null
      * it will be accepted and read from the VisitorClient
      */
-    public void listening () {
+    public void listening() {
         SendMessageToServer sendMessageToServer = new SendMessageToServer(this);
         view.setSendMessageToServer(sendMessageToServer);
         try {
@@ -83,7 +85,7 @@ public class ClientHandler {
                 if (objMessage != null)
                     objMessage.accept(new VisitorClient(view));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         close();
@@ -92,10 +94,11 @@ public class ClientHandler {
     /**
      * This method is used to send message to the server using the output stream object
      * until the closed condition is true. Everytime it sends a message it clears the output stream
+     *
      * @param objMessage is the object we want to send
      */
-    public void sendMessage(ObjMessage objMessage){
-        if(!closed) {
+    public void sendMessage(ObjMessage objMessage) {
+        if (!closed) {
             synchronized (LOCK) {
                 try {
                     outputStream.writeObject(objMessage);
@@ -108,7 +111,7 @@ public class ClientHandler {
     }
 
     /**
-     *This method is used to close the client connection with the server established with the socket objectw
+     * This method is used to close the client connection with the server established with the socket objectw
      */
     public void close() {
         try {

@@ -15,12 +15,17 @@ public class Base implements Block {
      */
     private final String blockName;
 
+    /**
+     * The constructor of the class
+     */
     public Base() {
         this.blockIdentifier = 1;
-        this.blockName="Base";
+        this.blockName = "Base";
     }
 
     /**
+     * This method return the int of the identifier of the block
+     *
      * @return the int of the identifier of the block
      */
     public int getBlockIdentifier() {
@@ -28,13 +33,17 @@ public class Base implements Block {
     }
 
     /**
-     *@return the name of the block
+     * This method return the name of the block
+     *
+     * @return the name of the block
      */
     public String getBlockName() {
         return blockName;
     }
 
     /**
+     * To sting method
+     *
      * @return this method print out the name of the block you have selected
      */
     @Override

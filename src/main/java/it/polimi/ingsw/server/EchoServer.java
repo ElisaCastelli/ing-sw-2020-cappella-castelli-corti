@@ -84,10 +84,21 @@ public class EchoServer {
         }
     }
 
+    /**
+     * Client array getter
+     *
+     * @return array of client
+     */
+
     public ArrayList<ServerHandler> getClientArray() {
         return clientArray;
     }
 
+    /**
+     * Client waiting array getter
+     *
+     * @return array of client
+     */
     public ArrayList<ServerHandler> getClientWaiting() {
         return clientWaiting;
     }

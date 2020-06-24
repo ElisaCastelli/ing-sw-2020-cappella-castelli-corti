@@ -8,7 +8,9 @@ import it.polimi.ingsw.network.objects.ObjMessage;
  * message starting connection event
  */
 public class AskWantToPlayEvent extends Event {
-
+    /**
+     * index of the client
+     */
     final int indexClient;
 
     /**
@@ -20,6 +22,11 @@ public class AskWantToPlayEvent extends Event {
         this.indexClient = indexClient;
     }
 
+    /**
+     * Index of the player getter
+     *
+     * @return index of the client
+     */
     public int getIndexClient() {
         return indexClient;
     }

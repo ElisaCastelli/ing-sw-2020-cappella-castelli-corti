@@ -26,11 +26,24 @@ public class GameStateManager {
      */
     private GameState currentState;
 
+    /**
+     * Constructor of the class
+     *
+     * @param players     array of players
+     * @param playersDead array of players dead
+     */
+
     public GameStateManager(ArrayList<Player> players, ArrayList<Player> playersDead) {
         going = new GoingState(players, playersDead, this);
         end = new EndState();
         currentState = null;
     }
+
+    /**
+     * Current state getter
+     *
+     * @return current state
+     */
 
     public GameState getCurrentState() {
         return currentState;
@@ -79,6 +92,7 @@ public class GameStateManager {
      *
      * @param indexPlayer of the player
      * @param indexWorker of the worker to move
+     * @return true if is reachable
      */
     public boolean setBoxReachable(int indexPlayer, int indexWorker) {
         return currentState.setBoxReachable(indexPlayer, indexWorker);

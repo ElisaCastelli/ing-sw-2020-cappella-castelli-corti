@@ -10,7 +10,9 @@ import it.polimi.ingsw.network.VisitorServer;
 public class ObjCard extends ObjMessage {
 
     private static final long serialVersionUID = -8393284750293847561L;
-
+    /**
+     * id of the card
+     */
     private final int cardChoose;
 
     /**
@@ -22,6 +24,11 @@ public class ObjCard extends ObjMessage {
         this.cardChoose = cardChoose;
     }
 
+    /**
+     * Card chosen getter
+     *
+     * @return id of the card
+     */
     public int getCardChose() {
         return cardChoose;
     }

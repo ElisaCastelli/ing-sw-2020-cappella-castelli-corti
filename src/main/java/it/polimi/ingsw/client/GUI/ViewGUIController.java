@@ -409,7 +409,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param indexClient is the index of the client associated with the player
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param board is the object Board describe the game field
-     * @param workerToMove
+     * @param workerToMove index of the worker to move
      * @param firstTime is a boolean that indicates if this is the first move tried in this turn
      * @param done is a boolean used to indicates if the move turn is over
      * @param specialTurn is a boolean used to identify special moves

@@ -11,7 +11,13 @@ import java.util.ArrayList;
  */
 
 public class AskNCardsEvent extends Event {
+    /**
+     * array of all cards
+     */
     final ArrayList<String> cardArray;
+    /**
+     * State of the player
+     */
     PlayerState state;
 
     /**
@@ -24,14 +30,29 @@ public class AskNCardsEvent extends Event {
         this.cardArray = cardArray;
     }
 
+    /**
+     * State setter
+     *
+     * @param state state of the player
+     */
     public void setState(PlayerState state) {
         this.state = state;
     }
 
+    /**
+     * State getter
+     *
+     * @return state of the player
+     */
     public PlayerState getState() {
         return state;
     }
 
+    /**
+     * Array of cards getter
+     *
+     * @return array of cards
+     */
     public ArrayList<String> getCardArray() {
         return cardArray;
     }

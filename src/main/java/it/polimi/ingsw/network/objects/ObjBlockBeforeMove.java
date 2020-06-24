@@ -7,10 +7,21 @@ import it.polimi.ingsw.network.VisitorServer;
  * message block before move
  */
 public class ObjBlockBeforeMove extends ObjMessage {
-
+    /**
+     * index of the worker
+     */
     final int indexWorker;
+    /**
+     * row of the worker
+     */
     final int rowWorker;
+    /**
+     * column of the worker
+     */
     final int columnWorker;
+    /**
+     * boolean choice of the player
+     */
     boolean wantToBuild;
 
     /**
@@ -29,21 +40,47 @@ public class ObjBlockBeforeMove extends ObjMessage {
         this.wantToBuild = wantToBuild;
     }
 
+    /**
+     * Index of the worker getter
+     *
+     * @return index of the worker
+     */
     public int getIndexWorker() {
         return indexWorker;
     }
 
+    /**
+     * Row of the worker getter
+     *
+     * @return row of the worker
+     */
     public int getRowWorker() {
         return rowWorker;
     }
 
+    /**
+     * Column of the worker getter
+     *
+     * @return column of the worker
+     */
     public int getColumnWorker() {
         return columnWorker;
     }
 
+    /**
+     * Want to build getter
+     *
+     * @return true if he want to build
+     */
     public boolean wantToBuild() {
         return wantToBuild;
     }
+
+    /**
+     * Want to build setter
+     *
+     * @param wantToBuild boolean choice of the player
+     */
 
     public void setWantToBuild(boolean wantToBuild) {
         this.wantToBuild = wantToBuild;

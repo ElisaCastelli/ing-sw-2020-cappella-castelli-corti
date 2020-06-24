@@ -10,14 +10,29 @@ import java.util.ArrayList;
  * Abstract class with common methods for the different states
  */
 public abstract class GameState {
+    /**
+     * Winner setter
+     *
+     * @param winner integer of the winner
+     */
 
     public void setWinner(int winner) {
     }
 
+    /**
+     * Winner getter
+     *
+     * @return integer of the winner
+     */
     public int getWinner() {
         return -1;
     }
 
+    /**
+     * Players dead getter
+     *
+     * @return array of players
+     */
     public ArrayList<Player> getPlayersDead() {
         return null;
     }
@@ -59,6 +74,8 @@ public abstract class GameState {
      *
      * @param indexPlayer of the player
      * @param indexWorker of the worker to move
+     *
+     * @return true if is reachable
      */
     public boolean setBoxReachable(int indexPlayer, int indexWorker) {
         return false;

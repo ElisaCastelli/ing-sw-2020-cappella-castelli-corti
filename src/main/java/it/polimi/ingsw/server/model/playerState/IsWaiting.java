@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 /**
  * Class of the player's state if he is in the game yet  but is the turn of an opponent
  */
-public class IsWaiting extends PlayerState{
+public class IsWaiting extends PlayerState {
 
     /**
      * Player's card
@@ -19,8 +19,14 @@ public class IsWaiting extends PlayerState{
      */
     private final PlayerStateManager playerManager;
 
-    public IsWaiting(God myGod, PlayerStateManager playerManager){
-        this.myGod=myGod;
-        this.playerManager=playerManager;
+    /**
+     * Constructor of the class
+     *
+     * @param myGod         God of the player
+     * @param playerManager manager of the player
+     */
+    public IsWaiting(God myGod, PlayerStateManager playerManager) {
+        this.myGod = myGod;
+        this.playerManager = playerManager;
     }
 }

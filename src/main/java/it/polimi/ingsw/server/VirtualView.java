@@ -9,6 +9,10 @@ import it.polimi.ingsw.server.model.gameComponents.Player;
 
 import java.util.ArrayList;
 
+/**
+ * This class is the view of the MVC pattern server's side
+ */
+
 public class VirtualView implements Observer {
 
     private ProxyGameModel gameModel;
@@ -18,39 +22,49 @@ public class VirtualView implements Observer {
 
 
     public VirtualView(SendMessageToClient sendMessageToClient) throws Exception {
-        gameModel= new ProxyGameModel();
-        controller= new Controller(gameModel);
+        gameModel = new ProxyGameModel();
+        controller = new Controller(gameModel);
         subscribe();
-        this.sendMessageToClient=sendMessageToClient;
+        this.sendMessageToClient = sendMessageToClient;
     }
 
+    /**
+     * this method is used to subscribe to the model
+     */
     @Override
     public void subscribe() {
         gameModel.subscribeObserver(this);
     }
 
-    public ArrayList<Player> getPlayerArray(){
+    /**
+     * this method return the array of player
+     *
+     * @return array of player
+     */
+
+    public ArrayList<Player> getPlayerArray() {
         return gameModel.getPlayerArray();
     }
 
     /**
      * This method handles all the clients which are connecting at the beginning of the game
+     *
      * @param indexClient client index who is connecting in the game
      */
-    public void askWantToPlay(int indexClient){
-        if(gameModel.getNPlayers() == 0 && getPlayerArray().size() == 0){
+    public void askWantToPlay(int indexClient) {
+        if (gameModel.getNPlayers() == 0 && getPlayerArray().size() == 0) {
             controller.addPlayer(indexClient);
             sendMessageToClient.sendAskNPlayer(false);
-        }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() == 0){
+        } else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() == 0) {
             controller.addPlayer(indexClient);
             sendMessageToClient.sendYouHaveToWait(indexClient);
-        }else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() != 0){
+        } else if (getPlayerArray().size() != 0 && gameModel.getNPlayers() != 0) {
             controller.addPlayer(indexClient);
-            if(getPlayerArray().size() == gameModel.getNPlayers()){
+            if (getPlayerArray().size() == gameModel.getNPlayers()) {
                 sendMessageToClient.YouCanPlay(gameModel.getNPlayers());
-            }else if (getPlayerArray().size() < gameModel.getNPlayers() ){
+            } else if (getPlayerArray().size() < gameModel.getNPlayers()) {
                 sendMessageToClient.sendYouHaveToWait(indexClient);
-            }else{
+            } else {
                 sendMessageToClient.sendCloseConnection(indexClient, true);
             }
         }
@@ -58,26 +72,28 @@ public class VirtualView implements Observer {
 
     /**
      * This method sets the number of players and sends the requests of player information
+     *
      * @param npLayer number of players that are going to play the game
      */
-    public void setNPlayers(int npLayer){
+    public void setNPlayers(int npLayer) {
         controller.setNPlayers(npLayer);
-        if(getPlayerArray().size() == 1 ){
+        if (getPlayerArray().size() == 1) {
             sendMessageToClient.sendAskPlayer(npLayer, false);
-        }else if (getPlayerArray().size() >= npLayer){
+        } else if (getPlayerArray().size() >= npLayer) {
             sendMessageToClient.sendAskPlayer(npLayer, true);
-        }else{
+        } else {
             sendMessageToClient.sendYouHaveToWait(0);
         }
     }
 
     /**
      * This method adds the player: if the players are more than the possible players in the game, this method is going to remove the extra players
-     * @param name player name
-     * @param age player age
+     *
+     * @param name        player name
+     * @param age         player age
      * @param indexClient client index of the player
      */
-    public void addPlayer(String name, int age, int indexClient){
+    public void addPlayer(String name, int age, int indexClient) {
         synchronized (LOCK) {
             if (getPlayerArray().size() > gameModel.getNPlayers()) {
                 controller.removeExtraPlayer();
@@ -89,7 +105,7 @@ public class VirtualView implements Observer {
     /**
      * This method calls askState method in the controller class
      */
-    public void askState(){
+    public void askState() {
         controller.askState();
     }
 
@@ -109,17 +125,19 @@ public class VirtualView implements Observer {
 
     /**
      * This method sets the two or three cards chosen by the first player
+     *
      * @param tempCard two or three cards chosen
      */
-    public void setTempCard(ArrayList<Integer> tempCard){
+    public void setTempCard(ArrayList<Integer> tempCard) {
         controller.setTempCard(tempCard);
     }
 
     /**
      * This method sets the card chosen by the player
+     *
      * @param godCard chosen card
      */
-    public void setCard(int godCard){
+    public void setCard(int godCard) {
         controller.setCard(godCard);
     }
 
@@ -136,12 +154,13 @@ public class VirtualView implements Observer {
     /**
      * This method calls startGame method in the controller class
      */
-    public void startGame(){
+    public void startGame() {
         controller.startGame();
     }
 
     /**
      * This method sends an update about player index to the players
+     *
      * @param indexClient client index who is playing
      * @param indexPlayer player index
      */
@@ -153,17 +172,17 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends the two or three cards to the player and he has to choose one. When each player chose a cards, it sends the board and the request to initialize the workers to the first player of the game
+     *
      * @param clientIndex client index who is playing
      */
     @Override
-    public void updateTempCard(int clientIndex){
+    public void updateTempCard(int clientIndex) {
         AskCardEvent askCardEvent = new AskCardEvent(gameModel.getTempCard());
         askCardEvent.setCurrentClientPlaying(clientIndex);
 
-        if(askCardEvent.getCardTemp().size() != 0){
+        if (askCardEvent.getCardTemp().size() != 0) {
             sendMessageToClient.sendAskCard(askCardEvent);
-        }
-        else{
+        } else {
             updateBoard(false);
             AskInitializeWorkerEvent askInitializeWorkerEvent = new AskInitializeWorkerEvent();
             askInitializeWorkerEvent.setCurrentClientPlaying(clientIndex);
@@ -173,44 +192,48 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends an update of the board to the players
+     *
      * @param reach boolean that identifies if the clients have to print the reachable boxes
      */
     @Override
-    public void updateBoard(boolean reach){
+    public void updateBoard(boolean reach) {
         sendMessageToClient.sendUpdateBoard(gameModel.gameData(reach));
     }
 
     /**
      * This method sends another request of player information to the client
+     *
      * @param indexClient client index who is playing
      */
     @Override
-    public void updateNewAddPlayer(int indexClient){
+    public void updateNewAddPlayer(int indexClient) {
         sendMessageToClient.sendAskPlayerAgain(indexClient);
     }
 
     /**
      * This method calls the initializeWorker method in the controller class
+     *
      * @param box1 box where the player wants to put the first worker
      * @param box2 box where the player wants to put the second worker
      */
     public void initializeWorker(Box box1, Box box2) {
-        controller.initializeWorker(box1,box2);
+        controller.initializeWorker(box1, box2);
     }
 
     /**
      * This method sends an update of the board and the request to choose the worker to move, if the first player has to play; otherwise sends the request to initialize the workers
+     *
      * @param indexClient client index who is playing
      * @param indexPlayer player index
      */
     @Override
-    public void updateInitializeWorker(int indexClient, int indexPlayer){
+    public void updateInitializeWorker(int indexClient, int indexPlayer) {
         updateBoard(false);
-        if(indexPlayer == 0){
+        if (indexPlayer == 0) {
             AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true, true);
             askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
             sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
-        }else{
+        } else {
             AskInitializeWorkerEvent askInitializeWorkerEvent = new AskInitializeWorkerEvent();
             askInitializeWorkerEvent.setCurrentClientPlaying(indexClient);
             sendMessageToClient.sendAskInitializeWorker(askInitializeWorkerEvent);
@@ -219,10 +242,11 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends another request to initialize the workers, if the player chooses an occupied box
+     *
      * @param indexClient client index who is playing
      */
     @Override
-    public void updateNotInitializeWorker(int indexClient){
+    public void updateNotInitializeWorker(int indexClient) {
         AskInitializeWorkerEvent askInitializeWorkerEvent = new AskInitializeWorkerEvent();
         askInitializeWorkerEvent.setCurrentClientPlaying(indexClient);
         sendMessageToClient.sendAskInitializeWorker(askInitializeWorkerEvent);
@@ -230,101 +254,108 @@ public class VirtualView implements Observer {
 
     /**
      * This method tells if a box is reachable by a worker
-     * @param row row of the box where the worker wants to move or to build
+     *
+     * @param row    row of the box where the worker wants to move or to build
      * @param column column of the box where the worker wants to move or to build
      * @return true if the box is reachable, otherwise returns false
      */
-    public boolean isReachable(int row, int column){
-        return gameModel.isReachable(row,column);
+    public boolean isReachable(int row, int column) {
+        return gameModel.isReachable(row, column);
     }
 
     /**
      * This method calls the canMove method in the controller class
      */
-    public void canMove(){
+    public void canMove() {
         controller.canMove();
     }
 
     /**
      * This method calls the canMoveSpecialTurn method in the controller class
-     * @param indexWorker worker index that the player wants to move
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexWorker  worker index that the player wants to move
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
      */
-    public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker ){
+    public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker) {
         controller.canMoveSpecialTurn(indexWorker, rowWorker, columnWorker);
     }
 
     /**
      * This method calls the setBoxReachable method in the controller class if the player didn't choose definitively the worker, otherwise calls the canBuildBeforeWorkerMove method in the controller
-     * @param row row of the box where the worker is
-     * @param column column of the box where the worker is
+     *
+     * @param row               row of the box where the worker is
+     * @param column            column of the box where the worker is
      * @param indexWorkerToMove worker index that the player wants to move
-     * @param isReady boolean that identifies if the player has chosen the worker or not
+     * @param isReady           boolean that identifies if the player has chosen the worker or not
      */
-    public void setBoxReachable(int row, int column, int indexWorkerToMove, boolean isReady){
-        if(isReady){
+    public void setBoxReachable(int row, int column, int indexWorkerToMove, boolean isReady) {
+        if (isReady) {
             controller.canBuildBeforeWorkerMove(row, column, indexWorkerToMove);
-        }else {
-            controller.setBoxReachable(indexWorkerToMove , false);
+        } else {
+            controller.setBoxReachable(indexWorkerToMove, false);
         }
     }
 
     /**
      * This method sends an update of the board and if it is not the second move, it sends again the request to initialize the workers
+     *
      * @param indexClient client index who is playing
      * @param indexPlayer player index
      * @param indexWorker worker index that the player wants to move
-     * @param secondMove boolean that identifies if it is the first or the second move
+     * @param secondMove  boolean that identifies if it is the first or the second move
      */
     @Override
-    public void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove){
+    public void updateReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove) {
         updateBoard(true);
-        if(!secondMove) {
+        if (!secondMove) {
             AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, false, true);
             askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
             askWorkerToMoveEvent.setIndexWorker(indexWorker);
             sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
         }
     }
+
     @Override
-    public void updateNotReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove){
+    public void updateNotReachable(int indexClient, int indexPlayer, int indexWorker, boolean secondMove) {
         updateBoard(true);
-        AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true,false);
+        AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true, false);
         askWorkerToMoveEvent.setCurrentClientPlaying(indexClient);
         askWorkerToMoveEvent.setIndexWorker(indexWorker);
         sendMessageToClient.sendAskWorkerToMoveEvent(askWorkerToMoveEvent);
     }
 
 
-
     /**
      * This method sends a message memorizing the positions of the player workers
+     *
      * @param indexPlayer player index who is playing
-     * @param firstMove boolean that identifies if it is the first time for this player
+     * @param firstMove   boolean that identifies if it is the first time for this player
+     * @param canMove boolean if the worker can make a move
      * @return object with the positions of the player workers
      */
-    public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove, boolean canMove){
+    public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove, boolean canMove) {
         ArrayList<Box> positions = gameModel.getWorkersPos(indexPlayer);
-        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(), positions.get(1).getRow(), positions.get(1).getColumn(),firstMove, canMove);
+        return new AskWorkerToMoveEvent(positions.get(0).getRow(), positions.get(0).getColumn(), positions.get(1).getRow(), positions.get(1).getColumn(), firstMove, canMove);
     }
 
     /**
      * This method controls if the box given by the player is reachable: if it is, the method calls the movePlayer method in the controller, otherwise it sends an update of the board and sends again the request to choose a reachable box
-     * @param rowStart row of the box where the worker is
-     * @param columnStart column of the box where the worker is
-     * @param row row of the box where the player wants to move the worker
-     * @param column column of the box where the player wants to move the worker
+     *
+     * @param rowStart          row of the box where the worker is
+     * @param columnStart       column of the box where the worker is
+     * @param row               row of the box where the player wants to move the worker
+     * @param column            column of the box where the player wants to move the worker
      * @param indexWorkerToMove worker index that the player wants to move
-     * @param firstTime boolean that identifies if it is the first player build or the second
+     * @param firstTime         boolean that identifies if it is the first player build or the second
      */
-    public void move(int rowStart, int columnStart, int row, int column, int indexWorkerToMove, boolean firstTime){
-        if(isReachable( row, column)){
+    public void move(int rowStart, int columnStart, int row, int column, int indexWorkerToMove, boolean firstTime) {
+        if (isReachable(row, column)) {
             controller.movePlayer(rowStart, columnStart, row, column, indexWorkerToMove);
-        }else{
+        } else {
             updateBoard(true);
             AskMoveEvent askMoveEvent = new AskMoveEvent(indexWorkerToMove, rowStart, columnStart, true, false);
-            if(!firstTime){
+            if (!firstTime) {
                 askMoveEvent.setFirstTime(false);
             }
             askMoveEvent.setWrongBox(true);
@@ -335,8 +366,9 @@ public class VirtualView implements Observer {
 
     /**
      * This method tells that the player can build before the worker move
-     * @param row row of the box where the worker is
-     * @param column column of the box where the worker is
+     *
+     * @param row               row of the box where the worker is
+     * @param column            column of the box where the worker is
      * @param indexWorkerToMove worker index that the player wants to move
      */
     @Override
@@ -346,21 +378,23 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends a message where requires to choose a worker to move
-     * @param indexWorker worker index that the player wants to move
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexWorker  worker index that the player wants to move
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
      */
     @Override
     public void updateBasicTurn(int indexWorker, int rowWorker, int columnWorker) {
-        AskMoveEvent askMoveEvent = new AskMoveEvent( indexWorker, rowWorker, columnWorker,true,false);
+        AskMoveEvent askMoveEvent = new AskMoveEvent(indexWorker, rowWorker, columnWorker, true, false);
         askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
         sendMessageToClient.sendAskMoveEvent(askMoveEvent);
     }
 
     /**
      * This method sends a request where the player can choose to build before worker move or not
-     * @param indexWorker worker index that the player wants to move
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexWorker  worker index that the player wants to move
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
      */
     @Override
@@ -372,44 +406,48 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends the request to build if the player chooses to build before worker move, otherwise calls updateBasicTurn method
-     * @param indexWorker worker index that the player wants to move
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexWorker  worker index that the player wants to move
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
-     * @param wantToBuild boolean that identifies if the player wants to build before worker move or not
+     * @param wantToBuild  boolean that identifies if the player wants to build before worker move or not
      */
-    public void buildBeforeMove(int indexWorker, int rowWorker, int columnWorker, boolean wantToBuild){
-        if(wantToBuild){
+    public void buildBeforeMove(int indexWorker, int rowWorker, int columnWorker, boolean wantToBuild) {
+        if (wantToBuild) {
             setBoxBuilding(indexWorker);
             AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false, true);
             askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
             sendMessageToClient.sendAskBuildEvent(askBuildEvent);
-        }else{
+        } else {
             updateBasicTurn(indexWorker, rowWorker, columnWorker);
         }
     }
 
     /**
      * This method sends an update of the board and checks if the player wins with the worker move
+     *
      * @param askMoveEvent object with all the information about the worker move
-     * @param clientIndex client index who is playing
+     * @param clientIndex  client index who is playing
      */
     @Override
-    public void updateMove(AskMoveEvent askMoveEvent, int clientIndex){
+    public void updateMove(AskMoveEvent askMoveEvent, int clientIndex) {
         updateBoard(false);
         checkWin(askMoveEvent, clientIndex);
     }
 
     /**
      * This method calls the checkWin method in the controller class
+     *
      * @param askMoveEvent object with all the information about the worker move
-     * @param clientIndex client index who is playing
+     * @param clientIndex  client index who is playing
      */
-    public void checkWin(AskMoveEvent askMoveEvent, int clientIndex){
+    public void checkWin(AskMoveEvent askMoveEvent, int clientIndex) {
         controller.checkWin(askMoveEvent, clientIndex);
     }
 
     /**
      * This method sends a message of victory to the player who has won
+     *
      * @param indexClient client index who has won
      */
     @Override
@@ -419,6 +457,7 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends a loss message to the player who has lost
+     *
      * @param indexClient client index who has lost
      */
     @Override
@@ -428,13 +467,14 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends the possibility to move again the worker if the player has a God with this ability, otherwise calls canBuild method
+     *
      * @param askMoveEvent object with all the information about the worker move
      */
     @Override
     public void updateContinueMove(AskMoveEvent askMoveEvent) {
-        if(askMoveEvent.isDone()){
+        if (askMoveEvent.isDone()) {
             canBuild(askMoveEvent.getClientIndex(), askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
-        }else{
+        } else {
             controller.setBoxReachable(askMoveEvent.getIndexWorker(), true);
             askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
             sendMessageToClient.sendAskMoveEvent(askMoveEvent);
@@ -443,29 +483,32 @@ public class VirtualView implements Observer {
 
     /**
      * This method calls canBuild method in the controller class
-     * @param indexClient client index who is playing
-     * @param indexWorker worker index that builds
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexClient  client index who is playing
+     * @param indexWorker  worker index that builds
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
      */
-    public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker){
+    public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker) {
         controller.canBuild(indexClient, indexWorker, rowWorker, columnWorker);
     }
 
     /**
      * This method calls canBuildSpecialTurn method in the controller class
-     * @param indexWorker worker index that has to build
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexWorker  worker index that has to build
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
      */
-    public void canBuildSpecialTurn(int indexWorker, int rowWorker, int columnWorker){
+    public void canBuildSpecialTurn(int indexWorker, int rowWorker, int columnWorker) {
         controller.canBuildSpecialTurn(indexWorker, rowWorker, columnWorker);
     }
 
     /**
      * This method sends an update of the board and the request to build a block
-     * @param indexWorker worker index that has to build
-     * @param rowWorker row of the box where the worker is
+     *
+     * @param indexWorker  worker index that has to build
+     * @param rowWorker    row of the box where the worker is
      * @param columnWorker column of the box where the worker is
      */
     @Override
@@ -478,6 +521,7 @@ public class VirtualView implements Observer {
 
     /**
      * This method calls setBoxBuilding method in the controller class
+     *
      * @param indexWorker worker index that has to build
      */
     public void setBoxBuilding(int indexWorker) {
@@ -488,29 +532,30 @@ public class VirtualView implements Observer {
      * This method sends an update of the board
      */
     @Override
-    public void updateSetBuilding(){
+    public void updateSetBuilding() {
         updateBoard(true);
     }
 
     /**
      * This method controls if the box given by the player is reachable: if it is, the method calls the buildBlock method in the controller class, otherwise it sends an update of the board and sends again the request to choose a reachable box
-     * @param indexClient client index who is playing
-     * @param indexWorker worker index that has to build
-     * @param rowWorker row of the box where the worker is
-     * @param columnWorker column of the box where the worker is
-     * @param row row of the box where the player wants to build
-     * @param column column of the box where the player wants to build
-     * @param firstTime boolean that identifies if it is the first player build or the second
-     * @param isSpecialTurn boolean that identifies if the player has built before worker move
+     *
+     * @param indexClient        client index who is playing
+     * @param indexWorker        worker index that has to build
+     * @param rowWorker          row of the box where the worker is
+     * @param columnWorker       column of the box where the worker is
+     * @param row                row of the box where the player wants to build
+     * @param column             column of the box where the player wants to build
+     * @param firstTime          boolean that identifies if it is the first player build or the second
+     * @param isSpecialTurn      boolean that identifies if the player has built before worker move
      * @param indexPossibleBlock index of the block that the player wants to build
      */
     public void buildBlock(int indexClient, int indexWorker, int rowWorker, int columnWorker, int row, int column, boolean firstTime, boolean isSpecialTurn, int indexPossibleBlock) {
-        if(isReachable(row, column)){
+        if (isReachable(row, column)) {
             controller.buildBlock(indexClient, indexWorker, rowWorker, columnWorker, row, column, isSpecialTurn, indexPossibleBlock);
-        }else{
+        } else {
             updateBoard(true);
             AskBuildEvent askBuildEvent = new AskBuildEvent(indexWorker, rowWorker, columnWorker, true, false, isSpecialTurn);
-            if(!firstTime){
+            if (!firstTime) {
                 askBuildEvent.setFirstTime(false);
             }
             askBuildEvent.setWrongBox(true);
@@ -521,24 +566,26 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends an update of the board and checks if a player has won
+     *
      * @param askBuildEvent object with all the information about the worker move
-     * @param clientIndex client index who is playing
+     * @param clientIndex   client index who is playing
      */
     @Override
-    public void updateBuild(AskBuildEvent askBuildEvent, int clientIndex){
+    public void updateBuild(AskBuildEvent askBuildEvent, int clientIndex) {
         updateBoard(false);
         checkWinAfterBuild(askBuildEvent);
     }
 
     /**
      * This method sends the possibility to build again a block if the player has a God with this ability, otherwise calls canMove method
+     *
      * @param askBuildEvent object with all the information about the build move
      */
     @Override
     public void updateContinueBuild(AskBuildEvent askBuildEvent) {
-        if(askBuildEvent.isSpecialTurn()){
+        if (askBuildEvent.isSpecialTurn()) {
             canMoveSpecialTurn(askBuildEvent.getIndexWorker(), askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker());
-        }else {
+        } else {
             if (askBuildEvent.isDone()) {
                 canMove();
             } else {
@@ -551,6 +598,7 @@ public class VirtualView implements Observer {
 
     /**
      * This method calls checkWinAfterBuild in the controller class
+     *
      * @param askBuildEvent object with all the information about the build move
      */
     public void checkWinAfterBuild(AskBuildEvent askBuildEvent) {
@@ -561,7 +609,7 @@ public class VirtualView implements Observer {
      * This method starts the turn of the next player sending the request to choose a worker
      */
     @Override
-    public void updateStartTurn(){
+    public void updateStartTurn() {
         int indexPlayer = gameModel.whoIsPlaying();
         int indexClient = gameModel.searchByPlayerIndex(indexPlayer);
         AskWorkerToMoveEvent askWorkerToMoveEvent = getWorkersPos(indexPlayer, true, true);
@@ -571,6 +619,7 @@ public class VirtualView implements Observer {
 
     /**
      * This method sends a message to the players who are still in the game saying which player has lost
+     *
      * @param loserClient client index who has lost
      */
     @Override
@@ -581,8 +630,9 @@ public class VirtualView implements Observer {
 
     /**
      * This method calls heartbeat method in the controller class
+     *
      * @param messageHeartbeat message of the heartbeat
-     * @param indexClient client index who has sent heartbeat
+     * @param indexClient      client index who has sent heartbeat
      */
     public void printHeartBeat(String messageHeartbeat, int indexClient) {
         controller.heartBeat(indexClient);
@@ -591,67 +641,38 @@ public class VirtualView implements Observer {
 
     /**
      * This method calls controlStillOpen method because the client doesn't send a response
+     *
      * @param indexClient client index who doesn't send a response
      */
     @Override
     public void updateUnreachableClient(int indexClient) {
         synchronized (LOCK) {
-            controlStillOpen(indexClient,false);
+            controlStillOpen(indexClient, false);
         }
     }
 
     /**
      * This method receive the notify of the connection closing
+     *
      * @param indexClient client index who get disconnected
      */
     public void close(int indexClient) {
-        System.out.println("client: "+ indexClient +" will be closed");
+        System.out.println("client: " + indexClient + " will be closed");
     }
 
     /**
      * This method controls if a client is still open
+     *
      * @param indexClient client index who has to be checked
+     * @param beforeStart if the game has not started yet
      */
-    public void controlStillOpen(int indexClient, boolean beforeStart){
-        //todo da controllare quanto migliorabile
+    public void controlStillOpen(int indexClient, boolean beforeStart) {
         synchronized (LOCK) {
             ArrayList<ServerHandler> serverHandlersWaiting = sendMessageToClient.getEchoServer().getClientWaiting();
-            ArrayList<ServerHandler> serverHandlers = sendMessageToClient.getEchoServer().getClientArray();
-            if(!beforeStart){
-                //quando ancora stanno aspettando l'nplayer e il tizio 0 si disconnette o un altro x
-                if (serverHandlersWaiting.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
-                    boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
-                    if (closed) {
-                        serverHandlersWaiting.remove(indexClient);
-                        controller.removePlayer(indexClient);
-                    } else {
-                        sendMessageToClient.sendCloseConnection(indexClient, false);
-                    }
-                } else if (serverHandlersWaiting.size() > 0 && gameModel.getNPlayers() == 0) {
-                    boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
-                    if (closed) {
-                        serverHandlersWaiting.remove(indexClient);
-                        controller.removePlayer(indexClient);
-                        sendMessageToClient.getEchoServer().updateIndexClientWaiting(indexClient);
-                    } else {
-                        sendMessageToClient.sendCloseConnection(indexClient, false);
-                    }
-                } else if (serverHandlers.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
-                    if(indexClient < gameModel.getNPlayers()) {
-                        boolean closed = serverHandlers.get(indexClient).isClosed();
-                        if (closed) {
-                            serverHandlers.remove(indexClient);
-                            controller.removePlayer(indexClient);
-                            sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
-                        } else {
-                            sendMessageToClient.sendCloseConnection(indexClient, false);
-                        }
-                    }else if(serverHandlersWaiting.size() != 0){
-                        serverHandlersWaiting.remove(indexClient);
-                        controller.removePlayer(indexClient);
-                    }
-                }
-            }else{
+            ArrayList<ServerHandler> clientArray = sendMessageToClient.getEchoServer().getClientArray();
+            if (!beforeStart) {
+                beforeStart(serverHandlersWaiting, clientArray, indexClient);
+            } else {
                 serverHandlersWaiting.remove(indexClient);
             }
         }
@@ -659,13 +680,90 @@ public class VirtualView implements Observer {
     }
 
     /**
+     * This method is recall if there is a disconnection before the game has started
+     *
+     * @param serverHandlersWaiting array of client waiting for playing
+     * @param clientArray           array of client playing
+     * @param indexClient           index identifying the client who sent the message to the server
+     */
+
+    public void beforeStart(ArrayList<ServerHandler> serverHandlersWaiting, ArrayList<ServerHandler> clientArray, int indexClient) {
+        if (serverHandlersWaiting.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
+            beforeInitializationFirstClient(serverHandlersWaiting, indexClient);
+        } else if (serverHandlersWaiting.size() > 0 && gameModel.getNPlayers() == 0) {
+            beforeInitializationOtherClient(serverHandlersWaiting, indexClient);
+        } else if (clientArray.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
+            afterInitialization(serverHandlersWaiting, clientArray, indexClient);
+        }
+    }
+
+    /**
+     * This method is recall if there is a disconnection before the game has started and is the first client that has disconnected
+     *
+     * @param serverHandlersWaiting array of client waiting for playing
+     * @param indexClient           index identifying the client who sent the message to the server
+     */
+
+    public void beforeInitializationFirstClient(ArrayList<ServerHandler> serverHandlersWaiting, int indexClient) {
+        boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+        if (closed) {
+            serverHandlersWaiting.remove(indexClient);
+            controller.removePlayer(indexClient);
+        } else {
+            sendMessageToClient.sendCloseConnection(indexClient, false);
+        }
+    }
+
+    /**
+     * This method is recall if there is a disconnection before the game has started and a client different from the first has disconnected
+     *
+     * @param serverHandlersWaiting array of client waiting for playing
+     * @param indexClient           index identifying the client who sent the message to the server
+     */
+
+    public void beforeInitializationOtherClient(ArrayList<ServerHandler> serverHandlersWaiting, int indexClient) {
+        boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+        if (closed) {
+            serverHandlersWaiting.remove(indexClient);
+            controller.removePlayer(indexClient);
+            sendMessageToClient.getEchoServer().updateIndexClientWaiting(indexClient);
+        } else {
+            sendMessageToClient.sendCloseConnection(indexClient, false);
+        }
+    }
+
+    /**
+     * This method is recall if there is a disconnection and the game has already started
+     *
+     * @param serverHandlersWaiting array of client waiting for playing
+     * @param clientArray           array of client playing
+     * @param indexClient           index identifying the client who sent the message to the server
+     */
+
+    public void afterInitialization(ArrayList<ServerHandler> serverHandlersWaiting, ArrayList<ServerHandler> clientArray, int indexClient) {
+        if (indexClient < gameModel.getNPlayers()) {
+            boolean closed = clientArray.get(indexClient).isClosed();
+            if (closed) {
+                clientArray.remove(indexClient);
+                controller.removePlayer(indexClient);
+                sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
+            } else {
+                sendMessageToClient.sendCloseConnection(indexClient, false);
+            }
+        } else if (serverHandlersWaiting.size() != 0) {
+            serverHandlersWaiting.remove(indexClient);
+            controller.removePlayer(indexClient);
+        }
+    }
+
+    /**
      * This method controls if the first player sets the number of player in the game
      */
-    public void updateControlSetNPlayer(){
+    public void updateControlSetNPlayer() {
         boolean done = controller.controlSetNPlayer();
-        if(!done){
+        if (!done) {
             sendMessageToClient.sendAskNPlayer(true);
-        }else{
+        } else {
             sendMessageToClient.getEchoServer().closeServerHandlers();
 
         }
@@ -676,7 +774,7 @@ public class VirtualView implements Observer {
      */
     @Override
     public void closeGame() {
-        sendMessageToClient.sendCloseConnection( false);
+        sendMessageToClient.sendCloseConnection(false);
         reset();
     }
 

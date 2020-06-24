@@ -10,26 +10,50 @@ import java.util.ArrayList;
  * This class implements the ability to build a block under an own worker
  */
 public class BuildABlockUnderItself extends GodDecorator {
-
+    /**
+     * Constructor of the class
+     *
+     * @param newGod God
+     */
     public BuildABlockUnderItself(God newGod) {
         super(newGod);
     }
 
+    /**
+     * Name setter
+     *
+     * @param name name of the card
+     */
     @Override
     public void setName(String name) {
         super.setName(name);
     }
 
+    /**
+     * Effects setter
+     *
+     * @param effects array of effects of the card
+     */
     @Override
     public void setEffect(ArrayList<String> effects) {
         super.setEffect(effects);
     }
 
+    /**
+     * Name getter
+     *
+     * @return name of the card
+     */
     @Override
     public String getName() {
         return super.getName();
     }
 
+    /**
+     * Effects getter
+     *
+     * @return array of effects of the card
+     */
     @Override
     public ArrayList<String> getEffects() {
         return super.getEffects();
@@ -37,6 +61,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     /**
      * This method tells which positions can get reached by a worker
+     *
      * @param worker Which worker is the check applied
      */
     @Override
@@ -46,21 +71,23 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     /**
      * This method tells which positions can get built by a worker: the worker space become reachable for the building
+     *
      * @param worker Which worker is the check applied
      */
     @Override
     public void setPossibleBuild(Worker worker) {
         super.setPossibleBuild(worker);
-        if(worker.getHeight() <= 2){
+        if (worker.getHeight() <= 2) {
             worker.getActualBox().setReachable(true);
             Block block = whatCanIBuild(worker.getActualBox());
-            if(block != null)
+            if (block != null)
                 worker.getActualBox().getPossibleBlock().add(block);
         }
     }
 
     /**
      * This method checks which block could be built in a box
+     *
      * @param box box that is going to be checked
      * @return type of block that can be built
      */
@@ -71,6 +98,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     /**
      * This method moves the chosen worker to the new position on the board
+     *
      * @param worker Which worker is applied the move
      * @param pos    Position on the board where the worker wants to go
      * @return False if you can do another move; true if the move has done successfully
@@ -82,17 +110,17 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     /**
      * This method builds a building block in a position on the board: a worker can build a block under itself
+     *
      * @param pos Position on the board where the worker builds a building block
      * @return False if you can do another construction; true if the move has done successfully
      */
     @Override
     public boolean moveBlock(Box pos) {
-        if(!pos.notWorker()){
+        if (!pos.notWorker()) {
             super.moveBlock(pos);
             pos.getWorker().setHeight(pos.getCounter());
             return true;
-        }
-        else {
+        } else {
             super.moveBlock(pos);
             if (pos.getCounter() == 4)
                 completeTowers++;
@@ -102,6 +130,7 @@ public class BuildABlockUnderItself extends GodDecorator {
 
     /**
      * This methods checks if the player win
+     *
      * @param initialPos Position on the board where the worker starts to move
      * @param finalBox   Position on the board where the worker arrives
      * @return False if the player doesn't win; true if the player wins

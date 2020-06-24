@@ -12,6 +12,9 @@ public class ObjTempCard extends ObjMessage {
 
     private static final long serialVersionUID = -3829471843029385138L;
 
+    /**
+     * array of card's id
+     */
     private final ArrayList<Integer> cardsTemp;
 
     /**
@@ -23,6 +26,11 @@ public class ObjTempCard extends ObjMessage {
         this.cardsTemp = cardsTemp;
     }
 
+    /**
+     * Temp card getter
+     *
+     * @return array of card's id
+     */
     public ArrayList<Integer> getCardsTemp() {
         return cardsTemp;
     }

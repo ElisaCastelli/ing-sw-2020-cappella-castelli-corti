@@ -9,10 +9,21 @@ import it.polimi.ingsw.network.VisitorServer;
 public class ObjWorkerToMove extends ObjMessage {
 
     private static final long serialVersionUID = -5927482148957834053L;
-
+    /**
+     * index of the worker
+     */
     final int indexWorkerToMove;
+    /**
+     * row of the worker
+     */
     final int row;
+    /**
+     * column of the worker
+     */
     final int column;
+    /**
+     * boolean if a player is ready to move
+     */
     final boolean isReady;
 
     /**
@@ -30,18 +41,39 @@ public class ObjWorkerToMove extends ObjMessage {
         this.isReady = isReady;
     }
 
+    /**
+     * Row getter
+     *
+     * @return row of the starter box
+     */
+
     public int getRow() {
         return row;
     }
 
+    /**
+     * Column getter
+     *
+     * @return column of the box
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * Index of the worker getter
+     *
+     * @return index of the worker
+     */
     public int getIndexWorkerToMove() {
         return indexWorkerToMove;
     }
 
+    /**
+     * Is ready getter
+     *
+     * @return true if ready to move
+     */
     public boolean isReady() {
         return isReady;
     }

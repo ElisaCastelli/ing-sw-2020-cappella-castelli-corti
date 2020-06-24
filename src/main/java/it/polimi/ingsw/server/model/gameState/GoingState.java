@@ -25,12 +25,24 @@ public class GoingState extends GameState {
      */
     private final GameStateManager manager;
 
+    /**
+     * Constructor of the class
+     *
+     * @param players     array of player
+     * @param playersDead array of player dead
+     * @param manager     game state
+     */
     public GoingState(ArrayList<Player> players, ArrayList<Player> playersDead, GameStateManager manager) {
         this.players = players;
         this.playersDead = playersDead;
         this.manager = manager;
     }
 
+    /**
+     * Players dead getter
+     *
+     * @return array of players
+     */
     public ArrayList<Player> getPlayersDead() {
         return playersDead;
     }

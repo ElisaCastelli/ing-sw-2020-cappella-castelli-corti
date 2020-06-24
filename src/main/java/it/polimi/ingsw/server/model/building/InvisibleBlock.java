@@ -10,30 +10,40 @@ public class InvisibleBlock implements Block {
      */
     private final String blockName;
 
-    public InvisibleBlock () {
+    /**
+     * The constructor of the class
+     */
+    public InvisibleBlock() {
         this.blockName = "I'm Invisible";
     }
 
     /**
-     *@return the name of the block
+     * This method return the name of the block
+     *
+     * @return the name of the block
      */
-    public String getBlockName () {
+    public String getBlockName() {
         return blockName;
     }
 
-    /**
-     * @return this method print out the name of the block you have selected
-     */
-    @Override
-    public String toString () {
-        return getBlockName();
-    }
 
     /**
+     * This method return the int of the identifier of the block
+     *
      * @return the int of the identifier of the block
      */
     @Override
     public int getBlockIdentifier() {
         return -1;
+    }
+
+    /**
+     * To sting method
+     *
+     * @return this method print out the name of the block you have selected
+     */
+    @Override
+    public String toString() {
+        return getBlockName();
     }
 }

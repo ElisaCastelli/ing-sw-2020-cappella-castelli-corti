@@ -7,6 +7,9 @@ import it.polimi.ingsw.network.VisitorServer;
  * message number of player
  */
 public class ObjNumPlayer extends ObjMessage {
+    /**
+     * number of players
+     */
     private final int nPlayer;
 
     /**
@@ -18,6 +21,11 @@ public class ObjNumPlayer extends ObjMessage {
         this.nPlayer = nPlayer;
     }
 
+    /**
+     * Number of the players getter
+     *
+     * @return number of players
+     */
     public int getNPlayer() {
         return nPlayer;
     }

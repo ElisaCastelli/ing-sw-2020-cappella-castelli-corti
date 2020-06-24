@@ -9,14 +9,28 @@ public class EndState extends GameState {
      */
     int winner;
 
+    /**
+     * Constructor of the class
+     */
+
     public EndState() {
     }
 
+    /**
+     * Winner setter
+     *
+     * @param winner integer of the winner
+     */
     @Override
     public void setWinner(int winner) {
         this.winner = winner;
     }
 
+    /**
+     * Winner getter
+     *
+     * @return integer of the winner
+     */
     @Override
     public int getWinner() {
         return winner;

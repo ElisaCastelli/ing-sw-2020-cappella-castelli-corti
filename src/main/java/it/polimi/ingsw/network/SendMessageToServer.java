@@ -13,7 +13,9 @@ import java.util.ArrayList;
  * class to send messages to the clients
  */
 public class SendMessageToServer {
-
+    /**
+     * Client handler
+     */
     private final ClientHandler clientHandler;
 
     /**
@@ -181,6 +183,7 @@ public class SendMessageToServer {
      * a method to send the notification of the connection's closing
      *
      * @param indexClient identify the index of the client
+     * @param beforeStart true if the game has not started yet
      */
 
 

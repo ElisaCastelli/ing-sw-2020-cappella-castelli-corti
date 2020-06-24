@@ -8,9 +8,17 @@ import it.polimi.ingsw.network.objects.ObjMessage;
  * message ask build before move event
  */
 public class AskBuildBeforeMoveEvent extends Event {
-
+    /**
+     * index of te worker
+     */
     final int indexWorker;
+    /**
+     * row of the worker
+     */
     final int rowWorker;
+    /**
+     * column of the worker
+     */
     final int columnWorker;
 
     /**
@@ -26,13 +34,30 @@ public class AskBuildBeforeMoveEvent extends Event {
         this.columnWorker = columnWorker;
     }
 
+    /**
+     * Index of the worker getter
+     *
+     * @return index of the worker
+     */
     public int getIndexWorker() {
         return indexWorker;
     }
 
+    /**
+     * Row of the worker getter
+     *
+     * @return row of the worker
+     */
+
     public int getRowWorker() {
         return rowWorker;
     }
+
+    /**
+     * Column of the worker getter
+     *
+     * @return column of the worker
+     */
 
     public int getColumnWorker() {
         return columnWorker;

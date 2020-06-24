@@ -21,6 +21,8 @@ public class SendMessageToClient {
     }
 
     /**
+     * Echo server getter
+     *
      * @return the echoServer
      */
 

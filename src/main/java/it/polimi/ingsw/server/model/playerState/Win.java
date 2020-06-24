@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.gameComponents.Worker;
 /**
  * Class of the player's state if he is in the game yet and it's his turn
  */
-public class Win extends PlayerState{
+public class Win extends PlayerState {
 
     /**
      * Player's card
@@ -19,13 +19,20 @@ public class Win extends PlayerState{
      */
     private final PlayerStateManager playerManager;
 
-    public Win(God myGod,PlayerStateManager playerManager){
+    /**
+     * Constructor of the class
+     *
+     * @param myGod         God of the player
+     * @param playerManager Player manager
+     */
+    public Win(God myGod, PlayerStateManager playerManager) {
         this.myGod = myGod;
-        this.playerManager=playerManager;
+        this.playerManager = playerManager;
     }
 
     /**
      * Check if the player is in a state of victory
+     *
      * @return true if the player's state is Win
      */
     @Override

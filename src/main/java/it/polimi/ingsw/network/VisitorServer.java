@@ -12,13 +12,15 @@ import it.polimi.ingsw.server.VirtualView;
  */
 
 public class VisitorServer {
-
+    /**
+     * view of the MVC pattern
+     */
     private final VirtualView virtualView;
 
     /**
      * class constructor
      *
-     * @param virtualView the the view of the MVC pattern
+     * @param virtualView the view of the MVC pattern
      */
     public VisitorServer(VirtualView virtualView) {
         this.virtualView = virtualView;
