@@ -561,6 +561,8 @@ public class Game implements GameModel {
             setDeadPlayer(playerIndex);
             if (nPlayers == 2 || playersDead.size() == 2) {
                 thereIsAWinner();
+            } else {
+                fakePlaying(playerIndex);
             }
         }
         return canMove;
@@ -620,15 +622,15 @@ public class Game implements GameModel {
         for (Player player : players) {
             int mayBeTheWinner = 0;
             int i = 0;
-            while (i < (playersDead.size() - 1)) {
+            while (i <= (playersDead.size() - 1)) {
                 if (playersDead.get(i).getIndexClient() != player.getIndexClient()) {
                     mayBeTheWinner = mayBeTheWinner + 1;
-                    i = i + 1;
                 }
                 if (mayBeTheWinner == playersDead.size()) {
                     player.goWin();
                     stateManager.goEnd(player.getIndexClient());
                 }
+                i++;
             }
         }
     }
@@ -639,10 +641,10 @@ public class Game implements GameModel {
      * @param indexWorker worker index that has to build
      */
     @Override
-    public void setBoxBuilding(int indexWorker) {
+    public boolean setBoxBuilding(int indexWorker) {
         board.clearReachable();
         int indexPlayer = whoIsPlaying();
-        stateManager.setBoxBuilding(indexPlayer, indexWorker);
+        return stateManager.setBoxBuilding(indexPlayer, indexWorker);
     }
 
     /**

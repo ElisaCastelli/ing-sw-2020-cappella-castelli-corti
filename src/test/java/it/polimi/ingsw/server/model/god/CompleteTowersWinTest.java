@@ -11,22 +11,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CompleteTowersWinTest {
 
-    private God god = new CompleteTowersWin(new BasicGod());
+    private God cronus = new CompleteTowersWin(new BasicGod());
 
     @BeforeEach
     void init(){
         ArrayList<String> effects = new ArrayList<>();
         effects.add("CompleteTowersWin");
         effects.add("BasicGod");
-        god.setEffect(effects);
-        god.setName("Cronus");
-        assertEquals("Cronus", god.getName());
-        assertEquals("CompleteTowersWin", god.getEffects().get(0));
-        assertEquals("BasicGod", god.getEffects().get(1));
+        cronus.setEffect(effects);
+        cronus.setName("Cronus");
+        assertEquals("Cronus", cronus.getName());
+        assertEquals("CompleteTowersWin", cronus.getEffects().get(0));
+        assertEquals("BasicGod", cronus.getEffects().get(1));
     }
 
     @Test
-    void checkWin() {
+    void checkWin(){
         God athena = new OpponentBlock(new BasicGod());
         God apollo = new SwitchWorker(new BasicGod());
         God artemis = new MoveWorkerTwice(new BasicGod());
@@ -39,104 +39,103 @@ class CompleteTowersWinTest {
         God triton = new MoveInfinityTimesAlongThePerimeter(new BasicGod());
         God zeus = new BuildABlockUnderItself(new BasicGod());
         God charon = new FerryAnOpponentWorker(new BasicGod());
-        Board board = new Board();
-        board.getBox(0,0);
+        Board boardGame = new Board();
 
-        board.getBox(0,0).build();
-        board.getBox(0,0).build();
-        board.getBox(0,0).build();
-        athena.moveBlock(board.getBox(0,0));
-        assertFalse(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(0,0).build();
+        boardGame.getBox(0,0).build();
+        boardGame.getBox(0,0).build();
+        athena.moveBlock(boardGame.getBox(0,0));
+        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        apollo.moveBlock(board.getBox(0,1));
-        board.getBox(0,1).build();
-        board.getBox(0,1).build();
-        apollo.moveBlock(board.getBox(0,1));
-        assertFalse(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        apollo.moveBlock(boardGame.getBox(0,1));
+        boardGame.getBox(0,1).build();
+        boardGame.getBox(0,1).build();
+        apollo.moveBlock(boardGame.getBox(0,1));
+        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        board.getBox(0,2).build();
-        artemis.moveBlock((board.getBox(0,2)));
-        board.getBox(0,2).build();
-        artemis.moveBlock(board.getBox(0,2));
-        assertFalse(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(0,2).build();
+        artemis.moveBlock((boardGame.getBox(0,2)));
+        boardGame.getBox(0,2).build();
+        artemis.moveBlock(boardGame.getBox(0,2));
+        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        board.getBox(0,3).build();
-        board.getBox(0,3).build();
-        minotaur.moveBlock(board.getBox(0,3));
-        minotaur.moveBlock(board.getBox(0,3));
-        assertFalse(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(0,3).build();
+        boardGame.getBox(0,3).build();
+        minotaur.moveBlock(boardGame.getBox(0,3));
+        minotaur.moveBlock(boardGame.getBox(0,3));
+        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        assertFalse(demeter.moveBlock(board.getBox(0,4)));
-        assertTrue(demeter.moveBlock(board.getBox(1,4)));
-        board.getBox(0,4).build();
-        board.getBox(0,4).build();
-        assertFalse(demeter.moveBlock(board.getBox(0,4)));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
-        board.getBox(1,4).build();
-        board.getBox(1,4).build();
-        assertTrue(demeter.moveBlock(board.getBox(1,4)));
+        assertFalse(demeter.moveBlock(boardGame.getBox(0,4)));
+        assertTrue(demeter.moveBlock(boardGame.getBox(1,4)));
+        boardGame.getBox(0,4).build();
+        boardGame.getBox(0,4).build();
+        assertFalse(demeter.moveBlock(boardGame.getBox(0,4)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
+        boardGame.getBox(1,4).build();
+        boardGame.getBox(1,4).build();
+        assertTrue(demeter.moveBlock(boardGame.getBox(1,4)));
 
-        assertFalse(hephaestus.moveBlock(board.getBox(1,3)));
-        assertTrue(hephaestus.moveBlock(board.getBox(1,3)));
-        assertTrue(hephaestus.moveBlock(board.getBox(1,3)));
-        assertTrue(hephaestus.moveBlock(board.getBox(1,3)));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        assertFalse(hephaestus.moveBlock(boardGame.getBox(1,3)));
+        assertTrue(hephaestus.moveBlock(boardGame.getBox(1,3)));
+        assertTrue(hephaestus.moveBlock(boardGame.getBox(1,3)));
+        assertTrue(hephaestus.moveBlock(boardGame.getBox(1,3)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        pan.moveBlock(board.getBox(1,2));
-        board.getBox(1,2).build();
-        board.getBox(1,2).build();
-        pan.moveBlock(board.getBox(1,2));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        pan.moveBlock(boardGame.getBox(1,2));
+        boardGame.getBox(1,2).build();
+        boardGame.getBox(1,2).build();
+        pan.moveBlock(boardGame.getBox(1,2));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        board.getBox(1,1).build();
-        god.moveBlock(board.getBox(1,1));
-        board.getBox(1,1).build();
-        god.moveBlock(board.getBox(1,1));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(1,1).build();
+        cronus.moveBlock(boardGame.getBox(1,1));
+        boardGame.getBox(1,1).build();
+        cronus.moveBlock(boardGame.getBox(1,1));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        board.getBox(1,0).build();
-        board.getBox(1,0).build();
-        triton.moveBlock(board.getBox(1,0));
-        triton.moveBlock(board.getBox(1,0));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(1,0).build();
+        boardGame.getBox(1,0).build();
+        triton.moveBlock(boardGame.getBox(1,0));
+        triton.moveBlock(boardGame.getBox(1,0));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        zeus.moveBlock(board.getBox(2,0));
-        board.getBox(2,0).build();
-        board.getBox(2,0).build();
-        zeus.moveBlock(board.getBox(2,0));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        zeus.moveBlock(boardGame.getBox(2,0));
+        boardGame.getBox(2,0).build();
+        boardGame.getBox(2,0).build();
+        zeus.moveBlock(boardGame.getBox(2,0));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        board.getBox(2,1).build();
-        charon.moveBlock(board.getBox(2,1));
-        board.getBox(2,1).build();
-        charon.moveBlock(board.getBox(2,1));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(2,1).build();
+        charon.moveBlock(boardGame.getBox(2,1));
+        boardGame.getBox(2,1).build();
+        charon.moveBlock(boardGame.getBox(2,1));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        assertFalse(hestia.moveBlock(board.getBox(2,2)));
-        assertTrue(hestia.moveBlock(board.getBox(2,2)));
-        assertFalse(hestia.moveBlock(board.getBox(2,2)));
-        assertTrue(hestia.moveBlock(board.getBox(2,2)));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        assertFalse(hestia.moveBlock(boardGame.getBox(2,2)));
+        assertTrue(hestia.moveBlock(boardGame.getBox(2,2)));
+        assertFalse(hestia.moveBlock(boardGame.getBox(2,2)));
+        assertTrue(hestia.moveBlock(boardGame.getBox(2,2)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        board.getBox(2,4).build();
-        board.getBox(2,4).build();
-        board.getBox(2,4).build();
-        assertFalse(hestia.moveBlock(board.getBox(2,4)));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        boardGame.getBox(2,4).build();
+        boardGame.getBox(2,4).build();
+        boardGame.getBox(2,4).build();
+        assertFalse(hestia.moveBlock(boardGame.getBox(2,4)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        assertTrue(hestia.moveBlock(board.getBox(2,3)));
-        assertTrue(prometheus.moveBlock(board.getBox(2,3)));
+        assertTrue(hestia.moveBlock(boardGame.getBox(2,3)));
+        assertTrue(prometheus.moveBlock(boardGame.getBox(2,3)));
         Worker proWorker = new Worker(1);
-        proWorker.initializePos(board.getBox(4,0),board);
-        assertTrue(prometheus.moveWorker(proWorker, board.getBox(4,1)));
-        assertTrue(prometheus.moveBlock(board.getBox(2,3)));
-        assertTrue(prometheus.moveWorker(proWorker, board.getBox(4,2)));
-        assertTrue(prometheus.moveBlock(board.getBox(2,3)));
-        assertTrue(god.checkWin(board.getBox(4,4), board.getBox(4,3)));
+        proWorker.initializePos(boardGame.getBox(4,0),boardGame);
+        assertTrue(prometheus.moveWorker(proWorker, boardGame.getBox(4,1)));
+        assertTrue(prometheus.moveBlock(boardGame.getBox(2,3)));
+        assertTrue(prometheus.moveWorker(proWorker, boardGame.getBox(4,2)));
+        assertTrue(prometheus.moveBlock(boardGame.getBox(2,3)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
-        god.setPossibleMove(proWorker);
-        assertTrue(god.moveWorker(proWorker, board.getBox(4,3)));
-        board.getBox(4,2).clearBoxesNextTo();
-        god.setPossibleBuild(proWorker);
+        cronus.setPossibleMove(proWorker);
+        assertTrue(cronus.moveWorker(proWorker, boardGame.getBox(4,3)));
+        boardGame.getBox(4,2).clearBoxesNextTo();
+        cronus.setPossibleBuild(proWorker);
     }
 }

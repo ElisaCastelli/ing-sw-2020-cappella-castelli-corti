@@ -21,7 +21,7 @@ public class VirtualView implements Observer {
     private final Object LOCK = new Object();
 
 
-    public VirtualView(SendMessageToClient sendMessageToClient) throws Exception {
+    public VirtualView(SendMessageToClient sendMessageToClient) {
         gameModel = new ProxyGameModel();
         controller = new Controller(gameModel);
         subscribe();
@@ -475,9 +475,13 @@ public class VirtualView implements Observer {
         if (askMoveEvent.isDone()) {
             canBuild(askMoveEvent.getClientIndex(), askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
         } else {
-            controller.setBoxReachable(askMoveEvent.getIndexWorker(), true);
-            askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
-            sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+            if (controller.setBoxReachable(askMoveEvent.getIndexWorker(), true)){
+                askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+                sendMessageToClient.sendAskMoveEvent(askMoveEvent);
+            }
+            else{
+                canBuild(askMoveEvent.getClientIndex(), askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
+            }
         }
     }
 
@@ -523,9 +527,10 @@ public class VirtualView implements Observer {
      * This method calls setBoxBuilding method in the controller class
      *
      * @param indexWorker worker index that has to build
+     * @return true if it is reachable
      */
-    public void setBoxBuilding(int indexWorker) {
-        controller.setBoxBuilding(indexWorker);
+    public boolean setBoxBuilding(int indexWorker) {
+        return controller.setBoxBuilding(indexWorker);
     }
 
     /**
@@ -589,9 +594,12 @@ public class VirtualView implements Observer {
             if (askBuildEvent.isDone()) {
                 canMove();
             } else {
-                setBoxBuilding(askBuildEvent.getIndexWorker());
-                askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
-                sendMessageToClient.sendAskBuildEvent(askBuildEvent);
+                if (setBoxBuilding(askBuildEvent.getIndexWorker())){
+                    askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
+                    sendMessageToClient.sendAskBuildEvent(askBuildEvent);
+                } else {
+                    canMove();
+                }
             }
         }
     }

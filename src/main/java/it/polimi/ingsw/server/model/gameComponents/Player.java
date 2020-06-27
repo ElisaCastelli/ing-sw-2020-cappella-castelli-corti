@@ -358,9 +358,11 @@ public class Player implements Serializable {
      * This method calls the setPossibleBuild in the playerStateManager
      *
      * @param indexWorker index of the worker which is getting the possible builds
+     * @return true if is reachable
      */
-    public void setPossibleBuild(int indexWorker) {
+    public boolean setPossibleBuild(int indexWorker) {
         gamerManager.setPossibleBuild(myWorkers[indexWorker]);
+        return myWorkers[indexWorker].getActualBox().checkPossible();
     }
 
     /**
@@ -405,11 +407,11 @@ public class Player implements Serializable {
      * @return false if no workers can move, otherwise returns true
      */
     public boolean checkWorkers() {
-        gamerManager.setPossibleMove(myWorkers[0]);
-        boolean firstWorker = myWorkers[0].getActualBox().checkPossible();
         myWorkers[0].getActualBox().clearBoxesNextTo();
-        gamerManager.setPossibleMove(myWorkers[1]);
-        boolean secondWorker = myWorkers[1].getActualBox().checkPossible();
+        boolean firstWorker = gamerManager.setPossibleMove(myWorkers[0]);
+        myWorkers[0].getActualBox().clearBoxesNextTo();
+        myWorkers[1].getActualBox().clearBoxesNextTo();
+        boolean secondWorker = gamerManager.setPossibleMove(myWorkers[1]);
         myWorkers[1].getActualBox().clearBoxesNextTo();
         return (firstWorker || secondWorker);
     }
@@ -421,8 +423,8 @@ public class Player implements Serializable {
      * @return false if the worker cannot move, otherwise returns true
      */
     public boolean checkWorker(int indexWorker) {
-        gamerManager.setPossibleMove(myWorkers[indexWorker]);
-        boolean worker = myWorkers[indexWorker].getActualBox().checkPossible();
+        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
+        boolean worker = gamerManager.setPossibleMove(myWorkers[indexWorker]);
         myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
         return worker;
     }
@@ -434,6 +436,8 @@ public class Player implements Serializable {
      * @return false if the worker cannot move, otherwise returns true
      */
     public boolean checkBuilding(int indexWorker) {
+        myWorkers[indexWorker].getActualBox().clearBoxesNextTo();
+        myWorkers[indexWorker].getActualBox().setReachable(false);
         gamerManager.setPossibleBuild(myWorkers[indexWorker]);
         return myWorkers[indexWorker].getActualBox().checkPossible();
     }

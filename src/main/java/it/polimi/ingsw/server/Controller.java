@@ -157,16 +157,16 @@ public class Controller {
      * This method checks if at least one of the two workers can move: if the workers can moves, the player can start his turn, otherwise he loses
      */
     public void canMove() {
-        int loserClient = gameModel.whoIsPlaying();
+        int loserClient = whoIsLosing();
         boolean goAhead = gameModel.canMove();
         if (goAhead) {
             gameModel.notifyStartTurn();
         } else {
-            gameModel.notifyLoser(loserClient);
             int winnerClient = gameModel.getWinner();
             if (winnerClient != -1) {
                 gameModel.notifyWin(winnerClient);
             } else {
+                gameModel.notifyLoser(loserClient);
                 gameModel.notifyWhoHasLost(loserClient);
             }
         }
@@ -180,18 +180,18 @@ public class Controller {
      * @param columnWorker column of the box where the worker is
      */
     public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker) {
-        int loserClient = gameModel.whoIsPlaying();
+        int loserClient = whoIsLosing();
         boolean goAhead = gameModel.canMoveSpecialTurn(indexWorker);
         if (goAhead) {
             gameModel.setBoxReachable(indexWorker);
             gameModel.notifyUpdateBoard(true);
             gameModel.notifyBasicTurn(indexWorker, rowWorker, columnWorker);
         } else {
-            gameModel.notifyLoser(loserClient);
             int winnerClient = gameModel.getWinner();
             if (winnerClient != -1) {
                 gameModel.notifyWin(winnerClient);
             } else {
+                gameModel.notifyLoser(loserClient);
                 gameModel.notifyWhoHasLost(loserClient);
             }
         }
@@ -202,14 +202,18 @@ public class Controller {
      *
      * @param indexWorker worker index that the player wants to move
      * @param secondMove  true if it is a second worker move because of a God ability, otherwise it is false
+     * @return boolean that identifies if there is at least one reachable box
      */
-    public void setBoxReachable(int indexWorker, boolean secondMove) {
+    public boolean setBoxReachable(int indexWorker, boolean secondMove) {
         boolean oneReachable = gameModel.setBoxReachable(indexWorker);
         if (oneReachable) {
             gameModel.notifySetReachable(indexWorker, secondMove);
+        } else if (!secondMove) {
+            gameModel.notifyNotReachable(indexWorker, false);
         } else {
-            gameModel.notifyNotReachable(indexWorker, secondMove);
+            return false;
         }
+        return true;
     }
 
     /**
@@ -267,11 +271,11 @@ public class Controller {
     public void canBuild(int indexClient, int indexWorker, int rowWorker, int columnWorker) {
         boolean goAhead = gameModel.canBuild(indexWorker);
         if (!goAhead) {
-            gameModel.notifyLoser(indexClient);
             int winnerClient = gameModel.getWinner();
             if (winnerClient != -1) {
                 gameModel.notifyWin(winnerClient);
             } else {
+                gameModel.notifyLoser(indexClient);
                 gameModel.notifyWhoHasLost(indexClient);
             }
         } else {
@@ -299,10 +303,15 @@ public class Controller {
      * This method sets all the boxes that a worker can reach with the building
      *
      * @param indexWorker worker index that has to build
+     * @return boolean that identifies if there is at least one reachable box
      */
-    public void setBoxBuilding(int indexWorker) {
-        gameModel.setBoxBuilding(indexWorker);
-        gameModel.notifySetBuilding();
+    public boolean setBoxBuilding(int indexWorker) {
+        if(gameModel.setBoxBuilding(indexWorker)){
+            gameModel.notifySetBuilding();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -353,6 +362,25 @@ public class Controller {
 
     public void setDeadPlayer(int indexPlayer) {
         gameModel.setDeadPlayer(indexPlayer);
+    }
+
+    /**
+     * This method tells which player is probably going to lose
+     *
+     * @return the index of the player that maybe is going to lose
+     */
+    public int whoIsLosing(){
+        int loserClient = gameModel.whoIsPlaying() + 1;
+        if (loserClient == gameModel.getNPlayers()){
+            loserClient = 0;
+        }
+        if (gameModel.getPlayerArray().get(loserClient).amIDead()){
+            loserClient++;
+            if (loserClient == gameModel.getNPlayers()){
+                loserClient = 0;
+            }
+        }
+        return loserClient;
     }
 
     /**

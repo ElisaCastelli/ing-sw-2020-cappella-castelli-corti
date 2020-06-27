@@ -85,11 +85,6 @@ public class OtherPositionToBuild extends MoveTwice {
                 if (boxNextTo != null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker() && super.samePosition(boxNextTo)) {
                     boxNextTo.setReachable(false);
                 }
-                if (boxNextTo != null) {
-                    System.out.println("Posso costruire?:" + boxNextTo.isReachable());
-                } else {
-                    System.out.println("Posso costruire?:" + false);
-                }
             }
         }
     }

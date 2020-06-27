@@ -250,7 +250,7 @@ public class ProxyGameModel implements GameModel, Subject {
      * @return all the cards of the game
      */
     @Override
-    public ArrayList<String> getCards() throws Exception {
+    public ArrayList<String> getCards(){
         return gameModel.getCards();
     }
 
@@ -450,10 +450,11 @@ public class ProxyGameModel implements GameModel, Subject {
      * This method sets all the boxes that a worker can reach with the building
      *
      * @param indexWorker worker index that has to build
+     * @return true if is reachable
      */
     @Override
-    public void setBoxBuilding(int indexWorker) {
-        gameModel.setBoxBuilding(indexWorker);
+    public boolean setBoxBuilding(int indexWorker) {
+        return gameModel.setBoxBuilding(indexWorker);
     }
 
     /**

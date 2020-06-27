@@ -127,10 +127,11 @@ public class GoingState extends GameState {
      *
      * @param indexPlayer of the player
      * @param indexWorker of the worker moved before build
+     * @return true if is reachable
      */
     @Override
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
-        players.get(indexPlayer).setPossibleBuild(indexWorker - 1);
+    public boolean setBoxBuilding(int indexPlayer, int indexWorker) {
+        return players.get(indexPlayer).setPossibleBuild(indexWorker - 1);
     }
 
     /**

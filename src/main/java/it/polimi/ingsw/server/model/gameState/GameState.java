@@ -111,8 +111,10 @@ public abstract class GameState {
      *
      * @param indexPlayer of the player
      * @param indexWorker of the worker moved before build
+     * @return true if is reachable
      */
-    public void setBoxBuilding(int indexPlayer, int indexWorker) {
+    public boolean setBoxBuilding(int indexPlayer, int indexWorker) {
+        return false;
     }
 
     /**

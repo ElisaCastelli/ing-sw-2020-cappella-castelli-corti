@@ -268,8 +268,9 @@ public interface GameModel {
      * This method sets all the boxes that a worker can reach with the building
      *
      * @param indexWorker worker index that has to build
+     * @return true if is reachable
      */
-    void setBoxBuilding(int indexWorker);
+    boolean setBoxBuilding(int indexWorker);
 
     /**
      * This method builds a block in a box
