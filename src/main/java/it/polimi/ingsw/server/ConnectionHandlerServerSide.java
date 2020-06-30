@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.events.AskWantToPlayEvent;
 import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
 import it.polimi.ingsw.network.objects.ObjHeartBeat;
 import it.polimi.ingsw.network.objects.ObjMessage;
-import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.VisitorMessageFromClient;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,7 +15,7 @@ import java.util.TimerTask;
 /**
  * This class handles all the clients that get connected
  */
-public class ServerHandler extends Thread {
+public class ConnectionHandlerServerSide extends Thread {
 
     /**
      * This attribute is the index that the client occupies in the clientArray of EchoServer class
@@ -39,7 +39,7 @@ public class ServerHandler extends Thread {
      * @param virtualView      view server's side
      * @param indexClientArray index client
      */
-    public ServerHandler(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView, int indexClientArray) {
+    public ConnectionHandlerServerSide(Socket socket, ObjectOutputStream outputStream, ObjectInputStream inputStream, VirtualView virtualView, int indexClientArray) {
         this.socket = socket;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
@@ -104,23 +104,27 @@ public class ServerHandler extends Thread {
      * This method receives all the messages from the client
      */
     public void listening() {
-        ObjMessage objMessage = null;
+        boolean beforeStart=false;
         try {
             while (!closed) {
+                ObjMessage objMessage = null;
+
                 try {
                     objMessage = (ObjMessage) inputStream.readObject();
                 } catch (IOException | ClassNotFoundException e) {
                     closed = true;
                 }
-                if (objMessage instanceof CloseConnectionFromClientEvent)
+                if (objMessage instanceof CloseConnectionFromClientEvent){
                     closed = true;
+                    beforeStart=objMessage.isBeforeStart();
+                }
                 if (objMessage != null)
-                    objMessage.accept(new VisitorServer(virtualView));
+                    objMessage.accept(new VisitorMessageFromClient(virtualView));
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
-        virtualView.controlStillOpen(indexClientArray, objMessage.isBeforeStart());
+        virtualView.controlStillOpen(indexClientArray,beforeStart);
         close();
     }
 

@@ -3,7 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.network.SendMessageToServer;
 import it.polimi.ingsw.network.events.CloseConnectionFromServerEvent;
 import it.polimi.ingsw.network.objects.ObjMessage;
-import it.polimi.ingsw.network.VisitorClient;
+import it.polimi.ingsw.network.VisitorMessageFromServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +13,7 @@ import java.net.Socket;
 /**
  * This class is used to managed the client connection to the serve
  */
-public class ClientHandler {
+public class ConnectionHandlerClientSide {
     /**
      * Stream Object used to receive Message
      */
@@ -47,7 +47,7 @@ public class ClientHandler {
      * @param socket       client socket
      * @param view         view client's side
      */
-    public ClientHandler(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket, View view) {
+    public ConnectionHandlerClientSide(ObjectInputStream inputStream, ObjectOutputStream outputStream, Socket socket, View view) {
         this.inputStream = inputStream;
         this.outputStream = outputStream;
         this.socket = socket;
@@ -83,7 +83,7 @@ public class ClientHandler {
                 if (objMessage instanceof CloseConnectionFromServerEvent)
                     closed = true;
                 if (objMessage != null)
-                    objMessage.accept(new VisitorClient(view));
+                    objMessage.accept(new VisitorMessageFromServer(view));
             }
         } catch (Exception e) {
             e.printStackTrace();

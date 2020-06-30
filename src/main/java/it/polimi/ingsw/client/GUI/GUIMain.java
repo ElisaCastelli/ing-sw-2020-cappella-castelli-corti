@@ -54,7 +54,7 @@ public class GUIMain extends Application{
                         "Scene/emptyPage.fxml"
                 )
         );
-        ViewGUIController controller= new ViewGUIController();
+        ViewGUIController controller= new ViewGUIController(0);
         loader.setController(controller);
         try{
             Scene scene = new Scene((Pane) loader.load());
@@ -63,25 +63,8 @@ public class GUIMain extends Application{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //primaryStage.setScene(new Scene(mainPane, 1280, 800));
         primaryStage.setResizable(false);
         primaryStage.show();
-        /*FXMLLoader loader = new FXMLLoader(
-                GUIMain.class.getClassLoader().getResource(
-                        "Scene/emptyPage.fxml"
-                )
-        );
-        ViewGUIController controller= loader.getController();
-        try {
-            Scene scene = new Scene((Pane) loader.load());
-            //primaryStage.setOnHidden(e -> controller.shutdown());
-            primaryStage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //primaryStage.setScene(new Scene(mainPane, 1280, 800));
-        primaryStage.setResizable(false);
-        primaryStage.show();*/
     }
 
     /**
@@ -94,7 +77,7 @@ public class GUIMain extends Application{
                         sceneName
                 )
         );
-        ViewGUIController controller= new ViewGUIController();
+        ViewGUIController controller= new ViewGUIController(1);
         loader.setController(controller);
         try{
             Scene scene = new Scene((Pane) loader.load());
@@ -117,11 +100,11 @@ public class GUIMain extends Application{
                         sceneName
                 )
         );
-        ViewGUIController controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"), null, null, nPlayer,1);
+        ViewGUIController controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"), null, null, nPlayer,2);
         if(cardsTemp.size()==2){
-            controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), null, nPlayer,1);
+            controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), null, nPlayer,2);
         }else if(cardsTemp.size()==3){
-            controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), new Image(cardsTemp.get(2)+".jpg"), nPlayer,1);
+            controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), new Image(cardsTemp.get(2)+".jpg"), nPlayer,2);
         }
         loader.setController(controller);
         try{
@@ -142,13 +125,13 @@ public class GUIMain extends Application{
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param board is the object Board describe the game field
      */
-    public static void changeBoard(String sceneName, ArrayList<User> usersArray, int clientIndex,int currentPlayer, Board board/*, int indexPlayer*/) {
+    public static void changeBoard(String sceneName, ArrayList<User> usersArray, int clientIndex,int currentPlayer, Board board) {
         FXMLLoader loader = new FXMLLoader(
                 GUIMain.class.getClassLoader().getResource(
                         sceneName
                 )
         );
-        ViewGUIController controller = new ViewGUIController(usersArray, clientIndex, board/*, indexPlayer*/, currentPlayer,2);
+        ViewGUIController controller = new ViewGUIController(usersArray, clientIndex, board/*, indexPlayer*/, currentPlayer,3);
         loader.setController(controller);
 
         try{
@@ -173,13 +156,13 @@ public class GUIMain extends Application{
      * @param done is a boolean used to indicates if the move turn is over
      * @param state is the actual gui situation
      */
-    public static void changBoardWithParameters(String sceneName, ArrayList<User> usersArray, int clientIndex,int currentPlayer, Board board/*, int indexPlayer*/, Box workerToMove, boolean firstTime, boolean done, boolean specialTurn, int state){
+    public static void changBoardWithParameters(String sceneName, ArrayList<User> usersArray, int clientIndex,int currentPlayer, Board board, Box workerToMove, boolean firstTime, boolean done, boolean specialTurn, int state){
         FXMLLoader loader = new FXMLLoader(
                 GUIMain.class.getClassLoader().getResource(
                         sceneName
                 )
         );
-        ViewGUIController controller= new ViewGUIController(usersArray,clientIndex,currentPlayer,board,/*indexPlayer,*/ workerToMove, firstTime, done,specialTurn, state);
+        ViewGUIController controller= new ViewGUIController(usersArray,clientIndex,currentPlayer,board, workerToMove, firstTime, done,specialTurn, state);
         loader.setController(controller);
         try{
             Scene scene = new Scene((Pane) loader.load());
@@ -200,7 +183,7 @@ public class GUIMain extends Application{
                         sceneName
                 )
         );
-        ViewGUIController controller= new ViewGUIController(11);
+        ViewGUIController controller= new ViewGUIController(12);
         loader.setController(controller);
         try{
             Scene scene = new Scene((Pane) loader.load());

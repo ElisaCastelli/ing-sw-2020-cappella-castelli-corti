@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.objects;
 
 
-import it.polimi.ingsw.network.VisitorClient;
-import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.VisitorMessageFromServer;
+import it.polimi.ingsw.network.VisitorMessageFromClient;
 
 /**
  * message card
@@ -40,7 +40,7 @@ public class ObjCard extends ObjMessage {
      */
 
     @Override
-    public void accept(VisitorServer visitor) {
+    public void accept(VisitorMessageFromClient visitor) {
         try {
             visitor.visit(this);
         } catch (Exception e) {
@@ -51,11 +51,11 @@ public class ObjCard extends ObjMessage {
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorClient the class of the visitor pattern client's side
+     * @param visitorMessageFromServer the class of the visitor pattern client's side
      */
 
     @Override
-    public void accept(VisitorClient visitorClient) {
+    public void accept(VisitorMessageFromServer visitorMessageFromServer) {
         throw new UnsupportedOperationException();
     }
 }

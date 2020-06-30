@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.client.ClientHandler;
+import it.polimi.ingsw.client.ConnectionHandlerClientSide;
 import it.polimi.ingsw.network.ack.*;
 import it.polimi.ingsw.network.events.AskWantToPlayEvent;
 import it.polimi.ingsw.network.events.CloseConnectionFromClientEvent;
@@ -16,15 +16,15 @@ public class SendMessageToServer {
     /**
      * Client handler
      */
-    private final ClientHandler clientHandler;
+    private final ConnectionHandlerClientSide connectionHandlerClientSide;
 
     /**
      * constructor for the class
      *
-     * @param clientHandler the class used to handle the connection client's side
+     * @param connectionHandlerClientSide the class used to handle the connection client's side
      */
-    public SendMessageToServer(ClientHandler clientHandler) {
-        this.clientHandler = clientHandler;
+    public SendMessageToServer(ConnectionHandlerClientSide connectionHandlerClientSide) {
+        this.connectionHandlerClientSide = connectionHandlerClientSide;
     }
 
     /**
@@ -34,7 +34,7 @@ public class SendMessageToServer {
      */
 
     public void sendAskWantToPlay(AskWantToPlayEvent askWantToPlayEvent) {
-        clientHandler.sendMessage(askWantToPlayEvent);
+        connectionHandlerClientSide.sendMessage(askWantToPlayEvent);
     }
 
     /**
@@ -45,7 +45,7 @@ public class SendMessageToServer {
 
     public void sendNPlayer(int response) {
         ObjNumPlayer numPlayer = new ObjNumPlayer(response);
-        clientHandler.sendMessage(numPlayer);
+        connectionHandlerClientSide.sendMessage(numPlayer);
     }
 
     /**
@@ -53,7 +53,7 @@ public class SendMessageToServer {
      */
 
     public void sendAckStartGame() {
-        clientHandler.sendMessage(new AckStartGame());
+        connectionHandlerClientSide.sendMessage(new AckStartGame());
     }
 
     /**
@@ -61,7 +61,7 @@ public class SendMessageToServer {
      */
 
     public void sendAckPlayer() {
-        clientHandler.sendMessage(new AckPlayer());
+        connectionHandlerClientSide.sendMessage(new AckPlayer());
     }
 
     /**
@@ -75,7 +75,7 @@ public class SendMessageToServer {
     public void sendPlayer(String name, int age, int indexClient) {
         ObjPlayer objPlayer = new ObjPlayer(name, age);
         objPlayer.setClientIndex(indexClient);
-        clientHandler.sendMessage(objPlayer);
+        connectionHandlerClientSide.sendMessage(objPlayer);
     }
 
     /**
@@ -86,7 +86,7 @@ public class SendMessageToServer {
 
     public void send3card(ArrayList<Integer> cardTemp) {
         ObjTempCard objTempCard = new ObjTempCard(cardTemp);
-        clientHandler.sendMessage(objTempCard);
+        connectionHandlerClientSide.sendMessage(objTempCard);
     }
 
     /**
@@ -97,7 +97,7 @@ public class SendMessageToServer {
 
     public void sendCard(int choseCardIndex) {
         ObjCard objCard = new ObjCard(choseCardIndex);
-        clientHandler.sendMessage(objCard);
+        connectionHandlerClientSide.sendMessage(objCard);
     }
 
     /**
@@ -109,7 +109,7 @@ public class SendMessageToServer {
 
     public void sendWorker(ArrayList<Box> boxes) {
         ObjWorkers objWorkers = new ObjWorkers(boxes.get(0), boxes.get(1));
-        clientHandler.sendMessage(objWorkers);
+        connectionHandlerClientSide.sendMessage(objWorkers);
     }
 
     /**
@@ -119,7 +119,7 @@ public class SendMessageToServer {
      */
 
     public void sendWorkerToMove(ObjWorkerToMove objWorkerToMove) {
-        clientHandler.sendMessage(objWorkerToMove);
+        connectionHandlerClientSide.sendMessage(objWorkerToMove);
     }
 
     /**
@@ -129,7 +129,7 @@ public class SendMessageToServer {
      */
 
     public void sendBlockBeforeMove(ObjBlockBeforeMove objBlockBeforeMove) {
-        clientHandler.sendMessage(objBlockBeforeMove);
+        connectionHandlerClientSide.sendMessage(objBlockBeforeMove);
     }
 
     /**
@@ -139,7 +139,7 @@ public class SendMessageToServer {
      */
 
     public void sendMoveWorker(ObjMove objMove) {
-        clientHandler.sendMessage(objMove);
+        connectionHandlerClientSide.sendMessage(objMove);
     }
 
     /**
@@ -149,7 +149,7 @@ public class SendMessageToServer {
      */
 
     public void sendAckMove(AckMove ackMove) {
-        clientHandler.sendMessage(ackMove);
+        connectionHandlerClientSide.sendMessage(ackMove);
     }
 
     /**
@@ -160,9 +160,9 @@ public class SendMessageToServer {
 
     public void sendBuildMove(ObjBlock objBlock) {
         if (objBlock.isDone()) {
-            clientHandler.sendMessage(new AckBlock());
+            connectionHandlerClientSide.sendMessage(new AckBlock());
         } else {
-            clientHandler.sendMessage(objBlock);
+            connectionHandlerClientSide.sendMessage(objBlock);
         }
     }
 
@@ -175,7 +175,7 @@ public class SendMessageToServer {
     public synchronized void sendPong(int indexClient) {
         ObjHeartBeat objHeartBeat = new ObjHeartBeat();
         objHeartBeat.setClientIndex(indexClient);
-        clientHandler.sendMessage(objHeartBeat);
+        connectionHandlerClientSide.sendMessage(objHeartBeat);
     }
 
 
@@ -191,6 +191,6 @@ public class SendMessageToServer {
         CloseConnectionFromClientEvent closeConnectionFromClientEvent = new CloseConnectionFromClientEvent();
         closeConnectionFromClientEvent.setClientIndex(indexClient);
         closeConnectionFromClientEvent.setBeforeStart(beforeStart);
-        clientHandler.sendMessage(closeConnectionFromClientEvent);
+        connectionHandlerClientSide.sendMessage(closeConnectionFromClientEvent);
     }
 }

@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.objects.*;
  * Visitor pattern client's side to invoke methods on the view
  */
 
-public class VisitorClient {
+public class VisitorMessageFromServer {
     /**
      * View client's side
      */
@@ -19,7 +19,7 @@ public class VisitorClient {
      *
      * @param view is the interface allocated for a client
      */
-    public VisitorClient(View view) {
+    public VisitorMessageFromServer(View view) {
         this.view = view;
     }
 
@@ -146,7 +146,7 @@ public class VisitorClient {
         if (askWorkerToMoveEvent.getClientIndex() == askWorkerToMoveEvent.getCurrentClientPlaying()) {
             if (askWorkerToMoveEvent.isFirstAsk()) {
                 if(askWorkerToMoveEvent.isCanMove()) {
-                    view.askWorker(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
+                    view.askWorker(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex(),true);
                 }else{
                     view.otherWorkerToMove(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(),  askWorkerToMoveEvent.getIndexWorker(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
                 }

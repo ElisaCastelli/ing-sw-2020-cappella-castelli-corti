@@ -655,7 +655,7 @@ public class VirtualView implements Observer {
     @Override
     public void updateUnreachableClient(int indexClient) {
         synchronized (LOCK) {
-            controlStillOpen(indexClient, false);
+            controlStillOpen(indexClient,false);
         }
     }
 
@@ -676,12 +676,12 @@ public class VirtualView implements Observer {
      */
     public void controlStillOpen(int indexClient, boolean beforeStart) {
         synchronized (LOCK) {
-            ArrayList<ServerHandler> serverHandlersWaiting = sendMessageToClient.getEchoServer().getClientWaiting();
-            ArrayList<ServerHandler> clientArray = sendMessageToClient.getEchoServer().getClientArray();
+            ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide = sendMessageToClient.getEchoServer().getClientWaiting();
+            ArrayList<ConnectionHandlerServerSide> clientArray = sendMessageToClient.getEchoServer().getClientArray();
             if (!beforeStart) {
-                beforeStart(serverHandlersWaiting, clientArray, indexClient);
+                afterStart(connectionHandlersWaitingServerSide, clientArray, indexClient);
             } else {
-                serverHandlersWaiting.remove(indexClient);
+                connectionHandlersWaitingServerSide.remove(indexClient);
             }
         }
 
@@ -690,32 +690,32 @@ public class VirtualView implements Observer {
     /**
      * This method is recall if there is a disconnection before the game has started
      *
-     * @param serverHandlersWaiting array of client waiting for playing
+     * @param connectionHandlersWaitingServerSide array of client waiting for playing
      * @param clientArray           array of client playing
      * @param indexClient           index identifying the client who sent the message to the server
      */
 
-    public void beforeStart(ArrayList<ServerHandler> serverHandlersWaiting, ArrayList<ServerHandler> clientArray, int indexClient) {
-        if (serverHandlersWaiting.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
-            beforeInitializationFirstClient(serverHandlersWaiting, indexClient);
-        } else if (serverHandlersWaiting.size() > 0 && gameModel.getNPlayers() == 0) {
-            beforeInitializationOtherClient(serverHandlersWaiting, indexClient);
+    public void afterStart(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient) {
+        if (connectionHandlersWaitingServerSide.size() > 0 && indexClient == 0 && gameModel.getNPlayers() == 0) {
+            beforeInitializationFirstClient(connectionHandlersWaitingServerSide, indexClient);
+        } else if (connectionHandlersWaitingServerSide.size() > 0 && gameModel.getNPlayers() == 0) {
+            beforeInitializationOtherClient(connectionHandlersWaitingServerSide, indexClient);
         } else if (clientArray.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
-            afterInitialization(serverHandlersWaiting, clientArray, indexClient);
+            afterInitialization(connectionHandlersWaitingServerSide, clientArray, indexClient);
         }
     }
 
     /**
      * This method is recall if there is a disconnection before the game has started and is the first client that has disconnected
      *
-     * @param serverHandlersWaiting array of client waiting for playing
+     * @param connectionHandlersWaitingServerSide array of client waiting for playing
      * @param indexClient           index identifying the client who sent the message to the server
      */
 
-    public void beforeInitializationFirstClient(ArrayList<ServerHandler> serverHandlersWaiting, int indexClient) {
-        boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+    public void beforeInitializationFirstClient(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, int indexClient) {
+        boolean closed = connectionHandlersWaitingServerSide.get(indexClient).isClosed();
         if (closed) {
-            serverHandlersWaiting.remove(indexClient);
+            connectionHandlersWaitingServerSide.remove(indexClient);
             controller.removePlayer(indexClient);
         } else {
             sendMessageToClient.sendCloseConnection(indexClient, false);
@@ -725,14 +725,14 @@ public class VirtualView implements Observer {
     /**
      * This method is recall if there is a disconnection before the game has started and a client different from the first has disconnected
      *
-     * @param serverHandlersWaiting array of client waiting for playing
+     * @param connectionHandlersWaitingServerSide array of client waiting for playing
      * @param indexClient           index identifying the client who sent the message to the server
      */
 
-    public void beforeInitializationOtherClient(ArrayList<ServerHandler> serverHandlersWaiting, int indexClient) {
-        boolean closed = serverHandlersWaiting.get(indexClient).isClosed();
+    public void beforeInitializationOtherClient(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, int indexClient) {
+        boolean closed = connectionHandlersWaitingServerSide.get(indexClient).isClosed();
         if (closed) {
-            serverHandlersWaiting.remove(indexClient);
+            connectionHandlersWaitingServerSide.remove(indexClient);
             controller.removePlayer(indexClient);
             sendMessageToClient.getEchoServer().updateIndexClientWaiting(indexClient);
         } else {
@@ -743,12 +743,12 @@ public class VirtualView implements Observer {
     /**
      * This method is recall if there is a disconnection and the game has already started
      *
-     * @param serverHandlersWaiting array of client waiting for playing
+     * @param connectionHandlersWaitingServerSide array of client waiting for playing
      * @param clientArray           array of client playing
      * @param indexClient           index identifying the client who sent the message to the server
      */
 
-    public void afterInitialization(ArrayList<ServerHandler> serverHandlersWaiting, ArrayList<ServerHandler> clientArray, int indexClient) {
+    public void afterInitialization(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient) {
         if (indexClient < gameModel.getNPlayers()) {
             boolean closed = clientArray.get(indexClient).isClosed();
             if (closed) {
@@ -758,8 +758,8 @@ public class VirtualView implements Observer {
             } else {
                 sendMessageToClient.sendCloseConnection(indexClient, false);
             }
-        } else if (serverHandlersWaiting.size() != 0) {
-            serverHandlersWaiting.remove(indexClient);
+        } else if (connectionHandlersWaitingServerSide.size() != 0) {
+            connectionHandlersWaitingServerSide.remove(indexClient);
             controller.removePlayer(indexClient);
         }
     }

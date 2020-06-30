@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.objects;
 
-import it.polimi.ingsw.network.VisitorClient;
-import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.VisitorMessageFromServer;
+import it.polimi.ingsw.network.VisitorMessageFromClient;
 
 /**
  * message state of the game
@@ -44,20 +44,20 @@ public class ObjState extends ObjMessage {
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorServer the class of the visitor pattern server's side
+     * @param visitorMessageFromClient the class of the visitor pattern server's side
      */
     @Override
-    public void accept(VisitorServer visitorServer) {
+    public void accept(VisitorMessageFromClient visitorMessageFromClient) {
         throw new UnsupportedOperationException();
     }
 
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorClient the class of the visitor pattern client's side
+     * @param visitorMessageFromServer the class of the visitor pattern client's side
      */
     @Override
-    public void accept(VisitorClient visitorClient) {
-        visitorClient.visit(this);
+    public void accept(VisitorMessageFromServer visitorMessageFromServer) {
+        visitorMessageFromServer.visit(this);
     }
 }

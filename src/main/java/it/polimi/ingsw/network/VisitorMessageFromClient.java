@@ -5,13 +5,11 @@ import it.polimi.ingsw.network.events.*;
 import it.polimi.ingsw.network.objects.*;
 import it.polimi.ingsw.server.VirtualView;
 
-//todo da rinominare la classe
-
 /**
  * Visitor pattern server's side to invoke methods on the virtualView
  */
 
-public class VisitorServer {
+public class VisitorMessageFromClient {
     /**
      * view of the MVC pattern
      */
@@ -22,7 +20,7 @@ public class VisitorServer {
      *
      * @param virtualView the view of the MVC pattern
      */
-    public VisitorServer(VirtualView virtualView) {
+    public VisitorMessageFromClient(VirtualView virtualView) {
         this.virtualView = virtualView;
     }
 

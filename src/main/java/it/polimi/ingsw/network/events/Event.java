@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.events;
 
-import it.polimi.ingsw.network.VisitorClient;
-import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.VisitorMessageFromServer;
+import it.polimi.ingsw.network.VisitorMessageFromClient;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
 /**
@@ -12,14 +12,14 @@ public abstract class Event extends ObjMessage {
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorServer the class of the visitor pattern server's side
+     * @param visitorMessageFromClient the class of the visitor pattern server's side
      */
-    public abstract void accept(VisitorServer visitorServer);
+    public abstract void accept(VisitorMessageFromClient visitorMessageFromClient);
 
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorClient the class of the visitor pattern client's side
+     * @param visitorMessageFromServer the class of the visitor pattern client's side
      */
-    public abstract void accept(VisitorClient visitorClient);
+    public abstract void accept(VisitorMessageFromServer visitorMessageFromServer);
 }

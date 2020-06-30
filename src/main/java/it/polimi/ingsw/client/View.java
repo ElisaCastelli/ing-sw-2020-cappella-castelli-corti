@@ -102,8 +102,9 @@ public interface View {
      * @param column2        is the column of the box occupied by the worker 2
      * @param currentPlaying is the integer index of the player who is playing
      * @param clientIndex    is the integer index associated to the client
+     * @param firstTime      indicates if it's the first time the player chooses a worker in the actual turn
      */
-    void askWorker(int row1, int column1, int row2, int column2, int currentPlaying, int clientIndex);
+    void askWorker(int row1, int column1, int row2, int column2, int currentPlaying, int clientIndex, boolean firstTime);
 
     /**
      * Method called from the VisitorClient when the ClientHandler receives not for the first time an AskWorkerToMoveEvent message.

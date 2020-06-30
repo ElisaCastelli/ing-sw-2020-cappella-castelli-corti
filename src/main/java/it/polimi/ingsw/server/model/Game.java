@@ -757,7 +757,6 @@ public class Game implements GameModel {
         nPlayers = 0;
         ackCounter = 0;
         tempCard.clear();
-        ///todo da fare ready stato per reinizializzazione
         stateManager = new GameStateManager(players, playersDead);
     }
 }

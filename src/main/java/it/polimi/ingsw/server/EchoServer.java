@@ -19,12 +19,12 @@ public class EchoServer {
     /**
      * This attribute is the array of players who are going to play the game
      */
-    private static ArrayList<ServerHandler> clientArray = new ArrayList<>();
+    private static ArrayList<ConnectionHandlerServerSide> clientArray = new ArrayList<>();
 
     /**
      * This attribute is the array of players who have to wait to get in the game
      */
-    private static ArrayList<ServerHandler> clientWaiting = new ArrayList<>();
+    private static ArrayList<ConnectionHandlerServerSide> clientWaiting = new ArrayList<>();
 
     /**
      * This attribute is the number port of the server
@@ -90,7 +90,7 @@ public class EchoServer {
      * @return array of client
      */
 
-    public ArrayList<ServerHandler> getClientArray() {
+    public ArrayList<ConnectionHandlerServerSide> getClientArray() {
         return clientArray;
     }
 
@@ -99,7 +99,7 @@ public class EchoServer {
      *
      * @return array of client
      */
-    public ArrayList<ServerHandler> getClientWaiting() {
+    public ArrayList<ConnectionHandlerServerSide> getClientWaiting() {
         return clientWaiting;
     }
 
@@ -109,8 +109,8 @@ public class EchoServer {
      * @param objMessage object message to send
      */
     public void sendBroadCast(ObjMessage objMessage) {
-        for (ServerHandler serverHandler : clientArray) {
-            serverHandler.sendUpdate(objMessage);
+        for (ConnectionHandlerServerSide connectionHandlerServerSide : clientArray) {
+            connectionHandlerServerSide.sendUpdate(objMessage);
         }
     }
 
@@ -140,12 +140,12 @@ public class EchoServer {
     public void closeServerHandlers() {
         synchronized (LOCKClientArray) {
             if (clientWaiting.size() > 0) {
-                for (ServerHandler serverHandler : clientWaiting) {
-                    serverHandler.close();
+                for (ConnectionHandlerServerSide connectionHandlerServerSide : clientWaiting) {
+                    connectionHandlerServerSide.close();
                 }
             } else {
-                for (ServerHandler serverHandler : clientArray) {
-                    serverHandler.close();
+                for (ConnectionHandlerServerSide connectionHandlerServerSide : clientArray) {
+                    connectionHandlerServerSide.close();
                 }
             }
             clientWaiting.clear();
@@ -191,10 +191,10 @@ public class EchoServer {
                 ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                 ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
 
-                ServerHandler serverHandler = new ServerHandler(clientSocket, oos, ois, virtualView, clientWaiting.size());
-                clientWaiting.add(serverHandler);
+                ConnectionHandlerServerSide connectionHandlerServerSide = new ConnectionHandlerServerSide(clientSocket, oos, ois, virtualView, clientWaiting.size());
+                clientWaiting.add(connectionHandlerServerSide);
 
-                serverHandler.start();
+                connectionHandlerServerSide.start();
             }
         } catch (IOException e) {
             e.printStackTrace();

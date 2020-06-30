@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.ack;
 
-import it.polimi.ingsw.network.VisitorClient;
-import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.VisitorMessageFromServer;
+import it.polimi.ingsw.network.VisitorMessageFromClient;
 import it.polimi.ingsw.network.objects.ObjMessage;
 
 /**
@@ -11,20 +11,20 @@ public class AckPlayer extends ObjMessage {
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorServer the class of the visitor pattern server's side
+     * @param visitorMessageFromClient the class of the visitor pattern server's side
      */
     @Override
-    public void accept(VisitorServer visitorServer) {
-        visitorServer.visit(this);
+    public void accept(VisitorMessageFromClient visitorMessageFromClient) {
+        visitorMessageFromClient.visit(this);
     }
 
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorClient the class of the visitor pattern client's side
+     * @param visitorMessageFromServer the class of the visitor pattern client's side
      */
     @Override
-    public void accept(VisitorClient visitorClient) {
+    public void accept(VisitorMessageFromServer visitorMessageFromServer) {
         throw new UnsupportedOperationException();
     }
 }

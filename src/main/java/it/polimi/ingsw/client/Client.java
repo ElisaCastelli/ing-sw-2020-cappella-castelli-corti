@@ -71,8 +71,8 @@ public class Client {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ClientHandler clientHandler = new ClientHandler(inputStream, outputStream, clientSocket, viewClient);
-            clientHandler.listening();
+            ConnectionHandlerClientSide connectionHandlerClientSide = new ConnectionHandlerClientSide(inputStream, outputStream, clientSocket, viewClient);
+            connectionHandlerClientSide.listening();
         }
     }
 

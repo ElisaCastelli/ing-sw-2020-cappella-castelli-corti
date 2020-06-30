@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.objects;
 
-import it.polimi.ingsw.network.VisitorClient;
-import it.polimi.ingsw.network.VisitorServer;
+import it.polimi.ingsw.network.VisitorMessageFromServer;
+import it.polimi.ingsw.network.VisitorMessageFromClient;
 
 /**
  * message worker to move
@@ -81,20 +81,20 @@ public class ObjWorkerToMove extends ObjMessage {
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorServer the class of the visitor pattern server's side
+     * @param visitorMessageFromClient the class of the visitor pattern server's side
      */
     @Override
-    public void accept(VisitorServer visitorServer) {
-        visitorServer.visit(this);
+    public void accept(VisitorMessageFromClient visitorMessageFromClient) {
+        visitorMessageFromClient.visit(this);
     }
 
     /**
      * accept method of the visitor pattern
      *
-     * @param visitorClient the class of the visitor pattern client's side
+     * @param visitorMessageFromServer the class of the visitor pattern client's side
      */
     @Override
-    public void accept(VisitorClient visitorClient) {
+    public void accept(VisitorMessageFromServer visitorMessageFromServer) {
         throw new UnsupportedOperationException();
     }
 }

@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodyBoard" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="myCard" fitHeight="390.0" fitWidth="300.0" layoutX="966.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="myCard" fitHeight="390.0" fitWidth="300.0" layoutX="970.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" />
       <GridPane fx:id="gridBoard" layoutX="338.0" layoutY="108.0" prefHeight="500.0" prefWidth="500.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="120.0" prefWidth="125.0" />
@@ -295,7 +295,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="turnSituation" layoutX="986.0" layoutY="35.0" prefHeight="150.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
+      <AnchorPane fx:id="turnSituation" layoutX="986.0" layoutY="30.0" prefHeight="150.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
          <children>
             <Text fx:id="playOrWaiting" layoutX="10.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="Wait, an opponent is playing">
                <font>
@@ -324,7 +324,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="possibleBlockPane" layoutX="985.0" layoutY="200.0" prefHeight="200.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;" visible="false">
+      <AnchorPane fx:id="possibleBlockPane" layoutX="985.0" layoutY="190.0" prefHeight="200.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;" visible="false">
          <children>
             <AnchorPane layoutX="10.0" layoutY="50.0" prefHeight="120.0" prefWidth="120.0">
                <children>

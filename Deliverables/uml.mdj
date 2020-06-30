@@ -23525,7 +23525,7 @@
 											"top": 846,
 											"width": 298.79052734375,
 											"height": 13,
-											"text": "-clientHandler: CleintHandler",
+											"text": "-connectionHandlerClientSide: CleintHandler",
 											"horizontalAlignment": 0
 										}
 									],
@@ -38298,7 +38298,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFylO3/P8NyJGo="
 							},
-							"name": "clientHandler",
+							"name": "connectionHandlerClientSide",
 							"visibility": "private",
 							"type": "CleintHandler"
 						}

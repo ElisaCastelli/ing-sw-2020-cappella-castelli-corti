@@ -309,7 +309,7 @@ public class CLIView implements View {
      * @param clientIndex    is the integer index associated to the client
      */
     @Override
-    public void askWorker(int row1, int column1, int row2, int column2, int currentPlaying, int clientIndex) {
+    public void askWorker(int row1, int column1, int row2, int column2, int currentPlaying, int clientIndex, boolean firstTime) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
 
@@ -369,7 +369,7 @@ public class CLIView implements View {
                 ObjWorkerToMove objWorkerToMove = new ObjWorkerToMove(indexWorker, row, column, true);
                 sendMessageToServer.sendWorkerToMove(objWorkerToMove);
             } else {
-                askWorker(row1, column1, row2, column2, currentPlaying, clientIndex);
+                askWorker(row1, column1, row2, column2, currentPlaying, clientIndex, false);
             }
         });
         thread.setDaemon(true);
@@ -391,7 +391,7 @@ public class CLIView implements View {
     public void otherWorkerToMove(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex) {
         System.out.println("Sorry but You selected the worker " + indexWorker + " , that can't move in this turn");
         System.out.println("Please pick the other one:");
-        askWorker(row1, column1, row2, column2, currentPlaying, clientIndex);
+        askWorker(row1, column1, row2, column2, currentPlaying, clientIndex,false);
     }
 
     /**
