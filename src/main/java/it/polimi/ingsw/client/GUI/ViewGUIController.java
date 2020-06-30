@@ -1387,15 +1387,16 @@ public class ViewGUIController  implements Initializable,View {
             }
         }
         if(state>2 && state!=12){
-            myCard.setImage(new Image(usersArray.get(indexClient).getNameCard()+".jpg"));
-            situationTurn.setText("");
+           situationTurn.setText("");
             if(nPlayers==2){
                 TwoOpponents.setVisible(false);
                 for(int indexP=0;indexP<usersArray.size();indexP++){
-                    if(indexClient!=indexP){
+                    if(indexClient!=usersArray.get(indexP).getClient()){
                         cardOpponent.setImage(new Image("/SenzaSfondo/"+usersArray.get(indexP).getNameCard()+".png"));
                         nameOpponent.setText(usersArray.get(indexP).getName());
                         stateOpponent.setText(printOpponentState(usersArray.get(indexP)));
+                    }else{
+                        myCard.setImage(new Image(usersArray.get(indexP).getNameCard()+".jpg"));
                     }
                 }
             }
@@ -1403,7 +1404,7 @@ public class ViewGUIController  implements Initializable,View {
                 oneOpponent.setVisible(false);
                 int find=0;
                 for(int indexP=0;indexP<usersArray.size();indexP++){
-                    if(indexClient!=indexP){
+                    if(indexClient!=usersArray.get(indexP).getClient()){
                         find++;
                         if(find==1){
                             cardFirstOpponent.setImage(new Image("/SenzaSfondo/"+usersArray.get(indexP).getNameCard()+".png"));
@@ -1415,6 +1416,8 @@ public class ViewGUIController  implements Initializable,View {
                             nameSecondOpponent.setText(usersArray.get(indexP).getName());
                             stateSecondOpponent.setText(printOpponentState(usersArray.get(indexP)));
                         }
+                    }else{
+                        myCard.setImage(new Image(usersArray.get(indexP).getNameCard()+".jpg"));
                     }
                 }
             }
