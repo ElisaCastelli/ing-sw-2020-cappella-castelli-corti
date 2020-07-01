@@ -44,7 +44,7 @@ public interface View {
      * @param currentPlaying  is the integer index of the gamer playing in this turn
      * @param indexClient     is the index of the client associated with the player
      */
-    void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient);
+    void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient, boolean someoneDead);
 
     /**
      * Method called from the VisitorClient of the first player connected when the ClientHandler receives an AskNPlayer message.
@@ -232,7 +232,7 @@ public interface View {
     /**
      * This method is used to show to the user that an opponent has lost
      */
-    void whoHasLost();
+    void whoHasLost(ArrayList<User> users, Board board, boolean setReachable,int currentPlaying, int indexClient);
 
     /**
      * Method used to send, using the SendMessageToServer object, a Pong message to the server after received a ping
@@ -250,4 +250,8 @@ public interface View {
      */
     void closingConnectionEvent(int indexClient, boolean GameNotAvailable);
 
+    /**
+     * Method used to close client when server is not responding
+     */
+    void close();
 }

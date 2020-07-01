@@ -632,7 +632,7 @@ public class VirtualView implements Observer {
      */
     @Override
     public void updateWhoHasLost(int loserClient) {
-        sendMessageToClient.sendWhoHasLost(loserClient);
+        sendMessageToClient.sendWhoHasLost(loserClient,gameModel.gameData(false));
         canMove();
     }
 

@@ -79,6 +79,7 @@ public class ConnectionHandlerClientSide {
                     objMessage = (ObjMessage) inputStream.readObject();
                 } catch (IOException | ClassNotFoundException e) {
                     closed = true;
+                    view.close();
                 }
                 if (objMessage instanceof CloseConnectionFromServerEvent)
                     closed = true;

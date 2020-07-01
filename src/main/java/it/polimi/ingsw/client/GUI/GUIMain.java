@@ -100,13 +100,19 @@ public class GUIMain extends Application{
                         sceneName
                 )
         );
-        ViewGUIController controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"), null, null, nPlayer,2);
-        if(cardsTemp.size()==2){
-            controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), null, nPlayer,2);
-        }else if(cardsTemp.size()==3){
-            controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), new Image(cardsTemp.get(2)+".jpg"), nPlayer,2);
+        if(cardsTemp!=null){
+            ViewGUIController controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"), null, null, nPlayer,2);
+            if(cardsTemp.size()==2){
+                controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), null, nPlayer,2);
+            }else if(cardsTemp.size()==3){
+                controller = new ViewGUIController(new Image(cardsTemp.get(0)+".jpg"),new Image(cardsTemp.get(1)+".jpg"), new Image(cardsTemp.get(2)+".jpg"), nPlayer,2);
+            }
+            loader.setController(controller);
         }
-        loader.setController(controller);
+        else{
+            ViewGUIController controller= new ViewGUIController(2);
+            loader.setController(controller);
+        }
         try{
             Scene scene = new Scene((Pane) loader.load());
             primaryStage.setScene(scene);
@@ -125,13 +131,13 @@ public class GUIMain extends Application{
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param board is the object Board describe the game field
      */
-    public static void changeBoard(String sceneName, ArrayList<User> usersArray, int clientIndex,int currentPlayer, Board board) {
+    public static void changeBoard(String sceneName, ArrayList<User> usersArray, int clientIndex,int currentPlayer, Board board, boolean someoneDead) {
         FXMLLoader loader = new FXMLLoader(
                 GUIMain.class.getClassLoader().getResource(
                         sceneName
                 )
         );
-        ViewGUIController controller = new ViewGUIController(usersArray, clientIndex, board/*, indexPlayer*/, currentPlayer,3);
+        ViewGUIController controller = new ViewGUIController(usersArray, clientIndex, board/*, indexPlayer*/, currentPlayer,3, someoneDead);
         loader.setController(controller);
 
         try{

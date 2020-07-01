@@ -101,6 +101,10 @@ public class ViewGUIController  implements Initializable,View {
      */
     private static boolean specialTurn;
     /**
+     * Boolean to know if someone is dead in the previous turn
+     */
+    private static boolean someoneDead;
+    /**
      * Level of the first block possible to build
      */
     private static int firstBlock;
@@ -349,16 +353,6 @@ public class ViewGUIController  implements Initializable,View {
     @FXML
     private Text helpText;
     /**
-     * Text to print some info to the player
-     */
-    @FXML
-    private Text infoText1;
-    /**
-     * Text to print some input to the player
-     */
-    @FXML
-    private Text infoText2;
-    /**
      * Button used to close the window and the connection
      */
     @FXML
@@ -371,6 +365,9 @@ public class ViewGUIController  implements Initializable,View {
 
     @FXML
     private ImageView waitPlayers;
+
+    @FXML
+    private ImageView workerSide;
 
     /**
      * Cosntructor
@@ -403,7 +400,7 @@ public class ViewGUIController  implements Initializable,View {
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param state is the current situation
      */
-    public ViewGUIController(ArrayList<User> usersArray, int indexClient, Board board, int currentPlayer, int state) {
+    public ViewGUIController(ArrayList<User> usersArray, int indexClient, Board board, int currentPlayer, int state, boolean someoneDead) {
         this.usersArray = usersArray;
         this.board = board;
         this.currentPlayer = currentPlayer;
@@ -559,15 +556,16 @@ public class ViewGUIController  implements Initializable,View {
      * @param indexClient is the index of the client associated with the player
      */
     @Override
-    public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient) {
+    public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient, boolean someoneDead) {
         this.usersArray=usersArray;
         this.board=board;
         currentPlayer=currentPlaying;
         this.indexClient=indexClient;
         Platform.runLater(() -> {
-            GUIMain.changeBoard("Scene/board.fxml", usersArray, indexClient, currentPlayer, board/*, 0*/);
+            GUIMain.changeBoard("Scene/board.fxml", usersArray, indexClient, currentPlayer, board, someoneDead);
         });
     }
+
 
     /**
      * Method called from the VisitorClient of the first player connected when the ClientHandler receives an AskNPlayer message.
@@ -883,7 +881,6 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void otherWorkerToMove(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int clientIndex) {
-        //TODO da fare
         askWorker(row1, column1, row2, column2, currentPlaying, clientIndex,false);
     }
 
@@ -910,7 +907,7 @@ public class ViewGUIController  implements Initializable,View {
             moveWorker( workerToMove.getRow(), workerToMove.getColumn(),workerToMove.getWorker().getWorkerId(),false,  firstTime,indexClient, currentPlayer);
         }
         if(state==11){
-            buildMove(workerToMove.getRow(), workerToMove.getColumn(),workerToMove.getWorker().getWorkerId(),false,firstTime,done,indexClient,currentPlayer,specialTurn);
+            buildMove(workerToMove.getRow(), workerToMove.getColumn(),workerToMove.getWorker().getWorkerId(),false,firstTime,specialTurn,indexClient,currentPlayer,done);
         }
     }
 
@@ -1023,9 +1020,9 @@ public class ViewGUIController  implements Initializable,View {
         workerToMove= board.getBox(rowWorker, columnWorker);
         firstTime=isFirstTime;
         this.done=done;
-        this.specialTurn=isSpecialTurn;
+        specialTurn=isSpecialTurn;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, workerToMove, firstTime, specialTurn, done, 10);
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, workerToMove, firstTime,done ,specialTurn, 10);
         });
     }
 
@@ -1093,9 +1090,9 @@ public class ViewGUIController  implements Initializable,View {
         workerToMove= board.getBox(rowWorker, columnWorker);
         firstTime=isFirstTime;
         this.done=done;
-        this.specialTurn=isSpecialTurn;
+        specialTurn=isSpecialTurn;
         Platform.runLater(() -> {
-            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board,  workerToMove, firstTime, specialTurn, done, 11);
+            GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board,  workerToMove, firstTime, done,specialTurn , 11);
         });
     }
 
@@ -1104,7 +1101,11 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void isNotMyTurn() {
-
+        if(state==1){
+            Platform.runLater(() -> {
+                GUIMain.changeScene("Scene/waitCards.fxml");
+            });
+        }
     }
 
     /**
@@ -1133,7 +1134,7 @@ public class ViewGUIController  implements Initializable,View {
     @Override
     public void someoneWon() {
         Platform.runLater(() -> {
-            GUIMain.changeFinal("Scene/youLose.fxml");
+            GUIMain.changeFinal("Scene/someoneWon.fxml");
         });
     }
 
@@ -1141,10 +1142,8 @@ public class ViewGUIController  implements Initializable,View {
      * This method is used to load the scene of winning game because someone lost
      */
     @Override
-    public void whoHasLost() {
-        Platform.runLater(() -> {
-            GUIMain.changeFinal("Scene/youWin.fxml");
-        });
+    public void whoHasLost(ArrayList<User> users, Board board, boolean setReachable,int currentPlaying, int indexClient) {
+        updateBoard(users,board,setReachable,currentPlaying,indexClient,true);
     }
 
     /**
@@ -1164,6 +1163,11 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void closingConnectionEvent(int indexClient, boolean gameNotAvailable) {
+        if(state>0 && state<13){
+            sendMessageToServer.sendAckClosingConnection(indexClient,false);
+        }else{
+            sendMessageToServer.sendAckClosingConnection(indexClient,true);
+        }
         if (gameNotAvailable) {
             Platform.runLater(() -> {
                 GUIMain.changeFinal("Scene/alreadyStarted.fxml");
@@ -1173,12 +1177,16 @@ public class ViewGUIController  implements Initializable,View {
                 GUIMain.changeFinal("Scene/notResponding.fxml");
             });
         }
-        if(state>0 && state<13){
-            sendMessageToServer.sendAckClosingConnection(indexClient,false);
-        }else{
-            sendMessageToServer.sendAckClosingConnection(indexClient,true);
-        }
+    }
 
+    /**
+     * Method used to close client when server is not responding
+     */
+    @Override
+    public void close(){
+        Platform.runLater(() -> {
+            GUIMain.changeFinal("Scene/serverNotResponding.fxml");
+        });
     }
 
     /**
@@ -1199,7 +1207,7 @@ public class ViewGUIController  implements Initializable,View {
             column = index % 5;
             if(!board.getBox(row,column).isReachable()){
                 AnchorPane pane= (AnchorPane)gridBoard.getChildren().get(index);
-                pane.getChildren().get(4).setDisable(true);
+                pane.getChildren().get(5).setDisable(true);
             }
         }
     }
@@ -1210,7 +1218,7 @@ public class ViewGUIController  implements Initializable,View {
     private void enableAllButtons(){
         for(int index=0; index<25;index++){
             AnchorPane pane= (AnchorPane)gridBoard.getChildren().get(index);
-            pane.getChildren().get(4).setDisable(false);
+            pane.getChildren().get(5).setDisable(false);
         }
     }
 
@@ -1220,7 +1228,7 @@ public class ViewGUIController  implements Initializable,View {
     private void disableAllButtons(){
         for(int index=0; index<25;index++){
             AnchorPane pane= (AnchorPane)gridBoard.getChildren().get(index);
-            pane.getChildren().get(4).setDisable(true);
+            pane.getChildren().get(5).setDisable(true);
         }
     }
 
@@ -1238,7 +1246,7 @@ public class ViewGUIController  implements Initializable,View {
                     printWorker((AnchorPane)gridBoard.getChildren().get(index));
                 }
                 AnchorPane pane= (AnchorPane)gridBoard.getChildren().get(index);
-                pane.getChildren().get(4).toFront();
+                pane.getChildren().get(5).toFront();
             }
         }
     }
@@ -1313,7 +1321,7 @@ public class ViewGUIController  implements Initializable,View {
                 worker= new Image("/SenzaSfondo/WorkerYellow.png");
             }
         }
-        ImageView img= (ImageView)actualPane.getChildren().get(3);
+        ImageView img= (ImageView)actualPane.getChildren().get(4);
         img.setImage(worker);
     }
 
@@ -1321,10 +1329,16 @@ public class ViewGUIController  implements Initializable,View {
      * Method used to print the state of the player in his state pane
      */
     private void printYourState(){
-        if(indexClient==currentPlayer){
-            playOrWaiting.setText("It's your turn!");
-        }else{
-            playOrWaiting.setText("Wait, an opponent is playing");
+        for(int i=0; i<usersArray.size();i++){
+            if(usersArray.get(i).getClient()==indexClient){
+                if (usersArray.get(i).isDead()) {
+                    playOrWaiting.setText("You are dead!");
+                } else if (indexClient==currentPlayer) {
+                    playOrWaiting.setText("It's your turn!");
+                } else {
+                    playOrWaiting.setText("Wait, an opponent is playing");
+                }
+            }
         }
     }
 
@@ -1333,11 +1347,13 @@ public class ViewGUIController  implements Initializable,View {
      * @param userOpponent is the user whose state is to print
      * @return the state string
      */
-    private String printOpponentState(User userOpponent){
-        if(userOpponent.getClient()==currentPlayer){
+    private String printOpponentState(User userOpponent) {
+        if (userOpponent.isDead()) {
+            return "Is dead";
+        } else if (userOpponent.getClient() == currentPlayer) {
             return "Is playing";
-        }else{
-            return "Is Waiting";
+        } else {
+            return "Is waiting";
         }
     }
 
@@ -1387,7 +1403,7 @@ public class ViewGUIController  implements Initializable,View {
             }
         }
         if(state>2 && state!=12){
-           situationTurn.setText("");
+            printYourState();
             if(nPlayers==2){
                 TwoOpponents.setVisible(false);
                 for(int indexP=0;indexP<usersArray.size();indexP++){
@@ -1397,6 +1413,15 @@ public class ViewGUIController  implements Initializable,View {
                         stateOpponent.setText(printOpponentState(usersArray.get(indexP)));
                     }else{
                         myCard.setImage(new Image(usersArray.get(indexP).getNameCard()+".jpg"));
+                        Image worker;
+                        if(indexClient==0){
+                            worker=new Image("/SenzaSfondo/workerRedlato.png");
+                        }else if(indexClient==1){
+                            worker= new Image("/SenzaSfondo/workerBluelato.png");
+                        }else{
+                            worker= new Image("/SenzaSfondo/workerYellowlato.png");
+                        }
+                        workerSide.setImage(worker);
                     }
                 }
             }
@@ -1418,10 +1443,22 @@ public class ViewGUIController  implements Initializable,View {
                         }
                     }else{
                         myCard.setImage(new Image(usersArray.get(indexP).getNameCard()+".jpg"));
+                        Image worker;
+                        if(indexClient==0){
+                            worker=new Image("/SenzaSfondo/workerRedlato.png");
+                        }else if(indexClient==1){
+                            worker= new Image("/SenzaSfondo/workerBluelato.png");
+                        }else{
+                            worker= new Image("/SenzaSfondo/workerYellowlato.png");
+                        }
+                        workerSide.setImage(worker);
                     }
                 }
             }
             printBoard();
+        }
+        if(state==3 && someoneDead){
+            situationTurn.setText("One of your opponents has dead!");
         }
         if(state==4){
             printYourState();
@@ -1434,45 +1471,45 @@ public class ViewGUIController  implements Initializable,View {
                 situationTurn.setText("Choose the worker to move");
             }
             else{
-                infoText1.setVisible(true);
-                infoText1.setText("Sorry but you selected the worker");
-                infoText2.setVisible(true);
-                infoText2.setText("that can't move in this turn");
-                situationTurn.setText("Please pick the other worker");
+                //infoText1.setVisible(true);
+                //infoText1.setText("Sorry but ");
+                //infoText2.setVisible(true);
+                //infoText2.setText("that can't move in this turn");
+                situationTurn.setText("Please pick the other worker, you selected the worker that can't move in this turn");
             }
         }
         if(state==6){
             printYourState();
             surePane.setVisible(true);
-            infoText1.setText("Confirm if you want to move");
-            infoText2.setText("this worker");
+            situationTurn.setText("Confirm if you want to move this worker");
+            //infoText2.setText("this worker");
             disableButtonsNotReachable();
         }
         if(state==7){
             printYourState();
             disableButtonsNotReachable();
-            situationTurn.setText("You can move the worker");
-            infoText1.setVisible(true);
-            infoText1.setText("What position you wanna reach?");
+            situationTurn.setText("You can move the worker, what position you wanna reach?");
+            //infoText1.setVisible(true);
+            //infoText1.setText("What position you wanna reach?");
         }
         if(state==8){
             printYourState();
-            situationTurn.setText("You can build before move");
-            infoText1.setVisible(true);
-            infoText1.setText("If you decide to do so, You'll not be");
-            infoText2.setVisible(true);
-            infoText2.setText("able to move up a building");
+            situationTurn.setText("You can build before move. If you decide to do so, You'll not be able to move up a building");
+            //infoText1.setVisible(true);
+            //infoText1.setText("If you decide to do so, You'll not be able to move up a building");
+            //infoText2.setVisible(true);
+            //infoText2.setText("able to move up a building");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");
         }
         if(state==9){
             printYourState();
             disableAllButtons();
-            situationTurn.setText("Move your worker again");
-            infoText1.setVisible(true);
-            infoText1.setText("You Have the possibility to make");
-            infoText2.setVisible(true);
-            infoText2.setText("another move");
+            situationTurn.setText("You Have the possibility to make another move");
+            //infoText1.setVisible(true);
+            //infoText1.setText("You Have the possibility to make another move");
+            //infoText2.setVisible(true);
+            //infoText2.setText("another move");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");
         }

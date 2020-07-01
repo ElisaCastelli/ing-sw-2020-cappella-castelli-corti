@@ -23,3 +23,7 @@
 .invisibleButton{
     -fx-background-color: Transparent;
 }
+
+.bodySomeoneWon{
+    -fx-background-image: url("/someoneWon.jpg");
+}

@@ -12,8 +12,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="bodyBoard" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="myCard" fitHeight="390.0" fitWidth="300.0" layoutX="970.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane fx:id="gridBoard" layoutX="338.0" layoutY="108.0" prefHeight="500.0" prefWidth="500.0">
+      <ImageView fx:id="myCard" fitHeight="390.0" fitWidth="300.0" layoutX="970.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true" />
+      <GridPane fx:id="gridBoard" layoutX="338.0" layoutY="112.0" prefHeight="500.0" prefWidth="500.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="120.0" prefWidth="125.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="125.0" />
@@ -35,6 +35,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -44,6 +45,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -53,6 +55,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -62,6 +65,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -71,6 +75,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -80,6 +85,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -89,6 +95,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -98,6 +105,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -107,6 +115,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -116,6 +125,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -125,6 +135,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -134,6 +145,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -143,6 +155,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -152,6 +165,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -161,6 +175,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -170,6 +185,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -179,6 +195,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -188,6 +205,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -197,6 +215,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -206,6 +225,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -215,6 +235,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -224,6 +245,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -233,6 +255,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -242,6 +265,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -251,6 +275,7 @@
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Button mnemonicParsing="false" onAction="#selectPositionInGameField" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBoard" stylesheets="@style.css" />
                </children>
             </AnchorPane>
@@ -295,36 +320,26 @@
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="turnSituation" layoutX="986.0" layoutY="30.0" prefHeight="150.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
+      <AnchorPane fx:id="turnSituation" layoutX="326.0" layoutY="10.0" prefHeight="86.0" prefWidth="622.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
          <children>
-            <Text fx:id="playOrWaiting" layoutX="10.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="Wait, an opponent is playing">
+            <Text fx:id="playOrWaiting" layoutX="10.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="situationTurn" layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="248.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="GAME STATE ">
                <font>
                   <Font size="18.0" />
-               </font>
-            </Text>
-            <Text fx:id="situationTurn" layoutX="10.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text fx:id="infoText1" layoutX="10.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="Text" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="infoText2" layoutX="10.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="Text" visible="false">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <Text layoutX="70.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="GAME STATE ">
-               <font>
-                  <Font size="20.0" />
                </font>
             </Text>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="possibleBlockPane" layoutX="985.0" layoutY="190.0" prefHeight="200.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;" visible="false">
+      <AnchorPane fx:id="possibleBlockPane" layoutX="985.0" layoutY="20.0" prefHeight="200.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;" visible="false">
          <children>
             <AnchorPane layoutX="10.0" layoutY="50.0" prefHeight="120.0" prefWidth="120.0">
                <children>
@@ -345,7 +360,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="surePane" layoutX="985.0" layoutY="230.0" prefHeight="100.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;" visible="false">
+      <AnchorPane fx:id="surePane" layoutX="985.0" layoutY="30.0" prefHeight="100.0" prefWidth="270.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;" visible="false">
          <children>
             <Text fx:id="helpText" layoutX="70.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="Are you sure?">
                <font>
@@ -354,6 +369,16 @@
             </Text>
             <Button layoutX="60.0" layoutY="50.0" mnemonicParsing="false" onAction="#surePaneYes" prefHeight="28.0" prefWidth="38.5" style="-fx-font-family: futura;" text="Yes" />
             <Button layoutX="150.0" layoutY="50.0" mnemonicParsing="false" onAction="#surePaneNo" prefHeight="28.0" prefWidth="37.0" style="-fx-font-family: futura;" text="No" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="960.0" layoutY="235.0" prefHeight="138.0" prefWidth="300.0" style="-fx-background-color: rgba(225,173,147,0.8); -fx-background-radius: 20;">
+         <children>
+            <ImageView fx:id="workerSide" fitHeight="120.0" fitWidth="90.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+            <Text layoutX="137.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: futura;" text="Your workers" wrappingWidth="145.09616511040429">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>

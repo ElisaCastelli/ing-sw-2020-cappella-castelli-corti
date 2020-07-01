@@ -225,8 +225,8 @@ public class SendMessageToClient {
      * @param loserClient identify the index of a client who lost
      */
 
-    public void sendWhoHasLost(int loserClient) {
-        WhoHasLostEvent whoHasLostEvent = new WhoHasLostEvent();
+    public void sendWhoHasLost(int loserClient, UpdateBoardEvent updateBoardEvent) {
+        WhoHasLostEvent whoHasLostEvent = new WhoHasLostEvent(updateBoardEvent.getUserArray(),updateBoardEvent.getBoard(),updateBoardEvent.isShowReachable());
         whoHasLostEvent.setCurrentClientPlaying(loserClient);
         echoServer.sendBroadCast(whoHasLostEvent);
     }

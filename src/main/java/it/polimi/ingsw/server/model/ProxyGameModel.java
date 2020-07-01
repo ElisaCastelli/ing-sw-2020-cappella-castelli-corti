@@ -193,8 +193,8 @@ public class ProxyGameModel implements GameModel, Subject {
             }
             //il gioco è già iniziato e ci sono tutti
             if (getNPlayers() != 0 && sizePlayerArray == getNPlayers() - 1) {
-                reset();
                 observer.closeGame();
+                reset();
             }
         } else {
             observer.reset();

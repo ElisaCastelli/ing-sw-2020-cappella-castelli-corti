@@ -90,9 +90,10 @@ public class CLIView implements View {
      * @param isShowReachable is a boolean that indicates if the printed board has to show the reachable boxes
      * @param currentPlaying  is the integer index of the gamer playing in this turn
      * @param indexClient     is the index of the client associated with the player
+     * @param someoneDead     indicates if in the previous turn someone has dead
      */
     @Override
-    public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient) {
+    public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient, boolean someoneDead) {
         clearScreen();
         this.usersArray = usersArray;
         this.board = board;
@@ -958,7 +959,7 @@ public class CLIView implements View {
      * This method is used to show to the user that an opponent has lost
      */
     @Override
-    public void whoHasLost() {
+    public void whoHasLost(ArrayList<User> users, Board board, boolean setReachable,int currentPlaying, int indexClient) {
         System.out.println("An opponent lost");
     }
 
@@ -995,6 +996,14 @@ public class CLIView implements View {
         });
         thread.setDaemon(true);
         thread.start();
+    }
+
+    /**
+     * Method used to close client when server is not responding
+     */
+    @Override
+    public void close(){
+        System.out.println("Server is not responding");
     }
 }
 

@@ -99,6 +99,8 @@ public class VisitorMessageFromServer {
     public void visit(AskNCardsEvent askNCardsEvent) {
         if (askNCardsEvent.getClientIndex() == askNCardsEvent.getCurrentClientPlaying())
             view.askNCard(askNCardsEvent.getCardArray());
+        else
+            view.isNotMyTurn();
     }
 
     /**
@@ -110,6 +112,8 @@ public class VisitorMessageFromServer {
     public void visit(AskCardEvent askCardEvent) {
         if (askCardEvent.getClientIndex() == askCardEvent.getCurrentClientPlaying())
             view.askCard(askCardEvent.getCardTemp());
+        else
+            view.isNotMyTurn();
     }
 
     /**
@@ -133,7 +137,7 @@ public class VisitorMessageFromServer {
      */
 
     public void visit(UpdateBoardEvent updateBoardEvent) {
-        view.updateBoard(updateBoardEvent.getUserArray(),updateBoardEvent.getBoard(), updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying(), updateBoardEvent.getClientIndex());
+        view.updateBoard(updateBoardEvent.getUserArray(),updateBoardEvent.getBoard(), updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying(), updateBoardEvent.getClientIndex(),false);
     }
 
     /**
@@ -242,7 +246,7 @@ public class VisitorMessageFromServer {
 
     public void visit(WhoHasLostEvent whoHasLostEvent) {
         if (whoHasLostEvent.getClientIndex() != whoHasLostEvent.getCurrentClientPlaying())
-            view.whoHasLost();
+            view.whoHasLost(whoHasLostEvent.getUserArray(),whoHasLostEvent.getBoard(),false, whoHasLostEvent.getCurrentClientPlaying(), whoHasLostEvent.getClientIndex());
     }
 
     /**
