@@ -266,7 +266,7 @@ public class Game implements GameModel {
             players.remove(indexPlayer);
             updateIndexInArray(indexPlayer);
         }catch(IndexOutOfBoundsException e ){
-            System.out.println("the player was already removed");
+            System.out.println("The player was already removed, not necessary remove method");
         }
     }
 
@@ -730,7 +730,7 @@ public class Game implements GameModel {
             int indexPlayer = searchByClientIndex(indexClient);
             players.get(indexPlayer).controlHeartBeat();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("the client is not anymore in the array because it was closed");
+            System.out.println("The client is not anymore in the array because it was closed, control heartbeat not necessary");
         }
     }
 
@@ -745,7 +745,7 @@ public class Game implements GameModel {
         try {
             return players.get(indexPlayer).incrementMissedHeartBeat();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("the client is not anymore in the array because it was closed");
+            System.out.println("the client is not anymore in the array because it was closed, increment heartbeat not necessary");
         }
         return true;
     }

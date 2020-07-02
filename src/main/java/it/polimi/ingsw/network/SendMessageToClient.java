@@ -65,7 +65,7 @@ public class SendMessageToClient {
         for (int indexClientWaiting = 1; indexClientWaiting < npLayer; indexClientWaiting++) {
             echoServer.updateClientArray(indexClientWaiting);
         }
-        echoServer.sendBroadCast(new AskPlayerEvent());
+        echoServer.sendBroadCast(new AskPlayerEvent(true));
     }
 
     /**
@@ -80,7 +80,7 @@ public class SendMessageToClient {
             for (int indexClientWaiting = 1; indexClientWaiting < npLayer; indexClientWaiting++) {
                 echoServer.updateClientArray(indexClientWaiting);
             }
-            echoServer.sendBroadCast(new AskPlayerEvent());
+            echoServer.sendBroadCast(new AskPlayerEvent(true));
         } else {
             echoServer.send(new ObjWait(), 0);
         }
@@ -93,7 +93,7 @@ public class SendMessageToClient {
      */
 
     public void sendAskPlayerAgain(int indexClient) {
-        echoServer.send(new AskPlayerEvent(), indexClient);
+        echoServer.send(new AskPlayerEvent(false), indexClient);
     }
 
     /**

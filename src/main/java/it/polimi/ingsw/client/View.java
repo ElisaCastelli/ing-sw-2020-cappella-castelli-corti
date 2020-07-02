@@ -63,8 +63,9 @@ public interface View {
      * Method called from the VisitorClient when the ClientHandler receives an AskPlayer message.
      *
      * @param clientIndex is the index of the client associated with the player
+     * @param firstTime false if there is another player with the same name
      */
-    void askPlayer(int clientIndex);
+    void askPlayer(int clientIndex, boolean firstTime);
 
     /**
      * Method used to set the personal index of the player to know if the player can play or must wait his turn

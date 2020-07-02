@@ -105,19 +105,6 @@ public class Building implements Serializable {
     }
 
     /**
-     * this method print out the building of a single box
-     */
-    public void print() {
-        Iterator<Block> blockIterator = arrayOfBlocks.iterator();
-        if (arrayOfBlocks.size() != 0) {
-            System.out.println("Building:");
-            while ((blockIterator.hasNext())) {
-                System.out.println(blockIterator.next() + " ");
-            }
-        }
-    }
-
-    /**
      * this method clear the arrayOfBlock so that the size of the list is equal to zero and the building is !=null
      */
     public void clear() {

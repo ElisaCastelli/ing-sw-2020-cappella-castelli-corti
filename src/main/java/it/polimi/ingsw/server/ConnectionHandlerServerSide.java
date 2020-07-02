@@ -77,7 +77,6 @@ public class ConnectionHandlerServerSide extends Thread {
             public void run() {
                 try {
                     if (!closed) {
-                        System.out.println("sending HeartBeat");
                         sendUpdate(new ObjHeartBeat());
                     } else {
                         t.cancel();
@@ -144,7 +143,7 @@ public class ConnectionHandlerServerSide extends Thread {
         try {
             outputStream.reset();
         } catch (IOException e) {
-            System.out.println("connection reset");
+            System.out.println("Connection reset");
             e.printStackTrace();
         }
     }

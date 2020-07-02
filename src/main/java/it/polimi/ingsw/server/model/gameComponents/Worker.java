@@ -142,10 +142,8 @@ public class Worker implements Serializable {
         if (board.getBox(requestedBox.getRow(), requestedBox.getColumn()).notWorker()) {
             board.getBox(requestedBox.getRow(), requestedBox.getColumn()).setWorker(this);
             actualBox = board.getBox(requestedBox.getRow(), requestedBox.getColumn());
-            System.out.println("the box is now occupied by this worker");
             return true;
         } else {
-            System.out.println("the box is occupied");
             return false;
         }
     }

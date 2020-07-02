@@ -455,7 +455,6 @@ public class Player implements Serializable {
      * This method resets the heartbeat counter if it receives a response from the client
      */
     public void controlHeartBeat() {
-        //System.out.println(missed_heartbeat + "riazzero" + indexPlayer);
         setMissed_heartbeat(0);
     }
 
@@ -468,7 +467,6 @@ public class Player implements Serializable {
         synchronized (LOCK) {
             int mh = getMissed_heartbeat();
             mh++;
-            //System.out.println(mh + "client" + indexClient);
             setMissed_heartbeat(mh);
             return getMissed_heartbeat() != MAX_HEARTBEATS_MISSED;
         }

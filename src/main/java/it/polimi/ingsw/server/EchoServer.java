@@ -186,7 +186,7 @@ public class EchoServer {
                 Socket clientSocket;
 
                 clientSocket = serverSocket.accept();
-                System.out.println("Un client si è connesso" + clientSocket);
+                System.out.println("The client " + clientSocket+ " is connected");
 
                 ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                 ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
@@ -235,8 +235,6 @@ public class EchoServer {
 
         if (N_ARGUMENT != args.length)
             System.err.println("Usage: ParseCmdLine [-ip] address [-port] port [-view] view");
-        else
-            System.out.println("Success!");
 
         parseServer(hashMap);
 
@@ -247,7 +245,7 @@ public class EchoServer {
         try {
             serverSocket = new ServerSocket(portNumber);
         } catch (IOException e) {
-            System.out.println("connection refused");
+            System.out.println("Connection refused");
             e.printStackTrace();
         }
         echoServer.acceptClientWaiting(serverSocket);

@@ -27,6 +27,7 @@ class GameTest {
 
     @BeforeEach
     public void init() {
+        gameTest.setNPlayers(3);
         gameTest.addPlayer(0, new Timer(), new TimerTask() {
             @Override
             public void run() {
@@ -105,7 +106,6 @@ class GameTest {
         gameTest.getBoard().getBox(2, 1).build();
         gameTest.getBoard().getBox(2, 0).build();
         gameTest.getBoard().getBox(2, 0).build();
-
         assertFalse(gameTest.canMove());
 
     }
@@ -149,7 +149,7 @@ class GameTest {
         gameTest.getBoard().getBox(1, 0).build();
         gameTest.getBoard().getBox(1, 0).build();
         gameTest.getBoard().getBox(1, 0).build();
-        assertTrue(gameTest.canBuild(1));
+        assertFalse(gameTest.canBuild(1));
     }
 
     @Test
@@ -212,20 +212,18 @@ class GameTest {
 
     @Test
     void getNPlayers() {
-        assertEquals(0, gameTest.getNPlayers());
-        gameTest.setNPlayers(3);
+        assertNotEquals(0, gameTest.getNPlayers());
+
         assertEquals(3, gameTest.getNPlayers());
     }
 
     @Test
     void checkAckPlayer() {
-        gameTest.setNPlayers(3);
         assertTrue(gameTest.checkAckPlayer());
     }
 
     @Test
     void removeExtraPlayer() {
-        gameTest.setNPlayers(3);
         assertEquals(3, gameTest.getNPlayers());
         gameTest.addPlayer(3, new Timer(), new TimerTask() {
             @Override
@@ -240,7 +238,6 @@ class GameTest {
 
     @Test
     void remove() {
-        gameTest.setNPlayers(3);
         assertEquals(3, gameTest.getNPlayers());
         gameTest.addPlayer(3, new Timer(), new TimerTask() {
             @Override
@@ -256,7 +253,6 @@ class GameTest {
 
     @Test
     void updateIndexInArray() {
-        gameTest.setNPlayers(3);
         assertEquals(3, gameTest.getNPlayers());
         gameTest.addPlayer(3, new Timer(), new TimerTask() {
             @Override
@@ -351,7 +347,6 @@ class GameTest {
     @Test
     void chooseTempCard() {
         gameTest.startGame();
-        gameTest.setNPlayers(3);
         gameTest.loadCards();
         ArrayList<Integer> indexCards = new ArrayList<>();
         indexCards.add(2);
@@ -366,7 +361,6 @@ class GameTest {
     @Test
     void chooseCard() {
         gameTest.startGame();
-        gameTest.setNPlayers(3);
         gameTest.loadCards();
         ArrayList<Integer> indexCards = new ArrayList<>();
         indexCards.add(2);
@@ -402,7 +396,6 @@ class GameTest {
 
     @Test
     void whoIsPlaying() {
-        gameTest.setNPlayers(3);
         gameTest.startGame();
         assertEquals(0, gameTest.whoIsPlaying());
         gameTest.goPlayingNext();

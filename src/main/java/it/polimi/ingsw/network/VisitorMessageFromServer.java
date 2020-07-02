@@ -67,7 +67,7 @@ public class VisitorMessageFromServer {
      */
 
     public void visit(AskPlayerEvent askPlayerEvent) {
-        view.askPlayer(askPlayerEvent.getClientIndex());
+        view.askPlayer(askPlayerEvent.getClientIndex(), askPlayerEvent.isFirstTime());
     }
 
     /**

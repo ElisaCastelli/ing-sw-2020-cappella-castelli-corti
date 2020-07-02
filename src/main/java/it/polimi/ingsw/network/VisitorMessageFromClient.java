@@ -51,8 +51,6 @@ public class VisitorMessageFromClient {
      */
 
     public void visit(ObjPlayer objPlayer) {
-        System.out.println("Receiving player data");
-        ///serverHandler.setClientName(objPlayer.getName());
         virtualView.addPlayer(objPlayer.getName(), objPlayer.getAge(), objPlayer.getClientIndex());
     }
 

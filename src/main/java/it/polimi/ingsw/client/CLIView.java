@@ -122,11 +122,16 @@ public class CLIView implements View {
      * It's used to ask name and age to the player and then to send this data to the server
      *
      * @param clientIndex is the index of the client associated with the player
+     * @param firstTime false if there is another player with the same name
      */
     @Override
-    public void askPlayer(int clientIndex) {
+    public void askPlayer(int clientIndex, boolean firstTime) {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
+            if(!firstTime){
+                System.out.println("There is already another player with the same name, use another one ");
+            }
+            System.out.println("Insert your name and your age ");
             String name = askName(input);
             int age = askAge(input);
             sendMessageToServer.sendPlayer(name, age, clientIndex);
@@ -447,7 +452,7 @@ public class CLIView implements View {
             if (isWrongBox) {
                 wrongMove();
             }
-            System.out.println("you have chosen the worker " + indexWorker);
+            System.out.println("You have chosen the worker " + indexWorker);
             System.out.println("Position : " + row + " <-row  " + column + " <-column");
             System.out.println("You' re going to do your move -> What Position You wanna reach ? ");
 
@@ -647,7 +652,6 @@ public class CLIView implements View {
             String inputString = input.nextLine();
             try {
                 intInputValue = Integer.parseInt(inputString);
-                ///System.out.println("Correct input, exit");
                 return intInputValue;
             } catch (NumberFormatException ne) {
                 System.out.println("Input is not a number, repeat");

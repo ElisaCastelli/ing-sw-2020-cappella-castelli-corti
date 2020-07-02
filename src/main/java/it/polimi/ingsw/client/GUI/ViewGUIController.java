@@ -39,7 +39,7 @@ public class ViewGUIController  implements Initializable,View {
      */
     private static int nPlayers;
     /**
-     * Index of the client ossociated with the player
+     * Index of the client associated with the player
      */
     private static int indexClient;
     /**
@@ -628,9 +628,11 @@ public class ViewGUIController  implements Initializable,View {
      * Method called from the VisitorClient when the ClientHandler receives an AskPlayer message.
      * It's used to load the next scene to ask name and age to the player
      * @param clientIndex is the index of the client associated with the player
+     * @param firstTime false if there is another player with the same name
      */
     @Override
-    public void askPlayer(int clientIndex){
+    public void askPlayer(int clientIndex, boolean firstTime){
+        //todo firsttime ask
         this.indexClient=clientIndex;
         Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/SecondPage.fxml");

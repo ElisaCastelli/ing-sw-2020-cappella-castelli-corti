@@ -47,15 +47,13 @@ public class Client {
 
         if (N_ARGUMENT != args.length)
             System.err.println("Usage: ParseCmdLine [-ip] address [-port] port [-view] view");
-        else
-            System.out.println("Success!");
         parseClient(hashMap);
 
         Socket clientSocket = null;
         try {
             clientSocket = new Socket(ip, portNumber);
         } catch (IOException e) {
-            System.out.println("connection refused");
+            System.out.println("Connection refused");
         }
         if (clientSocket != null) {
             // obtaining input and out streams

@@ -83,6 +83,7 @@ public class BuildNotAlongThePerimeter extends MoveTwice {
                 Box boxNextTo = worker.getActualBox().getBoxesNextTo().get(indexBoxNextTo);
                 if (boxNextTo != null && boxNextTo.getCounter() != 4 && boxNextTo.notWorker() && boxNextTo.getBoxesNextTo().contains(null)) {
                     boxNextTo.setReachable(false);
+                    boxNextTo.getPossibleBlock().clear();
                 }
             }
         }
