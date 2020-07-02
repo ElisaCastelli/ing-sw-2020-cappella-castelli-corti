@@ -5,7 +5,7 @@ package it.polimi.ingsw.server.model.gameState;
  */
 public class EndState extends GameState {
     /**
-     * index of the winner player
+     * index client of the winner player
      */
     int winner;
 

@@ -106,8 +106,7 @@ class GameTest {
         gameTest.getBoard().getBox(2, 1).build();
         gameTest.getBoard().getBox(2, 0).build();
         gameTest.getBoard().getBox(2, 0).build();
-        assertFalse(gameTest.canMove());
-
+        assertTrue(gameTest.canMove());
     }
 
     @Test

@@ -708,7 +708,7 @@ public class ViewGUIController implements Initializable, View {
     }
 
     /**
-     * This method is called everytime the first player chooses a card until he chooses as many cards as the number of the players
+     * This method is called every time the first player chooses a card until he chooses as many cards as the number of the players
      * and then send the array list of the chosen cards to the server
      *
      * @param actionEvent is the object associated to the click event

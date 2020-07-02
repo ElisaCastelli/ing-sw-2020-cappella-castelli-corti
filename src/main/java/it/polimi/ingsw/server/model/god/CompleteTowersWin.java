@@ -115,6 +115,7 @@ public class CompleteTowersWin extends GodDecorator {
     public boolean checkWin(Box initialPos, Box finalBox) {
         if (completeTowers >= 5)
             return true;
-        return super.checkWin(initialPos, finalBox);
+        else
+            return super.checkWin(initialPos, finalBox);
     }
 }

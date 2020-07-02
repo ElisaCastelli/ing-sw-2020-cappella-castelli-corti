@@ -88,12 +88,12 @@ class IsPlayingTest {
         playerStateManager.goWaiting();
         playerStateManager.goPlaying();
         playerStateManager.setPossibleMove(player.getWorkerBox(0).getWorker());
-        playerStateManager.moveWorker(player.getWorkerBox(0).getWorker(),board.getBox(2,1));
+        playerStateManager.moveWorker(player.getWorkerBox(0).getWorker(), board.getBox(2,1));
         playerStateManager.goWaiting();
         playerStateManager.goPlaying();
         playerStateManager.setPossibleMove(player.getWorkerBox(0).getWorker());
         playerStateManager.moveWorker(player.getWorkerBox(0).getWorker(),board.getBox(1,1));
-        assertTrue(playerStateManager.checkWin(board.getBox(1,1),board.getBox(2,1)));
+        assertFalse(playerStateManager.checkWin(board.getBox(1,1),board.getBox(2,1)));
     }
 
     @Test
@@ -109,7 +109,7 @@ class IsPlayingTest {
     void setPossibleMove() {
         playerStateManager.goPlaying();
         playerStateManager.setPossibleMove(player.getWorkerBox(0).getWorker());
-        assertTrue(board.getBox(1,1).isReachable());
+        assertFalse(board.getBox(1,1).isReachable());
         assertFalse(board.getBox(0,4).isReachable());
     }
 

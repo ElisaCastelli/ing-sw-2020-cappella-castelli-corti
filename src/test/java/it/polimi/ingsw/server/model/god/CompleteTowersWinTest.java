@@ -51,19 +51,19 @@ class CompleteTowersWinTest {
         boardGame.getBox(0,1).build();
         boardGame.getBox(0,1).build();
         apollo.moveBlock(boardGame.getBox(0,1));
-        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
         boardGame.getBox(0,2).build();
         artemis.moveBlock((boardGame.getBox(0,2)));
         boardGame.getBox(0,2).build();
         artemis.moveBlock(boardGame.getBox(0,2));
-        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
         boardGame.getBox(0,3).build();
         boardGame.getBox(0,3).build();
         minotaur.moveBlock(boardGame.getBox(0,3));
         minotaur.moveBlock(boardGame.getBox(0,3));
-        assertFalse(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
+        assertTrue(cronus.checkWin(boardGame.getBox(4,4), boardGame.getBox(4,3)));
 
         assertFalse(demeter.moveBlock(boardGame.getBox(0,4)));
         assertTrue(demeter.moveBlock(boardGame.getBox(1,4)));

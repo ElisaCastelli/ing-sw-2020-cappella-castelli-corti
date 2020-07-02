@@ -664,7 +664,7 @@ public class CLIView implements View {
     }
 
     /**
-     * This method is used to managed the input only of 0,1 or 2
+     * This method is used to managed the input only of 0 or 1
      *
      * @param input is the Scanner object used to read the user inputs
      * @return the value read
@@ -731,7 +731,7 @@ public class CLIView implements View {
      * This method is used to select a column reachable
      *
      * @param input is the Scanner object used to read the user inputs
-     * @return the integer value of the columnn choose
+     * @return the integer value of the column choose
      */
     private int columnSelected(Scanner input) {
         try {

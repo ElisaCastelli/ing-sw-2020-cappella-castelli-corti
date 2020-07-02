@@ -52,8 +52,8 @@ class NotMoveUpTest {
         god.setPossibleMove(myWorker);
 
         assertFalse(board.getBox(3,1).isReachable());
-        assertTrue(board.getBox(3,2).isReachable());
-        assertTrue(board.getBox(3,3).isReachable());
+        assertFalse(board.getBox(3,2).isReachable());
+        assertFalse(board.getBox(3,3).isReachable());
         assertFalse(board.getBox(4,1).isReachable());
         assertTrue(board.getBox(4,3).isReachable());
 

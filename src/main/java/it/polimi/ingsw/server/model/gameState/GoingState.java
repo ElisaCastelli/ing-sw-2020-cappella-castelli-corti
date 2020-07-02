@@ -191,9 +191,9 @@ public class GoingState extends GameState {
     public boolean checkWinAfterBuild() {
         boolean win = false;
         for (Player player : players) {
+            player.setGod(player.getGod());
             win = player.checkWin(player.getWorkerBox(0), player.getWorkerBox(0));
             if (win) {
-                player.goWin();
                 manager.goEnd(player.getIndexClient());
             }
         }

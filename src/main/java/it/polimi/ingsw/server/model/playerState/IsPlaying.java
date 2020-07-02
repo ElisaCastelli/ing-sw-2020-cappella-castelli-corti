@@ -35,7 +35,6 @@ public class IsPlaying extends PlayerState {
      *
      * @param myGod God of he player
      */
-
     public void setMyGod(God myGod) {
         this.myGod = myGod;
     }

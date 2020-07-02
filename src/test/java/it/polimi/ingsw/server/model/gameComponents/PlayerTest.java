@@ -162,7 +162,7 @@ class PlayerTest {
         boardTest.getBox(2,1).build();
         boardTest.getBox(2,0).build();
         boardTest.getBox(2,0).build();
-        assertFalse(pTest.checkWorkers());
+        assertTrue(pTest.checkWorkers());
         pTest.checkWorker(0);
     }
 
