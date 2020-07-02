@@ -166,6 +166,7 @@ public class Controller {
             if (winnerClient != -1) {
                 gameModel.notifyWin(winnerClient);
             } else {
+                loserClient = gameModel.searchByPlayerIndex(loserClient);
                 gameModel.notifyLoser(loserClient);
                 gameModel.notifyWhoHasLost(loserClient);
             }
@@ -180,7 +181,7 @@ public class Controller {
      * @param columnWorker column of the box where the worker is
      */
     public void canMoveSpecialTurn(int indexWorker, int rowWorker, int columnWorker) {
-        int loserClient = whoIsLosing();
+        int loserClient = gameModel.whoIsPlaying();
         boolean goAhead = gameModel.canMoveSpecialTurn(indexWorker);
         if (goAhead) {
             gameModel.setBoxReachable(indexWorker);
@@ -191,6 +192,7 @@ public class Controller {
             if (winnerClient != -1) {
                 gameModel.notifyWin(winnerClient);
             } else {
+                loserClient = gameModel.searchByPlayerIndex(loserClient);
                 gameModel.notifyLoser(loserClient);
                 gameModel.notifyWhoHasLost(loserClient);
             }

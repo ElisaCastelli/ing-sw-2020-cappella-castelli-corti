@@ -224,6 +224,20 @@ public class Game implements GameModel {
     }
 
     /**
+     * Method to update index client in the players array
+     * @param indexClient client dead
+     */
+    public void updateIndexClient(int indexClient){
+        int indexPlayerDead= searchByClientIndex(indexClient);
+        players.get(indexPlayerDead).setIndexClient(-1);
+        for (int index = indexClient+1; index < players.size(); index++) {
+            int indexPlayer= searchByClientIndex(index);
+            players.get(indexPlayer).setIndexClient(index-1);
+        }
+
+    }
+
+    /**
      * This method checks if all the players are been added
      *
      * @return true if all the players are been added

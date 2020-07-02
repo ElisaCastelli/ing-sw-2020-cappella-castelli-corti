@@ -5,6 +5,8 @@ import it.polimi.ingsw.network.objects.ObjState;
 import it.polimi.ingsw.network.objects.ObjWait;
 import it.polimi.ingsw.server.EchoServer;
 
+import java.util.ArrayList;
+
 /**
  * class to send messages to server
  */
@@ -213,16 +215,18 @@ public class SendMessageToClient {
      * send the notification to the winner client
      *
      * @param indexClient identify the index of a client
+     * @param userArray array of users
      */
 
-    public void sendLoser(int indexClient) {
-        echoServer.send(new LoserEvent(), indexClient);
+    public void sendLoser(int indexClient, ArrayList<User> userArray) {
+        echoServer.send(new LoserEvent(userArray), indexClient);
     }
 
     /**
      * send the notification to the loser client
      *
      * @param loserClient identify the index of a client who lost
+     * @param updateBoardEvent update object
      */
 
     public void sendWhoHasLost(int loserClient, UpdateBoardEvent updateBoardEvent) {

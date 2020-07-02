@@ -462,7 +462,7 @@ public class VirtualView implements Observer {
      */
     @Override
     public void updateLoser(int indexClient) {
-        sendMessageToClient.sendLoser(indexClient);
+        sendMessageToClient.sendLoser(indexClient, gameModel.gameData(false).getUserArray());
     }
 
     /**
@@ -684,7 +684,6 @@ public class VirtualView implements Observer {
                 connectionHandlersWaitingServerSide.remove(indexClient);
             }
         }
-
     }
 
     /**
@@ -700,7 +699,7 @@ public class VirtualView implements Observer {
             beforeInitializationFirstClient(connectionHandlersWaitingServerSide, indexClient);
         } else if (connectionHandlersWaitingServerSide.size() > 0 && gameModel.getNPlayers() == 0) {
             beforeInitializationOtherClient(connectionHandlersWaitingServerSide, indexClient);
-        } else if (clientArray.size() == gameModel.getNPlayers() && gameModel.getNPlayers() != 0) {
+        } else if ((clientArray.size() == gameModel.getNPlayers() || clientArray.size() == gameModel.getNPlayers()-1 ) && gameModel.getNPlayers() != 0) {
             afterInitialization(connectionHandlersWaitingServerSide, clientArray, indexClient);
         }
     }
@@ -752,15 +751,32 @@ public class VirtualView implements Observer {
         if (indexClient < gameModel.getNPlayers()) {
             boolean closed = clientArray.get(indexClient).isClosed();
             if (closed) {
-                clientArray.remove(indexClient);
-                controller.removePlayer(indexClient);
-                sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
+                stopWatching(clientArray, indexClient);
             } else {
                 sendMessageToClient.sendCloseConnection(indexClient, false);
             }
         } else if (connectionHandlersWaitingServerSide.size() != 0) {
             connectionHandlersWaitingServerSide.remove(indexClient);
             controller.removePlayer(indexClient);
+        }
+    }
+
+    /**
+     * This method is recall if there is a disconnection and the player chooses to watch the game
+     *
+     * @param clientArray           array of client playing
+     * @param indexClient           index identifying the client who sent the message to the server
+     */
+    public void stopWatching(ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient){
+        int indexUser = gameModel.searchByClientIndex(indexClient);
+        if(!gameModel.getPlayerArray().get(indexUser).amIDead()){
+            clientArray.remove(indexClient);
+            controller.removePlayer(indexClient);
+            sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
+        }else {
+            clientArray.remove(indexClient);
+            sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
+            gameModel.updateIndexClient(indexClient);
         }
     }
 

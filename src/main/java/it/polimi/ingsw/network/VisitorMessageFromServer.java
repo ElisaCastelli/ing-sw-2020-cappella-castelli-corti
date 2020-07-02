@@ -225,7 +225,7 @@ public class VisitorMessageFromServer {
         if (winnerEvent.getClientIndex() == winnerEvent.getCurrentClientPlaying())
             view.winnerEvent(winnerEvent.getClientIndex());
         else
-            view.someoneWon();
+            view.someoneWon(winnerEvent.getClientIndex());
     }
 
     /**
@@ -235,7 +235,7 @@ public class VisitorMessageFromServer {
      */
 
     public void visit(LoserEvent loserEvent) {
-        view.loserEvent();
+        view.loserEvent(loserEvent.getClientIndex(), loserEvent.getUserArray(),false);
     }
 
     /**

@@ -65,6 +65,12 @@ public interface GameModel {
     void startGame();
 
     /**
+     * Method to update index client in the players array
+     * @param indexClient client dead
+     */
+    void updateIndexClient(int indexClient);
+
+    /**
      * This method instances the player
      *
      * @param indexClient client index

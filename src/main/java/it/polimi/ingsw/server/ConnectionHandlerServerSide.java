@@ -112,6 +112,7 @@ public class ConnectionHandlerServerSide extends Thread {
                     objMessage = (ObjMessage) inputStream.readObject();
                 } catch (IOException | ClassNotFoundException e) {
                     closed = true;
+
                 }
                 if (objMessage instanceof CloseConnectionFromClientEvent){
                     closed = true;

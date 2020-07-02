@@ -63,7 +63,7 @@ public interface View {
      * Method called from the VisitorClient when the ClientHandler receives an AskPlayer message.
      *
      * @param clientIndex is the index of the client associated with the player
-     * @param firstTime false if there is another player with the same name
+     * @param firstTime   false if there is another player with the same name
      */
     void askPlayer(int clientIndex, boolean firstTime);
 
@@ -215,8 +215,12 @@ public interface View {
 
     /**
      * This method is used to show to the user who lost the end of the game
+     *
+     * @param indexClient index of the client
+     * @param userArray   user array
+     * @param someoneWon  true if called by someoneWon method
      */
-    void loserEvent();
+    void loserEvent(int indexClient, ArrayList<User> userArray, boolean someoneWon);
 
     /**
      * This method is used to show to the user who win the end of the game
@@ -227,13 +231,15 @@ public interface View {
 
     /**
      * This method is used to show to the user that an opponent has won
+     *
+     * @param indexClient index of the client
      */
-    void someoneWon();
+    void someoneWon(int indexClient);
 
     /**
      * This method is used to show to the user that an opponent has lost
      */
-    void whoHasLost(ArrayList<User> users, Board board, boolean setReachable,int currentPlaying, int indexClient);
+    void whoHasLost(ArrayList<User> users, Board board, boolean setReachable, int currentPlaying, int indexClient);
 
     /**
      * Method used to send, using the SendMessageToServer object, a Pong message to the server after received a ping

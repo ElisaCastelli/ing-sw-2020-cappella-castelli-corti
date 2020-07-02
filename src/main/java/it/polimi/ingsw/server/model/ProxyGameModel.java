@@ -134,6 +134,14 @@ public class ProxyGameModel implements GameModel, Subject {
     }
 
     /**
+     * Method to update index client in the players array
+     * @param indexClient client dead
+     */
+    public void updateIndexClient(int indexClient){
+        gameModel.updateIndexClient(indexClient);
+    }
+
+    /**
      * This method instances the player
      *
      * @param indexClient client index
@@ -191,8 +199,7 @@ public class ProxyGameModel implements GameModel, Subject {
             if (getNPlayers() == 0 && indexClient == 0) {
                 observer.updateControlSetNPlayer();
             }
-            //il gioco è già iniziato e ci sono tutti
-            if (getNPlayers() != 0 && sizePlayerArray == getNPlayers() - 1) {
+            if (getNPlayers() != 0 && (sizePlayerArray == getNPlayers() - 1 || sizePlayerArray == getNPlayers() - 2)) {
                 observer.closeGame();
                 reset();
             }
