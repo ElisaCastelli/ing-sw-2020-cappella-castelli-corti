@@ -1522,45 +1522,30 @@ public class ViewGUIController implements Initializable, View {
             if (firstTime) {
                 situationTurn.setText("Choose the worker to move");
             } else {
-                //infoText1.setVisible(true);
-                //infoText1.setText("Sorry but ");
-                //infoText2.setVisible(true);
-                //infoText2.setText("that can't move in this turn");
-                situationTurn.setText("Please pick the other worker, you selected the worker that can't move in this turn");
+                situationTurn.setText("Try again to choose a worker!");
             }
         }
         if (state == 6) {
             printYourState();
             surePane.setVisible(true);
             situationTurn.setText("Confirm if you want to move this worker");
-            //infoText2.setText("this worker");
             disableButtonsNotReachable();
         }
         if (state == 7) {
             printYourState();
             disableButtonsNotReachable();
             situationTurn.setText("You can move the worker, what position you wanna reach?");
-            //infoText1.setVisible(true);
-            //infoText1.setText("What position you wanna reach?");
         }
         if (state == 8) {
             printYourState();
             situationTurn.setText("You can build before move. If you decide to do so, You'll not be able to move up a building");
-            //infoText1.setVisible(true);
-            //infoText1.setText("If you decide to do so, You'll not be able to move up a building");
-            //infoText2.setVisible(true);
-            //infoText2.setText("able to move up a building");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");
         }
         if (state == 9) {
             printYourState();
             disableAllButtons();
-            situationTurn.setText("You Have the possibility to make another move");
-            //infoText1.setVisible(true);
-            //infoText1.setText("You Have the possibility to make another move");
-            //infoText2.setVisible(true);
-            //infoText2.setText("another move");
+            situationTurn.setText("You have the possibility to make another move");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");
         }
