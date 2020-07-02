@@ -600,7 +600,11 @@ public class CLIView implements View {
                 System.out.print("Box : " + "( " + boxNextTo.getRow() + " , " + boxNextTo.getColumn() + " )" + " you can build --> ");
                 for (int size = 0; size < boxNextTo.getPossibleBlock().size(); size++) {
                     Block block = boxNextTo.getPossibleBlock().get(size);
-                    System.out.print("[" + size + "]" + block.toString() + "  ");
+                    if(block.getBlockIdentifier() != 4) {
+                        System.out.print("[" + size + "]" + block.toString() + "  ");
+                    }else if (size != 0){
+                        System.out.print("[" + size + "]" + block.toString() + "  ");
+                    }
                 }
                 System.out.println();
             }
@@ -920,9 +924,22 @@ public class CLIView implements View {
 
     /**
      * This method is used when is not the player's turn
+     * @param clientIndex index client
      */
-    public void isNotMyTurn() {
-        System.out.println(Color.CYAN + "Waiting for my turn..." + Color.RESET);
+    public void isNotMyTurn( int clientIndex ) {
+        if( usersArray != null ){
+            int indexDead = -1;
+            for (User user : usersArray){
+                if(user.isDead()){
+                    indexDead = user.getClient();
+                }
+            }
+            if(clientIndex == indexDead){
+                System.out.println(Color.CYAN +"You are not playing... just watching the game" + Color.RESET);
+            }else{
+                System.out.println(Color.CYAN + "Waiting for my turn..." + Color.RESET);
+            }
+        }
     }
 
     /**
@@ -1036,6 +1053,7 @@ public class CLIView implements View {
     @Override
     public void whoHasLost(ArrayList<User> users, Board board, boolean setReachable, int currentPlaying, int indexClient) {
         System.out.println("An opponent lost");
+        updateBoard(users, board, setReachable, currentPlaying, indexClient, true);
     }
 
     /**

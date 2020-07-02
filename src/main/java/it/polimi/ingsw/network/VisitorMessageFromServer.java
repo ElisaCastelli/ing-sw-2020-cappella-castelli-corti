@@ -100,7 +100,7 @@ public class VisitorMessageFromServer {
         if (askNCardsEvent.getClientIndex() == askNCardsEvent.getCurrentClientPlaying())
             view.askNCard(askNCardsEvent.getCardArray());
         else
-            view.isNotMyTurn();
+            view.isNotMyTurn(askNCardsEvent.getClientIndex());
     }
 
     /**
@@ -113,7 +113,7 @@ public class VisitorMessageFromServer {
         if (askCardEvent.getClientIndex() == askCardEvent.getCurrentClientPlaying())
             view.askCard(askCardEvent.getCardTemp());
         else
-            view.isNotMyTurn();
+            view.isNotMyTurn(askCardEvent.getClientIndex());
     }
 
     /**
@@ -126,7 +126,7 @@ public class VisitorMessageFromServer {
         if (askInitializeWorkerEvent.getClientIndex() == askInitializeWorkerEvent.getCurrentClientPlaying()) {
             view.initializeWorker();
         }else{
-            view.isNotMyTurn();
+            view.isNotMyTurn(askInitializeWorkerEvent.getClientIndex());
         }
     }
 
@@ -158,7 +158,7 @@ public class VisitorMessageFromServer {
                 view.areYouSure(askWorkerToMoveEvent.getRow1(), askWorkerToMoveEvent.getColumn1(), askWorkerToMoveEvent.getRow2(), askWorkerToMoveEvent.getColumn2(), askWorkerToMoveEvent.getIndexWorker(), askWorkerToMoveEvent.getCurrentClientPlaying(), askWorkerToMoveEvent.getClientIndex());
             }
         } else {
-            view.isNotMyTurn();
+            view.isNotMyTurn(askWorkerToMoveEvent.getClientIndex());
         }
     }
 
@@ -172,7 +172,7 @@ public class VisitorMessageFromServer {
         if (askBuildBeforeMoveEvent.getClientIndex() == askBuildBeforeMoveEvent.getCurrentClientPlaying()) {
             view.askBuildBeforeMove(askBuildBeforeMoveEvent.getIndexWorker(), askBuildBeforeMoveEvent.getRowWorker(), askBuildBeforeMoveEvent.getColumnWorker());
         }else{
-            view.isNotMyTurn();
+            view.isNotMyTurn(askBuildBeforeMoveEvent.getClientIndex());
         }
     }
 
@@ -192,7 +192,7 @@ public class VisitorMessageFromServer {
                 view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
             }
         }else{
-            view.isNotMyTurn();
+            view.isNotMyTurn(askMoveEvent.getClientIndex());
         }
     }
 
@@ -211,7 +211,7 @@ public class VisitorMessageFromServer {
                 view.anotherBuild(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             }
         }else{
-            view.isNotMyTurn();
+            view.isNotMyTurn(askBuildEvent.getClientIndex());
         }
     }
 

@@ -639,12 +639,10 @@ public class VirtualView implements Observer {
     /**
      * This method calls heartbeat method in the controller class
      *
-     * @param messageHeartbeat message of the heartbeat
      * @param indexClient      client index who has sent heartbeat
      */
-    public void printHeartBeat(String messageHeartbeat, int indexClient) {
+    public void printHeartBeat(int indexClient) {
         controller.heartBeat(indexClient);
-        System.out.println(messageHeartbeat);
     }
 
     /**

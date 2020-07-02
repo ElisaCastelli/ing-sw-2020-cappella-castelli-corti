@@ -210,8 +210,9 @@ public interface View {
 
     /**
      * This method is used when is not the player's turn
+     * @param clientIndex index client
      */
-    void isNotMyTurn();
+    void isNotMyTurn(int clientIndex);
 
     /**
      * This method is used to show to the user who lost the end of the game

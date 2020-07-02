@@ -1144,7 +1144,7 @@ public class ViewGUIController implements Initializable, View {
      * This method is used when is not the player's turn
      */
     @Override
-    public void isNotMyTurn() {
+    public void isNotMyTurn(int clientIndex) {
         if (state == 1) {
             Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/waitCards.fxml", true);

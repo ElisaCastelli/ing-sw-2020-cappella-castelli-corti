@@ -178,7 +178,7 @@ public class VisitorMessageFromClient {
      */
 
     public void visit(ObjHeartBeat objHeartBeat) {
-        virtualView.printHeartBeat(objHeartBeat.getMessageHeartbeat(), objHeartBeat.getClientIndex());
+        virtualView.printHeartBeat(objHeartBeat.getClientIndex());
     }
 
     /**
