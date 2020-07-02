@@ -538,8 +538,7 @@ public class CLIView implements View {
             objBlock.setColumnBlock(intInputValue);
 
             System.out.println("You selected the Box: " + "( " + objBlock.getRowBlock() + " , " + objBlock.getColumnBlock() + " )");
-            System.out.println("Let me Know what Block you want to build, select the correct index");
-            int inputPossibleBlock = twoNumbers(input);
+            int inputPossibleBlock = inputBySize(input, board.getBox(objBlock.getRowBlock(), objBlock.getColumnBlock()) );
             objBlock.setPossibleBlock(inputPossibleBlock);
             sendMessageToServer.sendBuildMove(objBlock);
         });
@@ -592,7 +591,7 @@ public class CLIView implements View {
         System.out.println("Here you can see what kind of block you can build");
         for (int indexBoxNextTo = 0; indexBoxNextTo < posWorker.getBoxesNextTo().size(); indexBoxNextTo++) {
             Box boxNextTo = posWorker.getBoxesNextTo().get(indexBoxNextTo);
-            if (boxNextTo != null) {
+            if (boxNextTo != null && boxNextTo.getPossibleBlock().size() > 0) {
                 System.out.print("Box : " + "( " + boxNextTo.getRow() + " , " + boxNextTo.getColumn() + " )" + " you can build --> ");
                 for (int size = 0; size < boxNextTo.getPossibleBlock().size(); size++) {
                     Block block = boxNextTo.getPossibleBlock().get(size);
@@ -604,7 +603,35 @@ public class CLIView implements View {
     }
 
     /**
-     * This method is used to managed the inout of only numbers
+     * This method is used to managed the input of only numbers lower thn the size of the possible block size
+     *
+     * @param input is the Scanner object used to read the user inputs
+     * @param boxBlock selected box in which there is block
+     * @return the value read
+     */
+    private int inputBySize(Scanner input, Box boxBlock) {
+        try {
+            System.in.read(new byte[System.in.available()]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(boxBlock.isReachable() && boxBlock.getPossibleBlock().size() > 1) {
+            System.out.println("Let me Know what Block you want to build, select the correct index");
+            int intInputValue;
+            intInputValue = inputNumber(input);
+
+            while (intInputValue >= boxBlock.getPossibleBlock().size() || intInputValue < 0) {
+                System.out.println("Repeat, the input is wrong");
+                intInputValue = inputNumber(input);
+            }
+            return intInputValue;
+        }
+        return 0;
+    }
+
+
+    /**
+     * This method is used to managed the input of only numbers
      *
      * @param input is the Scanner object used to read the user inputs
      * @return the value read
@@ -617,14 +644,13 @@ public class CLIView implements View {
         }
         int intInputValue = 0;
         while (true) {
-            ///System.out.println("Enter a whole number.");
             String inputString = input.nextLine();
             try {
                 intInputValue = Integer.parseInt(inputString);
                 ///System.out.println("Correct input, exit");
                 return intInputValue;
             } catch (NumberFormatException ne) {
-                ///System.out.println("Input is not a number, continue");
+                System.out.println("Input is not a number, repeat");
             }
         }
     }
@@ -644,7 +670,7 @@ public class CLIView implements View {
         int intInputValue;
         intInputValue = inputNumber(input);
         while (intInputValue >= 2 || intInputValue < 0) {
-            System.out.println("Select again the row. You cannot reach that row");
+            System.out.println("Repeat, the input is wrong");
             intInputValue = inputNumber(input);
         }
         return intInputValue;
@@ -665,7 +691,7 @@ public class CLIView implements View {
         int intInputValue;
         intInputValue = inputNumber(input);
         while (intInputValue < 2 || intInputValue > 3) {
-            System.out.println("Select again");
+            System.out.println("Repeat, the input is wrong");
             intInputValue = inputNumber(input);
         }
         return intInputValue;
@@ -990,7 +1016,7 @@ public class CLIView implements View {
             if (gameNotAvailable) {
                 System.out.println("A game has already started -> Try to connect later");
             } else {
-                System.out.println("A client is not responding, the connection will be closed");
+                System.out.println(Color.CYAN+"A client is not responding, the connection will be closed"+Color.RESET);
             }
             sendMessageToServer.sendAckClosingConnection(indexClient, false);
         });

@@ -259,11 +259,15 @@ public class Game implements GameModel {
      */
     @Override
     public void remove(int indexPlayer) {
-        players.get(indexPlayer).getTimerTask().cancel();
-        players.get(indexPlayer).getTimer().cancel();
-        players.get(indexPlayer).getTimer().purge();
-        players.remove(indexPlayer);
-        updateIndexInArray(indexPlayer);
+        try {
+            players.get(indexPlayer).getTimerTask().cancel();
+            players.get(indexPlayer).getTimer().cancel();
+            players.get(indexPlayer).getTimer().purge();
+            players.remove(indexPlayer);
+            updateIndexInArray(indexPlayer);
+        }catch(IndexOutOfBoundsException e ){
+            System.out.println("the player was already removed");
+        }
     }
 
     /**

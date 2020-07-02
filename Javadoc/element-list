@@ -1,5 +1,14 @@
-it.polimi.ingsw
+it.polimi.ingsw.client
+it.polimi.ingsw.client.GUI
+it.polimi.ingsw.network
+it.polimi.ingsw.network.ack
+it.polimi.ingsw.network.events
+it.polimi.ingsw.network.objects
+it.polimi.ingsw.server
+it.polimi.ingsw.server.model
 it.polimi.ingsw.server.model.building
-it.polimi.ingsw.server.model.gamerstate
+it.polimi.ingsw.server.model.gameComponents
+it.polimi.ingsw.server.model.gameState
 it.polimi.ingsw.server.model.god
 it.polimi.ingsw.server.model.parse
+it.polimi.ingsw.server.model.playerState

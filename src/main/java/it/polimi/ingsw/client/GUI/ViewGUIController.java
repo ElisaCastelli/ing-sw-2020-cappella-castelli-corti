@@ -559,7 +559,7 @@ public class ViewGUIController  implements Initializable,View {
     public void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient, boolean someoneDead) {
         this.usersArray=usersArray;
         this.board=board;
-        currentPlayer=currentPlaying;
+        this.currentPlayer = currentPlaying;
         this.indexClient=indexClient;
         Platform.runLater(() -> {
             GUIMain.changeBoard("Scene/board.fxml", usersArray, indexClient, currentPlayer, board, someoneDead);
@@ -631,7 +631,7 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askPlayer(int clientIndex){
-        indexClient=clientIndex;
+        this.indexClient=clientIndex;
         Platform.runLater(() -> {
                 GUIMain.changeScene("Scene/SecondPage.fxml");
         });
@@ -837,8 +837,8 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void askWorker(int row1, int column1, int row2, int column2, int currentPlaying, int clientIndex, boolean firstTime) {
-        indexClient=clientIndex;
-        currentPlayer=currentPlaying;
+        this.indexClient=clientIndex;
+        this.currentPlayer=currentPlaying;
         Platform.runLater(() -> {
             GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient,currentPlayer, board,null, firstTime,false,false,5 );
         });
@@ -858,7 +858,7 @@ public class ViewGUIController  implements Initializable,View {
     @Override
     public void areYouSure(int row1, int column1, int row2, int column2, int indexWorker, int currentPlaying, int indexClient) {
         this.indexClient=indexClient;
-        currentPlayer=currentPlaying;
+        this.currentPlayer=currentPlaying;
         if (indexWorker == 1) {
             workerToMove= board.getBox(row1,column1);
         } else {
@@ -970,8 +970,8 @@ public class ViewGUIController  implements Initializable,View {
     public void moveWorker(int row, int column, int indexWorker, boolean isWrongBox, boolean firstTime, int clientIndex, int currentPlaying) {
         this.firstTime=firstTime;
         workerToMove= board.getBox(row, column);
-        indexClient=clientIndex;
-        currentPlayer=currentPlaying;
+        this.indexClient=clientIndex;
+        this.currentPlayer=currentPlaying;
         Platform.runLater(() -> {
             GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, workerToMove,firstTime , false,false, 7);
         });
@@ -990,8 +990,8 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void anotherMove(int row, int column, int indexWorker, boolean isWrongBox, boolean firstTime, int clientIndex, int currentPlaying, boolean done) {
-        indexClient=clientIndex;
-        currentPlayer=currentPlaying;
+        this.indexClient=clientIndex;
+        this.currentPlayer=currentPlaying;
         workerToMove=board.getBox(row, column);
         this.firstTime=firstTime;
         this.done = done;
@@ -1015,12 +1015,12 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void buildMove(int rowWorker, int columnWorker, int indexWorker, boolean isWrongBox, boolean isFirstTime, boolean isSpecialTurn, int clientIndex, int currentPlaying, boolean done) {
-        indexClient=clientIndex;
-        currentPlayer=currentPlaying;
-        workerToMove= board.getBox(rowWorker, columnWorker);
-        firstTime=isFirstTime;
+        this.indexClient=clientIndex;
+        this.currentPlayer=currentPlaying;
+        this.workerToMove= board.getBox(rowWorker, columnWorker);
+        this.firstTime=isFirstTime;
         this.done=done;
-        specialTurn=isSpecialTurn;
+        this.specialTurn=isSpecialTurn;
         Platform.runLater(() -> {
             GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board, workerToMove, firstTime,done ,specialTurn, 10);
         });
@@ -1085,12 +1085,12 @@ public class ViewGUIController  implements Initializable,View {
      */
     @Override
     public void anotherBuild(int rowWorker, int columnWorker, int indexWorker, boolean isWrongBox, boolean isFirstTime, boolean isSpecialTurn, int clientIndex, int currentPlaying, boolean done) {
-        indexClient=clientIndex;
-        currentPlayer=currentPlaying;
+        this.indexClient=clientIndex;
+        this.currentPlayer=currentPlaying;
         workerToMove= board.getBox(rowWorker, columnWorker);
-        firstTime=isFirstTime;
+        this.firstTime=isFirstTime;
         this.done=done;
-        specialTurn=isSpecialTurn;
+        this.specialTurn=isSpecialTurn;
         Platform.runLater(() -> {
             GUIMain.changBoardWithParameters("Scene/board.fxml", usersArray,indexClient, currentPlayer, board,  workerToMove, firstTime, done,specialTurn , 11);
         });
@@ -1333,7 +1333,7 @@ public class ViewGUIController  implements Initializable,View {
             if(usersArray.get(i).getClient()==indexClient){
                 if (usersArray.get(i).isDead()) {
                     playOrWaiting.setText("You are dead!");
-                } else if (indexClient==currentPlayer) {
+                } else if (indexClient== currentPlayer) {
                     playOrWaiting.setText("It's your turn!");
                 } else {
                     playOrWaiting.setText("Wait, an opponent is playing");

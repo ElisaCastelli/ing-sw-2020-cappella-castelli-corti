@@ -5,8 +5,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.server.model.god.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +48,9 @@ public class CardCreator {
         ObjectMapper mapper = new ObjectMapper();
         JsonParser parser;
         try {
-            parser = mapper.getFactory().createParser(new File("src/main/java/it/polimi/ingsw/server/model/parse/gods.json"));
+            InputStream stream = getClass().getResourceAsStream("/gods.json");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            parser = mapper.getFactory().createParser(reader);
             if (parser.nextToken() != JsonToken.START_ARRAY) {
                 throw new IllegalStateException("Expected an array");
             }
@@ -58,7 +59,6 @@ public class CardCreator {
                 try {
                     godRead = mapper.readValue(parser, BasicGod.class);
                 } catch (IOException e) {
-                    System.out.println("Exception while reading from file");
                     e.printStackTrace();
                 }
                 godsByJson.add(godRead);
