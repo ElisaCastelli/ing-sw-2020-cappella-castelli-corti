@@ -29,7 +29,7 @@ public class ConnectionHandlerClientSide {
     /**
      * View Object that contains the view instance the user has choose
      */
-    private View view;
+    private final View view;
     /**
      * Object use to guarantee the mutual exclusion to access a piece of code
      */
@@ -52,15 +52,6 @@ public class ConnectionHandlerClientSide {
         this.outputStream = outputStream;
         this.socket = socket;
         this.view = view;
-    }
-
-    /**
-     * Getter method for the View
-     *
-     * @return view client's side
-     */
-    public View getView() {
-        return view;
     }
 
     /**
@@ -94,7 +85,7 @@ public class ConnectionHandlerClientSide {
 
     /**
      * This method is used to send message to the server using the output stream object
-     * until the closed condition is true. Everytime it sends a message it clears the output stream
+     * until the closed condition is true. Every time it sends a message it clears the output stream
      *
      * @param objMessage is the object we want to send
      */
@@ -112,7 +103,7 @@ public class ConnectionHandlerClientSide {
     }
 
     /**
-     * This method is used to close the client connection with the server established with the socket objectw
+     * This method is used to close the client connection with the server established with the socket object
      */
     public void close() {
         try {

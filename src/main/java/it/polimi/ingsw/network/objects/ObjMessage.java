@@ -10,11 +10,11 @@ import java.io.Serializable;
  */
 public abstract class ObjMessage implements Serializable {
     /**
-     * ndex of the client
+     * Index of the client
      */
     private int clientIndex;
     /**
-     * ndex of the client playing
+     * Index of the client playing
      */
     private int currentClientPlaying;
     /**

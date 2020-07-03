@@ -464,6 +464,8 @@ class GameTest {
     void checkWinAfterBuild() {
         gameTest.startGame();
         gameTest.initializeWorker(boardTest.getBox(0, 0), boardTest.getBox(1, 2));
+        gameTest.getPlayerArray().get(1).initializeWorker(boardTest.getBox(2, 2), boardTest.getBox(4, 2), boardTest);
+        gameTest.getPlayerArray().get(2).initializeWorker(boardTest.getBox(3, 2), boardTest.getBox(4, 4), boardTest);
         gameTest.buildBlock(1,0,0);
         assertFalse(gameTest.checkWinAfterBuild());
     }

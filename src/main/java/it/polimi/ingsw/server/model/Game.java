@@ -21,16 +21,16 @@ public class Game implements GameModel {
     /**
      * This attribute is the playing board
      */
-    private Board board;
+    private final Board board;
     /**
      * this is the array list of the players
      */
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     private int ackCounter;
     /**
      * this is the array list of the players
      */
-    private ArrayList<Player> playersDead;
+    private final ArrayList<Player> playersDead;
     /**
      * This integer attribute is the number of the players
      */
@@ -42,7 +42,7 @@ public class Game implements GameModel {
     /**
      * Temporary array of chosen cards
      */
-    private ArrayList<God> tempCard;
+    private final ArrayList<God> tempCard;
     /**
      * Array of drawn cards
      */
@@ -50,7 +50,7 @@ public class Game implements GameModel {
     /**
      * Attribute for the cards parsing
      */
-    private CardCreator parser = new CardCreator();
+    private final CardCreator parser = new CardCreator();
 
     /**
      * Constructor without parameters
@@ -728,8 +728,7 @@ public class Game implements GameModel {
      *
      * @param indexPlayer index of the player
      */
-    @Override
-    public void setDeadPlayer(int indexPlayer) {
+    private void setDeadPlayer(int indexPlayer) {
         stateManager.setDeadPlayer(indexPlayer);
     }
 

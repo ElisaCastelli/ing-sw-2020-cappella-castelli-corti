@@ -59,18 +59,18 @@ public class Board implements Serializable {
      * @return true if each box of the matrix is empty else return false
      */
     public boolean isEmpty() {
-        boolean trovato = false;
+        boolean found = false;
         int i = 0, j = 0;
-        while (!trovato && i < DIM) {
-            while (!trovato && j < DIM) {
+        while (!found && i < DIM) {
+            while (!found && j < DIM) {
                 if (matrix[i][j].isEmpty()) {
-                    trovato = true;
+                    found = true;
                 }
                 j++;
             }
             i++;
         }
-        return trovato;
+        return found;
     }
 
     /**

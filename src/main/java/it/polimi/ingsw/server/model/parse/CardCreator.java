@@ -15,10 +15,10 @@ import java.util.Map;
  */
 public class CardCreator {
 
-    private ArrayList<God> cardsGod = new ArrayList<>();
-    private ArrayList<BasicGod> godsByJson = new ArrayList<>();
-    private Map<String, God> map = new HashMap<>();
-    public ArrayList<God> godArrayListToHash = new ArrayList<>();
+    private final ArrayList<God> cardsGod = new ArrayList<>();
+    private final ArrayList<BasicGod> godsByJson = new ArrayList<>();
+    private final Map<String, God> map = new HashMap<>();
+    public final ArrayList<God> godArrayListToHash = new ArrayList<>();
 
     /**
      * empty constructor

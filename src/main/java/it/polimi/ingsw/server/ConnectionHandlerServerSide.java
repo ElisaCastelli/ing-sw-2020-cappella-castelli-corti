@@ -24,7 +24,7 @@ public class ConnectionHandlerServerSide extends Thread {
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private final VirtualView virtualView;
-    private Socket socket;
+    private final Socket socket;
     /**
      * This attribute identifies if the client is closed or not
      */

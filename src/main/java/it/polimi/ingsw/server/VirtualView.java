@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class VirtualView implements Observer {
 
-    private ProxyGameModel gameModel;
-    private Controller controller;
-    SendMessageToClient sendMessageToClient;
+    private final ProxyGameModel gameModel;
+    private final Controller controller;
+    final SendMessageToClient sendMessageToClient;
     private final Object LOCK = new Object();
 
 

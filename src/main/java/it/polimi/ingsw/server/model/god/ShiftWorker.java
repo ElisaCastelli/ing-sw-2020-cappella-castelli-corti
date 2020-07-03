@@ -40,26 +40,6 @@ public class ShiftWorker extends GodDecorator {
     }
 
     /**
-     * Name getter
-     *
-     * @return name of the card
-     */
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * Effects getter
-     *
-     * @return array of effects of the card
-     */
-    @Override
-    public ArrayList<String> getEffects() {
-        return super.getEffects();
-    }
-
-    /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker and checks if the new opponent position belongs to the board, so the worker move surely succeed in case the player chooses this move
      *
      * @param worker Which worker is the check applied
@@ -101,8 +81,8 @@ public class ShiftWorker extends GodDecorator {
         if (!pos.notWorker()) {
             Box newEnemyPos = directionControl(worker, pos);
             Worker opponentWorker = pos.getWorker();
-            super.moveWorker(worker, pos); //Scambia i due giocatori adiacenti
-            return super.moveWorker(opponentWorker, newEnemyPos); //Sposta il worker nemico nella sua nuova posizione
+            super.moveWorker(worker, pos);
+            return super.moveWorker(opponentWorker, newEnemyPos);
         }
         return super.moveWorker(worker, pos);
     }

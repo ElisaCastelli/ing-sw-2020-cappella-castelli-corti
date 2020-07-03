@@ -13,12 +13,12 @@ public class GoingState extends GameState {
     /**
      * Players array
      */
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     /**
      * Players dead array
      */
-    private ArrayList<Player> playersDead;
+    private final ArrayList<Player> playersDead;
 
     /**
      * Object GameStateManager to manage the changes of the state

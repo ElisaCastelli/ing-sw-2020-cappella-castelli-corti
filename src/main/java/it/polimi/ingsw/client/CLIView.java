@@ -82,7 +82,7 @@ public class CLIView implements View {
     }
 
     /**
-     * Method called from the VisitorClient everytime the clientHandler received an updateBoard message
+     * Method called from the VisitorClient every time the clientHandler received an updateBoard message
      * to update and print the users state and the actual board situation
      *
      * @param usersArray      is the ArrayList of users taking part to the game
@@ -252,26 +252,26 @@ public class CLIView implements View {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             boolean choose = false;
-            int scelta = -1;
+            int cardchose = -1;
             for (int index = 0; index < cards.size(); index++) {
                 System.out.println("[ " + index + "] " + cards.get(index));
             }
             while (!choose) {
                 System.out.println("Choose your card");
-                scelta = inputNumber(input);
-                if (scelta < cards.size() && scelta >= 0) {
-                    System.out.println("Got it! " + scelta);
+                cardchose = inputNumber(input);
+                if (cardchose < cards.size() && cardchose >= 0) {
+                    System.out.println("Got it! " + cardchose);
                     choose = true;
                 }
             }
-            sendMessageToServer.sendCard(scelta);
+            sendMessageToServer.sendCard(cardchose);
         });
         thread.setDaemon(true);
         thread.start();
     }
 
     /**
-     * Method called from the VisitorClient when the ClientHandler receives an AskInizializeWorker message.
+     * Method called from the VisitorClient when the ClientHandler receives an AskInitializeWorker message.
      * It's used to ask to the player in which cells he wants to initialize his two workers
      * and then send this two positions to the server
      */
@@ -850,23 +850,23 @@ public class CLIView implements View {
             System.out.println();
             System.out.println(" " + " " + " " + " " + " " + " " + " " + " " + "0" + " " + " " + " " + " " + " " + " " + " " + "1" + " " + " " + " " + " " + " " + " " + " " + "2" + " " + " " + " " + " " + " " + " " + " " + "3" + " " + " " + " " + " " + " " + " " + " " + "4" + " " + " " + " " + " ");
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(0, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(0, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + "0" + " " + "||" + " " + " " + " " + printByIndexPlayer(0, 0, reach) + " " + printReachable(0, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 1, reach) + " " + printReachable(0, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 2, reach) + " " + printReachable(0, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 3, reach) + " " + printReachable(0, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 4, reach) + " " + printReachable(0, 4, reach) + " " + "||" + " " + " " + " " + " " + " " + " " + printName(0));
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printGod(0));
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + " " + " " + " " + " " + " " + " " + printStatePlayer(0, currentPlayer));
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(1, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(1, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + "1" + " " + "||" + " " + " " + " " + printByIndexPlayer(1, 0, reach) + " " + printReachable(1, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 1, reach) + " " + printReachable(1, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 2, reach) + " " + printReachable(1, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 3, reach) + " " + printReachable(1, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 4, reach) + " " + printReachable(1, 4, reach) + " " + "||" + " " + " " + " " + " " + Color.YELLOW_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printName(1));
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + " " + " " + " " + " " + " " + " " + printGod(1));
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(2, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printStatePlayer(1, currentPlayer));
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(2, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printStatePlayer(1, currentPlayer));
             System.out.println(" " + " " + "2" + " " + "||" + " " + " " + " " + printByIndexPlayer(2, 0, reach) + " " + printReachable(2, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 1, reach) + " " + printReachable(2, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 2, reach) + " " + printReachable(2, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 3, reach) + " " + printReachable(2, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 4, reach) + " " + printReachable(2, 4, reach) + " " + "||" + " " + " " + " " + " " + Color.YELLOW_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(3, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 4).printsize() + " " + " " + " " + " " + " " + " " + "||");
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(3, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 4).printSize() + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + "3" + " " + "||" + " " + " " + " " + printByIndexPlayer(3, 0, reach) + " " + printReachable(3, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 1, reach) + " " + printReachable(3, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 2, reach) + " " + printReachable(3, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 3, reach) + " " + printReachable(3, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 4, reach) + " " + printReachable(3, 4, reach) + " " + "||");
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(4, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 4).printsize() + " " + " " + " " + " " + " " + " " + "||");
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(4, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 4).printSize() + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + "4" + " " + "||" + " " + " " + " " + printByIndexPlayer(4, 0, reach) + " " + printReachable(4, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 1, reach) + " " + printReachable(4, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 2, reach) + " " + printReachable(4, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 3, reach) + " " + printReachable(4, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 4, reach) + " " + printReachable(4, 4, reach) + " " + "||");
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
@@ -877,23 +877,23 @@ public class CLIView implements View {
             System.out.println();
             System.out.println(" " + " " + " " + " " + " " + " " + " " + " " + "0" + " " + " " + " " + " " + " " + " " + " " + "1" + " " + " " + " " + " " + " " + " " + " " + "2" + " " + " " + " " + " " + " " + " " + " " + "3" + " " + " " + " " + " " + " " + " " + " " + "4" + " " + " " + " " + " ");
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(0, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(0, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(0, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + "0" + " " + "||" + " " + " " + " " + printByIndexPlayer(0, 0, reach) + " " + printReachable(0, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 1, reach) + " " + printReachable(0, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 2, reach) + " " + printReachable(0, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 3, reach) + " " + printReachable(0, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(0, 4, reach) + " " + printReachable(0, 4, reach) + " " + "||" + " " + " " + " " + " " + " " + " " + printName(0));
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printGod(0));
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + " " + " " + " " + " " + " " + " " + printStatePlayer(0, currentPlayer));
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(1, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(1, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(1, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.RED_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + "1" + " " + "||" + " " + " " + " " + printByIndexPlayer(1, 0, reach) + " " + printReachable(1, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 1, reach) + " " + printReachable(1, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 2, reach) + " " + printReachable(1, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 3, reach) + " " + printReachable(1, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(1, 4, reach) + " " + printReachable(1, 4, reach) + " " + "||" + " " + " " + " " + " " + Color.YELLOW_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printName(1));
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + " " + " " + " " + " " + " " + " " + printGod(1));
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(2, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printStatePlayer(1, currentPlayer));
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(2, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(2, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printStatePlayer(1, currentPlayer));
             System.out.println(" " + " " + "2" + " " + "||" + " " + " " + " " + printByIndexPlayer(2, 0, reach) + " " + printReachable(2, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 1, reach) + " " + printReachable(2, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 2, reach) + " " + printReachable(2, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 3, reach) + " " + printReachable(2, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(2, 4, reach) + " " + printReachable(2, 4, reach) + " " + "||" + " " + " " + " " + " " + Color.YELLOW_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.CYAN_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + " " + " " + " " + " " + " " + " " + printName(2));
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(3, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 4).printsize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printGod(2));
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(3, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(3, 4).printSize() + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + printGod(2));
             System.out.println(" " + " " + "3" + " " + "||" + " " + " " + " " + printByIndexPlayer(3, 0, reach) + " " + printReachable(3, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 1, reach) + " " + printReachable(3, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 2, reach) + " " + printReachable(3, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 3, reach) + " " + printReachable(3, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(3, 4, reach) + " " + printReachable(3, 4, reach) + " " + "||" + " " + " " + " " + " " + " " + " " + printStatePlayer(2, currentPlayer));
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||" + " " + " " + " " + " " + Color.CYAN_BOLD + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + "*" + Color.RESET);
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
-            System.out.println(" " + " " + " " + " " + "||" + board.getBox(4, 0).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 1).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 2).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 3).printsize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 4).printsize() + " " + " " + " " + " " + " " + " " + "||");
+            System.out.println(" " + " " + " " + " " + "||" + board.getBox(4, 0).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 1).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 2).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 3).printSize() + " " + " " + " " + " " + " " + " " + "|" + board.getBox(4, 4).printSize() + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + "4" + " " + "||" + " " + " " + " " + printByIndexPlayer(4, 0, reach) + " " + printReachable(4, 0, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 1, reach) + " " + printReachable(4, 1, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 2, reach) + " " + printReachable(4, 2, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 3, reach) + " " + printReachable(4, 3, reach) + " " + "|" + " " + " " + " " + printByIndexPlayer(4, 4, reach) + " " + printReachable(4, 4, reach) + " " + "||");
             System.out.println(" " + " " + " " + " " + "||" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "|" + " " + " " + " " + " " + " " + " " + " " + "||");
             System.out.println(" " + " " + " " + " " + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#" + "#");
@@ -982,8 +982,10 @@ public class CLIView implements View {
     }
 
     /**
+     * Method used if the player wants to continue watching the game
+     *
      * @param updatedUsersArray user array
-     * @param indexClient
+     * @param indexClient index of the client
      */
     public void stillWatching(ArrayList<User> updatedUsersArray, int indexClient) {
         if (updatedUsersArray.size() == 3 && onlyOneDead(updatedUsersArray)) {
@@ -1003,8 +1005,10 @@ public class CLIView implements View {
     }
 
     /**
-     * @param updatedUsersArray
-     * @return
+     * Method used to control if there is a player dead
+     *
+     * @param updatedUsersArray array of users of the game
+     * @return true if there is a player dead
      */
     public boolean onlyOneDead(ArrayList<User> updatedUsersArray) {
         int dead = 0;
@@ -1013,9 +1017,7 @@ public class CLIView implements View {
                 dead++;
             }
         }
-        if (dead == 1) {
-            return true;
-        } else return false;
+        return dead == 1;
     }
 
     /**
@@ -1063,9 +1065,7 @@ public class CLIView implements View {
      */
     @Override
     public void printHeartBeat(ObjHeartBeat objHeartBeat) {
-        Thread thread = new Thread(() -> {
-            sendMessageToServer.sendPong(objHeartBeat.getClientIndex());
-        });
+        Thread thread = new Thread(() -> sendMessageToServer.sendPong(objHeartBeat.getClientIndex()));
         thread.setDaemon(true);
         thread.start();
     }

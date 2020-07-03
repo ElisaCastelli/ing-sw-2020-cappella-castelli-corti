@@ -184,10 +184,8 @@ public class VisitorMessageFromServer {
 
     public void visit(AskMoveEvent askMoveEvent) {
         if (askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
-            //Questa è la prima ask
             if (askMoveEvent.isFirstTime()) {
                 view.moveWorker(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying());
-                ///se non è la prima volta significa che sei speciale e puoi fare un'altra mossa
             } else {
                 view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
             }
@@ -204,10 +202,9 @@ public class VisitorMessageFromServer {
 
     public void visit(AskBuildEvent askBuildEvent) {
         if (askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
-            //Qui entra se è veramente la prima volta o se ha inserito una box non valida
             if (askBuildEvent.isFirstTime()) {
                 view.buildMove(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
-            } else { //Può fare una mossa speciale
+            } else {
                 view.anotherBuild(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             }
         }else{

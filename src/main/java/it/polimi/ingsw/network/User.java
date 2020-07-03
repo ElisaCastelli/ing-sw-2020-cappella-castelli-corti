@@ -47,16 +47,6 @@ public class User implements Serializable {
     }
 
     /**
-     * Name of the player setter
-     *
-     * @param name name of the player
-     */
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Index of client getter
      *
      * @return index of client

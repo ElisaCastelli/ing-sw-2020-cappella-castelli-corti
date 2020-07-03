@@ -167,15 +167,6 @@ public class ObjBlock extends ObjMessage {
     }
 
     /**
-     * Done setter
-     *
-     * @param done true if done
-     */
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    /**
      * Is Special turn getter
      *
      * @return true if is the special turn

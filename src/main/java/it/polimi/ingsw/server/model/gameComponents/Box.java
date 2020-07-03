@@ -22,11 +22,11 @@ public class Box implements Serializable {
     /**
      * This attribute indicates the row of the matrix where the box is located
      */
-    private int row;
+    private final int row;
     /**
      * This attribute indicates the column of the matrix where the box is located
      */
-    private int column;
+    private final int column;
     /**
      * This attribute indicates if a box is reachable by a worker or not
      */
@@ -38,7 +38,7 @@ public class Box implements Serializable {
     /**
      * This attribute indicates which block can build
      */
-    private ArrayList<Block> possibleBlock;
+    private final ArrayList<Block> possibleBlock;
 
     /**
      * The constructor of the class
@@ -46,7 +46,7 @@ public class Box implements Serializable {
      * @param row    row of the box
      * @param column column of the box
      */
-    public Box(int row, int column) { //controllare r e c da 0 a 5
+    public Box(int row, int column) {
         building = new Building();
         possibleBlock = new ArrayList<>();
         this.row = row;
@@ -261,7 +261,7 @@ public class Box implements Serializable {
      *
      * @return an int which represents the size of the array
      */
-    public int printsize() {
+    public int printSize() {
         return Math.max(building.getArrayOfBlocks().size(), 0);
     }
 }

@@ -3,20 +3,15 @@ package it.polimi.ingsw.client.GUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import it.polimi.ingsw.network.User;
 import it.polimi.ingsw.server.model.gameComponents.Board;
 import it.polimi.ingsw.server.model.gameComponents.Box;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * This is the application class to show the gui
@@ -58,7 +53,7 @@ public class GUIMain extends Application {
         ViewGUIController controller = new ViewGUIController(0);
         loader.setController(controller);
         try {
-            Scene scene = new Scene((Pane) loader.load());
+            Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             primaryStage.setOnHidden(e -> controller.shutdown());
         } catch (IOException e) {
@@ -82,7 +77,7 @@ public class GUIMain extends Application {
         ViewGUIController controller = new ViewGUIController(1, firstTime);
         loader.setController(controller);
         try {
-            Scene scene = new Scene((Pane) loader.load());
+            Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             primaryStage.setOnHidden(e -> controller.shutdown());
         } catch (IOException e) {
@@ -116,7 +111,7 @@ public class GUIMain extends Application {
             loader.setController(controller);
         }
         try {
-            Scene scene = new Scene((Pane) loader.load());
+            Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             ViewGUIController c = loader.getController();
             primaryStage.setOnHidden(e -> c.shutdown());
@@ -144,7 +139,7 @@ public class GUIMain extends Application {
         loader.setController(controller);
 
         try {
-            Scene scene = new Scene((Pane) loader.load());
+            Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             primaryStage.setOnHidden(e -> controller.shutdown());
         } catch (IOException e) {
@@ -175,7 +170,7 @@ public class GUIMain extends Application {
         ViewGUIController controller = new ViewGUIController(usersArray, clientIndex, currentPlayer, board, workerToMove, firstTime, done, specialTurn, state);
         loader.setController(controller);
         try {
-            Scene scene = new Scene((Pane) loader.load());
+            Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             primaryStage.setOnHidden(e -> controller.shutdown());
         } catch (IOException e) {
@@ -197,7 +192,7 @@ public class GUIMain extends Application {
         ViewGUIController controller = new ViewGUIController(12);
         loader.setController(controller);
         try {
-            Scene scene = new Scene((Pane) loader.load());
+            Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             primaryStage.setOnHidden(e -> controller.shutdown());
         } catch (IOException e) {

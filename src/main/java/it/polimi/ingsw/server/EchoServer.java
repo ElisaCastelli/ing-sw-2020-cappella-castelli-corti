@@ -19,12 +19,12 @@ public class EchoServer {
     /**
      * This attribute is the array of players who are going to play the game
      */
-    private static ArrayList<ConnectionHandlerServerSide> clientArray = new ArrayList<>();
+    private static final ArrayList<ConnectionHandlerServerSide> clientArray = new ArrayList<>();
 
     /**
      * This attribute is the array of players who have to wait to get in the game
      */
-    private static ArrayList<ConnectionHandlerServerSide> clientWaiting = new ArrayList<>();
+    private static final ArrayList<ConnectionHandlerServerSide> clientWaiting = new ArrayList<>();
 
     /**
      * This attribute is the number port of the server

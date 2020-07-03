@@ -19,7 +19,7 @@ public class Client {
      */
     private static int portNumber;
     /**
-     * View  attribute that contains an istance of the type of view (CliView or GUIControllerView) that the user choose
+     * View  attribute that contains an instance of the type of view (CliView or GUIControllerView) that the user choose
      */
     private static View viewClient;
 
@@ -84,7 +84,6 @@ public class Client {
 
         String ipAddress = hashMap.get("ip");
         if (ipAddress != null) {
-            //controlla validità indirizzo
             ip = ipAddress;
         } else {
             redo = true;
@@ -93,7 +92,6 @@ public class Client {
         String port = hashMap.get("port");
         if (port != null) {
             int socketPort = Integer.parseInt(port);
-            //controlla validità porta
             portNumber = socketPort;
         } else {
             redo = true;

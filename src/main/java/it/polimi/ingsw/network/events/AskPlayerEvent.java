@@ -10,7 +10,7 @@ public class AskPlayerEvent extends Event {
     /**
      * boolean false if there is another player with the same name
      */
-    boolean firstTime;
+    final boolean firstTime;
 
     /**
      * Constructor of the class

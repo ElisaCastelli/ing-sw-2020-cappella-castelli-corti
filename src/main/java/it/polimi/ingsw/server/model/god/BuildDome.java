@@ -41,26 +41,6 @@ public class BuildDome extends GodDecorator {
     }
 
     /**
-     * Name getter
-     *
-     * @return name of the card
-     */
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * Effects getter
-     *
-     * @return array of effects of the card
-     */
-    @Override
-    public ArrayList<String> getEffects() {
-        return super.getEffects();
-    }
-
-    /**
      * This method tells which positions can get reached by a worker
      *
      * @param worker Which worker is the check applied

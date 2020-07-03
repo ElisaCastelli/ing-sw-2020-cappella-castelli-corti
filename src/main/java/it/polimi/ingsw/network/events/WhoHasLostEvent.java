@@ -39,10 +39,6 @@ public class WhoHasLostEvent extends Event {
         return board;
     }
 
-    public boolean isShowReachable() {
-        return showReachable;
-    }
-
     /**
      * accept method of the visitor pattern
      *

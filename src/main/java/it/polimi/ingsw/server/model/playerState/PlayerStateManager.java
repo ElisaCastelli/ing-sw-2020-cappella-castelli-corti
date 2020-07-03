@@ -158,8 +158,6 @@ public class PlayerStateManager {
         return currentState.canBuildBeforeWorkerMove();
     }
 
-    ;
-
     /**
      * Method to set the possible boxes reachable
      *

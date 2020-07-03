@@ -45,7 +45,7 @@ public class ViewGUIController implements Initializable, View {
     /**
      * ArrayList of cards to print
      */
-    private static ArrayList<String> cards = new ArrayList<String>(Arrays.asList("Apollo.jpg", "Artemis.jpg", "Athena.jpg", "Atlas.jpg",
+    private static final ArrayList<String> cards = new ArrayList<>(Arrays.asList("Apollo.jpg", "Artemis.jpg", "Athena.jpg", "Atlas.jpg",
             "Demeter.jpg", "Hephaestus.jpg", "Minotaur.jpg", "Pan.jpg", "Prometheus.jpg", "Charon.jpg",
             "Cronus.jpg", "Hestia.jpg", "Triton.jpg", "Zeus.jpg"));
     /**
@@ -53,9 +53,9 @@ public class ViewGUIController implements Initializable, View {
      */
     private static ArrayList<User> usersArray;
     /**
-     * Array of chards choose
+     * Array of cards choose
      */
-    private static ArrayList<Integer> cardsChoose = new ArrayList<>();
+    private static final ArrayList<Integer> cardsChoose = new ArrayList<>();
     /**
      * Array of temporary cards used until every player has a card
      */
@@ -79,7 +79,7 @@ public class ViewGUIController implements Initializable, View {
     /**
      * Array of boxes where the player wants to set the workers
      */
-    private static ArrayList<Box> boxesChoose = new ArrayList<>();
+    private static final ArrayList<Box> boxesChoose = new ArrayList<>();
     /**
      * This is the board box containing the worker to move
      */
@@ -93,7 +93,7 @@ public class ViewGUIController implements Initializable, View {
      */
     private static boolean firstTime;
     /**
-     * Boolean to know if the special movse are over
+     * Boolean to know if the special move are over
      */
     private static boolean done;
     /**
@@ -376,7 +376,7 @@ public class ViewGUIController implements Initializable, View {
     private ImageView workerSide;
 
     /**
-     * Cosntructor
+     * Constructor
      */
     public ViewGUIController() {
 
@@ -545,7 +545,6 @@ public class ViewGUIController implements Initializable, View {
      */
     @Override
     public void youHaveToWait() {
-
     }
 
     /**
@@ -573,7 +572,7 @@ public class ViewGUIController implements Initializable, View {
     }
 
     /**
-     * Method called from the VisitorClient everytime the clientHandler received an updateBoard message
+     * Method called from the VisitorClient every time the clientHandler received an updateBoard message
      * to update and load the users state and the actual board situation
      *
      * @param usersArray      is the ArrayList of users taking part to the game
@@ -798,7 +797,7 @@ public class ViewGUIController implements Initializable, View {
     }
 
     /**
-     * Method called from the VisitorClient when the ClientHandler receives an AskInizializeWorker message.
+     * Method called from the VisitorClient when the ClientHandler receives an AskInitializeWorker message.
      * It's used to load the game field scene
      */
     @Override
@@ -831,32 +830,42 @@ public class ViewGUIController implements Initializable, View {
                 cell.setDisable(true);
                 if (boxesChoose.size() == 2) {
                     disableAllButtons();
-                    playOrWaiting.setText("Wait, an opponent is playing");
-                    situationTurn.setText("Workers choose");
                     sendMessageToServer.sendWorker(boxesChoose);
                 }
             }
         }
         if (state == 5) {
             Box boardBox = getBoxIndex(pane);
-            if (boardBox.getWorker() != null && boardBox.getWorker().getIndexClient() == indexClient) {
-                disableAllButtons();
-                ObjWorkerToMove objWorkerToMove = new ObjWorkerToMove(boardBox.getWorker().getWorkerId(), boardBox.getRow(), boardBox.getColumn(), false);
-                situationTurn.setText("Worker choose");
-                sendMessageToServer.sendWorkerToMove(objWorkerToMove);
+            try {
+                if (boardBox.getWorker() != null && boardBox.getWorker().getIndexClient() == indexClient) {
+                    disableAllButtons();
+                    ObjWorkerToMove objWorkerToMove = new ObjWorkerToMove(boardBox.getWorker().getWorkerId(), boardBox.getRow(), boardBox.getColumn(), false);
+                    sendMessageToServer.sendWorkerToMove(objWorkerToMove);
+                }
+            }catch (NullPointerException e){
+                System.out.println("there is no worker");
             }
         }
         if (state == 7) {
             disableAllButtons();
             Box boardBox = getBoxIndex(pane);
-            ObjMove objMove = new ObjMove(workerToMove.getWorker().getWorkerId(), workerToMove.getRow(), workerToMove.getColumn(), boardBox.getRow(), boardBox.getColumn(), false);
-            sendMessageToServer.sendMoveWorker(objMove);
+            try {
+                ObjMove objMove = new ObjMove(workerToMove.getWorker().getWorkerId(), workerToMove.getRow(), workerToMove.getColumn(), boardBox.getRow(), boardBox.getColumn(), false);
+                sendMessageToServer.sendMoveWorker(objMove);
+            }catch (NullPointerException e){
+                System.out.println("there is no row");
+            }
+
         }
         if (state == 10) {
             disableAllButtons();
             Box boardBox = getBoxIndex(pane);
             boxToBuild = boardBox;
-            printPossibleBlocks(boxToBuild.getRow(), boxToBuild.getColumn());
+            try {
+                printPossibleBlocks(boxToBuild.getRow(), boxToBuild.getColumn());
+            }catch (NullPointerException e){
+                System.out.println("there is no row");
+            }
         }
     }
 
@@ -1084,7 +1093,7 @@ public class ViewGUIController implements Initializable, View {
             if (num == 0) {
                 firstBlock = size;
                 firstBlockPossible.setImage(image);
-            } else if(num==1 && board.getBox(row, column).getPossibleBlock().get(size-1).getBlockIdentifier()!=4) {
+            } else if (num == 1 && board.getBox(row, column).getPossibleBlock().get(size - 1).getBlockIdentifier() != 4) {
                 secondBlock = size;
                 block2.setVisible(true);
                 secondBlockPossible.setImage(image);
@@ -1353,6 +1362,7 @@ public class ViewGUIController implements Initializable, View {
     private void printWorker(AnchorPane actualPane) {
         Image worker;
         Box box = getBoxIndex(actualPane);
+        try{
         if (box.getWorker() == null) {
             if (indexClient == 0) {
                 worker = new Image("/SenzaSfondo/WorkerRed.png");
@@ -1371,16 +1381,21 @@ public class ViewGUIController implements Initializable, View {
             }
         }
         ImageView img = (ImageView) actualPane.getChildren().get(4);
-        img.setImage(worker);
+            img.setImage(worker);
+
+        }catch (NullPointerException e){
+            System.out.println("there is no worker");
+        }
+
     }
 
     /**
      * Method used to print the state of the player in his state pane
      */
     private void printYourState() {
-        for (int i = 0; i < usersArray.size(); i++) {
-            if (usersArray.get(i).getClient() == indexClient) {
-                if (usersArray.get(i).isDead()) {
+        for (User user : usersArray) {
+            if (user.getClient() == indexClient) {
+                if (user.isDead()) {
                     playOrWaiting.setText("You are dead!");
                 } else if (indexClient == currentPlayer) {
                     playOrWaiting.setText("It's your turn!");
@@ -1418,10 +1433,10 @@ public class ViewGUIController implements Initializable, View {
      * State 9 prints the request to decide if moving again
      * State 10 prints the request to chose the position where build
      * State 11 prints the request to decide if building again
-     * Each state after 2 also prints name, state and god's image of the opponent everytime they load a new scene from the GUIcontroller
+     * Each state after 2 also prints name, state and god's image of the opponent every time they load a new scene from the GUI controller
      *
-     * @param url
-     * @param resourceBundle
+     * @param url connection to the page to show
+     * @param resourceBundle package of resources of the game
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -1456,16 +1471,15 @@ public class ViewGUIController implements Initializable, View {
             }
         }
         if (state > 2 && state != 12) {
-            printYourState();
             if (nPlayers == 2) {
                 TwoOpponents.setVisible(false);
-                for (int indexP = 0; indexP < usersArray.size(); indexP++) {
-                    if (indexClient != usersArray.get(indexP).getClient()) {
-                        cardOpponent.setImage(new Image("/SenzaSfondo/" + usersArray.get(indexP).getNameCard() + ".png"));
-                        nameOpponent.setText(usersArray.get(indexP).getName());
-                        stateOpponent.setText(printOpponentState(usersArray.get(indexP)));
+                for (User user : usersArray) {
+                    if (indexClient != user.getClient()) {
+                        cardOpponent.setImage(new Image("/SenzaSfondo/" + user.getNameCard() + ".png"));
+                        nameOpponent.setText(user.getName());
+                        stateOpponent.setText(printOpponentState(user));
                     } else {
-                        myCard.setImage(new Image(usersArray.get(indexP).getNameCard() + ".jpg"));
+                        myCard.setImage(new Image(user.getNameCard() + ".jpg"));
                         Image worker;
                         if (indexClient == 0) {
                             worker = new Image("/SenzaSfondo/workerRedlato.png");
@@ -1481,20 +1495,20 @@ public class ViewGUIController implements Initializable, View {
             if (nPlayers == 3) {
                 oneOpponent.setVisible(false);
                 int find = 0;
-                for (int indexP = 0; indexP < usersArray.size(); indexP++) {
-                    if (indexClient != usersArray.get(indexP).getClient()) {
+                for (User user : usersArray) {
+                    if (indexClient != user.getClient()) {
                         find++;
                         if (find == 1) {
-                            cardFirstOpponent.setImage(new Image("/SenzaSfondo/" + usersArray.get(indexP).getNameCard() + ".png"));
-                            nameFirstOpponent.setText(usersArray.get(indexP).getName());
-                            stateFirstOpponent.setText(printOpponentState(usersArray.get(indexP)));
+                            cardFirstOpponent.setImage(new Image("/SenzaSfondo/" + user.getNameCard() + ".png"));
+                            nameFirstOpponent.setText(user.getName());
+                            stateFirstOpponent.setText(printOpponentState(user));
                         } else {
-                            cardSecondOpponent.setImage(new Image("/SenzaSfondo/" + usersArray.get(indexP).getNameCard() + ".png"));
-                            nameSecondOpponent.setText(usersArray.get(indexP).getName());
-                            stateSecondOpponent.setText(printOpponentState(usersArray.get(indexP)));
+                            cardSecondOpponent.setImage(new Image("/SenzaSfondo/" + user.getNameCard() + ".png"));
+                            nameSecondOpponent.setText(user.getName());
+                            stateSecondOpponent.setText(printOpponentState(user));
                         }
                     } else {
-                        myCard.setImage(new Image(usersArray.get(indexP).getNameCard() + ".jpg"));
+                        myCard.setImage(new Image(user.getNameCard() + ".jpg"));
                         Image worker;
                         if (indexClient == 0) {
                             worker = new Image("/SenzaSfondo/workerRedlato.png");
@@ -1507,58 +1521,50 @@ public class ViewGUIController implements Initializable, View {
                     }
                 }
             }
+            printYourState();
             printBoard();
         }
         if (state == 3 && someoneDead) {
             situationTurn.setText("One of your opponents has dead!");
         }
         if (state == 4) {
-            printYourState();
-            situationTurn.setText("Inizialize your workers!");
+            situationTurn.setText("Initialize your workers!");
         }
         if (state == 5) {
-            printYourState();
             enableAllButtons();
             if (firstTime) {
                 situationTurn.setText("Choose the worker to move");
             } else {
-                situationTurn.setText("Try again to choose a worker!");
+                situationTurn.setText("Try again, choose a worker!");
             }
         }
         if (state == 6) {
-            printYourState();
             surePane.setVisible(true);
             situationTurn.setText("Confirm if you want to move this worker");
             disableButtonsNotReachable();
         }
         if (state == 7) {
-            printYourState();
             disableButtonsNotReachable();
             situationTurn.setText("You can move the worker, what position you wanna reach?");
         }
         if (state == 8) {
-            printYourState();
             situationTurn.setText("You can build before move. If you decide to do so, You'll not be able to move up a building");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");
         }
         if (state == 9) {
-            printYourState();
             disableAllButtons();
             situationTurn.setText("You have the possibility to make another move");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");
         }
         if (state == 10) {
-            printYourState();
             disableButtonsNotReachable();
             surePane.setVisible(false);
             situationTurn.setText("Build a block");
         }
         if (state == 11) {
-            printYourState();
             disableAllButtons();
-            playOrWaiting.setText("It's your turn!");
             situationTurn.setText("You can build again");
             surePane.setVisible(true);
             helpText.setText("Do you want to?");

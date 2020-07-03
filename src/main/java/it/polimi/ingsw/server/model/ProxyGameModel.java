@@ -18,7 +18,7 @@ import java.util.TimerTask;
  */
 public class ProxyGameModel implements GameModel, Subject {
 
-    private GameModel gameModel;
+    private final GameModel gameModel;
     private final Object LOCK = new Object();
     private Observer observer;
 
@@ -508,16 +508,6 @@ public class ProxyGameModel implements GameModel, Subject {
     @Override
     public int getWinner() {
         return gameModel.getWinner();
-    }
-
-    /**
-     * dead Player setter
-     *
-     * @param indexPlayer index of the player
-     */
-    @Override
-    public void setDeadPlayer(int indexPlayer) {
-        gameModel.setDeadPlayer(indexPlayer);
     }
 
     /**

@@ -31,24 +31,6 @@ public class AskNCardsEvent extends Event {
     }
 
     /**
-     * State setter
-     *
-     * @param state state of the player
-     */
-    public void setState(PlayerState state) {
-        this.state = state;
-    }
-
-    /**
-     * State getter
-     *
-     * @return state of the player
-     */
-    public PlayerState getState() {
-        return state;
-    }
-
-    /**
      * Array of cards getter
      *
      * @return array of cards

@@ -39,26 +39,6 @@ public class FerryAnOpponentWorker extends MoveTwice {
     }
 
     /**
-     * Name getter
-     *
-     * @return name of the card
-     */
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * Effects getter
-     *
-     * @return array of effects of the card
-     */
-    @Override
-    public ArrayList<String> getEffects() {
-        return super.getEffects();
-    }
-
-    /**
      * This method checks which positions can get reached by a worker: during the first move, neighboring boxes are reachable even if there is an opponent worker which can be moved if the space where it goes is unoccupied;
      *
      * @param worker Which worker is the check applied

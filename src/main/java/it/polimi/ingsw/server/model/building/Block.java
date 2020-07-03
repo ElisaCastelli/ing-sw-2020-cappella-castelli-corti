@@ -6,10 +6,6 @@ import java.io.Serializable;
  * This interface represents the general Block that composes a building
  */
 public interface Block extends Serializable {
-    /**
-     * This attribute is the name of the block
-     */
-    String blockName = null;
 
     /**
      * @return this method print out the name of the block you have selected

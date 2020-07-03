@@ -320,13 +320,6 @@ public interface GameModel {
     int getWinner();
 
     /**
-     * Player dead setter
-     *
-     * @param indexPlayer index of the player
-     */
-    void setDeadPlayer(int indexPlayer);
-
-    /**
      * This method resets the heartbeat counter if it receives a response from the client
      *
      * @param indexClient client index who sends the heartbeat response

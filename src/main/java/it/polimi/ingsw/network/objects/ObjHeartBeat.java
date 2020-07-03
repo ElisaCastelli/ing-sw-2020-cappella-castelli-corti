@@ -8,10 +8,6 @@ import it.polimi.ingsw.network.VisitorMessageFromClient;
  */
 public class ObjHeartBeat extends ObjMessage {
 
-    public String getMessageHeartbeat() {
-        return "--HEARTBEATS--";
-    }
-
     /**
      * accept method of the visitor pattern
      *

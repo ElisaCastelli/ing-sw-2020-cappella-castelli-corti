@@ -36,7 +36,7 @@ public interface View {
     void setSendMessageToServer(SendMessageToServer sendMessageToServer);
 
     /**
-     * Method called from the VisitorClient everytime the clientHandler received an updateBoard message
+     * Method called from the VisitorClient every time the clientHandler received an updateBoard message
      *
      * @param usersArray      is the ArrayList of users taking part to the game
      * @param board           is the object Board describe the game field
@@ -76,7 +76,7 @@ public interface View {
     void setIndexPlayer(int indexPlayer);
 
     /**
-     * Method calledfrom the VisitorClient when the ClientHandler receives an Ask3Card message.
+     * Method called from the VisitorClient when the ClientHandler receives an Ask3Card message.
      *
      * @param cards is the ArrayList of cards name from which the user can choose
      */
@@ -90,7 +90,7 @@ public interface View {
     void askCard(ArrayList<String> cards);
 
     /**
-     * Method called from the VisitorClient when the ClientHandler receives an AskInizializeWorker message.
+     * Method called from the VisitorClient when the ClientHandler receives an AskInitializeWorker message.
      */
     void initializeWorker();
 

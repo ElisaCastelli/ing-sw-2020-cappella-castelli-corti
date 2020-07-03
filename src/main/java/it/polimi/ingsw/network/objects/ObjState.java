@@ -33,15 +33,6 @@ public class ObjState extends ObjMessage {
     }
 
     /**
-     * Index of the player setter
-     *
-     * @param indexPlayer index of the player
-     */
-    public void setIndexPlayer(int indexPlayer) {
-        this.indexPlayer = indexPlayer;
-    }
-
-    /**
      * accept method of the visitor pattern
      *
      * @param visitorMessageFromClient the class of the visitor pattern server's side

@@ -12,7 +12,7 @@ import java.util.Timer;
  * This class is the controller of MVC pattern: it controls all the game flow.
  */
 public class Controller {
-    private ProxyGameModel gameModel;
+    private final ProxyGameModel gameModel;
 
     public Controller(ProxyGameModel gameModel) {
         this.gameModel = gameModel;
@@ -354,16 +354,6 @@ public class Controller {
         } else {
             gameModel.notifyContinueBuild(askBuildEvent);
         }
-    }
-
-    /**
-     * This method is recall when a player meant to be dead
-     *
-     * @param indexPlayer the index of the player that is meant to be dead
-     */
-
-    public void setDeadPlayer(int indexPlayer) {
-        gameModel.setDeadPlayer(indexPlayer);
     }
 
     /**

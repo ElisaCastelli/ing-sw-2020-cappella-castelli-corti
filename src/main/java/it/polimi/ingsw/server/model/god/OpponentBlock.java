@@ -39,25 +39,6 @@ public class OpponentBlock extends GodDecorator {
         super.setEffect(effects);
     }
 
-    /**
-     * Name getter
-     *
-     * @return name of the card
-     */
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * Effects getter
-     *
-     * @return array of effects of the card
-     */
-    @Override
-    public ArrayList<String> getEffects() {
-        return super.getEffects();
-    }
 
     /**
      * Is Move Up getter

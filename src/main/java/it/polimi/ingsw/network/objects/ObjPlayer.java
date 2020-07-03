@@ -37,16 +37,6 @@ public class ObjPlayer extends ObjMessage {
     }
 
     /**
-     * Name setter
-     *
-     * @param name name of the player
-     */
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Age getter
      *
      * @return age of the player
@@ -54,16 +44,6 @@ public class ObjPlayer extends ObjMessage {
 
     public int getAge() {
         return age;
-    }
-
-    /**
-     * Age setter
-     *
-     * @param age age of the player
-     */
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
 

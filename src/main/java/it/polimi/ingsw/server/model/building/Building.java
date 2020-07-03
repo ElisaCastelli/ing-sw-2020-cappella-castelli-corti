@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.building;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * This class represents the building using a factory method
@@ -80,7 +79,7 @@ public class Building implements Serializable {
     }
 
     /**
-     * @param counter is anindex of the arrayOfBlocks
+     * @param counter is an index of the arrayOfBlocks
      * @return the block in the list at the specified index
      */
     public Block getBlockCounter(int counter) {

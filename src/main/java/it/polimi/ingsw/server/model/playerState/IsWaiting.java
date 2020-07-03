@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.playerState;
 
 import it.polimi.ingsw.server.model.god.*;
 import it.polimi.ingsw.server.model.gameComponents.Box;
-import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 /**
  * Class of the player's state if he is in the game yet  but is the turn of an opponent

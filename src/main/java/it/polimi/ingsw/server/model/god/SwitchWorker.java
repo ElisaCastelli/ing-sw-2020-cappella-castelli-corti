@@ -40,26 +40,6 @@ public class SwitchWorker extends GodDecorator {
     }
 
     /**
-     * Name getter
-     *
-     * @return name of the card
-     */
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * Effects getter
-     *
-     * @return array of effects of the card
-     */
-    @Override
-    public ArrayList<String> getEffects() {
-        return super.getEffects();
-    }
-
-    /**
      * This method labels a box next to the worker as a reachable box even if there is an opponent worker
      *
      * @param worker Which worker is the check applied

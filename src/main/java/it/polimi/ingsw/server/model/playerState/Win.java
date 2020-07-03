@@ -1,8 +1,6 @@
 package it.polimi.ingsw.server.model.playerState;
 
 import it.polimi.ingsw.server.model.god.*;
-import it.polimi.ingsw.server.model.gameComponents.Box;
-import it.polimi.ingsw.server.model.gameComponents.Worker;
 
 /**
  * Class of the player's state if he is in the game yet and it's his turn
@@ -12,7 +10,7 @@ public class Win extends PlayerState {
     /**
      * Player's card
      */
-    private God myGod;
+    private final God myGod;
 
     /**
      * Object PlayerStateManager to manage the changes of the state
