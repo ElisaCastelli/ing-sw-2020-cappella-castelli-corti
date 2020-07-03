@@ -1363,24 +1363,24 @@ public class ViewGUIController implements Initializable, View {
         Image worker;
         Box box = getBoxIndex(actualPane);
         try{
-        if (box.getWorker() == null) {
-            if (indexClient == 0) {
-                worker = new Image("/SenzaSfondo/WorkerRed.png");
-            } else if (indexClient == 1) {
-                worker = new Image("/SenzaSfondo/WorkerBlue.png");
+            if (box.getWorker() == null) {
+                if (indexClient == 0) {
+                    worker = new Image("/SenzaSfondo/workerRed.png");
+                } else if (indexClient == 1) {
+                    worker = new Image("/SenzaSfondo/workerBlue.png");
+                } else {
+                    worker = new Image("/SenzaSfondo/workerYellow.png");
+                }
             } else {
-                worker = new Image("/SenzaSfondo/WorkerYellow.png");
+                if (box.getWorker().getIndexClient() == 0) {
+                    worker = new Image("/SenzaSfondo/workerRed.png");
+                } else if (box.getWorker().getIndexClient() == 1) {
+                    worker = new Image("/SenzaSfondo/workerBlue.png");
+                } else {
+                    worker = new Image("/SenzaSfondo/workerYellow.png");
+                }
             }
-        } else {
-            if (box.getWorker().getIndexClient() == 0) {
-                worker = new Image("/SenzaSfondo/WorkerRed.png");
-            } else if (box.getWorker().getIndexClient() == 1) {
-                worker = new Image("/SenzaSfondo/WorkerBlue.png");
-            } else {
-                worker = new Image("/SenzaSfondo/WorkerYellow.png");
-            }
-        }
-        ImageView img = (ImageView) actualPane.getChildren().get(4);
+            ImageView img = (ImageView) actualPane.getChildren().get(4);
             img.setImage(worker);
 
         }catch (NullPointerException e){
