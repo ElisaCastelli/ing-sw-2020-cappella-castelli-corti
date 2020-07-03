@@ -14,6 +14,7 @@ public class AskPlayerEvent extends Event {
 
     /**
      * Constructor of the class
+     *
      * @param firstTime false if there is another player with the same name
      */
     public AskPlayerEvent(boolean firstTime) {
@@ -22,6 +23,7 @@ public class AskPlayerEvent extends Event {
 
     /**
      * First time getter
+     *
      * @return false if there is another player with the same name
      */
     public boolean isFirstTime() {

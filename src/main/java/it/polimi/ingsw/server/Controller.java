@@ -308,7 +308,7 @@ public class Controller {
      * @return boolean that identifies if there is at least one reachable box
      */
     public boolean setBoxBuilding(int indexWorker) {
-        if(gameModel.setBoxBuilding(indexWorker)){
+        if (gameModel.setBoxBuilding(indexWorker)) {
             gameModel.notifySetBuilding();
             return true;
         } else {
@@ -361,14 +361,14 @@ public class Controller {
      *
      * @return the index of the player that maybe is going to lose
      */
-    public int whoIsLosing(){
+    public int whoIsLosing() {
         int loserClient = gameModel.whoIsPlaying() + 1;
-        if (loserClient == gameModel.getNPlayers()){
+        if (loserClient == gameModel.getNPlayers()) {
             loserClient = 0;
         }
-        if (gameModel.getPlayerArray().get(loserClient).amIDead()){
+        if (gameModel.getPlayerArray().get(loserClient).amIDead()) {
             loserClient++;
-            if (loserClient == gameModel.getNPlayers()){
+            if (loserClient == gameModel.getNPlayers()) {
                 loserClient = 0;
             }
         }

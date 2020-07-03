@@ -266,8 +266,8 @@ public class Player implements Serializable {
     /**
      * This method sets the first position of a worker
      *
-     * @param box1 is the number of the worker i want to set
-     * @param box2 is the box where i want to set the worker
+     * @param box1  is the number of the worker i want to set
+     * @param box2  is the box where i want to set the worker
      * @param board game's board
      * @return true if initialization is successful, else false
      */
@@ -347,7 +347,6 @@ public class Player implements Serializable {
      * This method calls the setPossibleMove in the playerStateManager
      *
      * @param indexWorker index of the worker which is getting the possible moves
-     *
      * @return true if the worker can move
      */
     public boolean setPossibleMove(int indexWorker) {

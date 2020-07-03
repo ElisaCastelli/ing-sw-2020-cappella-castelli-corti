@@ -26,6 +26,9 @@ public class Game implements GameModel {
      * this is the array list of the players
      */
     private final ArrayList<Player> players;
+    /**
+     * Counter for player data ack
+     */
     private int ackCounter;
     /**
      * this is the array list of the players
@@ -225,14 +228,15 @@ public class Game implements GameModel {
 
     /**
      * Method to update index client in the players array
+     *
      * @param indexClient client dead
      */
-    public void updateIndexClient(int indexClient){
-        int indexPlayerDead= searchByClientIndex(indexClient);
+    public void updateIndexClient(int indexClient) {
+        int indexPlayerDead = searchByClientIndex(indexClient);
         players.get(indexPlayerDead).setIndexClient(-1);
-        for (int index = indexClient+1; index < players.size(); index++) {
-            int indexPlayer= searchByClientIndex(index);
-            players.get(indexPlayer).setIndexClient(index-1);
+        for (int index = indexClient + 1; index < players.size(); index++) {
+            int indexPlayer = searchByClientIndex(index);
+            players.get(indexPlayer).setIndexClient(index - 1);
         }
 
     }
@@ -279,7 +283,7 @@ public class Game implements GameModel {
             players.get(indexPlayer).getTimer().purge();
             players.remove(indexPlayer);
             updateIndexInArray(indexPlayer);
-        }catch(IndexOutOfBoundsException e ){
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("The player was already removed, not necessary remove method");
         }
     }

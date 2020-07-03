@@ -252,19 +252,19 @@ public class CLIView implements View {
         Thread thread = new Thread(() -> {
             Scanner input = new Scanner(System.in);
             boolean choose = false;
-            int cardchose = -1;
+            int cardChose = -1;
             for (int index = 0; index < cards.size(); index++) {
                 System.out.println("[ " + index + "] " + cards.get(index));
             }
             while (!choose) {
                 System.out.println("Choose your card");
-                cardchose = inputNumber(input);
-                if (cardchose < cards.size() && cardchose >= 0) {
-                    System.out.println("Got it! " + cardchose);
+                cardChose = inputNumber(input);
+                if (cardChose < cards.size() && cardChose >= 0) {
+                    System.out.println("Got it! " + cardChose);
                     choose = true;
                 }
             }
-            sendMessageToServer.sendCard(cardchose);
+            sendMessageToServer.sendCard(cardChose);
         });
         thread.setDaemon(true);
         thread.start();
@@ -600,9 +600,9 @@ public class CLIView implements View {
                 System.out.print("Box : " + "( " + boxNextTo.getRow() + " , " + boxNextTo.getColumn() + " )" + " you can build --> ");
                 for (int size = 0; size < boxNextTo.getPossibleBlock().size(); size++) {
                     Block block = boxNextTo.getPossibleBlock().get(size);
-                    if(block.getBlockIdentifier() != 4) {
+                    if (block.getBlockIdentifier() != 4) {
                         System.out.print("[" + size + "]" + block.toString() + "  ");
-                    }else if (size != 0){
+                    } else if (size != 0) {
                         System.out.print("[" + size + "]" + block.toString() + "  ");
                     }
                 }
@@ -807,8 +807,8 @@ public class CLIView implements View {
      * @return the name string of the player requested
      */
     private String printName(int indexClient) {
-        for (User user : usersArray){
-            if(user.getClient() == indexClient)
+        for (User user : usersArray) {
+            if (user.getClient() == indexClient)
                 return user.getName();
         }
         return "Not found";
@@ -821,8 +821,8 @@ public class CLIView implements View {
      * @return the god name string of the player requested
      */
     private String printGod(int indexClient) {
-        for (User user : usersArray){
-            if(user.getClient() == indexClient)
+        for (User user : usersArray) {
+            if (user.getClient() == indexClient)
                 return user.getNameCard();
         }
         return "Not found";
@@ -836,9 +836,9 @@ public class CLIView implements View {
      * @return the state string of the player requested
      */
     private String printStatePlayer(int indexClient, int currentPlayer) {
-        for (User user : usersArray){
-            if (user.getClient() == indexClient){
-                if(user.getClient() == currentPlayer)
+        for (User user : usersArray) {
+            if (user.getClient() == indexClient) {
+                if (user.getClient() == currentPlayer)
                     return "Is playing";
                 else if (user.isDead())
                     return "Is dead";
@@ -936,19 +936,20 @@ public class CLIView implements View {
 
     /**
      * This method is used when is not the player's turn
+     *
      * @param clientIndex index client
      */
-    public void isNotMyTurn( int clientIndex ) {
-        if( usersArray != null ){
+    public void isNotMyTurn(int clientIndex) {
+        if (usersArray != null) {
             int indexDead = -1;
-            for (User user : usersArray){
-                if(user.isDead()){
+            for (User user : usersArray) {
+                if (user.isDead()) {
                     indexDead = user.getClient();
                 }
             }
-            if(clientIndex == indexDead){
-                System.out.println(Color.CYAN +"You are not playing... just watching the game" + Color.RESET);
-            }else{
+            if (clientIndex == indexDead) {
+                System.out.println(Color.CYAN + "You are not playing... just watching the game" + Color.RESET);
+            } else {
                 System.out.println(Color.CYAN + "Waiting for my turn..." + Color.RESET);
             }
         }
@@ -997,7 +998,7 @@ public class CLIView implements View {
      * Method used if the player wants to continue watching the game
      *
      * @param updatedUsersArray user array
-     * @param indexClient index of the client
+     * @param indexClient       index of the client
      */
     public void stillWatching(ArrayList<User> updatedUsersArray, int indexClient) {
         if (updatedUsersArray.size() == 3 && onlyOneDead(updatedUsersArray)) {

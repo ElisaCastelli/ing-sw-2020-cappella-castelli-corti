@@ -67,6 +67,7 @@ public class GUIMain extends Application {
      * Method to load a scene passed by parameters
      *
      * @param sceneName is the name of the scene path to load
+     * @param firstTime false if there is another player with the same name
      */
     public static void changeScene(String sceneName, boolean firstTime) {
         FXMLLoader loader = new FXMLLoader(
@@ -128,6 +129,7 @@ public class GUIMain extends Application {
      * @param clientIndex   is the index of the client associated with the player
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param board         is the object Board describe the game field
+     * @param someoneDead   true if one of the three player is dead
      */
     public static void changeBoard(String sceneName, ArrayList<User> usersArray, int clientIndex, int currentPlayer, Board board, boolean someoneDead) {
         FXMLLoader loader = new FXMLLoader(

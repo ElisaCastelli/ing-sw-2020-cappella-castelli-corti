@@ -18,7 +18,7 @@ public class ObjCard extends ObjMessage {
     /**
      * constructor of the class
      *
-     * @param cardChoose  int for the chosen card
+     * @param cardChoose int for the chosen card
      */
     public ObjCard(int cardChoose) {
         this.cardChoose = cardChoose;

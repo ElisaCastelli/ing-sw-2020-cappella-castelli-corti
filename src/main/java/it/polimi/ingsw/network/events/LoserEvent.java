@@ -15,6 +15,7 @@ public class LoserEvent extends Event {
 
     /**
      * Constructor of the class
+     *
      * @param userArray user array
      */
     public LoserEvent(ArrayList<User> userArray) {
@@ -23,6 +24,7 @@ public class LoserEvent extends Event {
 
     /**
      * User array getter
+     *
      * @return user array
      */
     public ArrayList<User> getUserArray() {

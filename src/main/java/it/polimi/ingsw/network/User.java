@@ -7,10 +7,21 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable {
-
+    /**
+     * Name of the player
+     */
     private String name;
+    /**
+     * Name of the card
+     */
     private final String nameCard;
+    /**
+     * Index of the client
+     */
     private final int client;
+    /**
+     * Boolean true if is dead
+     */
     private boolean dead;
 
     /**

@@ -407,6 +407,7 @@ public class ViewGUIController implements Initializable, View {
      * @param board         is the object Board describe the game field
      * @param currentPlayer is the integer index of the gamer playing in this turn
      * @param state         is the current situation
+     * @param someoneDead   true if one of the three player is dead
      */
     public ViewGUIController(ArrayList<User> usersArray, int indexClient, Board board, int currentPlayer, int state, boolean someoneDead) {
         this.usersArray = usersArray;
@@ -444,7 +445,8 @@ public class ViewGUIController implements Initializable, View {
     /**
      * Constructor
      *
-     * @param state is the current situation
+     * @param state     is the current situation
+     * @param firstTime false if there is another player with the same name
      */
     public ViewGUIController(int state, boolean firstTime) {
         this.state = state;
@@ -842,7 +844,7 @@ public class ViewGUIController implements Initializable, View {
                     ObjWorkerToMove objWorkerToMove = new ObjWorkerToMove(boardBox.getWorker().getWorkerId(), boardBox.getRow(), boardBox.getColumn(), false);
                     sendMessageToServer.sendWorkerToMove(objWorkerToMove);
                 }
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 System.out.println("there is no worker");
             }
         }
@@ -852,7 +854,7 @@ public class ViewGUIController implements Initializable, View {
             try {
                 ObjMove objMove = new ObjMove(workerToMove.getWorker().getWorkerId(), workerToMove.getRow(), workerToMove.getColumn(), boardBox.getRow(), boardBox.getColumn(), false);
                 sendMessageToServer.sendMoveWorker(objMove);
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 System.out.println("there is no row");
             }
 
@@ -863,7 +865,7 @@ public class ViewGUIController implements Initializable, View {
             boxToBuild = boardBox;
             try {
                 printPossibleBlocks(boxToBuild.getRow(), boxToBuild.getColumn());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 System.out.println("there is no row");
             }
         }
@@ -1362,7 +1364,7 @@ public class ViewGUIController implements Initializable, View {
     private void printWorker(AnchorPane actualPane) {
         Image worker;
         Box box = getBoxIndex(actualPane);
-        try{
+        try {
             if (box.getWorker() == null) {
                 if (indexClient == 0) {
                     worker = new Image("/SenzaSfondo/workerRed.png");
@@ -1383,7 +1385,7 @@ public class ViewGUIController implements Initializable, View {
             ImageView img = (ImageView) actualPane.getChildren().get(4);
             img.setImage(worker);
 
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("there is no worker");
         }
 
@@ -1435,7 +1437,7 @@ public class ViewGUIController implements Initializable, View {
      * State 11 prints the request to decide if building again
      * Each state after 2 also prints name, state and god's image of the opponent every time they load a new scene from the GUI controller
      *
-     * @param url connection to the page to show
+     * @param url            connection to the page to show
      * @param resourceBundle package of resources of the game
      */
     @Override

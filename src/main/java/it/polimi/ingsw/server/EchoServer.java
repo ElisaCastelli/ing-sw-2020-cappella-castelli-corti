@@ -186,7 +186,7 @@ public class EchoServer {
                 Socket clientSocket;
 
                 clientSocket = serverSocket.accept();
-                System.out.println("The client " + clientSocket+ " is connected");
+                System.out.println("The client " + clientSocket + " is connected");
 
                 ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                 ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());

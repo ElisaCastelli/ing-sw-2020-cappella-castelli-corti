@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.god.God;
 public abstract class PlayerState {
     /**
      * God setter
+     *
      * @param myGod God of he player
      */
     public void setMyGod(God myGod) {

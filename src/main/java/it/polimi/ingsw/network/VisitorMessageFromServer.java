@@ -125,7 +125,7 @@ public class VisitorMessageFromServer {
     public void visit(AskInitializeWorkerEvent askInitializeWorkerEvent) {
         if (askInitializeWorkerEvent.getClientIndex() == askInitializeWorkerEvent.getCurrentClientPlaying()) {
             view.initializeWorker();
-        }else{
+        } else {
             view.isNotMyTurn(askInitializeWorkerEvent.getClientIndex());
         }
     }
@@ -137,7 +137,7 @@ public class VisitorMessageFromServer {
      */
 
     public void visit(UpdateBoardEvent updateBoardEvent) {
-        view.updateBoard(updateBoardEvent.getUserArray(),updateBoardEvent.getBoard(), updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying(), updateBoardEvent.getClientIndex(),false);
+        view.updateBoard(updateBoardEvent.getUserArray(), updateBoardEvent.getBoard(), updateBoardEvent.isShowReachable(), updateBoardEvent.getCurrentClientPlaying(), updateBoardEvent.getClientIndex(), false);
     }
 
     /**
@@ -171,7 +171,7 @@ public class VisitorMessageFromServer {
     public void visit(AskBuildBeforeMoveEvent askBuildBeforeMoveEvent) {
         if (askBuildBeforeMoveEvent.getClientIndex() == askBuildBeforeMoveEvent.getCurrentClientPlaying()) {
             view.askBuildBeforeMove(askBuildBeforeMoveEvent.getIndexWorker(), askBuildBeforeMoveEvent.getRowWorker(), askBuildBeforeMoveEvent.getColumnWorker());
-        }else{
+        } else {
             view.isNotMyTurn(askBuildBeforeMoveEvent.getClientIndex());
         }
     }
@@ -185,11 +185,11 @@ public class VisitorMessageFromServer {
     public void visit(AskMoveEvent askMoveEvent) {
         if (askMoveEvent.getClientIndex() == askMoveEvent.getCurrentClientPlaying()) {
             if (askMoveEvent.isFirstTime()) {
-                view.moveWorker(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying());
+                view.moveWorker(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(), askMoveEvent.isFirstTime(), askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying());
             } else {
-                view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(),askMoveEvent.isFirstTime(),askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
+                view.anotherMove(askMoveEvent.getRow(), askMoveEvent.getColumn(), askMoveEvent.getIndexWorker(), askMoveEvent.isWrongBox(), askMoveEvent.isFirstTime(), askMoveEvent.getClientIndex(), askMoveEvent.getCurrentClientPlaying(), askMoveEvent.isDone());
             }
-        }else{
+        } else {
             view.isNotMyTurn(askMoveEvent.getClientIndex());
         }
     }
@@ -203,11 +203,11 @@ public class VisitorMessageFromServer {
     public void visit(AskBuildEvent askBuildEvent) {
         if (askBuildEvent.getClientIndex() == askBuildEvent.getCurrentClientPlaying()) {
             if (askBuildEvent.isFirstTime()) {
-                view.buildMove(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
+                view.buildMove(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(), askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             } else {
-                view.anotherBuild(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(),askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
+                view.anotherBuild(askBuildEvent.getRowWorker(), askBuildEvent.getColumnWorker(), askBuildEvent.getIndexWorker(), askBuildEvent.isWrongBox(), askBuildEvent.isFirstTime(), askBuildEvent.isSpecialTurn(), askBuildEvent.getClientIndex(), askBuildEvent.getCurrentClientPlaying(), askBuildEvent.isDone());
             }
-        }else{
+        } else {
             view.isNotMyTurn(askBuildEvent.getClientIndex());
         }
     }
@@ -232,7 +232,7 @@ public class VisitorMessageFromServer {
      */
 
     public void visit(LoserEvent loserEvent) {
-        view.loserEvent(loserEvent.getClientIndex(), loserEvent.getUserArray(),false);
+        view.loserEvent(loserEvent.getClientIndex(), loserEvent.getUserArray(), false);
     }
 
     /**
@@ -243,7 +243,7 @@ public class VisitorMessageFromServer {
 
     public void visit(WhoHasLostEvent whoHasLostEvent) {
         if (whoHasLostEvent.getClientIndex() != whoHasLostEvent.getCurrentClientPlaying())
-            view.whoHasLost(whoHasLostEvent.getUserArray(),whoHasLostEvent.getBoard(),false, whoHasLostEvent.getCurrentClientPlaying(), whoHasLostEvent.getClientIndex());
+            view.whoHasLost(whoHasLostEvent.getUserArray(), whoHasLostEvent.getBoard(), false, whoHasLostEvent.getCurrentClientPlaying(), whoHasLostEvent.getClientIndex());
     }
 
     /**

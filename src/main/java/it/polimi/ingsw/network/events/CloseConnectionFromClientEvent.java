@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.VisitorMessageFromClient;
  * message closing event
  */
 public class CloseConnectionFromClientEvent extends Event {
-    
+
     /**
      * accept method of the visitor pattern
      *

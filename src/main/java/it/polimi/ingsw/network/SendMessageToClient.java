@@ -215,7 +215,7 @@ public class SendMessageToClient {
      * send the notification to the winner client
      *
      * @param indexClient identify the index of a client
-     * @param userArray array of users
+     * @param userArray   array of users
      */
 
     public void sendLoser(int indexClient, ArrayList<User> userArray) {
@@ -225,12 +225,12 @@ public class SendMessageToClient {
     /**
      * send the notification to the loser client
      *
-     * @param loserClient identify the index of a client who lost
+     * @param loserClient      identify the index of a client who lost
      * @param updateBoardEvent update object
      */
 
     public void sendWhoHasLost(int loserClient, UpdateBoardEvent updateBoardEvent) {
-        WhoHasLostEvent whoHasLostEvent = new WhoHasLostEvent(updateBoardEvent.getUserArray(),updateBoardEvent.getBoard(),updateBoardEvent.isShowReachable());
+        WhoHasLostEvent whoHasLostEvent = new WhoHasLostEvent(updateBoardEvent.getUserArray(), updateBoardEvent.getBoard(), updateBoardEvent.isShowReachable());
         whoHasLostEvent.setCurrentClientPlaying(loserClient);
         echoServer.sendBroadCast(whoHasLostEvent);
     }

@@ -103,7 +103,7 @@ public class ConnectionHandlerServerSide extends Thread {
      * This method receives all the messages from the client
      */
     public void listening() {
-        boolean beforeStart=false;
+        boolean beforeStart = false;
         try {
             while (!closed) {
                 ObjMessage objMessage = null;
@@ -114,17 +114,17 @@ public class ConnectionHandlerServerSide extends Thread {
                     closed = true;
 
                 }
-                if (objMessage instanceof CloseConnectionFromClientEvent){
+                if (objMessage instanceof CloseConnectionFromClientEvent) {
                     closed = true;
-                    beforeStart=objMessage.isBeforeStart();
+                    beforeStart = objMessage.isBeforeStart();
                 }
                 if (objMessage != null)
                     objMessage.accept(new VisitorMessageFromClient(virtualView));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        virtualView.controlStillOpen(indexClientArray,beforeStart);
+        virtualView.controlStillOpen(indexClientArray, beforeStart);
         close();
     }
 

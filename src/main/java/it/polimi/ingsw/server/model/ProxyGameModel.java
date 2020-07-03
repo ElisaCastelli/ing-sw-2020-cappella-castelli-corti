@@ -17,9 +17,17 @@ import java.util.TimerTask;
  * This class is composed by all the GameModel and Subject methods
  */
 public class ProxyGameModel implements GameModel, Subject {
-
+    /**
+     * Interface of the class
+     */
     private final GameModel gameModel;
+    /**
+     * Object lock for shared resources
+     */
     private final Object LOCK = new Object();
+    /**
+     * Observer of the class
+     */
     private Observer observer;
 
     /**
@@ -135,9 +143,10 @@ public class ProxyGameModel implements GameModel, Subject {
 
     /**
      * Method to update index client in the players array
+     *
      * @param indexClient client dead
      */
-    public void updateIndexClient(int indexClient){
+    public void updateIndexClient(int indexClient) {
         gameModel.updateIndexClient(indexClient);
     }
 
@@ -257,7 +266,7 @@ public class ProxyGameModel implements GameModel, Subject {
      * @return all the cards of the game
      */
     @Override
-    public ArrayList<String> getCards(){
+    public ArrayList<String> getCards() {
         return gameModel.getCards();
     }
 

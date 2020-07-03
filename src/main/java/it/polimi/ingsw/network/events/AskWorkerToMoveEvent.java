@@ -54,7 +54,7 @@ public class AskWorkerToMoveEvent extends Event {
      * @param row2     row second worker
      * @param column2  column second worker
      * @param firstAsk boolean first ask
-     * @param canMove boolean if it can move
+     * @param canMove  boolean if it can move
      */
     public AskWorkerToMoveEvent(int row1, int column1, int row2, int column2, boolean firstAsk, boolean canMove) {
         this.row1 = row1;

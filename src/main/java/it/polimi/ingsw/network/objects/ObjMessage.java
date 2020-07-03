@@ -52,7 +52,7 @@ public abstract class ObjMessage implements Serializable {
     /**
      * Index of the client setter
      *
-     * @param  clientIndex of the client
+     * @param clientIndex of the client
      */
     public void setClientIndex(int clientIndex) {
         this.clientIndex = clientIndex;

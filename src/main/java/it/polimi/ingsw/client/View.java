@@ -43,6 +43,7 @@ public interface View {
      * @param isShowReachable is a boolean that indicates if the printed board has to show the reachable boxes
      * @param currentPlaying  is the integer index of the gamer playing in this turn
      * @param indexClient     is the index of the client associated with the player
+     * @param someoneDead     true if one of the three players died
      */
     void updateBoard(ArrayList<User> usersArray, Board board, boolean isShowReachable, int currentPlaying, int indexClient, boolean someoneDead);
 
@@ -210,6 +211,7 @@ public interface View {
 
     /**
      * This method is used when is not the player's turn
+     *
      * @param clientIndex index client
      */
     void isNotMyTurn(int clientIndex);
@@ -239,7 +241,14 @@ public interface View {
 
     /**
      * This method is used to show to the user that an opponent has lost
+     *
+     * @param users          is the ArrayList of users taking part to the game
+     * @param board          is the object Board describe the game field
+     * @param setReachable   is a boolean that indicates if the printed board has to show the reachable boxes
+     * @param currentPlaying is the integer index of the player who is playing
+     * @param indexClient    index of the client
      */
+
     void whoHasLost(ArrayList<User> users, Board board, boolean setReachable, int currentPlaying, int indexClient);
 
     /**

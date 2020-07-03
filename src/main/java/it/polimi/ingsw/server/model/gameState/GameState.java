@@ -16,8 +16,7 @@ public abstract class GameState {
      * @param winner integer of the winner
      */
 
-    public void setWinner(int winner) {
-    }
+    public void setWinner(int winner) { }
 
     /**
      * Winner getter
@@ -74,7 +73,6 @@ public abstract class GameState {
      *
      * @param indexPlayer of the player
      * @param indexWorker of the worker to move
-     *
      * @return true if is reachable
      */
     public boolean setBoxReachable(int indexPlayer, int indexWorker) {

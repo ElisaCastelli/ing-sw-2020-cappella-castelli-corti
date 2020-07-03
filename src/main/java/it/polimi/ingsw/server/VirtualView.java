@@ -331,7 +331,7 @@ public class VirtualView implements Observer {
      *
      * @param indexPlayer player index who is playing
      * @param firstMove   boolean that identifies if it is the first time for this player
-     * @param canMove boolean if the worker can make a move
+     * @param canMove     boolean if the worker can make a move
      * @return object with the positions of the player workers
      */
     public AskWorkerToMoveEvent getWorkersPos(int indexPlayer, boolean firstMove, boolean canMove) {
@@ -475,11 +475,10 @@ public class VirtualView implements Observer {
         if (askMoveEvent.isDone()) {
             canBuild(askMoveEvent.getClientIndex(), askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
         } else {
-            if (controller.setBoxReachable(askMoveEvent.getIndexWorker(), true)){
+            if (controller.setBoxReachable(askMoveEvent.getIndexWorker(), true)) {
                 askMoveEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
                 sendMessageToClient.sendAskMoveEvent(askMoveEvent);
-            }
-            else{
+            } else {
                 canBuild(askMoveEvent.getClientIndex(), askMoveEvent.getIndexWorker(), askMoveEvent.getRow(), askMoveEvent.getColumn());
             }
         }
@@ -594,7 +593,7 @@ public class VirtualView implements Observer {
             if (askBuildEvent.isDone()) {
                 canMove();
             } else {
-                if (setBoxBuilding(askBuildEvent.getIndexWorker())){
+                if (setBoxBuilding(askBuildEvent.getIndexWorker())) {
                     askBuildEvent.setCurrentClientPlaying(gameModel.searchByPlayerIndex(gameModel.whoIsPlaying()));
                     sendMessageToClient.sendAskBuildEvent(askBuildEvent);
                 } else {
@@ -632,14 +631,14 @@ public class VirtualView implements Observer {
      */
     @Override
     public void updateWhoHasLost(int loserClient) {
-        sendMessageToClient.sendWhoHasLost(loserClient,gameModel.gameData(false));
+        sendMessageToClient.sendWhoHasLost(loserClient, gameModel.gameData(false));
         canMove();
     }
 
     /**
      * This method calls heartbeat method in the controller class
      *
-     * @param indexClient      client index who has sent heartbeat
+     * @param indexClient client index who has sent heartbeat
      */
     public void printHeartBeat(int indexClient) {
         controller.heartBeat(indexClient);
@@ -653,7 +652,7 @@ public class VirtualView implements Observer {
     @Override
     public void updateUnreachableClient(int indexClient) {
         synchronized (LOCK) {
-            controlStillOpen(indexClient,false);
+            controlStillOpen(indexClient, false);
         }
     }
 
@@ -674,12 +673,16 @@ public class VirtualView implements Observer {
      */
     public void controlStillOpen(int indexClient, boolean beforeStart) {
         synchronized (LOCK) {
-            ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide = sendMessageToClient.getEchoServer().getClientWaiting();
-            ArrayList<ConnectionHandlerServerSide> clientArray = sendMessageToClient.getEchoServer().getClientArray();
-            if (!beforeStart) {
-                afterStart(connectionHandlersWaitingServerSide, clientArray, indexClient);
-            } else {
-                connectionHandlersWaitingServerSide.remove(indexClient);
+            try {
+                ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide = sendMessageToClient.getEchoServer().getClientWaiting();
+                ArrayList<ConnectionHandlerServerSide> clientArray = sendMessageToClient.getEchoServer().getClientArray();
+                if (!beforeStart) {
+                    afterStart(connectionHandlersWaitingServerSide, clientArray, indexClient);
+                } else {
+                    connectionHandlersWaitingServerSide.remove(indexClient);
+                }
+            } catch (NullPointerException | IndexOutOfBoundsException e) {
+                System.out.println("Clients not found");
             }
         }
     }
@@ -688,8 +691,8 @@ public class VirtualView implements Observer {
      * This method is recall if there is a disconnection before the game has started
      *
      * @param connectionHandlersWaitingServerSide array of client waiting for playing
-     * @param clientArray           array of client playing
-     * @param indexClient           index identifying the client who sent the message to the server
+     * @param clientArray                         array of client playing
+     * @param indexClient                         index identifying the client who sent the message to the server
      */
 
     public void afterStart(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient) {
@@ -697,7 +700,7 @@ public class VirtualView implements Observer {
             beforeInitializationFirstClient(connectionHandlersWaitingServerSide, indexClient);
         } else if (connectionHandlersWaitingServerSide.size() > 0 && gameModel.getNPlayers() == 0) {
             beforeInitializationOtherClient(connectionHandlersWaitingServerSide, indexClient);
-        } else if ((clientArray.size() == gameModel.getNPlayers() || clientArray.size() == gameModel.getNPlayers()-1 ) && gameModel.getNPlayers() != 0) {
+        } else if ((clientArray.size() == gameModel.getNPlayers() || clientArray.size() == gameModel.getNPlayers() - 1) && gameModel.getNPlayers() != 0) {
             afterInitialization(connectionHandlersWaitingServerSide, clientArray, indexClient);
         }
     }
@@ -706,7 +709,7 @@ public class VirtualView implements Observer {
      * This method is recall if there is a disconnection before the game has started and is the first client that has disconnected
      *
      * @param connectionHandlersWaitingServerSide array of client waiting for playing
-     * @param indexClient           index identifying the client who sent the message to the server
+     * @param indexClient                         index identifying the client who sent the message to the server
      */
 
     public void beforeInitializationFirstClient(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, int indexClient) {
@@ -723,7 +726,7 @@ public class VirtualView implements Observer {
      * This method is recall if there is a disconnection before the game has started and a client different from the first has disconnected
      *
      * @param connectionHandlersWaitingServerSide array of client waiting for playing
-     * @param indexClient           index identifying the client who sent the message to the server
+     * @param indexClient                         index identifying the client who sent the message to the server
      */
 
     public void beforeInitializationOtherClient(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, int indexClient) {
@@ -741,8 +744,8 @@ public class VirtualView implements Observer {
      * This method is recall if there is a disconnection and the game has already started
      *
      * @param connectionHandlersWaitingServerSide array of client waiting for playing
-     * @param clientArray           array of client playing
-     * @param indexClient           index identifying the client who sent the message to the server
+     * @param clientArray                         array of client playing
+     * @param indexClient                         index identifying the client who sent the message to the server
      */
 
     public void afterInitialization(ArrayList<ConnectionHandlerServerSide> connectionHandlersWaitingServerSide, ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient) {
@@ -762,16 +765,16 @@ public class VirtualView implements Observer {
     /**
      * This method is recall if there is a disconnection and the player chooses to watch the game
      *
-     * @param clientArray           array of client playing
-     * @param indexClient           index identifying the client who sent the message to the server
+     * @param clientArray array of client playing
+     * @param indexClient index identifying the client who sent the message to the server
      */
-    public void stopWatching(ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient){
+    public void stopWatching(ArrayList<ConnectionHandlerServerSide> clientArray, int indexClient) {
         int indexUser = gameModel.searchByClientIndex(indexClient);
-        if(!gameModel.getPlayerArray().get(indexUser).amIDead()){
+        if (!gameModel.getPlayerArray().get(indexUser).amIDead()) {
             clientArray.remove(indexClient);
             controller.removePlayer(indexClient);
             sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
-        }else {
+        } else {
             clientArray.remove(indexClient);
             sendMessageToClient.getEchoServer().updateIndexClient(indexClient);
             gameModel.updateIndexClient(indexClient);

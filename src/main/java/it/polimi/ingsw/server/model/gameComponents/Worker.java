@@ -134,9 +134,8 @@ public class Worker implements Serializable {
      * This method is recall to initialize the position of a worker in the Board
      *
      * @param requestedBox is the box where the player wants to put the worker
-     * @param board game's board
+     * @param board        game's board
      * @return a boolean that is true if the worker is set in the requested position
-     *
      */
     public boolean initializePos(Box requestedBox, Board board) {
         if (board.getBox(requestedBox.getRow(), requestedBox.getColumn()).notWorker()) {
