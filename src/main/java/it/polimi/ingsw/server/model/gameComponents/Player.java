@@ -185,7 +185,8 @@ public class Player implements Serializable {
      */
     public void setIndexClient(int indexClient) {
         this.indexClient = indexClient;
-
+        myWorkers[0].setIndexClient(indexClient);
+        myWorkers[1].setIndexClient(indexClient);
     }
 
     /**
